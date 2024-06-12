@@ -1,0 +1,36 @@
+.searchBox {
+  position: relative;
+  width: 100%;
+
+  .form {
+    width: 100%;
+
+    .inputWrapper {
+      position: relative;
+
+      .input {
+        border-radius: rem(25px);
+        border: rem(1px) solid var(--color-light);
+        background-color: var(--color-dark);
+        width: 100%;
+        padding: rem(10px) rem(20px);
+        font-size: var(--fs-base);
+        color: var(--color-light);
+        transition: all 0.3s ease-in-out;
+      }
+    }
+  }
+
+  &__result {
+    display: none;
+    width: 100%;
+    height: rem(600px);
+    border-radius: rem(10px);
+    background-color: var(--color-dark);
+    position: absolute;
+    top: calc(100% + rem(10px));
+    box-shadow: 0 rem(8px) rem(40px) rem(0px) rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    overflow-y: auto;
+  }
+}

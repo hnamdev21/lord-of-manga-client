@@ -1,0 +1,8 @@
+.husky
+public
+package-lock.json
+node_modules
+yarn.lock
+**/*.md
+.eslintrc.json
+next.config.js

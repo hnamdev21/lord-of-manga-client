@@ -1,0 +1,76 @@
+.button {
+  transition: all 0.3s ease-in-out;
+
+  &__size {
+    &__sm {
+      padding: rem(5px) rem(10px);
+      font-size: var(--fs-sm);
+      border-radius: rem(5px);
+    }
+
+    &__base {
+      padding: rem(10px) rem(20px);
+      font-size: var(--fs-base);
+      border-radius: rem(10px);
+    }
+
+    &__md {
+      padding: rem(15px) rem(30px);
+      font-size: var(--fs-md);
+      border-radius: rem(15px);
+    }
+
+    &__lg {
+      padding: rem(20px) rem(40px);
+      font-size: var(--fs-lg);
+      border-radius: rem(20px);
+    }
+  }
+
+  &__color {
+    &__primary {
+      background-color: var(--color-primary);
+      color: var(--color-light);
+    }
+
+    &__secondary {
+      background-color: var(--color-secondary);
+      color: var(--color-light);
+    }
+
+    &__dark {
+      background-color: var(--color-dark);
+      color: var(--color-light);
+    }
+
+    &__light {
+      background-color: var(--color-light);
+      color: var(--color-dark);
+    }
+  }
+
+  &__variant {
+    &__outline {
+      background-color: transparent;
+      border: rem(1px) solid var(--color-light);
+    }
+
+    &__plain {
+      background-color: transparent;
+      color: var(--color-light);
+    }
+
+    &__solid {
+      border: none;
+    }
+  }
+
+  &__icon {
+    border-radius: 50%;
+    padding: rem(10px);
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
