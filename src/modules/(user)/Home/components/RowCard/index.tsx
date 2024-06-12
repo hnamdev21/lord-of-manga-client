@@ -9,8 +9,8 @@ import Typography from "@/components/Typography";
 const RowCard = () => {
   return (
     <Container noGrid>
-      <div className="flex justify-between items-center mb-[1rem]">
-        <Typography tag="h5" fontSize="lg">
+      <div className="flex justify-between items-center">
+        <Typography tag="h5" fontSize="lg" className="mb-[1.5rem]">
           Drama
         </Typography>
 
