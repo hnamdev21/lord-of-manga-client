@@ -11,7 +11,7 @@
     &__base {
       padding: rem(10px) rem(20px);
       font-size: var(--fs-base);
-      border-radius: rem(10px);
+      border-radius: rem(8px);
     }
 
     &__md {
@@ -45,7 +45,27 @@
 
     &__light {
       background-color: var(--color-light);
-      color: var(--color-dark);
+      color: var(--color-black);
+    }
+
+    &__danger {
+      background-color: var(--color-danger);
+      color: var(--color-black);
+    }
+
+    &__warning {
+      background-color: var(--color-warning);
+      color: var(--color-black);
+    }
+
+    &__success {
+      background-color: var(--color-success);
+      color: var(--color-black);
+    }
+
+    &__info {
+      background-color: var(--color-info);
+      color: var(--color-light);
     }
   }
 
@@ -57,7 +77,7 @@
 
     &__plain {
       background-color: transparent;
-      color: var(--color-light);
+      color: var(--color-primary);
     }
 
     &__solid {

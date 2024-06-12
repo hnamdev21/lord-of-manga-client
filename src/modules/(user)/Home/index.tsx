@@ -1,3 +1,5 @@
+"use client";
+
 import { Carousel } from "antd";
 import React from "react";
 

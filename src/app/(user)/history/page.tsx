@@ -1,7 +1,9 @@
 import React from "react";
 
+import HistoryModule from "@/modules/(user)/History";
+
 const HistoryPage = () => {
-  return <div>HistoryPage</div>;
+  return <HistoryModule />;
 };
 
 export default HistoryPage;
