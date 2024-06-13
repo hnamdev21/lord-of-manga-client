@@ -6,34 +6,25 @@ import React from "react";
 import Typography from "@/components/Typography";
 import { FormSignUp } from "@/types/form";
 
-import styles from "./styles.module.scss";
-
-type FieldType = FormSignUp;
-
 const SignUpModule = () => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
-  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-    try {
-      setIsLoading(true);
-    } catch (error) {
-      //
-    } finally {
-      setIsLoading(false);
-    }
+  const onFinish: FormProps<FormSignUp>["onFinish"] = async (values) => {
+    //
   };
 
   return (
     <React.Fragment>
-      <div>
-        <Typography tag="h1" fontSize="2xl" align="center" className="mb-[1.6rem]">
-          Welcome to Lord of Manga
-        </Typography>
-      </div>
+      <Typography tag="h1" fontSize="2xl" align="center" className="mb-[1.6rem]">
+        Welcome to Lord of Manga
+      </Typography>
 
-      <div className={styles.container}>
-        <Form name="basic" layout={"vertical"} initialValues={{ remember: true }} onFinish={onFinish} autoComplete="off">
-          <Form.Item<FieldType>
+      <div
+        className="grid grid-cols-12 gap-[2rem] rounded-2xl py-[4rem]"
+        style={{
+          backgroundColor: "var(--color-dark-gray)",
+        }}
+      >
+        <Form name="basic" layout={"vertical"} initialValues={{ remember: true }} onFinish={onFinish} autoComplete="off" className="col-start-4 col-span-6">
+          <Form.Item<FormSignUp>
             label={
               <Typography className="span" fontSize="sm">
                 Full name
@@ -45,7 +36,7 @@ const SignUpModule = () => {
             <Input placeholder={"Example Ham"} />
           </Form.Item>
 
-          <Form.Item<FieldType>
+          <Form.Item<FormSignUp>
             label={
               <Typography className="span" fontSize="sm">
                 Username
@@ -57,7 +48,7 @@ const SignUpModule = () => {
             <Input placeholder={"example"} />
           </Form.Item>
 
-          <Form.Item<FieldType>
+          <Form.Item<FormSignUp>
             label={
               <Typography className="span" fontSize="sm">
                 Password
@@ -69,7 +60,7 @@ const SignUpModule = () => {
             <Input.Password placeholder={"********"} />
           </Form.Item>
 
-          <Form.Item<FieldType>
+          <Form.Item<FormSignUp>
             label={
               <Typography className="span" fontSize="sm">
                 Email
@@ -81,7 +72,7 @@ const SignUpModule = () => {
             <Input placeholder={"example@gmail.com"} />
           </Form.Item>
 
-          <Form.Item<FieldType> name="receiveNews" valuePropName="checked">
+          <Form.Item<FormSignUp> name="receiveNews" valuePropName="checked">
             <div className={"w-full flex items-center justify-between"}>
               <Checkbox
                 style={{

@@ -4,6 +4,8 @@ import { Button, Divider, Form, Input, InputNumber, InputRef, Select, Space, Upl
 import { RcFile } from "antd/es/upload";
 import React from "react";
 
+import Typography from "@/components/Typography";
+
 const checkFile = (resolve: any, file: RcFile) => {
   const isLt5M = file.size / 1024 / 1024 <= 2;
   if (!isLt5M) {
@@ -40,19 +42,54 @@ const UploadComic = () => {
     <div className="grid grid-cols-12 gap-[2rem]">
       <Form layout="vertical" form={form} onFinish={onFinish} className="col-start-5 col-span-4">
         <div className="flex gap-[2rem]">
-          <Form.Item label="Title" name="title" rules={[{ required: true, message: "Please enter comic title" }]} className="flex-1">
+          <Form.Item
+            llabel={
+              <Typography className="span" fontSize="sm">
+                Title
+              </Typography>
+            }
+            name="title"
+            rules={[{ required: true, message: "Please enter comic title" }]}
+            className="flex-1"
+          >
             <Input placeholder="Enter comic title" />
           </Form.Item>
-          <Form.Item label="Author name" name="author" rules={[{ required: true, message: "Please enter author name" }]} className="flex-1">
+          <Form.Item
+            label={
+              <Typography className="span" fontSize="sm">
+                Author name
+              </Typography>
+            }
+            name="author"
+            rules={[{ required: true, message: "Please enter author name" }]}
+            className="flex-1"
+          >
             <Input placeholder="Author name" />
           </Form.Item>
         </div>
 
         <div className="flex gap-[2rem]">
-          <Form.Item label="Categories" name={"categories"} rules={[{ required: true, message: "Please select categories" }]} className="flex-1">
+          <Form.Item
+            label={
+              <Typography className="span" fontSize="sm">
+                Categories
+              </Typography>
+            }
+            name={"categories"}
+            rules={[{ required: true, message: "Please select categories" }]}
+            className="flex-1"
+          >
             <Select mode="multiple" allowClear id="categories" style={{ width: "100%" }} placeholder="-- Select categories --" options={[]} />
           </Form.Item>
-          <Form.Item label="Tags" name={"tags"} className="flex-1">
+          <Form.Item
+            label={
+              <Typography className="span" fontSize="sm">
+                Tags
+              </Typography>
+            }
+            name={"tags"}
+            className="flex-1"
+          >
             <Select
               style={{ width: "100%" }}
               placeholder="-- Select tags --"
@@ -85,20 +122,53 @@ const UploadComic = () => {
         </div>
 
         <div className="flex gap-[2rem]">
-          <Form.Item label="Comic type" name={"type"} className="flex-1">
+          <Form.Item
+            label={
+              <Typography className="span" fontSize="sm">
+                Comic type
+              </Typography>
+            }
+            name={"type"}
+            className="flex-1"
+          >
             <Select allowClear id="type" style={{ width: "100%" }} defaultActiveFirstOption options={[]} />
           </Form.Item>
-          <Form.Item label="Price" name={"price"} className="flex-1">
+          <Form.Item
+            label={
+              <Typography className="span" fontSize="sm">
+                Price
+              </Typography>
+            }
+            name={"price"}
+            className="flex-1"
+          >
             <InputNumber addonAfter="VND" min={0} style={{ width: "100%" }} disabled={false} />
           </Form.Item>
         </div>
         <div>
-          <Form.Item label={"Description"} name={"description"} rules={[{ required: true, message: "Please enter description" }]}>
+          <Form.Item
+            label={
+              <Typography className="span" fontSize="sm">
+                Description
+              </Typography>
+            }
+            name={"description"}
+            rules={[{ required: true, message: "Please enter description" }]}
+          >
             <Input.TextArea rows={4} placeholder="Enter description" />
           </Form.Item>
 
           <div className={"grid grid-cols-2 gap-[2rem]"}>
-            <Form.Item label="Cover" valuePropName="fileList" getValueFromEvent={normFile} name="cover">
+            <Form.Item
+              label={
+                <Typography className="span" fontSize="sm">
+                  Cover
+                </Typography>
+              }
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+              name="cover"
+            >
               <Upload
                 listType="picture"
                 maxCount={1}
@@ -112,7 +182,16 @@ const UploadComic = () => {
                 <Button onClick={(e) => e.preventDefault()}>Upload cover</Button>
               </Upload>
             </Form.Item>
-            <Form.Item label="Thumbnail" valuePropName="fileList" getValueFromEvent={normFile} name="thumbnail">
+            <Form.Item
+              label={
+                <Typography className="span" fontSize="sm">
+                  Thumbnail
+                </Typography>
+              }
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+              name="thumbnail"
+            >
               <Upload
                 listType="picture"
                 maxCount={1}

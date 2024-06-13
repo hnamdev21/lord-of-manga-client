@@ -28,20 +28,54 @@ const UploadChapter = () => {
       <div className="grid grid-cols-12 gap-[2rem]">
         <Form layout="vertical" form={form} onFinish={onFinish} className="col-start-5 col-span-4">
           <div className="flex gap-[2rem]">
-            <Form.Item label="Title" name="title" rules={[{ required: true, message: "Please enter chapter title" }]} className="flex-1">
+            <Form.Item
+              label={
+                <Typography className="span" fontSize="sm">
+                  Title
+                </Typography>
+              }
+              name="title"
+              rules={[{ required: true, message: "Please enter chapter title" }]}
+              className="flex-1"
+            >
               <Input placeholder="Enter comic title" />
             </Form.Item>
 
-            <Form.Item label="Comic" name={"comic"} rules={[{ required: true, message: "Please select a comic" }]} className="flex-1">
+            <Form.Item
+              label={
+                <Typography className="span" fontSize="sm">
+                  Comic
+                </Typography>
+              }
+              name={"comic"}
+              rules={[{ required: true, message: "Please select a comic" }]}
+              className="flex-1"
+            >
               <Select placeholder="-- Select a comic --" options={[]} />
             </Form.Item>
           </div>
 
           <div className="flex gap-[2rem]">
-            <Form.Item label="Chapter type" name={"type"} className="flex-1">
+            <Form.Item
+              label={
+                <Typography className="span" fontSize="sm">
+                  Chapter type
+                </Typography>
+              }
+              name={"type"}
+              className="flex-1"
+            >
               <Select allowClear id="type" defaultActiveFirstOption options={[]} />
             </Form.Item>
-            <Form.Item label="Price" name={"price"} className="flex-1">
+            <Form.Item
+              label={
+                <Typography className="span" fontSize="sm">
+                  Price
+                </Typography>
+              }
+              name={"price"}
+              className="flex-1"
+            >
               <InputNumber addonAfter="VND" min={0} disabled={false} />
             </Form.Item>
           </div>

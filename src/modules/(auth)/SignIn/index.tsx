@@ -1,29 +1,13 @@
 "use client";
 
-import { Button, Checkbox, Form as FormAnt, type FormProps, Input } from "antd";
+import { Button, Checkbox, Form, type FormProps, Input } from "antd";
 import React from "react";
 
 import Typography from "@/components/Typography";
 import { FormSignIn } from "@/types/form";
 
-import styles from "./styles.module.scss";
-
-type FieldType = FormSignIn;
-
 const SignInModule = () => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
-  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-    try {
-      setIsLoading(true);
-    } catch (error) {
-      //
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (_errorInfo) => {
+  const onFinish: FormProps<FormSignIn>["onFinish"] = async (values) => {
     //
   };
 
@@ -34,9 +18,15 @@ const SignInModule = () => {
           Welcome to Lord of Manga
         </Typography>
       </div>
-      <div className={styles.container}>
-        <FormAnt name="basic" layout={"vertical"} initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
-          <FormAnt.Item<FieldType>
+
+      <div
+        className="grid grid-cols-12 gap-[2rem] rounded-2xl py-[4rem]"
+        style={{
+          backgroundColor: "var(--color-dark-gray)",
+        }}
+      >
+        <Form layout={"vertical"} initialValues={{ remember: true }} onFinish={onFinish} autoComplete="off" className="col-start-4 col-span-6">
+          <Form.Item<FormSignIn>
             label={
               <Typography className="span" fontSize="sm">
                 Username
@@ -46,9 +36,9 @@ const SignInModule = () => {
             rules={[{ required: true, type: "string", message: "Please enter your username" }]}
           >
             <Input placeholder={"example"} />
-          </FormAnt.Item>
+          </Form.Item>
 
-          <FormAnt.Item<FieldType>
+          <Form.Item<FormSignIn>
             label={
               <Typography className="span" fontSize="sm">
                 Password
@@ -58,9 +48,9 @@ const SignInModule = () => {
             rules={[{ required: true, message: "Please enter your password" }]}
           >
             <Input.Password placeholder={"********"} />
-          </FormAnt.Item>
+          </Form.Item>
 
-          <FormAnt.Item<FieldType> name="remember" valuePropName="checked">
+          <Form.Item<FormSignIn> name="remember" valuePropName="checked">
             <div className={"w-full flex items-center justify-between"}>
               <Checkbox
                 style={{
@@ -70,9 +60,9 @@ const SignInModule = () => {
                 Remember me
               </Checkbox>
             </div>
-          </FormAnt.Item>
+          </Form.Item>
 
-          <FormAnt.Item>
+          <Form.Item>
             <Button
               type="primary"
               style={{
@@ -83,8 +73,8 @@ const SignInModule = () => {
             >
               Sign In
             </Button>
-          </FormAnt.Item>
-        </FormAnt>
+          </Form.Item>
+        </Form>
       </div>
     </React.Fragment>
   );
