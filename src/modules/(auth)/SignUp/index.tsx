@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Checkbox, Form as FormAnt, type FormProps, Input } from "antd";
+import { Button, Checkbox, Form, type FormProps, Input } from "antd";
 import React from "react";
 
 import Typography from "@/components/Typography";
@@ -23,10 +23,6 @@ const SignUpModule = () => {
     }
   };
 
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (_errorInfo) => {
-    //
-  };
-
   return (
     <React.Fragment>
       <div>
@@ -36,8 +32,8 @@ const SignUpModule = () => {
       </div>
 
       <div className={styles.container}>
-        <FormAnt name="basic" layout={"vertical"} initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
-          <FormAnt.Item<FieldType>
+        <Form name="basic" layout={"vertical"} initialValues={{ remember: true }} onFinish={onFinish} autoComplete="off">
+          <Form.Item<FieldType>
             label={
               <Typography className="span" fontSize="sm">
                 Full name
@@ -46,10 +42,10 @@ const SignUpModule = () => {
             name="fullName"
             rules={[{ required: true, type: "string", message: "Please enter your fullName" }]}
           >
-            <Input size={"large"} placeholder={"Example Ham"} />
-          </FormAnt.Item>
+            <Input placeholder={"Example Ham"} />
+          </Form.Item>
 
-          <FormAnt.Item<FieldType>
+          <Form.Item<FieldType>
             label={
               <Typography className="span" fontSize="sm">
                 Username
@@ -58,10 +54,10 @@ const SignUpModule = () => {
             name="username"
             rules={[{ required: true, type: "string", message: "Please enter your username" }]}
           >
-            <Input size={"large"} placeholder={"example"} />
-          </FormAnt.Item>
+            <Input placeholder={"example"} />
+          </Form.Item>
 
-          <FormAnt.Item<FieldType>
+          <Form.Item<FieldType>
             label={
               <Typography className="span" fontSize="sm">
                 Password
@@ -70,10 +66,10 @@ const SignUpModule = () => {
             name="password"
             rules={[{ required: true, message: "Please enter your password" }]}
           >
-            <Input.Password size={"large"} placeholder={"********"} />
-          </FormAnt.Item>
+            <Input.Password placeholder={"********"} />
+          </Form.Item>
 
-          <FormAnt.Item<FieldType>
+          <Form.Item<FieldType>
             label={
               <Typography className="span" fontSize="sm">
                 Email
@@ -82,10 +78,10 @@ const SignUpModule = () => {
             name="password"
             rules={[{ type: "email", message: "Please enter your email" }]}
           >
-            <Input size={"large"} placeholder={"example@gmail.com"} />
-          </FormAnt.Item>
+            <Input placeholder={"example@gmail.com"} />
+          </Form.Item>
 
-          <FormAnt.Item<FieldType> name="receiveNews" valuePropName="checked">
+          <Form.Item<FieldType> name="receiveNews" valuePropName="checked">
             <div className={"w-full flex items-center justify-between"}>
               <Checkbox
                 style={{
@@ -95,22 +91,21 @@ const SignUpModule = () => {
                 Receive news
               </Checkbox>
             </div>
-          </FormAnt.Item>
+          </Form.Item>
 
-          <FormAnt.Item>
+          <Form.Item>
             <Button
               type="primary"
               style={{
                 backgroundColor: "var(--color-primary)",
               }}
               className={"w-full"}
-              size={"large"}
               htmlType="submit"
             >
               Sign Up
             </Button>
-          </FormAnt.Item>
-        </FormAnt>
+          </Form.Item>
+        </Form>
       </div>
     </React.Fragment>
   );

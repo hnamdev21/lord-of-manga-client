@@ -20,12 +20,10 @@ const Header = () => {
         </div>
 
         <div className="col-start-11 col-span-2 flex justify-end gap-[2rem]">
-          <Button as="a" href="/sign-in" variant="plain">
+          <Button href="/sign-in" variant="outline">
             Sign In
           </Button>
-          <Button as="a" href="/sign-up">
-            Sign Up
-          </Button>
+          <Button href="/sign-up">Sign Up</Button>
         </div>
       </Container>
     </header>

@@ -11,13 +11,13 @@ type ButtonColor = "primary" | "secondary" | "danger" | "success" | "warning" | 
 type ButtonVariant = "solid" | "outline" | "plain";
 
 type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
-  as: "button";
+  element: "button";
   type: "button" | "submit" | "reset";
   children: React.ReactNode;
 };
 
 type LinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-  as?: "a";
+  element?: "a";
   href: string;
   children: React.ReactNode;
 };
@@ -41,7 +41,7 @@ const Button = ({ size = "base", color = "primary", variant = "solid", icon = fa
     className
   );
 
-  if (props.as === "button") {
+  if (props.element === "button") {
     return (
       <button {...props} className={classes}>
         {children}
@@ -50,7 +50,7 @@ const Button = ({ size = "base", color = "primary", variant = "solid", icon = fa
   }
 
   return (
-    <Link {...props} className={classes}>
+    <Link {...props} className={classes} href={props.href}>
       {children}
     </Link>
   );

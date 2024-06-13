@@ -3,6 +3,7 @@ import "@Styles/app.scss";
 import type { Metadata } from "next";
 
 import { roboto } from "@/configs/font";
+import ThemeProvider from "@/layouts/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "Lord of Manga",
@@ -16,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={roboto.className}>{children}</body>
+      <body className={roboto.className}>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

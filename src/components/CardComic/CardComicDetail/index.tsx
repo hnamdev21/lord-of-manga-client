@@ -23,7 +23,8 @@ const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
           <div className="flex-1 flex flex-col justify-between">
             <div className="flex flex-col">
               <Typography textColor="black" fontSize="lg" fontWeight="bold" tag="h5" className="line-clamp-1">
-                Naruto
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis similique saepe error cumque reprehenderit. Ipsum fugiat est sequi iure minus
+                accusantium quisquam voluptates dolorum distinctio. Incidunt minus perferendis veniam sequi.
               </Typography>
 
               <Typography textColor="black" tag="h6" className="line-clamp-1">
@@ -61,7 +62,7 @@ const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
 
               <Button
                 className="flex-1 flex items-center justify-center aspect-square"
-                as="button"
+                element="button"
                 type="button"
                 variant="outline"
                 style={{

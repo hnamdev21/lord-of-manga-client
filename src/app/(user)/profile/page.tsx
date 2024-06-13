@@ -1,7 +1,9 @@
 import React from "react";
 
+import ProfileModule from "@/modules/(user)/Profile";
+
 const ProfilePage = () => {
-  return <div>ProfilePage</div>;
+  return <ProfileModule />;
 };
 
 export default ProfilePage;

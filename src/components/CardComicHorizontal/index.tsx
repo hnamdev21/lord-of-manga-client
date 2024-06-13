@@ -21,7 +21,8 @@ const CardComicHorizontal = ({ ...props }: CardComicHorizontalProps) => {
       <div className="flex-1 py-[1rem] px-[2rem] flex flex-col justify-between">
         <div className="flex-1">
           <Typography tag="h6" fontSize="lg" className="mb-[1rem] line-clamp-1">
-            Naruto
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum, optio reprehenderit amet esse aliquid vel quas id modi aperiam similique quam
+            autem neque, consequatur molestias commodi corporis, sit eum molestiae.
           </Typography>
 
           <Typography tag="p" className="mb-[1rem] line-clamp-3">

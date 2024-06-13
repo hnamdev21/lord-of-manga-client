@@ -45,7 +45,7 @@ const SignInModule = () => {
             name="username"
             rules={[{ required: true, type: "string", message: "Please enter your username" }]}
           >
-            <Input size={"large"} placeholder={"example"} />
+            <Input placeholder={"example"} />
           </FormAnt.Item>
 
           <FormAnt.Item<FieldType>
@@ -57,7 +57,7 @@ const SignInModule = () => {
             name="password"
             rules={[{ required: true, message: "Please enter your password" }]}
           >
-            <Input.Password size={"large"} placeholder={"********"} />
+            <Input.Password placeholder={"********"} />
           </FormAnt.Item>
 
           <FormAnt.Item<FieldType> name="remember" valuePropName="checked">
@@ -79,7 +79,6 @@ const SignInModule = () => {
                 backgroundColor: "var(--color-primary)",
               }}
               className={"w-full"}
-              size={"large"}
               htmlType="submit"
             >
               Sign In
