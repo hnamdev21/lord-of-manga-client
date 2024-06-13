@@ -1,7 +1,9 @@
 import React from "react";
 
+import SavedComicsModule from "@/modules/(user)/SavedComics";
+
 const SavedComicsPage = () => {
-  return <div>SavedComicsPage</div>;
+  return <SavedComicsModule />;
 };
 
 export default SavedComicsPage;

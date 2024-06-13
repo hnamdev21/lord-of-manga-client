@@ -15,13 +15,9 @@ type PaginationProps = {
   pageSize?: number;
 };
 
-const Pagination = ({ onPageChange, totalPages, siblingCount, currentPage, pageSize }: PaginationProps) => {
-  const paginationRange = usePagination({
-    currentPage,
-    totalPages,
-    siblingCount,
-    pageSize,
-  });
+const Pagination = ({ ...props }: PaginationProps) => {
+  const { onPageChange, currentPage } = props;
+  const paginationRange = usePagination(props);
 
   if (!paginationRange || currentPage === 0 || paginationRange.length < 2) {
     return null;
@@ -55,6 +51,7 @@ const Pagination = ({ onPageChange, totalPages, siblingCount, currentPage, pageS
 
         return (
           <li
+            key={pageNumber}
             className={twMerge(
               "rounded-md aspect-square w-[4rem] border-[.1rem] border-solid border-gray-600 flex items-center justify-center cursor-pointer",
               pageNumber === currentPage && "border-gray-100"

@@ -1,3 +1,5 @@
+"use client";
+
 import { Popover } from "antd";
 import React from "react";
 import { FaBookmark } from "react-icons/fa";

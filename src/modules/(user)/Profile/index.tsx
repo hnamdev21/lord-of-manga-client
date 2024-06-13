@@ -38,13 +38,7 @@ const ProfileModule = () => {
           </Form.Item>
 
           <div className="w-1/3 flex items-end pb-[2.4rem]">
-            <Button
-              type="primary"
-              style={{
-                backgroundColor: "var(--color-info)",
-              }}
-              className="block flex-1"
-            >
+            <Button type="dashed" className="block flex-1">
               Verify
             </Button>
           </div>
