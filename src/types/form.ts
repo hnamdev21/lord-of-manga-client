@@ -17,6 +17,20 @@ export type FormChangePassword = {
   newPassword: string;
 };
 
+export type FormForgotPassword = {
+  email: string;
+};
+
+export type FormResetPassword = {
+  password: string;
+  confirmPassword: string;
+  code: string;
+};
+
+export type FormTwoFactorAuthentication = {
+  code: string;
+};
+
 export type FormUpdateProfile = {
   fullName: string;
   twoFactorAuthentication: boolean;
