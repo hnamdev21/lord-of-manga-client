@@ -1,15 +1,38 @@
 "use client";
 
 import { Button, Divider, Form, FormProps, Input, Select, Switch } from "antd";
+import { FieldNamesType } from "antd/es/cascader";
+import cn from "classnames";
+import Image from "next/image";
 import React from "react";
+import { FaCamera } from "react-icons/fa";
 
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { FormUpdateProfile } from "@/types/form";
+import { getBase64 } from "@/utils/imageUtils";
+
+import styles from "./styles.module.scss";
 
 const ProfileModule = () => {
+  const user = {
+    avatar: "",
+  };
+  const [base64Image, setBase64Image] = React.useState<string | null>(null);
+
+  const avatarSrc = base64Image || user.avatar || "/images/avatar.jpg";
+
   const onFinish: FormProps<FormUpdateProfile>["onFinish"] = (_values: FormUpdateProfile) => {
     //
+  };
+
+  const onFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] as FieldNamesType;
+
+    if (file) {
+      const base64 = await getBase64(file);
+      setBase64Image(base64);
+    }
   };
 
   return (
@@ -21,7 +44,17 @@ const ProfileModule = () => {
       </div>
 
       <Form layout="vertical" onFinish={onFinish} className="col-start-5 col-span-4">
-        <div className="flex gap-[2rem]">
+        <div className={cn("w-full flex justify-center", styles.container)}>
+          <label htmlFor="avatar" className={`${styles.avatarContainer}`}>
+            <Image src={avatarSrc} alt={`Avatar of ${"Example Ham"}`} width={400} height={400} className={`${styles.avatar}`} />
+            <div className={`${styles.overlay}`}>
+              <FaCamera />
+            </div>
+          </label>
+          <input type="file" name="avatar" id="avatar" accept="image/*" style={{ display: "none" }} onChange={onFileInputChange} />
+        </div>
+
+        <div className="flex gap-[2rem] mt-[4rem]">
           <Form.Item<FormUpdateProfile>
             label={
               <Typography className="span" fontSize="sm">
@@ -42,7 +75,7 @@ const ProfileModule = () => {
               </Typography>
             }
             name="gender"
-            rules={[{ required: true, message: "Please select full name" }]}
+            rules={[{ required: true, message: "Pease select gender" }]}
             className="w-1/3"
           >
             <Select id="gender" placeholder="-- Select gender --" options={[]} />
