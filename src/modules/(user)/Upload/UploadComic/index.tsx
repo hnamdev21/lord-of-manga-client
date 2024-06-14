@@ -5,7 +5,9 @@ import { RcFile } from "antd/es/upload";
 import React from "react";
 
 import Typography from "@/components/Typography";
+import { COMIC_TYPE_OPTIONS } from "@/constants/options";
 import { FormCreateComic } from "@/types/form";
+import { numberFormatter } from "@/utils/formatter";
 
 const checkFile = (resolve: any, file: RcFile) => {
   const isLt5M = file.size / 1024 / 1024 <= 2;
@@ -20,7 +22,7 @@ const UploadComic = () => {
   const inputRef = React.useRef<InputRef>(null);
 
   const [searchValue, setSearchValue] = React.useState<string>("");
-  const [_disablePriceInput, _setDisablePriceInput] = React.useState<boolean>(true);
+  const [disablePriceInput, setDisablePriceInput] = React.useState<boolean>(true);
 
   const onFinish: FormProps<FormCreateComic>["onFinish"] = (_values: FormCreateComic) => {
     //
@@ -40,7 +42,7 @@ const UploadComic = () => {
 
   return (
     <div className="grid grid-cols-12 gap-[2rem]">
-      <Form layout="vertical" onFinish={onFinish} className="col-start-5 col-span-4">
+      <Form layout="vertical" onFinish={onFinish} initialValues={{ type: COMIC_TYPE_OPTIONS[0].value }} className="col-start-5 col-span-4">
         <div className="flex gap-[2rem]">
           <Form.Item<FormCreateComic>
             label={
@@ -130,7 +132,18 @@ const UploadComic = () => {
             name={"type"}
             className="flex-1"
           >
-            <Select allowClear id="type" defaultActiveFirstOption options={[]} />
+            <Select
+              allowClear
+              id="type"
+              options={COMIC_TYPE_OPTIONS}
+              onChange={(value) => {
+                if (value === "PAID_ONCE") {
+                  setDisablePriceInput(false);
+                } else {
+                  setDisablePriceInput(true);
+                }
+              }}
+            />
           </Form.Item>
           <Form.Item<FormCreateComic>
             label={
@@ -141,7 +154,7 @@ const UploadComic = () => {
             name={"price"}
             className="flex-1"
           >
-            <InputNumber addonAfter="VND" min={0} disabled={false} />
+            <InputNumber disabled={disablePriceInput} addonAfter="VND" min={1_000} formatter={(value) => numberFormatter(value || 0)} />
           </Form.Item>
         </div>
         <div>

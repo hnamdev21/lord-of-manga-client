@@ -9,6 +9,7 @@ import { FaCamera } from "react-icons/fa";
 
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
+import { GENDER_OPTIONS } from "@/constants/options";
 import { FormUpdateProfile } from "@/types/form";
 import { getBase64 } from "@/utils/imageUtils";
 
@@ -78,7 +79,7 @@ const ProfileModule = () => {
             rules={[{ required: true, message: "Pease select gender" }]}
             className="w-1/3"
           >
-            <Select id="gender" placeholder="-- Select gender --" options={[]} />
+            <Select id="gender" placeholder="-- Select gender --" options={GENDER_OPTIONS} />
           </Form.Item>
         </div>
 

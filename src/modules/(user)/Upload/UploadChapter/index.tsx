@@ -6,14 +6,17 @@ import React from "react";
 
 import MultipleFileInput from "@/components/MultipleFileInput";
 import Typography from "@/components/Typography";
+import { CHAPTER_TYPE_OPTIONS } from "@/constants/options";
 import { FormCreateChapter } from "@/types/form";
+import { numberFormatter } from "@/utils/formatter";
 import { getBase64 } from "@/utils/imageUtils";
 
 import styles from "./styles.module.scss";
 
 const UploadChapter = () => {
   const [form] = Form.useForm();
-  const [_disablePriceInput, _setDisablePriceInput] = React.useState<boolean>(true);
+
+  const [disablePriceInput, setDisablePriceInput] = React.useState<boolean>(true);
   const [images, setImages] = React.useState<Array<string>>([]);
 
   const onFinish: FormProps<FormCreateChapter>["onFinish"] = async (_values: FormCreateChapter) => {
@@ -23,7 +26,13 @@ const UploadChapter = () => {
   return (
     <React.Fragment>
       <div className="grid grid-cols-12 gap-[2rem]">
-        <Form layout="vertical" form={form} onFinish={onFinish} className="col-start-5 col-span-4">
+        <Form
+          layout="vertical"
+          form={form}
+          initialValues={{ type: CHAPTER_TYPE_OPTIONS[0].value, showComment: true }}
+          onFinish={onFinish}
+          className="col-start-5 col-span-4"
+        >
           <div className="flex gap-[2rem]">
             <Form.Item<FormCreateChapter>
               label={
@@ -62,7 +71,18 @@ const UploadChapter = () => {
               name={"type"}
               className="flex-1"
             >
-              <Select allowClear id="type" defaultActiveFirstOption options={[]} />
+              <Select
+                allowClear
+                id="type"
+                options={CHAPTER_TYPE_OPTIONS}
+                onChange={(value) => {
+                  if (value === "PAID") {
+                    setDisablePriceInput(false);
+                  } else {
+                    setDisablePriceInput(true);
+                  }
+                }}
+              />
             </Form.Item>
             <Form.Item<FormCreateChapter>
               label={
@@ -73,11 +93,11 @@ const UploadChapter = () => {
               name={"price"}
               className="flex-1"
             >
-              <InputNumber addonAfter="VND" min={0} disabled={false} />
+              <InputNumber addonAfter="VND" min={1_000} formatter={(value) => numberFormatter(value || 0)} disabled={disablePriceInput} />
             </Form.Item>
           </div>
 
-          <Form.Item<FormCreateChapter> name={"showComment"} valuePropName="checked" className="flex justify-center">
+          <Form.Item<FormCreateChapter> name={"showComment"} className="flex justify-center">
             <span className="flex items-center gap-[.5rem]">
               <Typography tag="span">Show comment</Typography>
               <Switch />
