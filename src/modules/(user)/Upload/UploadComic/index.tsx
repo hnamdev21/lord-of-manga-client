@@ -1,10 +1,11 @@
 "use client";
 
-import { Button, Divider, Form, Input, InputNumber, InputRef, Select, Space, Upload } from "antd";
+import { Button, Divider, Form, FormProps, Input, InputNumber, InputRef, Select, Space, Upload } from "antd";
 import { RcFile } from "antd/es/upload";
 import React from "react";
 
 import Typography from "@/components/Typography";
+import { FormCreateComic } from "@/types/form";
 
 const checkFile = (resolve: any, file: RcFile) => {
   const isLt5M = file.size / 1024 / 1024 <= 2;
@@ -18,15 +19,14 @@ const checkFile = (resolve: any, file: RcFile) => {
 const UploadComic = () => {
   const inputRef = React.useRef<InputRef>(null);
 
-  const [form] = Form.useForm();
   const [searchValue, setSearchValue] = React.useState<string>("");
-  const [disablePriceInput, setDisablePriceInput] = React.useState<boolean>(true);
+  const [_disablePriceInput, _setDisablePriceInput] = React.useState<boolean>(true);
 
-  const onFinish = (values: any) => {
+  const onFinish: FormProps<FormCreateComic>["onFinish"] = (_values: FormCreateComic) => {
     //
   };
 
-  const addItem = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+  const addItem = (_e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     //
   };
 
@@ -40,10 +40,10 @@ const UploadComic = () => {
 
   return (
     <div className="grid grid-cols-12 gap-[2rem]">
-      <Form layout="vertical" form={form} onFinish={onFinish} className="col-start-5 col-span-4">
+      <Form layout="vertical" onFinish={onFinish} className="col-start-5 col-span-4">
         <div className="flex gap-[2rem]">
-          <Form.Item
-            llabel={
+          <Form.Item<FormCreateComic>
+            label={
               <Typography className="span" fontSize="sm">
                 Title
               </Typography>
@@ -54,7 +54,7 @@ const UploadComic = () => {
           >
             <Input placeholder="Enter comic title" />
           </Form.Item>
-          <Form.Item
+          <Form.Item<FormCreateComic>
             label={
               <Typography className="span" fontSize="sm">
                 Author name
@@ -69,7 +69,7 @@ const UploadComic = () => {
         </div>
 
         <div className="flex gap-[2rem]">
-          <Form.Item
+          <Form.Item<FormCreateComic>
             label={
               <Typography className="span" fontSize="sm">
                 Categories
@@ -79,9 +79,9 @@ const UploadComic = () => {
             rules={[{ required: true, message: "Please select categories" }]}
             className="flex-1"
           >
-            <Select mode="multiple" allowClear id="categories" style={{ width: "100%" }} placeholder="-- Select categories --" options={[]} />
+            <Select mode="multiple" allowClear id="categories" placeholder="-- Select categories --" options={[]} />
           </Form.Item>
-          <Form.Item
+          <Form.Item<FormCreateComic>
             label={
               <Typography className="span" fontSize="sm">
                 Tags
@@ -91,7 +91,6 @@ const UploadComic = () => {
             className="flex-1"
           >
             <Select
-              style={{ width: "100%" }}
               placeholder="-- Select tags --"
               allowClear
               mode="multiple"
@@ -122,7 +121,7 @@ const UploadComic = () => {
         </div>
 
         <div className="flex gap-[2rem]">
-          <Form.Item
+          <Form.Item<FormCreateComic>
             label={
               <Typography className="span" fontSize="sm">
                 Comic type
@@ -131,9 +130,9 @@ const UploadComic = () => {
             name={"type"}
             className="flex-1"
           >
-            <Select allowClear id="type" style={{ width: "100%" }} defaultActiveFirstOption options={[]} />
+            <Select allowClear id="type" defaultActiveFirstOption options={[]} />
           </Form.Item>
-          <Form.Item
+          <Form.Item<FormCreateComic>
             label={
               <Typography className="span" fontSize="sm">
                 Price
@@ -142,11 +141,11 @@ const UploadComic = () => {
             name={"price"}
             className="flex-1"
           >
-            <InputNumber addonAfter="VND" min={0} style={{ width: "100%" }} disabled={false} />
+            <InputNumber addonAfter="VND" min={0} disabled={false} />
           </Form.Item>
         </div>
         <div>
-          <Form.Item
+          <Form.Item<FormCreateComic>
             label={
               <Typography className="span" fontSize="sm">
                 Description
@@ -159,7 +158,7 @@ const UploadComic = () => {
           </Form.Item>
 
           <div className={"grid grid-cols-2 gap-[2rem]"}>
-            <Form.Item
+            <Form.Item<FormCreateComic>
               label={
                 <Typography className="span" fontSize="sm">
                   Cover
@@ -182,7 +181,7 @@ const UploadComic = () => {
                 <Button onClick={(e) => e.preventDefault()}>Upload cover</Button>
               </Upload>
             </Form.Item>
-            <Form.Item
+            <Form.Item<FormCreateComic>
               label={
                 <Typography className="span" fontSize="sm">
                   Thumbnail
@@ -207,7 +206,7 @@ const UploadComic = () => {
             </Form.Item>
           </div>
 
-          <Form.Item>
+          <Form.Item<FormCreateComic>>
             <Button type="primary" htmlType="submit" className="block w-full">
               Create
             </Button>

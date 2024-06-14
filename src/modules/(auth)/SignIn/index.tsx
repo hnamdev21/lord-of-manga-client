@@ -7,7 +7,7 @@ import Typography from "@/components/Typography";
 import { FormSignIn } from "@/types/form";
 
 const SignInModule = () => {
-  const onFinish: FormProps<FormSignIn>["onFinish"] = async (values) => {
+  const onFinish: FormProps<FormSignIn>["onFinish"] = async (_values: FormSignIn) => {
     //
   };
 
@@ -25,7 +25,7 @@ const SignInModule = () => {
           backgroundColor: "var(--color-dark-gray)",
         }}
       >
-        <Form layout={"vertical"} initialValues={{ remember: true }} onFinish={onFinish} autoComplete="off" className="col-start-4 col-span-6">
+        <Form layout={"vertical"} onFinish={onFinish} autoComplete="off" className="col-start-4 col-span-6">
           <Form.Item<FormSignIn>
             label={
               <Typography className="span" fontSize="sm">

@@ -1,15 +1,14 @@
 "use client";
 
-import { Button, Divider, Form, Input, Select, Switch } from "antd";
+import { Button, Divider, Form, FormProps, Input, Select, Switch } from "antd";
 import React from "react";
 
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
+import { FormUpdateProfile } from "@/types/form";
 
 const ProfileModule = () => {
-  const [form] = Form.useForm();
-
-  const onFinish = (values: any) => {
+  const onFinish: FormProps<FormUpdateProfile>["onFinish"] = (_values: FormUpdateProfile) => {
     //
   };
 
@@ -21,9 +20,9 @@ const ProfileModule = () => {
         </Typography>
       </div>
 
-      <Form layout="vertical" form={form} onFinish={onFinish} className="col-start-5 col-span-4">
+      <Form layout="vertical" onFinish={onFinish} className="col-start-5 col-span-4">
         <div className="flex gap-[2rem]">
-          <Form.Item
+          <Form.Item<FormUpdateProfile>
             label={
               <Typography className="span" fontSize="sm">
                 Full name
@@ -36,7 +35,7 @@ const ProfileModule = () => {
             <Input placeholder="Example Ham" />
           </Form.Item>
 
-          <Form.Item
+          <Form.Item<FormUpdateProfile>
             label={
               <Typography className="span" fontSize="sm">
                 Gender
@@ -51,7 +50,7 @@ const ProfileModule = () => {
         </div>
 
         <div className="flex gap-[2rem]">
-          <Form.Item
+          <Form.Item<FormUpdateProfile>
             label={
               <Typography className="span" fontSize="sm">
                 Email
@@ -73,20 +72,20 @@ const ProfileModule = () => {
 
         <Divider />
 
-        <Form.Item name={"receiveNews"}>
+        <Form.Item<FormUpdateProfile> name={"receiveNews"}>
           <span className="flex items-center justify-between gap-[.5rem]">
             <Typography tag="span">Receive news</Typography>
             <Switch />
           </span>
         </Form.Item>
-        <Form.Item name={"two2fa"}>
+        <Form.Item<FormUpdateProfile> name={"two2fa"}>
           <span className="flex items-center justify-between gap-[.5rem]">
             <Typography tag="span">Two-factor authentication</Typography>
             <Switch />
           </span>
         </Form.Item>
 
-        <Form.Item>
+        <Form.Item<FormUpdateProfile>>
           <Button type="primary" htmlType="submit" className="block w-full">
             Save
           </Button>

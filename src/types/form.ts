@@ -12,9 +12,17 @@ export type FormSignUp = {
   receiveNews: boolean;
 };
 
+export type FormChangePassword = {
+  oldPassword: string;
+  newPassword: string;
+};
+
 export type FormUpdateProfile = {
   fullName: string;
   twoFactorAuthentication: boolean;
+  gender: string;
+  receiveNews: boolean;
+  two2fa: boolean;
 };
 
 export type FormCreateComment = {
@@ -50,6 +58,8 @@ export type FormCreateComic = {
   author: string;
   tags: string[];
   categories: string[];
+  cover: File;
+  thumbnail: File;
   type: "FREE" | "PAID_PER_CHAPTER" | "PAID_ONCE";
   price: number;
   showComment: boolean;
@@ -62,6 +72,7 @@ export type FormUpdateComic = FormCreateComic & {
 export type FormCreateChapter = {
   comicId: string;
   title: string;
+  showComment: boolean;
   type: "FREE" | "PAID";
   price: number;
 };

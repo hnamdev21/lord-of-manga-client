@@ -1,15 +1,16 @@
 "use client";
 
-import { Button, Form, Input } from "antd";
+import { Button, Form, FormProps, Input } from "antd";
 import React from "react";
 
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
+import { FormChangePassword } from "@/types/form";
 
 const ChangePasswordModule = () => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
+  const onFinish: FormProps<FormChangePassword>["onFinish"] = async (_values: FormChangePassword) => {
     //
   };
 
@@ -22,7 +23,7 @@ const ChangePasswordModule = () => {
       </div>
 
       <Form layout="vertical" form={form} onFinish={onFinish} className="col-start-6 col-span-2">
-        <Form.Item
+        <Form.Item<FormChangePassword>
           label={
             <Typography className="span" fontSize="sm">
               Old password
@@ -34,7 +35,7 @@ const ChangePasswordModule = () => {
           <Input.Password placeholder="********" />
         </Form.Item>
 
-        <Form.Item
+        <Form.Item<FormChangePassword>
           label={
             <Typography className="span" fontSize="sm">
               New password
@@ -46,23 +47,7 @@ const ChangePasswordModule = () => {
           <Input.Password placeholder="********" />
         </Form.Item>
 
-        <Form.Item
-          label={
-            <Typography className="span" fontSize="sm">
-              Code
-            </Typography>
-          }
-          name="code"
-        >
-          <div className="flex gap-[2rem]">
-            <Input className="w-2/3" />
-            <Button type="dashed" htmlType="submit" className="w-1/3">
-              Send code
-            </Button>
-          </div>
-        </Form.Item>
-
-        <Form.Item>
+        <Form.Item<FormChangePassword>>
           <Button type="primary" htmlType="submit" className="block w-full">
             Save
           </Button>

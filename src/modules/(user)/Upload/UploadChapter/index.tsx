@@ -1,25 +1,22 @@
 "use client";
 
-import { Button, Form, Input, InputNumber, Select, Switch, Upload } from "antd";
+import { Button, Form, FormProps, Input, InputNumber, Select, Switch, Upload } from "antd";
 import { FieldNamesType } from "antd/es/cascader";
 import React from "react";
 
 import MultipleFileInput from "@/components/MultipleFileInput";
 import Typography from "@/components/Typography";
+import { FormCreateChapter } from "@/types/form";
 import { getBase64 } from "@/utils/imageUtils";
 
 import styles from "./styles.module.scss";
 
 const UploadChapter = () => {
   const [form] = Form.useForm();
-  const [disablePriceInput, setDisablePriceInput] = React.useState<boolean>(true);
+  const [_disablePriceInput, _setDisablePriceInput] = React.useState<boolean>(true);
   const [images, setImages] = React.useState<Array<string>>([]);
 
-  const fetchCreatedComics = async () => {
-    //
-  };
-
-  const onFinish = (values: any) => {
+  const onFinish: FormProps<FormCreateChapter>["onFinish"] = async (_values: FormCreateChapter) => {
     //
   };
 
@@ -28,7 +25,7 @@ const UploadChapter = () => {
       <div className="grid grid-cols-12 gap-[2rem]">
         <Form layout="vertical" form={form} onFinish={onFinish} className="col-start-5 col-span-4">
           <div className="flex gap-[2rem]">
-            <Form.Item
+            <Form.Item<FormCreateChapter>
               label={
                 <Typography className="span" fontSize="sm">
                   Title
@@ -41,13 +38,13 @@ const UploadChapter = () => {
               <Input placeholder="Enter comic title" />
             </Form.Item>
 
-            <Form.Item
+            <Form.Item<FormCreateChapter>
               label={
                 <Typography className="span" fontSize="sm">
                   Comic
                 </Typography>
               }
-              name={"comic"}
+              name={"comicId"}
               rules={[{ required: true, message: "Please select a comic" }]}
               className="flex-1"
             >
@@ -56,7 +53,7 @@ const UploadChapter = () => {
           </div>
 
           <div className="flex gap-[2rem]">
-            <Form.Item
+            <Form.Item<FormCreateChapter>
               label={
                 <Typography className="span" fontSize="sm">
                   Chapter type
@@ -67,7 +64,7 @@ const UploadChapter = () => {
             >
               <Select allowClear id="type" defaultActiveFirstOption options={[]} />
             </Form.Item>
-            <Form.Item
+            <Form.Item<FormCreateChapter>
               label={
                 <Typography className="span" fontSize="sm">
                   Price
@@ -80,14 +77,14 @@ const UploadChapter = () => {
             </Form.Item>
           </div>
 
-          <Form.Item name={"showComment"} valuePropName="checked" className="flex justify-center">
+          <Form.Item<FormCreateChapter> name={"showComment"} valuePropName="checked" className="flex justify-center">
             <span className="flex items-center gap-[.5rem]">
               <Typography tag="span">Show comment</Typography>
               <Switch />
             </span>
           </Form.Item>
 
-          <Form.Item>
+          <Form.Item<FormCreateChapter>>
             <div className="flex justify-center gap-[2rem]">
               <Upload
                 beforeUpload={() => false}
