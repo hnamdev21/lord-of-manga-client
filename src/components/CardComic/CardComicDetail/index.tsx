@@ -56,19 +56,19 @@ const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
             </div>
 
             <div className="flex items-center gap-[1rem]">
-              <Button className="block w-11/12 text-center" href="#">
+              <Button className="block flex-1 text-center" href="#">
                 Read
               </Button>
 
               <Button
-                className="flex-1 flex items-center justify-center aspect-square"
+                className="w-[10%] flex items-center justify-center aspect-square"
                 element="button"
                 type="button"
                 variant="outline"
                 style={{
                   color: "var(--color-black)",
                   borderColor: "var(--color-black)",
-                  padding: "1.5rem",
+                  padding: "1rem",
                 }}
               >
                 <FaBookmark />

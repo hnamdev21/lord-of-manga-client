@@ -1,6 +1,5 @@
 "use client";
 
-import { Divider } from "antd";
 import cn from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,16 +14,14 @@ const Sidebar = () => {
 
   return (
     <div
-      className="fixed top-0 left-0 z-20 p-[1rem] h-screen w-24 hover:w-96 transition-all ease-in-out duration-300 bg-[var(--color-dark)]"
+      className="fixed top-0 left-0 z-20 p-[1rem] h-screen w-[5.2rem] hover:w-96 transition-all ease-in-out duration-300 bg-[var(--color-dark)]"
       style={{
         boxShadow: "0 0 20px rgba(0, 0, 0, 0.9)",
       }}
     >
-      <div className="mt-[1rem] mb-[4rem] w-full h-[4rem] flex justify-center">
+      <div className="w-full h-[4.2rem] pb-[1rem] mb-[4rem] flex justify-center">
         <Logo />
       </div>
-
-      <Divider />
 
       <div className="w-full flex flex-col gap-[1rem]">
         {Object.entries(SidebarPath).map(([key, value]) => {
@@ -35,11 +32,14 @@ const Sidebar = () => {
             <Link
               key={key}
               href={value.href}
-              className={cn("w-full h-[4rem] p-[1rem] rounded-xl hover:brightness-50 transition ease-in-out duration-300 bg-[var(--color-dark-gray)]", {
-                "bg-[var(--color-primary)]": active,
-              })}
+              className={cn(
+                "w-full h-[3.2rem] p-[.9rem] flex-items center rounded-xl hover:brightness-50 transition ease-in-out duration-300 bg-[var(--color-dark-gray)]",
+                {
+                  "bg-[var(--color-primary)]": active,
+                }
+              )}
             >
-              <span className="flex items-center overflow-hidden gap-[2rem] w-full h-[2rem]">
+              <span className="flex items-center overflow-hidden gap-[.6rem] w-full h-[1.4rem]">
                 <value.icon className="flex-none" />{" "}
                 <Typography tag="span" className="flex-none">
                   {value.label}
