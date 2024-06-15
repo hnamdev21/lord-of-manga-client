@@ -2,10 +2,13 @@ import React from "react";
 
 import Footer from "./Footer";
 import Header from "./Header";
+import Sidebar from "./Sidebar";
 
 const LayoutUser = ({ children }: { children: React.ReactNode }) => {
   return (
     <React.Fragment>
+      <Sidebar />
+
       <div className="min-h-screen flex flex-col justify-between">
         <Header />
 
