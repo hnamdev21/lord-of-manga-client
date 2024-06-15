@@ -13,7 +13,7 @@ export const GENDER_OPTIONS = [
   },
 ];
 
-export const FILTER_OPTIONS = [
+export const ORDER_BY_OPTIONS = [
   {
     label: "All",
     value: "all",
@@ -33,6 +33,25 @@ export const FILTER_OPTIONS = [
   {
     label: "Most searched",
     value: "search_count",
+  },
+];
+
+export const FILTER_COMIC_TYPE_OPTIONS = [
+  {
+    label: "All",
+    value: "all",
+  },
+  {
+    label: "Free",
+    value: "FREE",
+  },
+  {
+    label: "Paid once",
+    value: "PAID_ONCE",
+  },
+  {
+    label: "Paid per chapter",
+    value: "PAID_PER_CHAPTER",
   },
 ];
 

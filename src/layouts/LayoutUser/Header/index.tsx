@@ -10,12 +10,7 @@ import styles from "./styles.module.scss";
 const Header = () => {
   return (
     <header className={styles.header}>
-      <div
-        className="absolute top-0 left-0 w-full h-full blur-md bg-[rgba(0, 0, 0, 0.4)]"
-        // style={{
-        //   backgroundColor: "rgba(0, 0, 0, 0.4)",
-        // }}
-      />
+      <div className="absolute top-0 left-0 w-full h-full blur-md bg-[rgba(0, 0, 0, 0.4)]" />
 
       <Container className="relative py-[2.4rem]">
         <div className="col-span-2">

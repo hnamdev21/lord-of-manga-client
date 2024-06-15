@@ -79,7 +79,7 @@ const ProfileModule = () => {
             rules={[{ required: true, message: "Pease select gender" }]}
             className="w-1/3"
           >
-            <Select id="gender" placeholder="-- Select gender --" options={GENDER_OPTIONS} />
+            <Select options={GENDER_OPTIONS} />
           </Form.Item>
         </div>
 
