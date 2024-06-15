@@ -7,18 +7,18 @@ const SidebarPath = {
     icon: FaHome,
   } as const,
   COMICS: {
-    label: "Comics",
-    href: "/comics",
+    label: "Library",
+    href: "/library",
     icon: FaBook,
   } as const,
   SAVED_COMICS: {
-    label: "Saved comics",
+    label: "Saved",
     href: "/saved-comics",
     icon: FaBookmark,
   } as const,
   READING_HISTORY: {
     label: "Reading history",
-    href: "/reading-history",
+    href: "/reading-istory",
     icon: FaCalendarTimes,
   } as const,
 } as const;

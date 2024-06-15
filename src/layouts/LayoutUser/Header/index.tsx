@@ -2,7 +2,7 @@ import React from "react";
 
 import Button from "@/components/Button";
 import Container from "@/components/Container";
-import Typography from "@/components/Typography";
+import Logo from "@/components/Logo";
 
 import SearchBox from "./SearchBox";
 import styles from "./styles.module.scss";
@@ -19,7 +19,7 @@ const Header = () => {
 
       <Container className="relative py-[2.4rem]">
         <div className="col-span-2">
-          <Typography tag="h4">Logo</Typography>
+          <Logo />
         </div>
 
         <div className="col-start-5 col-span-4">

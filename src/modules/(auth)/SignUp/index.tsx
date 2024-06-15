@@ -1,9 +1,12 @@
 "use client";
 
 import { Button, Checkbox, Form, type FormProps, Input } from "antd";
+import Link from "next/link";
 import React from "react";
 
+import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
+import Path from "@/constants/path";
 import { FormSignUp } from "@/types/form";
 
 const SignUpModule = () => {
@@ -17,13 +20,20 @@ const SignUpModule = () => {
         Welcome to Lord of Manga
       </Typography>
 
-      <div
-        className="grid grid-cols-12 gap-[2rem] rounded-2xl py-[4rem]"
-        style={{
-          backgroundColor: "var(--color-dark-gray)",
-        }}
-      >
-        <Form layout={"vertical"} onFinish={onFinish} autoComplete="off" className="col-start-4 col-span-6">
+      <div className="grid grid-cols-10 gap-[.5rem]">
+        <Form
+          layout={"vertical"}
+          onFinish={onFinish}
+          autoComplete="off"
+          className="rounded-2xl col-start-3 col-span-6 p-[2rem]"
+          style={{
+            backgroundColor: "var(--color-dark-gray)",
+          }}
+        >
+          <div className="w-full h-[8rem] mb-[2rem] flex justify-center">
+            <Logo />
+          </div>
+
           <Form.Item<FormSignUp>
             label={
               <Typography className="span" fontSize="sm">
@@ -84,18 +94,23 @@ const SignUpModule = () => {
             </div>
           </Form.Item>
 
-          <Form.Item>
-            <Button
-              type="primary"
-              style={{
-                backgroundColor: "var(--color-primary)",
-              }}
-              className={"w-full"}
-              htmlType="submit"
-            >
-              Sign Up
-            </Button>
-          </Form.Item>
+          <Button
+            type="primary"
+            style={{
+              backgroundColor: "var(--color-primary)",
+            }}
+            className="block w-full mb-[1rem]"
+            htmlType="submit"
+          >
+            Sign Up
+          </Button>
+
+          <Typography fontSize="sm" align="center">
+            Already have an account?{" "}
+            <Link href={Path.AUTH.SIGN_IN} className="underline underline-offset-2">
+              Sign In
+            </Link>
+          </Typography>
         </Form>
       </div>
     </React.Fragment>
