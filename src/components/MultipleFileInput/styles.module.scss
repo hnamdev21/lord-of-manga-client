@@ -1,50 +1,10 @@
-.imgsContainer {
-  width: 100%;
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  gap: rem(20px);
-  margin-bottom: rem(20px);
-  overflow: hidden;
-  @include onlyMobile {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  @include min-tablet {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  @include min-tabletWide {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-  @include pcSmall {
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-  }
-
-  //.imgContainer {
-  //  //display: inline-block;
-  //  //aspect-ratio: 1;
-  //  height: auto;
-  //  //display: flex;
-  //  //align-items: center;
-  //  .img {
-  //    display: block;
-  //    width: 100%;
-  //    height: 100%;
-  //    object-fit: cover;
-  //    transition-duration: 0.5s;
-  //  }
-  //}
-}
-
-.container_img {
-  width: rem(90px) !important;
-  height: rem(90px) !important;
-  @include min-tablet {
+.container {
+  &__img {
     width: rem(100px) !important;
     height: rem(100px) !important;
   }
-}
 
-.container_drag {
-  height: 90vh;
-  overflow-y: scroll;
+  &__drag {
+    overflow-y: scroll;
+  }
 }

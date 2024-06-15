@@ -21,15 +21,7 @@ const SignUpModule = () => {
       </Typography>
 
       <div className="grid grid-cols-10 gap-[.5rem]">
-        <Form
-          layout={"vertical"}
-          onFinish={onFinish}
-          autoComplete="off"
-          className="rounded-2xl col-start-3 col-span-6 p-[2rem]"
-          style={{
-            backgroundColor: "var(--color-dark-gray)",
-          }}
-        >
+        <Form layout={"vertical"} onFinish={onFinish} autoComplete="off" className="rounded-2xl col-start-3 col-span-6 p-[2rem] bg-[var(--color-dark-gray)]">
           <div className="w-full h-[8rem] mb-[2rem] flex justify-center">
             <Logo />
           </div>
@@ -83,7 +75,7 @@ const SignUpModule = () => {
           </Form.Item>
 
           <Form.Item<FormSignUp> name="receiveNews" valuePropName="checked">
-            <div className={"w-full flex items-center justify-between"}>
+            <div className="w-full flex items-center justify-between">
               <Checkbox
                 style={{
                   color: "var(--color-light)",
@@ -94,14 +86,7 @@ const SignUpModule = () => {
             </div>
           </Form.Item>
 
-          <Button
-            type="primary"
-            style={{
-              backgroundColor: "var(--color-primary)",
-            }}
-            className="block w-full mb-[1rem]"
-            htmlType="submit"
-          >
+          <Button type="primary" className="block w-full mb-[1rem] bg-[var(--color-primary)]" htmlType="submit">
             Sign Up
           </Button>
 

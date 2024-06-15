@@ -101,7 +101,7 @@ const UploadComic = () => {
               options={[]}
               dropdownRender={(menu) => (
                 <>
-                  <Space style={{ padding: "0 8px 4px" }}>
+                  <Space>
                     <Input
                       placeholder="Search or add new tag"
                       ref={inputRef}
@@ -114,7 +114,7 @@ const UploadComic = () => {
                       Add
                     </Button>
                   </Space>
-                  <Divider style={{ margin: "8px 0" }} />
+                  <Divider className="mt-[.5rem]" />
                   {menu}
                 </>
               )}
@@ -154,7 +154,7 @@ const UploadComic = () => {
             name={"price"}
             className="flex-1"
           >
-            <InputNumber disabled={disablePriceInput} addonAfter="VND" min={1_000} formatter={(value) => numberFormatter(value || 0)} />
+            <InputNumber disabled={disablePriceInput} addonAfter="VND" min={1_000} formatter={(value) => numberFormatter(value || 0)} className="w-full" />
           </Form.Item>
         </div>
         <div>
@@ -170,7 +170,7 @@ const UploadComic = () => {
             <Input.TextArea rows={4} placeholder="Enter description" />
           </Form.Item>
 
-          <div className={"grid grid-cols-2 gap-[2rem]"}>
+          <div className="grid grid-cols-2 gap-[2rem]">
             <Form.Item<FormCreateComic>
               label={
                 <Typography className="span" fontSize="sm">

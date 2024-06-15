@@ -15,12 +15,7 @@ type CardComicProps = Comic;
 const CardComic = ({ ...props }: CardComicProps) => {
   return (
     <Popover color="var(--color-light)" content={<CardComicDetail {...props} />} placement="left">
-      <div
-        className="w-full h-[36rem] rounded-md overflow-hidden relative"
-        style={{
-          backgroundColor: "var(--color-dark)",
-        }}
-      >
+      <div className="w-full h-[36rem] rounded-md overflow-hidden relative bg-[var(--color-dark)]">
         <Button
           className="absolute top-0 right-0 flex items-center justify-center aspect-square"
           element="button"
@@ -30,9 +25,6 @@ const CardComic = ({ ...props }: CardComicProps) => {
           style={{
             color: "var(--color-black)",
             borderColor: "var(--color-black)",
-          }}
-          onClick={() => {
-            console.log("clicked");
           }}
         >
           <FaBookmark />

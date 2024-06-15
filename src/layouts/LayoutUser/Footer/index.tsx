@@ -65,12 +65,7 @@ const MOCK: Array<FastAccessColProps> = [
 const Footer = () => {
   return (
     <footer className="mt-[4rem]">
-      <Container
-        className="py-[2rem]"
-        style={{
-          backgroundColor: "var(--color-dark)",
-        }}
-      >
+      <Container className="py-[2rem] bg-[var(--color-dark)]">
         {MOCK.map((props, index) => (
           <div key={index} className="col-span-2">
             <FastAccessCol {...props} />

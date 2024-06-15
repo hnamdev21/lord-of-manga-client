@@ -52,7 +52,7 @@ const ProfileModule = () => {
               <FaCamera />
             </div>
           </label>
-          <input type="file" name="avatar" id="avatar" accept="image/*" style={{ display: "none" }} onChange={onFileInputChange} />
+          <input type="file" name="avatar" id="avatar" accept="image/*" className="hidden" onChange={onFileInputChange} />
         </div>
 
         <div className="flex gap-[2rem] mt-[4rem]">

@@ -47,10 +47,10 @@ const MultipleFileInput = ({ images, setImages }: MultipleFileInputProps) => {
   return (
     <div className="mt-[1rem]">
       <GridContextProvider onChange={onChange}>
-        <GridDropZone id="images" boxesPerRow={checkSizeGrid(size.width)} rowHeight={200} className={`${styles.container_drag}`}>
+        <GridDropZone id="images" boxesPerRow={checkSizeGrid(size.width)} rowHeight={200} className={`${styles.container__drag}`}>
           {images.map((image: string, index: number) => {
             return (
-              <GridItem key={v4()} className={`${styles.container_img}`}>
+              <GridItem key={v4()} className={`${styles.container__img}`}>
                 <div className="flex flex-col justify-between items-center w-full">
                   <Image src={image} alt="img" />
                   <div className="flex items-center justify-between mt-5">

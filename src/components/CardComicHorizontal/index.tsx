@@ -10,12 +10,7 @@ type CardComicHorizontalProps = Comic;
 
 const CardComicHorizontal = ({ ...props }: CardComicHorizontalProps) => {
   return (
-    <div
-      className="w-full flex rounded-md overflow-hidden"
-      style={{
-        backgroundColor: "var(--color-dark)",
-      }}
-    >
+    <div className="w-full flex rounded-md overflow-hidden bg-[var(--color-dark)]">
       <div className="w-1/4 h-[20rem] bg-white"></div>
 
       <div className="flex-1 py-[1rem] px-[2rem] flex flex-col justify-between">

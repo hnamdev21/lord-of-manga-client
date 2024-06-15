@@ -1,4 +1,4 @@
-import { FaBook, FaBookmark, FaCalendarTimes, FaHome } from "react-icons/fa";
+import { FaBook, FaBookmark, FaBox, FaClock, FaHome, FaUpload } from "react-icons/fa";
 
 const SidebarPath = {
   HOME: {
@@ -7,19 +7,29 @@ const SidebarPath = {
     icon: FaHome,
   } as const,
   COMICS: {
-    label: "Library",
-    href: "/library",
+    label: "Comics",
+    href: "/comics",
     icon: FaBook,
   } as const,
   SAVED_COMICS: {
-    label: "Saved",
+    label: "Saved Comics",
     href: "/saved-comics",
     icon: FaBookmark,
   } as const,
   READING_HISTORY: {
-    label: "Reading history",
+    label: "Reading History",
     href: "/reading-istory",
-    icon: FaCalendarTimes,
+    icon: FaClock,
+  } as const,
+  UPLOAD: {
+    label: "Upload Comic",
+    href: "/upload",
+    icon: FaUpload,
+  } as const,
+  COMIC_MANAGEMENT: {
+    label: "Comic Management",
+    href: "/comic-management",
+    icon: FaBox,
   } as const,
 } as const;
 

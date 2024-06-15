@@ -61,17 +61,13 @@ const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
               </Button>
 
               <Button
-                className="flex-1 flex items-center justify-center aspect-square"
+                className="flex-1 flex items-center justify-center aspect-square p-[1.5rem]"
                 element="button"
                 type="button"
                 variant="outline"
                 style={{
                   color: "var(--color-black)",
                   borderColor: "var(--color-black)",
-                  padding: "1.5rem",
-                }}
-                onClick={() => {
-                  console.log("clicked");
                 }}
               >
                 <FaBookmark />

@@ -44,7 +44,7 @@ const UploadChapter = () => {
               rules={[{ required: true, message: "Please enter chapter title" }]}
               className="flex-1"
             >
-              <Input placeholder="Enter comic title" />
+              <Input placeholder="Enter chapter title" />
             </Form.Item>
 
             <Form.Item<FormCreateChapter>

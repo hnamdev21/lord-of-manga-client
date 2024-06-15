@@ -13,13 +13,36 @@ export const GENDER_OPTIONS = [
   },
 ];
 
+export const FILTER_OPTIONS = [
+  {
+    label: "All",
+    value: "all",
+  },
+  {
+    label: "Newest",
+    value: "createdAt",
+  },
+  {
+    label: "Most viewed",
+    value: "view_count",
+  },
+  {
+    label: "Most liked",
+    value: "like_count",
+  },
+  {
+    label: "Most searched",
+    value: "search_count",
+  },
+];
+
 export const COMIC_TYPE_OPTIONS = [
   {
     label: "Free",
     value: "FREE",
   },
   {
-    label: "Paid",
+    label: "Paid once",
     value: "PAID_ONCE",
   },
   {
