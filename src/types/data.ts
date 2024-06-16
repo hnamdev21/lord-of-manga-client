@@ -3,8 +3,8 @@ type ChapterStatus = "PENDING" | "APPROVED" | "BANNED" | "DELETED";
 
 export type BaseEntity = {
   id: string;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type Permission = BaseEntity & {
@@ -66,6 +66,8 @@ export type Chapter = BaseEntity & {
 export type Comic = BaseEntity & {
   title: string;
   description: string;
+  coverPath: string;
+  thumbnailPath: string;
   creator: User;
   tags: Tag[];
   categories: Category[];

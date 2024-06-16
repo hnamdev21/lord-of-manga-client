@@ -1,8 +1,9 @@
 .header {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 10;
   width: 100%;
-  background-color: var(--color-night);
+  background-color: rgba(23, 23, 23, 0.71);
+  backdrop-filter: blur(10px);
   margin-bottom: rem(40px);
 }

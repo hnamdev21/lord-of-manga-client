@@ -33,13 +33,13 @@ const Sidebar = () => {
               key={key}
               href={value.href}
               className={cn(
-                "w-full h-[3.2rem] p-[.9rem] flex-items center rounded-xl hover:brightness-50 transition ease-in-out duration-300 bg-[var(--color-dark-gray)]",
+                "w-full h-[3.2rem] p-[.9rem] flex-items center rounded-xl hover:brightness-50 transition ease-in-out duration-300 bg-[var(--color-dark-gray)] overflow-hidden",
                 {
                   "bg-[var(--color-primary)]": active,
                 }
               )}
             >
-              <span className="flex items-center overflow-hidden gap-[.6rem] w-full h-[1.4rem]">
+              <span className="flex items-center gap-[1rem] w-full h-[1.4rem]">
                 <value.icon className="flex-none" />{" "}
                 <Typography tag="span" className="flex-none">
                   {value.label}

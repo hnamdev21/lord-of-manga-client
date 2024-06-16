@@ -27,7 +27,6 @@ const Typography = ({
   textColor = "light",
   transform = "none",
   align = "left",
-  label = false,
   className = "",
   children,
   ...props
@@ -44,7 +43,7 @@ const Typography = ({
   );
 
   return (
-    <TagName {...props} className={classes} style={{ fontFamily: label ? "var(--font-source-code-pro)" : "var(--font-roboto)" }}>
+    <TagName {...props} className={classes}>
       {children}
     </TagName>
   );

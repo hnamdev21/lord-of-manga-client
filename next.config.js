@@ -49,7 +49,16 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: [process.env.NEXT_PUBLIC_API_HOSTING || "localhost:3000"],
+    domains: [
+      "localhost",
+      "res.cloudinary.com",
+      "cdn.sanity.io",
+      "images.unsplash.com",
+      "cdn.pixabay.com",
+      "cdn.shopify.com",
+      "cdn.shopifycloud.com",
+      "cdn.shopifycloud",
+    ],
   },
 };
 

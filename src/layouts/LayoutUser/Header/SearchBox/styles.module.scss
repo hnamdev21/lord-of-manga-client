@@ -23,15 +23,28 @@
   }
 
   &__result {
-    display: none;
     width: 100%;
-    height: rem(600px);
+    max-height: 0;
+    padding: 0;
+    overflow-y: auto;
     border-radius: rem(10px);
     background-color: var(--color-dark);
     position: absolute;
     top: calc(100% + rem(10px));
     box-shadow: 0 rem(8px) rem(40px) rem(0px) rgba(0, 0, 0, 0.4);
-    opacity: 0;
-    overflow-y: auto;
+    transition:
+      opacity 0.3s ease-in-out,
+      max-height 0.3s ease-in-out,
+      padding 0s 0.3s;
+
+    &__show {
+      padding: rem(10px);
+      opacity: 1;
+      max-height: rem(600px);
+      transition:
+        opacity 0.3s ease-in-out,
+        max-height 0.3s ease-in-out,
+        padding 0s 0s;
+    }
   }
 }

@@ -8,10 +8,11 @@ const AXIOS_INSTANCE = axios.create({
   baseURL: process.env.NEXT_PUBLIC_LOCAL_API_URL,
   headers: {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Credentials": "true",
-    accept: "application/json",
+    // "Access-Control-Allow-Credentials": "true",
+    // "Access-Control-Allow-Origin": "*",
+    // accept: "/*",
   },
-  withCredentials: true,
+  // withCredentials: true,
 });
 
 AXIOS_INSTANCE.interceptors.response.use(

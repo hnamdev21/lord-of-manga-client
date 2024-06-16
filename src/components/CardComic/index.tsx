@@ -15,7 +15,7 @@ type CardComicProps = Comic;
 const CardComic = ({ ...props }: CardComicProps) => {
   return (
     <Popover color="var(--color-light)" content={<CardComicDetail {...props} />} placement="left">
-      <div className="w-full h-[36rem] rounded-md overflow-hidden relative bg-[var(--color-dark)]">
+      <div className="w-full h-[33rem] rounded-md overflow-hidden relative bg-[var(--color-dark)]">
         <Button
           className="absolute top-0 right-0 flex items-center justify-center aspect-square"
           element="button"
