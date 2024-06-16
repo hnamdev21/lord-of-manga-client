@@ -66,6 +66,10 @@ export type Chapter = BaseEntity & {
 export type Comic = BaseEntity & {
   title: string;
   description: string;
+  author: string;
+  viewCount: number;
+  searchCount: number;
+  slug: string;
   coverPath: string;
   thumbnailPath: string;
   creator: User;

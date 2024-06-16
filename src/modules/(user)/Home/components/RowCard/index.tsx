@@ -1,17 +1,35 @@
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 
+import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import CardComic from "@/components/CardComic";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
+import { Category, Comic } from "@/types/data";
+import { BaseGetResponse, BaseResponse } from "@/types/response";
 
-const RowCard = () => {
+type RowCardProps = {
+  category: Category;
+};
+
+const RowCard = ({ category }: RowCardProps) => {
+  const [comics, setComics] = React.useState<Comic[]>([]);
+
+  const fetchComics = async () => {
+    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics/category/search?term=" + category.name)).data;
+    setComics(data.content);
+  };
+
+  React.useEffect(() => {
+    fetchComics();
+  }, []);
+
   return (
     <Container noGrid>
       <div className="flex justify-between items-center">
         <Typography tag="h5" fontSize="lg" className="mb-[1.5rem]">
-          Drama
+          {category.name}
         </Typography>
 
         <Button href="#" size="sm" variant="outline" className="flex items-center gap-[.5rem]">
@@ -19,12 +37,18 @@ const RowCard = () => {
         </Button>
       </div>
 
-      <div className="grid grid-cols-12 gap-[1rem]">
-        {Array.from({ length: 6 }).map((_, index) => (
-          <div key={index} className="col-span-2">
-            <CardComic />
-          </div>
-        ))}
+      <div className="grid grid-cols-9 gap-[2rem]">
+        {comics.length > 0 ? (
+          comics.map((comic) => (
+            <div key={comic.id} className="col-span-1">
+              <CardComic {...comic} />
+            </div>
+          ))
+        ) : (
+          <Typography tag="h6" fontSize="md" className="col-span-9 text-center">
+            No comic found in this category
+          </Typography>
+        )}
       </div>
     </Container>
   );

@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./styles.module.scss";
 
 type FontColor = "info" | "danger" | "warning" | "success" | "primary" | "secondary" | "dark" | "light" | "white" | "black";
-type FontSize = "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl" | "8xl" | "9xl";
+type FontSize = "xs" | "sm" | "base" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl" | "8xl" | "9xl";
 type FontWeight = "thin" | "base" | "md" | "bold" | "extrabold";
 type TextTransform = "uppercase" | "lowercase" | "capitalize" | "normal" | "none";
 type TextAlign = "left" | "center" | "right" | "justify";

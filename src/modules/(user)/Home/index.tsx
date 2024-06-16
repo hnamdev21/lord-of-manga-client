@@ -3,9 +3,12 @@
 import { Carousel } from "antd";
 import React from "react";
 
+import AXIOS_INSTANCE from "@/apis/instance";
 import CardComicHorizontal from "@/components/CardComicHorizontal";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
+import { Category } from "@/types/data";
+import { BaseGetResponse, BaseResponse } from "@/types/response";
 
 import RowCard from "./components/RowCard";
 
@@ -19,6 +22,18 @@ const contentStyles: React.CSSProperties = {
 };
 
 const HomeModule = () => {
+  const [categories, setCategories] = React.useState<Category[]>([]);
+
+  const fetchCategories = async () => {
+    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Category[]>>>("/categories?size=4")).data;
+
+    setCategories(data.content);
+  };
+
+  React.useEffect(() => {
+    fetchCategories();
+  }, []);
+
   return (
     <div className="flex flex-col gap-[4rem]">
       <Container noGrid>
@@ -73,8 +88,8 @@ const HomeModule = () => {
         </div>
       </Container>
 
-      {Array.from({ length: 4 }).map((_, index) => (
-        <RowCard key={index} />
+      {categories.map((category) => (
+        <RowCard key={category.id} category={category} />
       ))}
     </div>
   );

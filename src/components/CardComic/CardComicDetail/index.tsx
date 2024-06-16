@@ -1,13 +1,15 @@
+import Image from "next/image";
 import React from "react";
 import { FaBookmark, FaComment, FaEye } from "react-icons/fa";
 
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import { Comic } from "@/types/data";
+import { timestampToDateTime } from "@/utils/formatter";
 
 type CardComicDetailProps = Comic;
 
-const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
+const CardComicDetail = ({ title, description, author, coverPath, chapters, categories, creator, createdAt, updatedAt, viewCount }: CardComicDetailProps) => {
   return (
     <React.Fragment>
       <div
@@ -18,39 +20,44 @@ const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
       />
       <div className="relative w-[60rem] flex flex-col gap-[1rem]">
         <div className="h-4/5 w-full flex gap-[1rem]">
-          <div className="w-2/5 h-[30rem] rounded-2xl overflow-hidden bg-black"></div>
+          <div className="w-2/5 h-[38rem] rounded-2xl overflow-hidden relative">
+            <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + coverPath} alt={`Cover image of ${title}`} layout="fill" objectFit="cover" />
+          </div>
 
           <div className="flex-1 flex flex-col justify-between">
             <div className="flex flex-col">
-              <Typography textColor="black" fontSize="lg" fontWeight="bold" tag="h5" className="line-clamp-1">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis similique saepe error cumque reprehenderit. Ipsum fugiat est sequi iure minus
-                accusantium quisquam voluptates dolorum distinctio. Incidunt minus perferendis veniam sequi.
+              <Typography fontSize="lg" fontWeight="bold" tag="h5" className="line-clamp-1">
+                {title}
               </Typography>
 
-              <Typography textColor="black" tag="h6" className="line-clamp-1">
-                Author: Masashi Kishimoto
+              <Typography tag="h6" className="line-clamp-1">
+                Author: {author}
               </Typography>
-              <Typography textColor="black" tag="h6" className="line-clamp-1">
-                Current chapter: 100
-              </Typography>
-
-              <Typography textColor="black" tag="h6" className="line-clamp-1">
-                Publisher: Admin
+              <Typography tag="h6" className="line-clamp-1">
+                Total chapters: {chapters.length}
               </Typography>
 
-              <Typography textColor="black" tag="h6" className="line-clamp-1">
-                Published: 2022-01-01
+              <Typography tag="h6" className="line-clamp-1">
+                Publisher: {creator.fullName}
               </Typography>
-              <Typography textColor="black" tag="h6" className="line-clamp-1">
-                Last updated: 2022-01-01
+
+              <Typography tag="h6" className="line-clamp-1">
+                Categories: {categories.map((category) => category.name).join(", ")}
+              </Typography>
+
+              <Typography tag="h6" className="line-clamp-1">
+                Published: {timestampToDateTime(createdAt)}
+              </Typography>
+              <Typography tag="h6" className="line-clamp-1">
+                Last updated: {timestampToDateTime(updatedAt)}
               </Typography>
 
               <div className="flex items-center gap-[1.5rem]">
-                <Typography textColor="black" tag="h6" className="line-clamp-1 flex items-center gap-[.5rem]">
+                <Typography tag="h6" className="line-clamp-1 flex items-center gap-[.5rem]">
                   <FaComment /> 100
                 </Typography>
-                <Typography textColor="black" tag="h6" className="line-clamp-1 flex items-center gap-[.5rem]">
-                  <FaEye /> 100
+                <Typography tag="h6" className="line-clamp-1 flex items-center gap-[.5rem]">
+                  <FaEye /> {viewCount}
                 </Typography>
               </div>
             </div>
@@ -66,8 +73,6 @@ const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
                 type="button"
                 variant="outline"
                 style={{
-                  color: "var(--color-black)",
-                  borderColor: "var(--color-black)",
                   padding: "1rem",
                 }}
               >
@@ -78,12 +83,7 @@ const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
         </div>
 
         <div className="h-1/5">
-          <Typography textColor="black" className="line-clamp-3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque ut eaque vero delectus molestiae, corrupti labore minus fugiat exercitationem
-            praesentium velit, eligendi laudantium assumenda tempore non rerum eos debitis a! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
-            dolorem suscipit neque quod? Repellat obcaecati in pariatur. Voluptatibus sapiente esse quaerat eius in maxime, ut doloribus beatae dolores expedita
-            asperiores?
-          </Typography>
+          <Typography className="line-clamp-3">{description}</Typography>
         </div>
       </div>
     </React.Fragment>

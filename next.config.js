@@ -49,15 +49,13 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: [
-      "localhost",
-      "res.cloudinary.com",
-      "cdn.sanity.io",
-      "images.unsplash.com",
-      "cdn.pixabay.com",
-      "cdn.shopify.com",
-      "cdn.shopifycloud.com",
-      "cdn.shopifycloud",
+    remotePatterns: [
+      {
+        hostname: "localhost",
+        pathname: "/manga-service/api/uploads/**",
+        port: "8081",
+        protocol: "http",
+      },
     ],
   },
 };
