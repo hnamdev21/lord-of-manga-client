@@ -17,6 +17,14 @@ export type FormChangePassword = {
   newPassword: string;
 };
 
+export type FormComicFilter = {
+  title: string;
+  sortBy: "all" | "createdAt" | "updatedAt" | "title" | "price" | "viewCount" | "searchCount" | "likeCount";
+  type: "all" | "FREE" | "PAID_PER_CHAPTER" | "PAID_ONCE";
+  from: number;
+  to: number;
+};
+
 export type FormForgotPassword = {
   email: string;
 };

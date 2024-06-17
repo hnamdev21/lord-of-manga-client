@@ -5,6 +5,7 @@ import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Typography from "@/components/Typography";
+import { BaseResponse } from "@/types/response";
 
 type ListDataProps = {
   prefix: string;
@@ -20,9 +21,8 @@ const ListData = ({ prefix, fetchUrl }: ListDataProps) => {
   >([]);
 
   const fetchData = async () => {
-    const response = await AXIOS_INSTANCE.get(fetchUrl);
-    console.log("[ListData] response :::: ", response.data);
-    setData(response.data.slice(0, 5));
+    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<any>>(fetchUrl)).data;
+    setData(data.content);
   };
 
   React.useEffect(() => {

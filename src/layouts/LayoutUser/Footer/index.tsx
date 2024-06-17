@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import Container from "@/components/Container";
@@ -7,40 +9,16 @@ import FastAccessCol from "./FastAccessCol";
 
 const MOCK: Array<FastAccessColProps> = [
   {
-    fetch: false,
+    fetch: true,
     title: "Categories",
-    data: [
-      {
-        label: "Category 1",
-        href: "#",
-      },
-      {
-        label: "Category 2",
-        href: "#",
-      },
-      {
-        label: "Category 3",
-        href: "#",
-      },
-    ],
+    fetchUrl: "/categories?size=5",
+    prefix: "/comics?categoryName=",
   },
   {
-    fetch: false,
+    fetch: true,
     title: "Tags",
-    data: [
-      {
-        label: "Tag 1",
-        href: "#",
-      },
-      {
-        label: "Tag 2",
-        href: "#",
-      },
-      {
-        label: "Tag 3",
-        href: "#",
-      },
-    ],
+    fetchUrl: "/tags?size=5",
+    prefix: "/comics?tagName=",
   },
   {
     fetch: false,

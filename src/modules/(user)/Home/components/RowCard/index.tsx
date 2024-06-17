@@ -37,7 +37,7 @@ const RowCard = ({ category }: RowCardProps) => {
         </Button>
       </div>
 
-      <div className="grid grid-cols-9 gap-[2rem]">
+      <div className="grid grid-cols-9 gap-[2rem] h-[20rem]">
         {comics.length > 0 ? (
           comics.map((comic) => (
             <div key={comic.id} className="col-span-1">
@@ -45,9 +45,11 @@ const RowCard = ({ category }: RowCardProps) => {
             </div>
           ))
         ) : (
-          <Typography tag="h6" fontSize="md" className="col-span-9 text-center">
-            No comic found in this category
-          </Typography>
+          <div className="col-span-9 flex items-center justify-center">
+            <Typography tag="h6" fontSize="md" align="center">
+              No comic found in this category
+            </Typography>
+          </div>
         )}
       </div>
     </Container>

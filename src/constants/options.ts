@@ -13,7 +13,10 @@ export const GENDER_OPTIONS = [
   },
 ];
 
-export const ORDER_BY_OPTIONS = [
+export const ORDER_BY_OPTIONS: {
+  label: string;
+  value: "all" | "createdAt" | "updatedAt" | "title" | "price" | "viewCount" | "searchCount" | "likeCount";
+}[] = [
   {
     label: "All",
     value: "all",
@@ -24,19 +27,22 @@ export const ORDER_BY_OPTIONS = [
   },
   {
     label: "Most viewed",
-    value: "view_count",
+    value: "viewCount",
   },
   {
     label: "Most liked",
-    value: "like_count",
+    value: "likeCount",
   },
   {
     label: "Most searched",
-    value: "search_count",
+    value: "searchCount",
   },
 ];
 
-export const FILTER_COMIC_TYPE_OPTIONS = [
+export const FILTER_COMIC_TYPE_OPTIONS: {
+  label: string;
+  value: "all" | "FREE" | "PAID_ONCE" | "PAID_PER_CHAPTER";
+}[] = [
   {
     label: "All",
     value: "all",
