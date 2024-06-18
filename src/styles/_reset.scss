@@ -129,9 +129,10 @@ img:is([loading="lazy"]) {
 }
 
 img {
-  display: block;
+  // display: block;
   width: 100%;
+  max-width: 100%;
   height: auto;
-  max-height: 100% !important;
+  vertical-align: middle;
   object-fit: cover;
 }

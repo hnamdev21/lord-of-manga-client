@@ -1,30 +1,56 @@
 "use client";
 
-import { Button, Divider, Form, FormProps, Input, Select, Switch } from "antd";
+import { Avatar, Button, Checkbox, Divider, Form, FormProps, Input, message, Select } from "antd";
 import { FieldNamesType } from "antd/es/cascader";
 import cn from "classnames";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FaCamera } from "react-icons/fa";
 
+import AXIOS_INSTANCE from "@/apis/instance";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { GENDER_OPTIONS } from "@/constants/options";
+import Path from "@/constants/path";
+import { AuthContext } from "@/providers/AuthProvider";
+import { User } from "@/types/data";
 import { FormUpdateProfile } from "@/types/form";
+import { BaseResponse } from "@/types/response";
 import { getBase64 } from "@/utils/imageUtils";
 
 import styles from "./styles.module.scss";
 
 const ProfileModule = () => {
-  const user = {
-    avatar: "",
-  };
+  const router = useRouter();
+  const authContext = React.use(AuthContext);
+  const [form] = Form.useForm<FormUpdateProfile>();
+
+  const [user, setUser] = React.useState<User | null>(null);
+  const [avatarFile, setAvatarFile] = React.useState<File | null>(null);
   const [base64Image, setBase64Image] = React.useState<string | null>(null);
 
-  const avatarSrc = base64Image || user.avatar || "/images/avatar.jpg";
+  const avatarSrc =
+    base64Image ||
+    (user?.avatarPath ? `${process.env.NEXT_PUBLIC_LOCAL_API_URL}/uploads/${user.avatarPath}` : null) ||
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
-  const onFinish: FormProps<FormUpdateProfile>["onFinish"] = (_values: FormUpdateProfile) => {
-    //
+  const onFinish: FormProps<FormUpdateProfile>["onFinish"] = async (values: FormUpdateProfile) => {
+    const formData = new FormData();
+    formData.append("fullName", values.fullName);
+    formData.append("email", values.email);
+    formData.append("file", avatarFile as File);
+    formData.append("receiveNews", values.receiveNews.toString());
+    formData.append("twoStepVerification", values.twoStepVerification.toString());
+
+    await AXIOS_INSTANCE.put<BaseResponse<User>>("/users/mine", formData, {
+      headers: {
+        Authorization: `Bearer ${authContext?.auth.token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    await getMe();
+    message.success("Update profile successfully");
   };
 
   const onFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,8 +59,34 @@ const ProfileModule = () => {
     if (file) {
       const base64 = await getBase64(file);
       setBase64Image(base64);
+      setAvatarFile(file as File);
     }
   };
+
+  const getMe = async () => {
+    const { data } = (
+      await AXIOS_INSTANCE.get<BaseResponse<User>>("/users/mine", {
+        headers: {
+          Authorization: `Bearer ${authContext?.auth.token}`,
+        },
+      })
+    ).data;
+
+    setUser(data);
+    form.setFieldsValue(data);
+    console.log("[ProfileModule] getMe -> data :::: ", data);
+  };
+
+  React.useEffect(() => {
+    if (!authContext?.isLoaded) return;
+
+    if (authContext?.auth.token) {
+      getMe();
+    } else {
+      message.error("Please sign in to continue");
+      router.push(Path.AUTH.SIGN_IN);
+    }
+  }, [authContext?.isLoaded]);
 
   return (
     <Container>
@@ -44,15 +96,15 @@ const ProfileModule = () => {
         </Typography>
       </div>
 
-      <Form layout="vertical" onFinish={onFinish} className="col-start-5 col-span-4">
+      <Form layout="vertical" form={form} onFinish={onFinish} className="col-start-5 col-span-4">
         <div className={cn("w-full flex justify-center", styles.container)}>
           <label htmlFor="avatar" className={`${styles.avatarContainer}`}>
-            <Image src={avatarSrc} alt={`Avatar of ${"Example Ham"}`} width={400} height={400} className={`${styles.avatar}`} />
+            <Avatar src={avatarSrc} size={120} className={`${styles.avatar}`} alt={`Avatar of ${"Example Ham"}`} />
             <div className={`${styles.overlay}`}>
               <FaCamera />
             </div>
           </label>
-          <input type="file" name="avatar" id="avatar" accept="image/*" className="hidden" onChange={onFileInputChange} />
+          <input type="file" name="avatar" id="avatar" accept="image/*" style={{ display: "none" }} onChange={onFileInputChange} />
         </div>
 
         <div className="flex gap-[2rem] mt-[4rem]">
@@ -90,7 +142,7 @@ const ProfileModule = () => {
                 Email
               </Typography>
             }
-            name="fullName"
+            name="email"
             rules={[{ type: "email", message: "Invalid email. Example: example@gmail.com" }]}
             className="w-2/3"
           >
@@ -104,19 +156,13 @@ const ProfileModule = () => {
           </div>
         </div>
 
-        <Divider />
+        <Divider className="my-[1rem]" />
 
-        <Form.Item<FormUpdateProfile> name={"receiveNews"}>
-          <span className="flex items-center justify-between gap-[.5rem]">
-            <Typography tag="span">Receive news</Typography>
-            <Switch />
-          </span>
+        <Form.Item<FormUpdateProfile> name="receiveNews" valuePropName="checked" className="my-[.5rem]">
+          <Checkbox>Receive news</Checkbox>
         </Form.Item>
-        <Form.Item<FormUpdateProfile> name={"two2fa"}>
-          <span className="flex items-center justify-between gap-[.5rem]">
-            <Typography tag="span">Two-factor authentication</Typography>
-            <Switch />
-          </span>
+        <Form.Item<FormUpdateProfile> name="twoStepVerification" valuePropName="checked" className="my-[.5rem]">
+          <Checkbox>Two-factor authentication</Checkbox>
         </Form.Item>
 
         <Form.Item<FormUpdateProfile>>

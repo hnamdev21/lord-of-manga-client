@@ -41,10 +41,10 @@ export type FormTwoFactorAuthentication = {
 
 export type FormUpdateProfile = {
   fullName: string;
-  twoFactorAuthentication: boolean;
+  twoStepVerification: boolean;
   gender: string;
   receiveNews: boolean;
-  two2fa: boolean;
+  email: string;
 };
 
 export type FormCreateComment = {

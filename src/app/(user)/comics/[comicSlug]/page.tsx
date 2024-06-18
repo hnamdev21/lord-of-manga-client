@@ -1,5 +1,7 @@
 import React from "react";
 
+import ComicDetailModule from "@/modules/(user)/ComicDetail";
+
 type PageProps = {
   params: {
     comicSlug: string;
@@ -7,7 +9,7 @@ type PageProps = {
 };
 
 const ComicDetailPage = ({ params }: PageProps) => {
-  return <div>ComicDetailPage</div>;
+  return <ComicDetailModule comicSlug={params.comicSlug} />;
 };
 
 export default ComicDetailPage;

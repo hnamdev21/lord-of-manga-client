@@ -10,9 +10,9 @@ const AXIOS_INSTANCE = axios.create({
     "Content-Type": "application/json",
     // "Access-Control-Allow-Credentials": "true",
     // "Access-Control-Allow-Origin": "*",
-    // accept: "/*",
+    accept: "*/*",
   },
-  // withCredentials: true,
+  withCredentials: true,
 });
 
 AXIOS_INSTANCE.interceptors.response.use(

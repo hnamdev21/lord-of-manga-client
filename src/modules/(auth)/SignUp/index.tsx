@@ -1,17 +1,31 @@
 "use client";
 
-import { Button, Checkbox, Form, type FormProps, Input } from "antd";
+import { Button, Checkbox, Form, type FormProps, Input, message } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
+import AXIOS_INSTANCE from "@/apis/instance";
 import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
 import Path from "@/constants/path";
+import { User } from "@/types/data";
 import { FormSignUp } from "@/types/form";
+import { BaseResponse } from "@/types/response";
 
 const SignUpModule = () => {
-  const onFinish: FormProps<FormSignUp>["onFinish"] = async (_values: FormSignUp) => {
-    //
+  const router = useRouter();
+
+  const onFinish: FormProps<FormSignUp>["onFinish"] = async (values: FormSignUp) => {
+    const response = (await AXIOS_INSTANCE.post<BaseResponse<User>>("/users", values)).data;
+
+    if (response.code === "CREATED") {
+      message.success(response.message);
+
+      router.push(Path.AUTH.SIGN_IN);
+    } else if (response.code === "CONFLICT") {
+      message.error("Username or email already exists");
+    }
   };
 
   return (
@@ -21,7 +35,19 @@ const SignUpModule = () => {
       </Typography>
 
       <div className="grid grid-cols-10 gap-[.5rem]">
-        <Form layout={"vertical"} onFinish={onFinish} autoComplete="off" className="rounded-2xl col-start-3 col-span-6 p-[2rem] bg-[var(--color-dark-gray)]">
+        <Form
+          layout={"vertical"}
+          onFinish={onFinish}
+          autoComplete="off"
+          className="rounded-2xl col-start-3 col-span-6 p-[2rem] bg-[var(--color-dark-gray)]"
+          initialValues={{
+            fullName: "",
+            username: "",
+            password: "",
+            email: "",
+            receiveNews: false,
+          }}
+        >
           <div className="w-full h-[8rem] mb-[2rem] flex justify-center">
             <Logo />
           </div>
@@ -33,7 +59,7 @@ const SignUpModule = () => {
               </Typography>
             }
             name="fullName"
-            rules={[{ required: true, type: "string", message: "Please enter your fullName" }]}
+            rules={[{ required: true, type: "string", message: "Please enter your full name" }]}
           >
             <Input placeholder={"Example Ham"} />
           </Form.Item>
@@ -68,7 +94,7 @@ const SignUpModule = () => {
                 Email
               </Typography>
             }
-            name="password"
+            name="email"
             rules={[{ type: "email", message: "Please enter your email" }]}
           >
             <Input placeholder={"example@gmail.com"} />

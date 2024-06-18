@@ -2,7 +2,7 @@ import "@Styles/app.scss";
 
 import type { Metadata } from "next";
 
-import ThemeProvider from "@/layouts/ThemeProvider";
+import Providers from "@/providers/Providers";
 
 export const metadata: Metadata = {
   title: "Lord of Manga",
@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

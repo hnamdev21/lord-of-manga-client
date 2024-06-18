@@ -24,7 +24,7 @@ export type User = BaseEntity & {
   email?: string;
   avatarPath?: string;
   roles: Role[];
-  twoStepVerification: boolean; // TODO: Rename to twoFactorAuthentication
+  twoStepVerification: boolean;
   receiveNews: boolean;
   bannedReason: string | null;
   bannedAt: string | null;

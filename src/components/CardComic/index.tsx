@@ -18,7 +18,7 @@ const CardComic = ({ ...props }: CardComicProps) => {
 
   return (
     <Popover color="var(--color-dark)" content={<CardComicDetail {...props} />} placement="left">
-      <div className="w-full h-[28rem] rounded-md overflow-hidden relative bg-[var(--color-dark)]">
+      <div className="w-full h-[34rem] rounded-md overflow-hidden relative bg-[var(--color-dark)]">
         <Button
           className="absolute top-0 right-0 flex items-center justify-center aspect-square"
           element="button"
@@ -33,14 +33,8 @@ const CardComic = ({ ...props }: CardComicProps) => {
           <FaBookmark />
         </Button>
 
-        <div className="w-full h-[85%]">
-          <Image
-            src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + coverPath}
-            alt={`Cover image of ${title}`}
-            width={400}
-            height={800}
-            className="object-cover"
-          />
+        <div className="w-full h-[85%] relative">
+          <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + coverPath} alt={`Cover image of ${title}`} layout="fill" />
         </div>
 
         <div className="w-full h-[15%] px-[1rem] flex items-center">

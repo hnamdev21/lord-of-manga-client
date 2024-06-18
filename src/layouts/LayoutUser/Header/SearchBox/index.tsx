@@ -79,7 +79,7 @@ const SearchBox = () => {
 
                   <div className="flex gap-[.5rem]">
                     {comic.tags.map((tag) => (
-                      <Button size="sm" href="#" variant="outline">
+                      <Button size="sm" href="#" variant="outline" key={tag.slug}>
                         {tag.name}
                       </Button>
                     ))}
@@ -122,7 +122,7 @@ const SearchBox = () => {
 
                   <div className="flex gap-[.5rem]">
                     {comic.tags.map((tag) => (
-                      <Button size="sm" href="#" variant="outline">
+                      <Button size="sm" href="#" variant="outline" key={tag.slug}>
                         {tag.name}
                       </Button>
                     ))}
@@ -165,7 +165,7 @@ const SearchBox = () => {
 
                   <div className="flex gap-[.5rem]">
                     {comic.tags.map((tag) => (
-                      <Button size="sm" href="#" variant="outline">
+                      <Button size="sm" href="#" variant="outline" key={tag.slug}>
                         {tag.name}
                       </Button>
                     ))}

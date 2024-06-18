@@ -1,17 +1,32 @@
 "use client";
 
-import { Button, Checkbox, Form, type FormProps, Input } from "antd";
+import { Button, Checkbox, Form, type FormProps, Input, message } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
+import AXIOS_INSTANCE from "@/apis/instance";
 import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
 import Path from "@/constants/path";
+import { AuthContext } from "@/providers/AuthProvider";
 import { FormSignIn } from "@/types/form";
+import { BaseResponse } from "@/types/response";
 
 const SignInModule = () => {
-  const onFinish: FormProps<FormSignIn>["onFinish"] = async (_values: FormSignIn) => {
-    //
+  const router = useRouter();
+  const authContext = React.use(AuthContext);
+
+  const onFinish: FormProps<FormSignIn>["onFinish"] = async (values: FormSignIn) => {
+    const response = (await AXIOS_INSTANCE.post<BaseResponse<string>>("/auth/sign-in", values)).data;
+
+    if (response.code === "OK") {
+      message.success("Welcome to Lord of Manga!");
+      authContext?.signIn(response.data);
+      router.push(Path.USER.HOME);
+    } else if (response.code === "BAD_REQUEST") {
+      message.error("Username or password is incorrect");
+    }
   };
 
   return (

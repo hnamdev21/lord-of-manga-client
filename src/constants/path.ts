@@ -1,6 +1,7 @@
 const Path = {
   USER: {
     HOME: "/",
+    PROFILE: "/profile",
     COMICS: "/comics",
   } as const,
   AUTH: {
