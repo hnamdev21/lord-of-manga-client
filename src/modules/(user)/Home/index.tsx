@@ -1,25 +1,15 @@
 "use client";
 
-import { Carousel } from "antd";
 import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
-import CardComicHorizontal from "@/components/CardComicHorizontal";
 import Container from "@/components/Container";
-import Typography from "@/components/Typography";
 import { Category } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 
+import ColCard from "./components/ColCard";
+import Hero from "./components/Hero";
 import RowCard from "./components/RowCard";
-
-const contentStyles: React.CSSProperties = {
-  height: "600px",
-  padding: "20px 0",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  color: "#fff",
-};
 
 const HomeModule = () => {
   const [categories, setCategories] = React.useState<Category[]>([]);
@@ -36,22 +26,9 @@ const HomeModule = () => {
 
   return (
     <div className="flex flex-col gap-[4rem]">
-      <Container noGrid>
-        <Carousel autoplay arrows dotPosition="left" className="w-full h-[60rem]">
-          <div>
-            <h3 style={contentStyles}>1</h3>
-          </div>
-          <div>
-            <h3 style={contentStyles}>2</h3>
-          </div>
-          <div>
-            <h3 style={contentStyles}>3</h3>
-          </div>
-          <div>
-            <h3 style={contentStyles}>4</h3>
-          </div>
-        </Carousel>
-      </Container>
+      <div className="bg-[var(--color-dark)]">
+        <Hero />
+      </div>
 
       <Container className="relative">
         <div
@@ -60,31 +37,11 @@ const HomeModule = () => {
         />
 
         <div className="col-span-6">
-          <Typography tag="h5" fontSize="lg" className="mb-[2rem]">
-            Latest update
-          </Typography>
-
-          <div className="flex flex-col gap-[2rem]">
-            <div className="col-span-12 flex flex-col gap-[1rem]">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <CardComicHorizontal key={index} />
-              ))}
-            </div>
-          </div>
+          <ColCard title="Latest update" fetchUrl="/comics?size=8&sortBy=updatedAt" />
         </div>
 
         <div className="col-span-6">
-          <Typography tag="h5" fontSize="lg" className="mb-[2rem]">
-            Most viewed
-          </Typography>
-
-          <div className="flex flex-col gap-[2rem]">
-            <div className="col-span-12 flex flex-col gap-[1rem]">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <CardComicHorizontal key={index} />
-              ))}
-            </div>
-          </div>
+          <ColCard title="Most viewed" fetchUrl="/comics?size=8&sortBy=viewCount" />
         </div>
       </Container>
 

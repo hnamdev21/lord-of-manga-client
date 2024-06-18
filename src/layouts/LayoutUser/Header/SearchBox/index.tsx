@@ -37,7 +37,7 @@ const SearchBox = () => {
         <div className={styles.inputWrapper}>
           <input
             type="text"
-            placeholder="Naruto, Bleach, #top10, #trendy..."
+            placeholder="Naruto, Bleach, top 10, trendy..."
             autoComplete="off"
             name="search"
             className={styles.input}

@@ -2,6 +2,14 @@
   transition: all 0.3s ease-in-out;
 
   &__size {
+    &__xs {
+      height: rem(20px);
+      padding: rem(1px) rem(6px);
+      font-size: var(--fs-xs);
+      border-radius: rem(2px);
+      @include text-xs;
+    }
+
     &__sm {
       height: rem(24px);
       padding: rem(2px) rem(8px);
@@ -26,7 +34,7 @@
     }
 
     &__lg {
-      height: rem(48px);
+      height: rem(50px);
       padding: rem(8px) rem(32px);
       font-size: var(--fs-lg);
       border-radius: rem(10px);

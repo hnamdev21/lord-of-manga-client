@@ -1,0 +1,50 @@
+"use client";
+
+import React from "react";
+
+import AXIOS_INSTANCE from "@/apis/instance";
+import CardComicHorizontal from "@/components/CardComicHorizontal";
+import Typography from "@/components/Typography";
+import { Comic } from "@/types/data";
+import { BaseGetResponse, BaseResponse } from "@/types/response";
+
+type ColCardProps = {
+  title: string;
+  fetchUrl: string;
+};
+
+const ColCard = ({ title, fetchUrl }: ColCardProps) => {
+  const [comics, setComics] = React.useState<Comic[]>([]);
+
+  const fetchComics = async () => {
+    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(fetchUrl)).data;
+    setComics(data.content);
+  };
+
+  React.useEffect(() => {
+    fetchComics();
+  }, []);
+
+  return (
+    <React.Fragment>
+      <Typography tag="h5" fontSize="lg" className="mb-[1rem]">
+        {title}
+      </Typography>
+
+      <div className="grid grid-cols-2 gap-[2rem]">
+        <div className="col-span-1 flex flex-col gap-[1rem]">
+          {comics.slice(0, 4).map((comic) => (
+            <CardComicHorizontal key={comic.id} {...comic} />
+          ))}
+        </div>
+        <div className="col-span-1 flex flex-col gap-[1rem]">
+          {comics.slice(4, 8).map((comic) => (
+            <CardComicHorizontal key={comic.id} {...comic} />
+          ))}
+        </div>
+      </div>
+    </React.Fragment>
+  );
+};
+
+export default ColCard;
