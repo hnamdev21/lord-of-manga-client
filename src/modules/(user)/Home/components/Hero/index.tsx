@@ -29,12 +29,12 @@ const Hero = () => {
         {comics.map((comic) => (
           <div key={comic.id}>
             <Container className="h-[60rem] relative">
-              <div className="absolute top-0 left-0 w-full h-full brightness-[.5] blur-md">
+              <div className="absolute top-0 left-0 w-full h-full brightness-[.5] blur-lg">
                 <Image
                   src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + comic.thumbnailPath}
                   alt={`Thumbnail image of ${comic.title}`}
                   layout="fill"
-                  objectFit="contain"
+                  objectFit="cover"
                 />
               </div>
 
@@ -44,13 +44,13 @@ const Hero = () => {
                 </div>
               </div>
 
-              <div className="relative col-span-9 flex flex-col py-[1rem] gap-[2rem]">
-                <div className="h-[60%]">
+              <div className="relative col-span-9 flex flex-col justify-between py-[1rem] gap-[2rem]">
+                <div className="w-full flex flex-col gap-[1rem]">
                   <Typography tag="h3" fontSize="8xl" fontWeight="md" className="mb-[.5rem]">
                     {comic.title}
                   </Typography>
 
-                  <div className="flex gap-[1rem] mb-[1rem]">
+                  <div className="flex gap-[1rem]">
                     {comic.categories.slice(0, 8).map((category) => (
                       <Button href="#" variant="outline" key={category.slug}>
                         {category.name}
@@ -58,7 +58,7 @@ const Hero = () => {
                     ))}
                   </div>
 
-                  <div className="mb-[2rem]">
+                  <div>
                     <Typography tag="p" fontSize="md">
                       Author: {comic.author}
                     </Typography>
@@ -67,7 +67,7 @@ const Hero = () => {
                     </Typography>
                   </div>
 
-                  <Typography tag="p" fontSize="md" className="mb-[1rem] line-clamp-5">
+                  <Typography tag="p" fontSize="md" className="line-clamp-8 ">
                     {comic.description}
                   </Typography>
                 </div>
