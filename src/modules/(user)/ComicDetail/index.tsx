@@ -2,6 +2,7 @@
 
 import { Form, Input } from "antd";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FaComment, FaEye } from "react-icons/fa";
 
@@ -17,11 +18,15 @@ type ComicDetailModuleProps = {
 };
 
 const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
+  const router = useRouter();
+
   const [comic, setComic] = React.useState<Comic | null>(null);
   const [chapters, setChapters] = React.useState<Comic["chapters"] | null>(null);
 
   const fetchComic = async () => {
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<Comic>>(`/comics/slug/${comicSlug}`)).data;
+
+    console.log("[ComicDetailModule] fetchComic -> data :::: ", data);
 
     if (data) {
       setComic(data);
@@ -94,7 +99,7 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
         </div>
       </Container>
 
-      <Container>
+      <Container className="mb-[4rem]">
         <div className="col-span-12 grid grid-col-12 gap-[2rem] items-end">
           <Typography tag="h3" fontSize="2xl" fontWeight="md" className="mb-[1rem] col-span-1">
             Chapters
@@ -107,13 +112,14 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
           </Form>
         </div>
 
-        {chapters?.map((_, index) => (
+        {chapters?.map((chapter, index) => (
           <div
             key={index}
             className="col-span-12 flex justify-between p-[2rem] rounded-lg bg-[var(--color-dark)] hover:brightness-110 transition ease-in-out duration-300 cursor-pointer"
+            onClick={() => router.push(`/comics/${comicSlug}/${chapter.slug}`)}
           >
             <Typography tag="h3" fontSize="xl" fontWeight="md">
-              Chapter {index + 1}
+              {chapter.title}
             </Typography>
 
             <div className="flex flex-col">
@@ -122,10 +128,10 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
               </Typography>
               <div className="flex items-center gap-[1.5rem]">
                 <Typography tag="h6" className="line-clamp-1 flex items-center gap-[.5rem]">
-                  <FaComment /> 100
+                  <FaComment /> {chapter.comments.length}
                 </Typography>
                 <Typography tag="h6" className="line-clamp-1 flex items-center gap-[.5rem]">
-                  <FaEye /> {comic?.viewCount}
+                  <FaEye /> {chapter.viewCount}
                 </Typography>
               </div>
             </div>

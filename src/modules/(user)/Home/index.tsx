@@ -25,7 +25,7 @@ const HomeModule = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-[4rem]">
+    <div className="flex flex-col gap-[4rem] mb-[4rem]">
       <div className="bg-[var(--color-black)]">
         <Hero />
       </div>

@@ -9,7 +9,19 @@ import { timestampToDateTime } from "@/utils/formatter";
 
 type CardComicDetailProps = Comic;
 
-const CardComicDetail = ({ title, description, author, coverPath, chapters, categories, creator, createdAt, updatedAt, viewCount }: CardComicDetailProps) => {
+const CardComicDetail = ({
+  title,
+  description,
+  author,
+  coverPath,
+  chapters,
+  categories,
+  creator,
+  createdAt,
+  updatedAt,
+  viewCount,
+  slug,
+}: CardComicDetailProps) => {
   return (
     <React.Fragment>
       <div
@@ -63,7 +75,7 @@ const CardComicDetail = ({ title, description, author, coverPath, chapters, cate
             </div>
 
             <div className="flex items-center gap-[1rem]">
-              <Button className="block flex-1 text-center" href="#">
+              <Button className="block flex-1 text-center" href={"/comics/" + slug}>
                 Read
               </Button>
 

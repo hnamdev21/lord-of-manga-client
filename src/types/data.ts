@@ -55,6 +55,7 @@ export type Chapter = BaseEntity & {
   slug: string;
   ordinal: number;
   totalPages: number;
+  viewCount: number;
   status: ChapterStatus;
   showComment: boolean;
   comments: Comment[];

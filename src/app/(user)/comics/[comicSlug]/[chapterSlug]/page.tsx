@@ -1,5 +1,7 @@
 import React from "react";
 
+import ReadingModule from "@/modules/(user)/Reading";
+
 type PageProps = {
   params: {
     comicSlug: string;
@@ -7,6 +9,8 @@ type PageProps = {
   };
 };
 
-export const ChapterDetailPage = ({ params }: PageProps) => {
-  return <div>ChapterDetailPage</div>;
+const ReadingPage = ({ params }: PageProps) => {
+  return <ReadingModule {...params} />;
 };
+
+export default ReadingPage;

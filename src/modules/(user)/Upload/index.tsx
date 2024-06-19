@@ -22,7 +22,7 @@ const UploadModule = () => {
   ];
 
   return (
-    <Container noGrid>
+    <Container noGrid className="mb-[4rem]">
       <Tabs defaultActiveKey="1" size="large" centered items={items} className={styles.tabs} />
     </Container>
   );

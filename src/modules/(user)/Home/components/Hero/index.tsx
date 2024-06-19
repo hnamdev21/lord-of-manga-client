@@ -38,10 +38,14 @@ const Hero = () => {
                 />
               </div>
 
-              <div className="col-span-3 py-[1rem]">
-                <div className="h-full rounded-2xl overflow-hidden relative">
+              <div className="col-span-3 py-[1rem] flex flex-col justify-between gap-[1rem]">
+                <div className="h-[90%] rounded-2xl overflow-hidden relative">
                   <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + comic.coverPath} alt={`Cover image of ${comic.title}`} layout="fill" />
                 </div>
+
+                <Button href={"/comics/" + comic.slug} size="lg" className="block relative text-center">
+                  Read now
+                </Button>
               </div>
 
               <div className="relative col-span-9 flex flex-col justify-between py-[1rem] gap-[2rem]">
@@ -71,10 +75,6 @@ const Hero = () => {
                     {comic.description}
                   </Typography>
                 </div>
-
-                <Button href="#" size="lg" className="max-w-max">
-                  Read now
-                </Button>
               </div>
             </Container>
           </div>

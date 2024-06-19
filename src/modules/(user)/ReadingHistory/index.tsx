@@ -7,7 +7,7 @@ import Typography from "@/components/Typography";
 
 const ReadingHistoryModule = () => {
   return (
-    <Container noGrid>
+    <Container noGrid className="mb-[4rem]">
       <Typography tag="h1" fontSize="2xl" align="center">
         Reading History
       </Typography>
