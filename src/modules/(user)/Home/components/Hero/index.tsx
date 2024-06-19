@@ -23,7 +23,7 @@ const Hero = () => {
       <Carousel autoplay arrows dotPosition="left" className="w-full h-[60rem]">
         {comics?.map((comic) => (
           <div key={comic.id}>
-            <Container className="h-[60rem] relative">
+            <Container noGrid className="h-[60rem] relative grid grid-cols-9 gap-[2rem]">
               <div className="absolute top-0 left-0 w-full h-full brightness-[.5] blur-lg">
                 <Image
                   src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + comic.thumbnailPath}
@@ -33,7 +33,7 @@ const Hero = () => {
                 />
               </div>
 
-              <div className="col-span-3 py-[1rem] flex flex-col justify-between gap-[1rem]">
+              <div className="col-span-2 py-[1rem] flex flex-col justify-between gap-[1rem]">
                 <div className="h-[90%] rounded-2xl overflow-hidden relative">
                   <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + comic.coverPath} alt={`Cover image of ${comic.title}`} layout="fill" />
                 </div>
@@ -43,7 +43,7 @@ const Hero = () => {
                 </Button>
               </div>
 
-              <div className="relative col-span-9 flex flex-col justify-between py-[1rem] gap-[2rem]">
+              <div className="relative col-span-7 flex flex-col justify-between py-[1rem] gap-[2rem]">
                 <div className="w-full flex flex-col gap-[1rem]">
                   <Typography tag="h3" fontSize="8xl" fontWeight="md" className="mb-[.5rem]">
                     {comic.title}

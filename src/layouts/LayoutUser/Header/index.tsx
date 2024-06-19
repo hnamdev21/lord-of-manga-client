@@ -17,6 +17,10 @@ import styles from "./styles.module.scss";
 const Header = () => {
   const authContext = React.use(AuthContext);
 
+  const avatarSrc =
+    (authContext?.user?.avatarPath ? `${process.env.NEXT_PUBLIC_LOCAL_API_URL}/uploads/${authContext?.user.avatarPath}` : null) ||
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+
   return (
     <header className={styles.header}>
       <Container className="py-[1rem]">
@@ -29,15 +33,10 @@ const Header = () => {
         </div>
 
         <div className="col-start-11 col-span-2 flex justify-end gap-[2rem]">
-          {authContext?.auth.token ? (
+          {authContext?.user ? (
             <Popover content={<PopoverProfile />}>
               <Link href={Path.USER.PROFILE}>
-                <Avatar
-                  size={40}
-                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                  alt="User Avatar"
-                  className="cursor-pointer"
-                />
+                <Avatar size={40} src={avatarSrc} alt="User avatar" className="cursor-pointer" />
               </Link>
             </Popover>
           ) : (

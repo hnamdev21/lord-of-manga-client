@@ -5,7 +5,10 @@ import jwt from "jsonwebtoken";
 import { useRouter } from "next/navigation";
 import React from "react";
 
+import AXIOS_INSTANCE from "@/apis/instance";
 import Path from "@/constants/path";
+import { User } from "@/types/data";
+import { BaseResponse } from "@/types/response";
 
 type Auth = {
   token: string | null;
@@ -14,6 +17,8 @@ type Auth = {
 
 export const AuthContext = React.createContext<{
   auth: Auth;
+  user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
   signIn: (token: string) => void;
   signOut: () => void;
   isLoaded: boolean;
@@ -25,6 +30,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     token: null,
     username: null,
   });
+  const [user, setUser] = React.useState<User | null>(null);
   const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
 
   const signIn = (token: string) => {
@@ -49,26 +55,33 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const token = localStorage.getItem("token");
 
     if (token) {
-      jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET || "", (err, decoded) => {
+      jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET || "", async (err, decoded) => {
         if (err) {
           message.info("Your session has expired. Please sign in again.");
           signOut();
-          console.log("[AuthProvider] err ::::", err.message);
+          setIsLoaded(true);
           return;
         }
 
-        console.log("[AuthProvider] decoded ::::", decoded);
+        const { data } = (
+          await AXIOS_INSTANCE.get<BaseResponse<User>>("/users/mine", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+        ).data;
+
+        setIsLoaded(true);
+        setUser(data);
         setAuth({
           token,
           username: (decoded as jwt.JwtPayload).sub as string,
         });
       });
     }
-
-    setIsLoaded(true);
   }, []);
 
-  return <AuthContext.Provider value={{ auth, signIn, signOut, isLoaded }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ auth, user, setUser, signIn, signOut, isLoaded }}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

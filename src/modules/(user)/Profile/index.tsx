@@ -25,13 +25,12 @@ const ProfileModule = () => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormUpdateProfile>();
 
-  const [user, setUser] = React.useState<User | null>(null);
   const [avatarFile, setAvatarFile] = React.useState<File | null>(null);
   const [base64Image, setBase64Image] = React.useState<string | null>(null);
 
   const avatarSrc =
     base64Image ||
-    (user?.avatarPath ? `${process.env.NEXT_PUBLIC_LOCAL_API_URL}/uploads/${user.avatarPath}` : null) ||
+    (authContext?.user?.avatarPath ? `${process.env.NEXT_PUBLIC_LOCAL_API_URL}/uploads/${authContext.user.avatarPath}` : null) ||
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
   const onFinish: FormProps<FormUpdateProfile>["onFinish"] = async (values: FormUpdateProfile) => {
@@ -76,19 +75,18 @@ const ProfileModule = () => {
       })
     ).data;
 
-    setUser(data);
+    authContext?.setUser(data);
     form.setFieldsValue(data);
-    console.log("[ProfileModule] getMe -> data :::: ", data);
   };
 
   React.useEffect(() => {
     if (!authContext?.isLoaded) return;
 
-    if (authContext?.auth.token) {
-      getMe();
-    } else {
+    if (!authContext.user) {
       message.error("Please sign in to continue");
       router.push(Path.AUTH.SIGN_IN);
+    } else {
+      form.setFieldsValue(authContext.user);
     }
   }, [authContext?.isLoaded]);
 
