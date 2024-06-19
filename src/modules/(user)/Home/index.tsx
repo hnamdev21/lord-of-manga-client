@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Container from "@/components/Container";
@@ -12,17 +13,10 @@ import Hero from "./components/Hero";
 import RowCard from "./components/RowCard";
 
 const HomeModule = () => {
-  const [categories, setCategories] = React.useState<Category[]>([]);
-
-  const fetchCategories = async () => {
+  const { data: categories } = useQuery("categories", async () => {
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Category[]>>>("/categories?size=4")).data;
-
-    setCategories(data.content);
-  };
-
-  React.useEffect(() => {
-    fetchCategories();
-  }, []);
+    return data.content;
+  });
 
   return (
     <div className="flex flex-col gap-[4rem] mb-[4rem]">
@@ -42,9 +36,7 @@ const HomeModule = () => {
         </div>
       </Container>
 
-      {categories.map((category) => (
-        <RowCard key={category.id} category={category} />
-      ))}
+      {categories?.map((category) => <RowCard key={category.id} category={category} />)}
     </div>
   );
 };

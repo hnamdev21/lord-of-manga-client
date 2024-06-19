@@ -33,9 +33,10 @@ const ComicsModule = () => {
   const [page, setPage] = React.useState(1);
 
   const onFinish: FormProps<FormComicFilter>["onFinish"] = async (values: FormComicFilter) => {
-    const query = `/comics?pageNumber=${page}&size=6&` + formDataToQuery(values, ignoreData);
+    const query = `/comics?pageNumber=1&size=6&` + formDataToQuery(values, ignoreData);
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(query)).data;
 
+    setPage(1);
     setData(data);
     setFilter(values);
   };

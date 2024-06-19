@@ -3,6 +3,7 @@
 import { Carousel } from "antd";
 import Image from "next/image";
 import React from "react";
+import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
@@ -12,21 +13,15 @@ import { Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 
 const Hero = () => {
-  const [comics, setComics] = React.useState<Comic[]>([]);
-
-  const fetchComics = async () => {
+  const { data: comics } = useQuery("comics", async () => {
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics?size=4&sortBy=createdAt")).data;
-    setComics(data.content);
-  };
-
-  React.useEffect(() => {
-    fetchComics();
-  }, []);
+    return data.content;
+  });
 
   return (
     <React.Fragment>
       <Carousel autoplay arrows dotPosition="left" className="w-full h-[60rem]">
-        {comics.map((comic) => (
+        {comics?.map((comic) => (
           <div key={comic.id}>
             <Container className="h-[60rem] relative">
               <div className="absolute top-0 left-0 w-full h-full brightness-[.5] blur-lg">

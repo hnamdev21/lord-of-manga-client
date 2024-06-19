@@ -1,5 +1,6 @@
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
+import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
@@ -14,16 +15,10 @@ type RowCardProps = {
 };
 
 const RowCard = ({ category }: RowCardProps) => {
-  const [comics, setComics] = React.useState<Comic[]>([]);
-
-  const fetchComics = async () => {
-    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics/category/search?term=" + category.name)).data;
-    setComics(data.content);
-  };
-
-  React.useEffect(() => {
-    fetchComics();
-  }, []);
+  const { data: comics } = useQuery(["comics", category.name], async () => {
+    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("comics/category/search?term=" + category.name)).data;
+    return data.content;
+  });
 
   return (
     <Container noGrid>
@@ -38,8 +33,8 @@ const RowCard = ({ category }: RowCardProps) => {
       </div>
 
       <div className="grid grid-cols-9 gap-[2rem] h-[20rem]">
-        {comics.length > 0 ? (
-          comics.map((comic) => (
+        {(comics?.length || 0) > 0 ? (
+          comics?.map((comic) => (
             <div key={comic.id} className="col-span-1">
               <CardComic {...comic} />
             </div>

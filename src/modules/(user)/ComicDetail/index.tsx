@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { FaComment, FaEye } from "react-icons/fa";
+import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
@@ -19,45 +20,37 @@ type ComicDetailModuleProps = {
 
 const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
   const router = useRouter();
-
-  const [comic, setComic] = React.useState<Comic | null>(null);
   const [chapters, setChapters] = React.useState<Comic["chapters"] | null>(null);
 
-  const fetchComic = async () => {
+  const { data } = useQuery(["comic", comicSlug], async () => {
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<Comic>>(`/comics/slug/${comicSlug}`)).data;
+    setChapters(data.chapters);
+    return data;
+  });
 
-    console.log("[ComicDetailModule] fetchComic -> data :::: ", data);
+  const onSearchChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!data) return;
 
-    if (data) {
-      setComic(data);
-      setChapters(data.chapters);
-    }
-  };
+      const { value } = e.target;
 
-  const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!comic) return;
-
-    const { value } = e.target;
-
-    if (value) {
-      const filteredChapters = comic.chapters.filter((chapter) => chapter.title.toLowerCase().includes(value.toLowerCase()));
-      setChapters(filteredChapters);
-    } else {
-      setChapters(comic?.chapters);
-    }
-  };
-
-  React.useEffect(() => {
-    fetchComic();
-  }, []);
+      if (value) {
+        const filteredChapters = data.chapters.filter((chapter) => chapter.title.toLowerCase().includes(value.toLowerCase()));
+        setChapters(filteredChapters);
+      } else {
+        setChapters(data.chapters);
+      }
+    },
+    [data]
+  );
 
   return (
     <React.Fragment>
       <Container className="h-[60rem] mb-[4rem] relative">
         <div className="absolute top-0 left-0 w-full h-full brightness-[.5] blur-lg">
           <Image
-            src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + comic?.thumbnailPath}
-            alt={`Thumbnail image of ${comic?.title}`}
+            src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + data?.thumbnailPath}
+            alt={`Thumbnail image of ${data?.title}`}
             layout="fill"
             objectFit="cover"
           />
@@ -65,18 +58,18 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
 
         <div className="col-span-3 py-[1rem]">
           <div className="h-full rounded-2xl overflow-hidden relative">
-            <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + comic?.coverPath} alt={`Cover image of ${comic?.title}`} layout="fill" />
+            <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + data?.coverPath} alt={`Cover image of ${data?.title}`} layout="fill" />
           </div>
         </div>
 
         <div className="relative col-span-9 flex flex-col justify-between py-[1rem] gap-[2rem]">
           <div className="w-full flex flex-col gap-[1rem]">
             <Typography tag="h3" fontSize="8xl" fontWeight="md" className="mb-[.5rem]">
-              {comic?.title}
+              {data?.title}
             </Typography>
 
             <div className="flex gap-[1rem]">
-              {comic?.categories.slice(0, 8).map((category) => (
+              {data?.categories.slice(0, 8).map((category) => (
                 <Button href="#" variant="outline" key={category.slug}>
                   {category.name}
                 </Button>
@@ -85,15 +78,15 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
 
             <div>
               <Typography tag="p" fontSize="md">
-                Author: {comic?.author}
+                Author: {data?.author}
               </Typography>
               <Typography tag="p" fontSize="md">
-                Publisher: {comic?.creator.fullName}
+                Publisher: {data?.creator.fullName}
               </Typography>
             </div>
 
             <Typography tag="p" fontSize="md" className="line-clamp-8 ">
-              {comic?.description}
+              {data?.description}
             </Typography>
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
+import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
@@ -16,23 +17,19 @@ type ReadingModuleProps = {
 };
 
 const ReadingModule = ({ comicSlug, chapterSlug }: ReadingModuleProps) => {
-  const [comic, setComic] = React.useState<Comic | null>(null);
-  const [chapter, setChapter] = React.useState<Chapter | null>(null);
-
-  const currentIndex = comic?.chapters.findIndex((c) => c.slug === chapterSlug) || -1;
-  const havePrevious = currentIndex > 0;
-  const haveNext = currentIndex < (comic?.chapters.length || -1) - 1;
-
-  const fetchData = async () => {
+  const { data } = useQuery(["comic", comicSlug, "chapter", chapterSlug], async () => {
     const { data: comic } = (await AXIOS_INSTANCE.get<BaseResponse<Comic>>("/comics/slug/" + comicSlug)).data;
     const { data: chapter } = (await AXIOS_INSTANCE.get<BaseResponse<Chapter>>("/chapters/slug/" + chapterSlug + "/comic/" + comic.id)).data;
-    setComic(comic);
-    setChapter(chapter);
-  };
 
-  React.useEffect(() => {
-    fetchData();
-  }, []);
+    return {
+      comic,
+      chapter,
+    };
+  });
+
+  const currentIndex = data?.comic.chapters.findIndex((c) => c.slug === chapterSlug) ?? -1;
+  const havePrevious = currentIndex > 0;
+  const haveNext = currentIndex < (data?.comic.chapters.length || -1) - 1;
 
   return (
     <div>
@@ -44,7 +41,7 @@ const ReadingModule = ({ comicSlug, chapterSlug }: ReadingModuleProps) => {
                 <Button
                   variant="outline"
                   className="flex justify-center items-center"
-                  href={`/comics/${comicSlug}/chapters/${comic?.chapters[currentIndex - 1]?.slug}`}
+                  href={`/comics/${comicSlug}/${data?.comic.chapters[currentIndex - 1]?.slug}`}
                 >
                   Previous
                 </Button>
@@ -52,7 +49,7 @@ const ReadingModule = ({ comicSlug, chapterSlug }: ReadingModuleProps) => {
             </div>
 
             <Typography tag="h4" fontSize="md" className="line-clamp-1 flex-1 border border-solid border-[var(--border-input)] rounded-md" align="center">
-              {chapter?.title}
+              {data?.chapter.title}
             </Typography>
 
             <div className="w-[20%]">
@@ -61,7 +58,7 @@ const ReadingModule = ({ comicSlug, chapterSlug }: ReadingModuleProps) => {
                   type="button"
                   variant="outline"
                   className="flex justify-center items-center"
-                  href={`/comics/${comicSlug}/chapters/${comic?.chapters[currentIndex + 1]?.slug}`}
+                  href={`/comics/${comicSlug}/${data?.comic.chapters[currentIndex + 1]?.slug}`}
                 >
                   Next
                 </Button>
@@ -72,16 +69,17 @@ const ReadingModule = ({ comicSlug, chapterSlug }: ReadingModuleProps) => {
       </div>
 
       <Container className="gap-x-[2rem] gap-y-0">
-        {chapter &&
-          Array.from({ length: chapter.totalPages }).map((_, index) => (
+        {data?.chapter &&
+          Array.from({ length: data?.chapter.totalPages }).map((_, index) => (
             <div
               className="col-start-3 col-span-8 relative"
               style={{
                 height: "calc(100vh - 5.2rem)",
               }}
+              key={index}
             >
               <Image
-                src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/comic/" + comic?.id + "/chapter-" + chapter?.ordinal + "/" + index + ".png"}
+                src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/comic/" + data?.comic.id + "/chapter-" + data?.chapter.ordinal + "/" + index + ".png"}
                 alt={`Chapter image of ${index}`}
                 layout="fill"
               />

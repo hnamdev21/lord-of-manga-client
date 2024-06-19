@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import CardComicHorizontal from "@/components/CardComicHorizontal";
@@ -14,16 +15,10 @@ type ColCardProps = {
 };
 
 const ColCard = ({ title, fetchUrl }: ColCardProps) => {
-  const [comics, setComics] = React.useState<Comic[]>([]);
-
-  const fetchComics = async () => {
+  const { data: comics } = useQuery(["comics", fetchUrl], async () => {
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(fetchUrl)).data;
-    setComics(data.content);
-  };
-
-  React.useEffect(() => {
-    fetchComics();
-  }, []);
+    return data.content;
+  });
 
   return (
     <React.Fragment>
@@ -32,16 +27,8 @@ const ColCard = ({ title, fetchUrl }: ColCardProps) => {
       </Typography>
 
       <div className="grid grid-cols-2 gap-[2rem]">
-        <div className="col-span-1 flex flex-col gap-[1rem]">
-          {comics.slice(0, 4).map((comic) => (
-            <CardComicHorizontal key={comic.id} {...comic} />
-          ))}
-        </div>
-        <div className="col-span-1 flex flex-col gap-[1rem]">
-          {comics.slice(4, 8).map((comic) => (
-            <CardComicHorizontal key={comic.id} {...comic} />
-          ))}
-        </div>
+        <div className="col-span-1 flex flex-col gap-[1rem]">{comics?.slice(0, 4).map((comic) => <CardComicHorizontal key={comic.id} {...comic} />)}</div>
+        <div className="col-span-1 flex flex-col gap-[1rem]">{comics?.slice(4, 8).map((comic) => <CardComicHorizontal key={comic.id} {...comic} />)}</div>
       </div>
     </React.Fragment>
   );

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import React from "react";
+import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Typography from "@/components/Typography";
@@ -13,24 +14,13 @@ type ListDataProps = {
 };
 
 const ListData = ({ prefix, fetchUrl }: ListDataProps) => {
-  const [data, setData] = React.useState<
-    Array<{
-      name: string;
-      slug: string;
-    }>
-  >([]);
-
-  const fetchData = async () => {
+  const { data } = useQuery(["listData", fetchUrl], async () => {
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<any>>(fetchUrl)).data;
-    setData(data.content);
-  };
+    return data.content;
+  });
 
-  React.useEffect(() => {
-    fetchData();
-  }, []);
-
-  return (data || []).map((item, index) => (
-    <li key={index}>
+  return (data || []).map((item: any) => (
+    <li key={item.id}>
       <Link href={`/${prefix}${item.slug}`}>
         <Typography tag="span" fontSize="sm">
           {item.name}
