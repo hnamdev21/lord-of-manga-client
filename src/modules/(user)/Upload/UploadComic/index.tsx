@@ -1,12 +1,17 @@
 "use client";
 
 import { Button, Divider, Form, FormProps, Input, InputNumber, InputRef, Select, Space, Upload } from "antd";
-import { RcFile } from "antd/es/upload";
+import { RcFile, UploadFile } from "antd/es/upload";
 import React from "react";
+import { useQuery } from "react-query";
 
+import AXIOS_INSTANCE from "@/apis/instance";
 import Typography from "@/components/Typography";
 import { COMIC_TYPE_OPTIONS } from "@/constants/options";
+import { AuthContext } from "@/providers/AuthProvider";
+import { Category, Comic, Tag } from "@/types/data";
 import { FormCreateComic } from "@/types/form";
+import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberFormatter } from "@/utils/formatter";
 
 const checkFile = (resolve: any, file: RcFile) => {
@@ -19,13 +24,46 @@ const checkFile = (resolve: any, file: RcFile) => {
 };
 
 const UploadComic = () => {
+  const authContext = React.use(AuthContext);
+  const { data } = useQuery(["categories", "tags"], async () => {
+    const [responseCategories, responseTags] = await Promise.all([
+      AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Category[]>>>("/categories"),
+      AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Tag[]>>>("/tags"),
+    ]);
+
+    const categories = responseCategories.data.data.content;
+    const tags = responseTags.data.data.content;
+
+    const categoryOptions = categories.map((category) => ({ label: category.name, value: category.name }));
+    const tagOptions = tags.map((tag) => ({ label: tag.name, value: tag.name }));
+
+    return { categories: categoryOptions, tags: tagOptions };
+  });
+
   const inputRef = React.useRef<InputRef>(null);
 
   const [searchValue, setSearchValue] = React.useState<string>("");
   const [disablePriceInput, setDisablePriceInput] = React.useState<boolean>(true);
 
-  const onFinish: FormProps<FormCreateComic>["onFinish"] = (_values: FormCreateComic) => {
-    //
+  const onFinish: FormProps<FormCreateComic>["onFinish"] = async (values: FormCreateComic) => {
+    const { data } = (
+      await AXIOS_INSTANCE.post<BaseResponse<Comic>>(
+        "/comics",
+        {
+          ...values,
+          cover: (values.cover[0] as UploadFile).originFileObj,
+          thumbnail: (values.thumbnail[0] as UploadFile).originFileObj,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authContext?.auth.token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+    ).data;
+
+    console.log("[UploadComic] data", data);
   };
 
   const addItem = (_e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
@@ -81,7 +119,7 @@ const UploadComic = () => {
             rules={[{ required: true, message: "Please select categories" }]}
             className="flex-1"
           >
-            <Select mode="multiple" allowClear id="categories" placeholder="-- Select categories --" options={[]} />
+            <Select mode="multiple" allowClear id="categories" placeholder="-- Select categories --" options={data?.categories} />
           </Form.Item>
           <Form.Item<FormCreateComic>
             label={
@@ -98,7 +136,7 @@ const UploadComic = () => {
               mode="multiple"
               showSearch={false}
               searchValue={searchValue}
-              options={[]}
+              options={data?.tags}
               dropdownRender={(menu) => (
                 <>
                   <Space>

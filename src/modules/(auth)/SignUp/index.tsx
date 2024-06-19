@@ -21,7 +21,6 @@ const SignUpModule = () => {
 
     if (response.code === "CREATED") {
       message.success(response.message);
-
       router.push(Path.AUTH.SIGN_IN);
     } else if (response.code === "CONFLICT") {
       message.error("Username or email already exists");

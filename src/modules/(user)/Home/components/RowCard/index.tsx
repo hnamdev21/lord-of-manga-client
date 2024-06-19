@@ -32,7 +32,7 @@ const RowCard = ({ category }: RowCardProps) => {
         </Button>
       </div>
 
-      <div className="grid grid-cols-9 gap-[2rem] h-[20rem]">
+      <div className="grid grid-cols-9 gap-[2rem] h-[34rem]">
         {(comics?.length || 0) > 0 ? (
           comics?.map((comic) => (
             <div key={comic.id} className="col-span-1">

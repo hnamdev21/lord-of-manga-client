@@ -1,3 +1,5 @@
+import { FieldNamesType } from "antd/es/cascader";
+
 export type FormSignIn = {
   username: string;
   password: string;
@@ -80,8 +82,8 @@ export type FormCreateComic = {
   author: string;
   tags: string[];
   categories: string[];
-  cover: File;
-  thumbnail: File;
+  cover: FieldNamesType[];
+  thumbnail: FieldNamesType[];
   type: "FREE" | "PAID_PER_CHAPTER" | "PAID_ONCE";
   price: number;
   showComment: boolean;

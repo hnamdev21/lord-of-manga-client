@@ -3,7 +3,6 @@
 import { Avatar, Button, Checkbox, Divider, Form, FormProps, Input, message, Select } from "antd";
 import { FieldNamesType } from "antd/es/cascader";
 import cn from "classnames";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { FaCamera } from "react-icons/fa";
 
@@ -11,7 +10,6 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { GENDER_OPTIONS } from "@/constants/options";
-import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { FormUpdateProfile } from "@/types/form";
@@ -21,7 +19,6 @@ import { getBase64 } from "@/utils/imageUtils";
 import styles from "./styles.module.scss";
 
 const ProfileModule = () => {
-  const router = useRouter();
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormUpdateProfile>();
 
@@ -80,15 +77,10 @@ const ProfileModule = () => {
   };
 
   React.useEffect(() => {
-    if (!authContext?.isLoaded) return;
+    authContext?.goToSignInIfNotAuthenticated();
 
-    if (!authContext.user) {
-      message.error("Please sign in to continue");
-      router.push(Path.AUTH.SIGN_IN);
-    } else {
-      form.setFieldsValue(authContext.user);
-    }
-  }, [authContext?.isLoaded]);
+    form.setFieldsValue(authContext?.user as User);
+  }, [authContext?.user]);
 
   return (
     <Container>

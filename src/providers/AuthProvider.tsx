@@ -21,34 +21,66 @@ export const AuthContext = React.createContext<{
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   signIn: (token: string) => void;
   signOut: () => void;
-  isLoaded: boolean;
+  goToSignInIfNotAuthenticated: () => void;
 } | null>(null);
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
+
+  const [loaded, setLoaded] = React.useState<boolean>(false);
   const [auth, setAuth] = React.useState<Auth>({
     token: null,
     username: null,
   });
   const [user, setUser] = React.useState<User | null>(null);
-  const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
 
-  const signIn = (token: string) => {
+  const getMe = async (token: string) => {
+    const { data } = (
+      await AXIOS_INSTANCE.get<BaseResponse<User>>("/users/mine", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    ).data;
+
+    return data;
+  };
+
+  const signIn = async (token: string) => {
+    const user = await getMe(token);
+
     localStorage.setItem("token", token);
+
+    setLoaded(true);
+    setUser(user);
     setAuth({
       token,
       username: jwt.decode(token)?.sub as string,
     });
+
     router.push(Path.USER.HOME);
   };
 
   const signOut = () => {
     localStorage.removeItem("token");
+
     setAuth({
       token: null,
       username: null,
     });
+    setUser(null);
+    setLoaded(true);
+
     router.push(Path.AUTH.SIGN_IN);
+  };
+
+  const goToSignInIfNotAuthenticated = () => {
+    if (!loaded) return;
+
+    if (!user) {
+      message.info("Please sign in to continue");
+      router.push(Path.AUTH.SIGN_IN);
+    }
   };
 
   React.useEffect(() => {
@@ -58,21 +90,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET || "", async (err, decoded) => {
         if (err) {
           message.info("Your session has expired. Please sign in again.");
+          setLoaded(true);
           signOut();
-          setIsLoaded(true);
           return;
         }
 
-        const { data } = (
-          await AXIOS_INSTANCE.get<BaseResponse<User>>("/users/mine", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-        ).data;
-
-        setIsLoaded(true);
-        setUser(data);
+        const user = await getMe(token);
+        setLoaded(true);
+        setUser(user);
         setAuth({
           token,
           username: (decoded as jwt.JwtPayload).sub as string,
@@ -81,7 +106,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  return <AuthContext.Provider value={{ auth, user, setUser, signIn, signOut, isLoaded }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ auth, user, setUser, signIn, signOut, goToSignInIfNotAuthenticated }}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;
