@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Divider, Form, FormProps, Input, InputNumber, InputRef, Select, Space, Upload } from "antd";
+import { Button, Divider, Form, FormProps, Input, InputNumber, InputRef, message, Select, Space, Upload } from "antd";
 import { RcFile, UploadFile } from "antd/es/upload";
 import React from "react";
 import { useQuery } from "react-query";
@@ -25,6 +25,7 @@ const checkFile = (resolve: any, file: RcFile) => {
 
 const UploadComic = () => {
   const authContext = React.use(AuthContext);
+  const [form] = Form.useForm<FormCreateComic>();
   const { data } = useQuery(["categories", "tags"], async () => {
     const [responseCategories, responseTags] = await Promise.all([
       AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Category[]>>>("/categories"),
@@ -46,7 +47,7 @@ const UploadComic = () => {
   const [disablePriceInput, setDisablePriceInput] = React.useState<boolean>(true);
 
   const onFinish: FormProps<FormCreateComic>["onFinish"] = async (values: FormCreateComic) => {
-    const { data } = (
+    const response = (
       await AXIOS_INSTANCE.post<BaseResponse<Comic>>(
         "/comics",
         {
@@ -63,7 +64,13 @@ const UploadComic = () => {
       )
     ).data;
 
-    console.log("[UploadComic] data", data);
+    if (response.code === "CREATED") {
+      message.success("Comic created successfully");
+    }
+
+    form.resetFields();
+    setSearchValue("");
+    setDisablePriceInput(true);
   };
 
   const addItem = (_e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
@@ -80,7 +87,7 @@ const UploadComic = () => {
 
   return (
     <div className="grid grid-cols-12 gap-[2rem]">
-      <Form layout="vertical" onFinish={onFinish} initialValues={{ type: COMIC_TYPE_OPTIONS[0].value }} className="col-start-5 col-span-4">
+      <Form layout="vertical" onFinish={onFinish} form={form} initialValues={{ type: COMIC_TYPE_OPTIONS[0].value }} className="col-start-5 col-span-4">
         <div className="flex gap-[2rem]">
           <Form.Item<FormCreateComic>
             label={
@@ -115,7 +122,7 @@ const UploadComic = () => {
                 Categories
               </Typography>
             }
-            name={"categories"}
+            name="categoryNames"
             rules={[{ required: true, message: "Please select categories" }]}
             className="flex-1"
           >
@@ -127,7 +134,7 @@ const UploadComic = () => {
                 Tags
               </Typography>
             }
-            name={"tags"}
+            name="tagNames"
             className="flex-1"
           >
             <Select
@@ -189,7 +196,7 @@ const UploadComic = () => {
                 Price
               </Typography>
             }
-            name={"price"}
+            name="price"
             className="flex-1"
           >
             <InputNumber disabled={disablePriceInput} addonAfter="VND" min={1_000} formatter={(value) => numberFormatter(value || 0)} className="w-full" />

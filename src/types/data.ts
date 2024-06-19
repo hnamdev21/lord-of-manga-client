@@ -55,6 +55,8 @@ export type Chapter = BaseEntity & {
   slug: string;
   ordinal: number;
   totalPages: number;
+  type: "FREE" | "PAID";
+  price: number;
   viewCount: number;
   status: ChapterStatus;
   showComment: boolean;
@@ -68,6 +70,8 @@ export type Comic = BaseEntity & {
   title: string;
   description: string;
   author: string;
+  type: "FREE" | "PAID_ONCE" | "PAID_PER_CHAPTER";
+  price: number;
   viewCount: number;
   searchCount: number;
   slug: string;

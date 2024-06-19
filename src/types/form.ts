@@ -80,8 +80,8 @@ export type FormCreateComic = {
   title: string;
   description: string;
   author: string;
-  tags: string[];
-  categories: string[];
+  tagNames: string[];
+  categoryNames: string[];
   cover: FieldNamesType[];
   thumbnail: FieldNamesType[];
   type: "FREE" | "PAID_PER_CHAPTER" | "PAID_ONCE";

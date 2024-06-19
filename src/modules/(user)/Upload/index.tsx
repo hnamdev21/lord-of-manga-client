@@ -3,8 +3,11 @@
 import { Tabs, type TabsProps } from "antd";
 import React from "react";
 
+import AXIOS_INSTANCE from "@/apis/instance";
 import Container from "@/components/Container";
 import { AuthContext } from "@/providers/AuthProvider";
+import { Comic } from "@/types/data";
+import { BaseGetResponse, BaseResponse } from "@/types/response";
 
 import styles from "./styles.module.scss";
 import UploadChapter from "./UploadChapter";
@@ -12,6 +15,20 @@ import UploadComic from "./UploadComic";
 
 const UploadModule = () => {
   const authContext = React.use(AuthContext);
+
+  const [createdComics, setCreatedComics] = React.useState<Comic[]>([]);
+
+  const fetchCreatedComics = async () => {
+    const { data } = (
+      await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(`/comics/mine?all=true`, {
+        headers: {
+          Authorization: `Bearer ${authContext?.auth.token}`,
+        },
+      })
+    ).data;
+
+    setCreatedComics(data.content);
+  };
 
   React.useEffect(() => {
     authContext?.goToSignInIfNotAuthenticated();
@@ -26,13 +43,24 @@ const UploadModule = () => {
     {
       key: "2",
       label: "Upload chapter",
-      children: <UploadChapter />,
+      children: <UploadChapter createdComics={createdComics} />,
     },
   ];
 
   return (
     <Container noGrid className="mb-[4rem]">
-      <Tabs defaultActiveKey="1" size="large" centered items={items} className={styles.tabs} />
+      <Tabs
+        defaultActiveKey="1"
+        size="large"
+        centered
+        items={items}
+        className={styles.tabs}
+        onChange={(key) => {
+          if (key === "2") {
+            fetchCreatedComics();
+          }
+        }}
+      />
     </Container>
   );
 };

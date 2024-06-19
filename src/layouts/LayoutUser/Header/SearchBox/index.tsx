@@ -2,14 +2,13 @@
 
 import { useDebounce } from "@uidotdev/usehooks";
 import { Divider } from "antd";
-import Image from "next/image";
 import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
-import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import { BaseResponse, SearchComicResponse } from "@/types/response";
 
+import SearchResultItem from "./SearchResultItem";
 import styles from "./styles.module.scss";
 
 const SearchBox = () => {
@@ -55,37 +54,7 @@ const SearchBox = () => {
           </Typography>
           <div className="flex flex-col gap-[1rem]">
             {data.byTitle.slice(0, 4).map((comic) => (
-              <div key={comic.id} className="flex h-[15rem] gap-[1rem]">
-                <div className="w-1/5 bg-white rounded-md overflow-hidden">
-                  <Image
-                    src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + comic.coverPath}
-                    alt={`Cover image of ${comic.title}`}
-                    width={400}
-                    height={400}
-                    className="object-cover"
-                  />
-                </div>
-
-                <div className="flex-1 flex flex-col justify-between">
-                  <div className="flex-1">
-                    <Typography tag="h4" fontWeight="md" className="line-clamp-1">
-                      {comic.title}
-                    </Typography>
-
-                    <Typography tag="p" className="line-clamp-4">
-                      {comic.description}
-                    </Typography>
-                  </div>
-
-                  <div className="flex gap-[.5rem]">
-                    {comic.tags.map((tag) => (
-                      <Button size="sm" href="#" variant="outline" key={tag.slug}>
-                        {tag.name}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <SearchResultItem key={comic.id} {...comic} />
             ))}
           </div>
         </div>
@@ -98,37 +67,7 @@ const SearchBox = () => {
           </Typography>
           <div className="flex flex-col gap-[1rem]">
             {data.byCategoryName.slice(0, 4).map((comic) => (
-              <div key={comic.id} className="flex h-[15rem] gap-[1rem]">
-                <div className="w-1/5 bg-white rounded-md overflow-hidden">
-                  <Image
-                    src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + comic.coverPath}
-                    alt={`Cover image of ${comic.title}`}
-                    width={400}
-                    height={400}
-                    className="object-cover"
-                  />
-                </div>
-
-                <div className="flex-1 flex flex-col justify-between">
-                  <div className="flex-1">
-                    <Typography tag="h4" fontWeight="md" className="line-clamp-1">
-                      {comic.title}
-                    </Typography>
-
-                    <Typography tag="p" className="line-clamp-4">
-                      {comic.description}
-                    </Typography>
-                  </div>
-
-                  <div className="flex gap-[.5rem]">
-                    {comic.tags.map((tag) => (
-                      <Button size="sm" href="#" variant="outline" key={tag.slug}>
-                        {tag.name}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <SearchResultItem key={comic.id} {...comic} />
             ))}
           </div>
         </div>
@@ -141,37 +80,7 @@ const SearchBox = () => {
           </Typography>
           <div className="flex flex-col gap-[1rem]">
             {data.byTagName.slice(0, 4).map((comic) => (
-              <div key={comic.id} className="flex h-[15rem] gap-[1rem]">
-                <div className="w-1/5 bg-white rounded-md overflow-hidden">
-                  <Image
-                    src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + comic.coverPath}
-                    alt={`Cover image of ${comic.title}`}
-                    width={400}
-                    height={400}
-                    className="object-cover"
-                  />
-                </div>
-
-                <div className="flex-1 flex flex-col justify-between">
-                  <div className="flex-1">
-                    <Typography tag="h4" fontWeight="md" className="line-clamp-1">
-                      {comic.title}
-                    </Typography>
-
-                    <Typography tag="p" className="line-clamp-4">
-                      {comic.description}
-                    </Typography>
-                  </div>
-
-                  <div className="flex gap-[.5rem]">
-                    {comic.tags.map((tag) => (
-                      <Button size="sm" href="#" variant="outline" key={tag.slug}>
-                        {tag.name}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <SearchResultItem key={comic.id} {...comic} />
             ))}
           </div>
         </div>

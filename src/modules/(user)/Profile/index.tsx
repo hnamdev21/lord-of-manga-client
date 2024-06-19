@@ -31,12 +31,12 @@ const ProfileModule = () => {
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
   const onFinish: FormProps<FormUpdateProfile>["onFinish"] = async (values: FormUpdateProfile) => {
-    // const formData = new FormData();
-    // formData.append("fullName", values.fullName);
-    // formData.append("email", values.email);
-    // formData.append("file", avatarFile as File);
-    // formData.append("receiveNews", values.receiveNews.toString());
-    // formData.append("twoStepVerification", values.twoStepVerification.toString());
+    const formData = new FormData();
+    formData.append("fullName", values.fullName);
+    formData.append("email", values.email);
+    formData.append("file", avatarFile as File);
+    formData.append("receiveNews", values.receiveNews.toString());
+    formData.append("twoStepVerification", values.twoStepVerification.toString());
 
     await AXIOS_INSTANCE.put<BaseResponse<User>>(
       "/users/mine",
