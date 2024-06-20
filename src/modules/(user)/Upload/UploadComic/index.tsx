@@ -66,11 +66,10 @@ const UploadComic = () => {
 
     if (response.code === "CREATED") {
       message.success("Comic created successfully");
+      form.resetFields();
+      setSearchValue("");
+      setDisablePriceInput(true);
     }
-
-    form.resetFields();
-    setSearchValue("");
-    setDisablePriceInput(true);
   };
 
   const addItem = (_e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
@@ -87,7 +86,13 @@ const UploadComic = () => {
 
   return (
     <div className="grid grid-cols-12 gap-[2rem]">
-      <Form layout="vertical" onFinish={onFinish} form={form} initialValues={{ type: COMIC_TYPE_OPTIONS[0].value }} className="col-start-5 col-span-4">
+      <Form
+        layout="vertical"
+        onFinish={onFinish}
+        form={form}
+        initialValues={{ type: COMIC_TYPE_OPTIONS[0].value, price: disablePriceInput ? 0 : 1_000 }}
+        className="col-start-5 col-span-4"
+      >
         <div className="flex gap-[2rem]">
           <Form.Item<FormCreateComic>
             label={
@@ -145,7 +150,7 @@ const UploadComic = () => {
               searchValue={searchValue}
               options={data?.tags}
               dropdownRender={(menu) => (
-                <>
+                <React.Fragment>
                   <Space>
                     <Input
                       placeholder="Search or add new tag"
@@ -155,13 +160,13 @@ const UploadComic = () => {
                       allowClear
                       onKeyDown={(e) => e.stopPropagation()}
                     />
-                    <Button type="primary" danger size={"middle"} onClick={addItem}>
+                    <Button type="primary" danger size="middle" onClick={addItem}>
                       Add
                     </Button>
                   </Space>
                   <Divider className="mt-[.5rem]" />
                   {menu}
-                </>
+                </React.Fragment>
               )}
             />
           </Form.Item>
@@ -174,7 +179,7 @@ const UploadComic = () => {
                 Comic type
               </Typography>
             }
-            name={"type"}
+            name="type"
             className="flex-1"
           >
             <Select
@@ -183,8 +188,10 @@ const UploadComic = () => {
               options={COMIC_TYPE_OPTIONS}
               onChange={(value) => {
                 if (value === "PAID_ONCE") {
+                  form.setFieldsValue({ price: 1_000 });
                   setDisablePriceInput(false);
                 } else {
+                  form.setFieldsValue({ price: 0 });
                   setDisablePriceInput(true);
                 }
               }}
@@ -199,7 +206,13 @@ const UploadComic = () => {
             name="price"
             className="flex-1"
           >
-            <InputNumber disabled={disablePriceInput} addonAfter="VND" min={1_000} formatter={(value) => numberFormatter(value || 0)} className="w-full" />
+            <InputNumber
+              disabled={disablePriceInput}
+              addonAfter="VND"
+              min={disablePriceInput ? 0 : 1_000}
+              formatter={(value) => numberFormatter(value || 0)}
+              className="w-full"
+            />
           </Form.Item>
         </div>
         <div>

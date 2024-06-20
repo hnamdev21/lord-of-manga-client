@@ -31,6 +31,14 @@ const ReadingModule = ({ comicSlug, chapterSlug }: ReadingModuleProps) => {
   const havePrevious = currentIndex > 0;
   const haveNext = currentIndex < (data?.comic.chapters.length || -1) - 1;
 
+  if (data && data.chapter && data.comic) {
+    const lastRead = JSON.parse(localStorage.getItem("lastRead") || "{}");
+
+    lastRead[comicSlug] = currentIndex;
+
+    localStorage.setItem("lastRead", JSON.stringify(lastRead));
+  }
+
   return (
     <div>
       <div className="py-[1rem] bg-[var(--color-black)]">
@@ -71,17 +79,20 @@ const ReadingModule = ({ comicSlug, chapterSlug }: ReadingModuleProps) => {
       <Container className="gap-x-[2rem] gap-y-0">
         {data?.chapter &&
           Array.from({ length: data?.chapter.totalPages }).map((_, index) => (
-            <div
-              className="col-start-3 col-span-8 relative"
-              style={{
-                height: "calc(100vh - 5.2rem)",
-              }}
-              key={index}
-            >
+            <div className="col-start-3 col-span-8 relative" key={index}>
               <Image
                 src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/comic/" + data?.comic.id + "/chapter-" + data?.chapter.ordinal + "/" + index + ".png"}
                 alt={`Chapter image of ${index}`}
-                layout="fill"
+                width={1920}
+                height={1080}
+                objectFit="contain"
+                style={{
+                  width: "auto",
+                  height: "auto",
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  margin: "0 auto",
+                }}
               />
             </div>
           ))}

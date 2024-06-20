@@ -15,15 +15,13 @@ import { BaseResponse } from "@/types/response";
 import { numberFormatter } from "@/utils/formatter";
 import { getBase64 } from "@/utils/imageUtils";
 
-import styles from "./styles.module.scss";
-
 type UploadChapterProps = {
   createdComics: Comic[];
 };
 
 const UploadChapter = ({ createdComics }: UploadChapterProps) => {
   const authContext = React.use(AuthContext);
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<FormCreateChapter>();
 
   const createdComicOptions = React.useMemo(() => {
     return createdComics.map((comic) => ({ label: comic.title, value: comic.id }));
@@ -44,7 +42,6 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
       formData.append("files", file);
     });
 
-    console.log({ ...values, files });
     const response = (
       await AXIOS_INSTANCE.post<BaseResponse<Chapter>>("/chapters", formData, {
         headers: {
@@ -56,6 +53,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
 
     if (response.code === "CREATED") {
       message.success("Chapter created successfully");
+      form.resetFields();
     }
   };
 
@@ -70,7 +68,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
 
   return (
     <React.Fragment>
-      <div className="grid grid-cols-12 gap-[2rem]">
+      <div className="grid grid-cols-12 gap-[2rem] h-[60%]">
         <Form
           layout="vertical"
           form={form}
@@ -78,6 +76,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
             type: CHAPTER_TYPE_OPTIONS[0].value,
             showComment: true,
             comicId: createdComicOptions.length > 0 ? createdComicOptions[0].value : undefined,
+            price: disablePriceInput ? 0 : 1_000,
           }}
           onFinish={onFinish}
           className="col-start-5 col-span-4"
@@ -127,8 +126,10 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
                 disabled={disablePriceInput}
                 onChange={(value) => {
                   if (value === "PAID") {
+                    form.setFieldsValue({ price: 1_000 });
                     setDisablePriceInput(false);
                   } else {
+                    form.setFieldsValue({ price: 0 });
                     setDisablePriceInput(true);
                   }
                 }}
@@ -143,7 +144,12 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
               name="price"
               className="flex-1"
             >
-              <InputNumber addonAfter="VND" min={1_000} formatter={(value) => numberFormatter(value || 0)} disabled={disablePriceInput} />
+              <InputNumber
+                addonAfter="VND"
+                min={disablePriceInput ? 0 : 1_000}
+                formatter={(value) => numberFormatter(value || 0)}
+                disabled={disablePriceInput}
+              />
             </Form.Item>
           </div>
 
@@ -174,8 +180,6 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
                     })
                   );
 
-                  console.log(fileList, base64Images);
-
                   setFiles([...files, ...fileList]);
                   setImages([...images, ...base64Images]);
                 }}
@@ -192,9 +196,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
         </Form>
       </div>
 
-      <div className={`${styles.previewImgs}`}>
-        <MultipleFileInput images={images} setImages={setImages} />
-      </div>
+      <MultipleFileInput images={images} setImages={setImages} />
     </React.Fragment>
   );
 };

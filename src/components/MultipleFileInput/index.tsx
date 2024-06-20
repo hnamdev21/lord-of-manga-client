@@ -8,18 +8,10 @@ import { v4 } from "uuid";
 import styles from "./styles.module.scss";
 
 function checkSizeGrid(size: number | any): number {
-  if (size > 1100) {
-    return 10;
-  }
-  if (size > 700) {
-    return 6;
-  }
-  if (size >= 500 && size < 700) {
-    return 4;
-  }
-  if (size < 500) {
-    return 3;
-  }
+  if (size > 1100) return 10;
+  if (size > 700) return 6;
+  if (size >= 500 && size < 700) return 4;
+  if (size < 500) return 3;
   return 10;
 }
 
@@ -47,14 +39,13 @@ const MultipleFileInput = ({ images, setImages }: MultipleFileInputProps) => {
   return (
     <div className="mt-[1rem]">
       <GridContextProvider onChange={onChange}>
-        <GridDropZone id="images" boxesPerRow={checkSizeGrid(size.width)} rowHeight={200} className={`${styles.container__drag}`}>
+        <GridDropZone id="images" boxesPerRow={checkSizeGrid(size.width)} rowHeight={160} className={styles.container__drag}>
           {images.map((image: string, index: number) => {
             return (
-              <GridItem key={v4()} className={`${styles.container__img}`}>
-                <div className="flex flex-col justify-between items-center w-full">
+              <GridItem key={v4()} className={styles.container__img}>
+                <div className="w-full h-full flex flex-col justify-between items-center">
                   <Image src={image} alt="img" />
                   <div className="flex items-center justify-between mt-5">
-                    <Button size="small" type="text" />
                     <Button size="small" type="text" icon={<FaTrash />} danger={true} onClick={() => deleteItem(index)} />
                   </div>
                 </div>

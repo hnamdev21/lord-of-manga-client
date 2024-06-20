@@ -1,10 +1,16 @@
 .container {
   &__img {
-    width: rem(100px) !important;
-    height: rem(100px) !important;
+    width: rem(80px) !important;
+    // height: rem(90px) !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   &__drag {
-    overflow-y: scroll;
+    height: rem(200px);
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 }

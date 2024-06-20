@@ -14,7 +14,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className="fixed top-0 left-0 z-20 p-[1rem] h-screen w-[5.2rem] hover:w-96 transition-all ease-in-out duration-300 bg-[var(--color-dark)]"
+      className="fixed top-0 left-0 z-30 p-[1rem] h-screen w-[5.2rem] hover:w-96 transition-all ease-in-out duration-300 bg-[var(--color-dark)]"
       style={{
         boxShadow: "0 0 20px rgba(0, 0, 0, 0.9)",
       }}
