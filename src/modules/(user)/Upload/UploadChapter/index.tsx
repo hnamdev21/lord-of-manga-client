@@ -14,6 +14,7 @@ import { FormCreateChapter } from "@/types/form";
 import { BaseResponse } from "@/types/response";
 import { numberFormatter } from "@/utils/formatter";
 import { getBase64 } from "@/utils/imageUtils";
+import { fromObjetToFomData } from "@/utils/utils";
 
 type UploadChapterProps = {
   createdComics: Comic[];
@@ -32,15 +33,16 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
   const [images, setImages] = React.useState<Array<string>>([]);
 
   const onFinish: FormProps<FormCreateChapter>["onFinish"] = async (values: FormCreateChapter) => {
-    const formData = new FormData();
-    formData.append("title", values.title);
-    formData.append("comicId", values.comicId);
-    formData.append("type", values.type);
-    formData.append("showComment", values.showComment.toString());
-    formData.append("price", (values.price || 0).toString());
-    files.forEach((file) => {
-      formData.append("files", file);
-    });
+    const formData = fromObjetToFomData({ ...values, files });
+    // const formData = new FormData();
+    // formData.append("title", values.title);
+    // formData.append("comicId", values.comicId);
+    // formData.append("type", values.type);
+    // formData.append("showComment", values.showComment.toString());
+    // formData.append("price", (values.price || 0).toString());
+    // files.forEach((file) => {
+    //   formData.append("files", file);
+    // });
 
     const response = (
       await AXIOS_INSTANCE.post<BaseResponse<Chapter>>("/chapters", formData, {

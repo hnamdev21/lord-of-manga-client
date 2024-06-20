@@ -1,17 +1,15 @@
 "use client";
 
-import cn from "classnames";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import React from "react";
 
 import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
-import { SidebarAuthenticatedPath, SidebarCommonPath } from "@/constants/sidebar";
+import { SidebarAdminPath, SidebarAuthenticatedPath, SidebarCommonPath } from "@/constants/sidebar";
 import { AuthContext } from "@/providers/AuthProvider";
 
+import SidebarItem from "./SidebarItem";
+
 const Sidebar = () => {
-  const pathname = usePathname();
   const authContext = React.use(AuthContext);
 
   return (
@@ -25,68 +23,45 @@ const Sidebar = () => {
         <Logo />
       </div>
 
+      {/* General Menu */}
       <Typography tag="h6" fontSize="sm" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
         Main
       </Typography>
-
       <div className="w-full flex flex-col gap-[1rem] mb-[2rem]">
-        {Object.entries(SidebarCommonPath).map(([key, value]) => {
-          const routes = pathname.split("/");
-          const active = routes[1].toLowerCase() === value.href.split("/")[1].toLowerCase();
-
-          return (
-            <Link
-              key={key}
-              href={value.href}
-              className={cn(
-                "w-full h-[3.2rem] p-[.9rem] flex-items center rounded-xl hover:brightness-50 transition ease-in-out duration-300 bg-[var(--color-dark-gray)] overflow-hidden",
-                {
-                  "bg-[var(--color-primary)]": active,
-                }
-              )}
-            >
-              <span className="flex items-center gap-[1rem] w-full h-[1.4rem]">
-                <value.icon className="flex-none" />{" "}
-                <Typography tag="span" className="flex-none">
-                  {value.label}
-                </Typography>
-              </span>
-            </Link>
-          );
-        })}
+        {Object.entries(SidebarCommonPath).map(([key, value]) => (
+          <SidebarItem key={key} {...value} />
+        ))}
       </div>
 
-      <Typography tag="h6" fontSize="sm" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
-        User
-      </Typography>
+      {/* Authenticated Menu */}
+      {authContext?.user && (
+        <React.Fragment>
+          <Typography tag="h6" fontSize="sm" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
+            User
+          </Typography>
 
-      <div className="w-full flex flex-col gap-[1rem]">
-        {authContext?.user &&
-          Object.entries(SidebarAuthenticatedPath).map(([key, value]) => {
-            const routes = pathname.split("/");
-            const active = routes[1].toLowerCase() === value.href.split("/")[1].toLowerCase();
+          <div className="w-full flex flex-col gap-[1rem] mb-[2rem]">
+            {Object.entries(SidebarAuthenticatedPath).map(([key, value]) => (
+              <SidebarItem key={key} {...value} />
+            ))}
+          </div>
 
-            return (
-              <Link
-                key={key}
-                href={value.href}
-                className={cn(
-                  "w-full h-[3.2rem] p-[.9rem] flex-items center rounded-xl hover:brightness-50 transition ease-in-out duration-300 bg-[var(--color-dark-gray)] overflow-hidden",
-                  {
-                    "bg-[var(--color-primary)]": active,
-                  }
-                )}
-              >
-                <span className="flex items-center gap-[1rem] w-full h-[1.4rem]">
-                  <value.icon className="flex-none" />{" "}
-                  <Typography tag="span" className="flex-none">
-                    {value.label}
-                  </Typography>
-                </span>
-              </Link>
-            );
-          })}
-      </div>
+          {/* Admin Menu */}
+          {authContext.user.roles.find((role) => role.name === "ADMIN") && (
+            <React.Fragment>
+              <Typography tag="h6" fontSize="sm" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
+                Admin
+              </Typography>
+
+              <div className="w-full flex flex-col gap-[1rem]">
+                {Object.entries(SidebarAdminPath).map(([key, value]) => (
+                  <SidebarItem key={key} {...value} />
+                ))}
+              </div>
+            </React.Fragment>
+          )}
+        </React.Fragment>
+      )}
     </div>
   );
 };

@@ -46,6 +46,10 @@
     &__primary {
       background-color: var(--color-primary);
       color: var(--color-light);
+
+      &:hover {
+        color: var(--color-light);
+      }
     }
 
     &__secondary {
@@ -92,6 +96,10 @@
 
     &__plain {
       background-color: transparent;
+
+      &:hover {
+        color: var(--color-primary);
+      }
     }
 
     &__solid {

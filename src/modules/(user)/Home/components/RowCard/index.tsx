@@ -27,7 +27,7 @@ const RowCard = ({ category }: RowCardProps) => {
           {category.name}
         </Typography>
 
-        <Button href="#" size="sm" variant="outline" className="flex items-center gap-[.5rem]">
+        <Button href="#" size="sm" variant="plain" className="flex items-center gap-[.5rem]">
           View all <FaArrowRight scale={0.4} />
         </Button>
       </div>

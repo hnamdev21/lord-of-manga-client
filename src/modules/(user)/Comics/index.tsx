@@ -12,7 +12,7 @@ import { Comic } from "@/types/data";
 import { FormComicFilter } from "@/types/form";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberFormatter } from "@/utils/formatter";
-import { formDataToQuery } from "@/utils/utils";
+import { fromObjetToQuery } from "@/utils/utils";
 
 const ignoreData = {
   sortBy: ORDER_BY_OPTIONS[0].value,
@@ -33,7 +33,7 @@ const ComicsModule = () => {
   const [page, setPage] = React.useState(1);
 
   const onFinish: FormProps<FormComicFilter>["onFinish"] = async (values: FormComicFilter) => {
-    const query = `/comics?pageNumber=1&size=6&` + formDataToQuery(values, ignoreData);
+    const query = `/comics?pageNumber=1&size=6&` + fromObjetToQuery(values, ignoreData);
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(query)).data;
 
     setPage(1);
@@ -43,7 +43,7 @@ const ComicsModule = () => {
 
   const onLoadMore = async () => {
     const nextPage = page + 1;
-    const query = `/comics?pageNumber=${nextPage}&size=6&` + formDataToQuery(filter, ignoreData);
+    const query = `/comics?pageNumber=${nextPage}&size=6&` + fromObjetToQuery(filter, ignoreData);
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(query)).data;
 
     setPage(nextPage);
