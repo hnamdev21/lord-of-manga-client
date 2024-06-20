@@ -1,5 +1,7 @@
-type ComicStatus = "PENDING" | "APPROVED" | "BANNED" | "DELETED";
-type ChapterStatus = "PENDING" | "APPROVED" | "BANNED" | "DELETED";
+export type ComicStatus = "PENDING" | "APPROVED" | "BANNED" | "DELETED";
+export type ChapterStatus = "PENDING" | "APPROVED" | "BANNED" | "DELETED";
+export type ComicType = "FREE" | "PAID_ONCE" | "PAID_PER_CHAPTER";
+export type ChapterType = "FREE" | "PAID";
 
 export type BaseEntity = {
   id: string;
@@ -55,7 +57,7 @@ export type Chapter = BaseEntity & {
   slug: string;
   ordinal: number;
   totalPages: number;
-  type: "FREE" | "PAID";
+  type: ChapterType;
   price: number;
   viewCount: number;
   status: ChapterStatus;
@@ -70,7 +72,7 @@ export type Comic = BaseEntity & {
   title: string;
   description: string;
   author: string;
-  type: "FREE" | "PAID_ONCE" | "PAID_PER_CHAPTER";
+  type: ComicType;
   price: number;
   viewCount: number;
   searchCount: number;

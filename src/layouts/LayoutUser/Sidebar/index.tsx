@@ -7,10 +7,12 @@ import React from "react";
 
 import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
-import SidebarPath from "@/constants/sidebar";
+import { SidebarAuthenticatedPath, SidebarCommonPath } from "@/constants/sidebar";
+import { AuthContext } from "@/providers/AuthProvider";
 
 const Sidebar = () => {
   const pathname = usePathname();
+  const authContext = React.use(AuthContext);
 
   return (
     <div
@@ -23,8 +25,12 @@ const Sidebar = () => {
         <Logo />
       </div>
 
-      <div className="w-full flex flex-col gap-[1rem]">
-        {Object.entries(SidebarPath).map(([key, value]) => {
+      <Typography tag="h6" fontSize="sm" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
+        Main
+      </Typography>
+
+      <div className="w-full flex flex-col gap-[1rem] mb-[2rem]">
+        {Object.entries(SidebarCommonPath).map(([key, value]) => {
           const routes = pathname.split("/");
           const active = routes[1].toLowerCase() === value.href.split("/")[1].toLowerCase();
 
@@ -48,6 +54,38 @@ const Sidebar = () => {
             </Link>
           );
         })}
+      </div>
+
+      <Typography tag="h6" fontSize="sm" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
+        User
+      </Typography>
+
+      <div className="w-full flex flex-col gap-[1rem]">
+        {authContext?.user &&
+          Object.entries(SidebarAuthenticatedPath).map(([key, value]) => {
+            const routes = pathname.split("/");
+            const active = routes[1].toLowerCase() === value.href.split("/")[1].toLowerCase();
+
+            return (
+              <Link
+                key={key}
+                href={value.href}
+                className={cn(
+                  "w-full h-[3.2rem] p-[.9rem] flex-items center rounded-xl hover:brightness-50 transition ease-in-out duration-300 bg-[var(--color-dark-gray)] overflow-hidden",
+                  {
+                    "bg-[var(--color-primary)]": active,
+                  }
+                )}
+              >
+                <span className="flex items-center gap-[1rem] w-full h-[1.4rem]">
+                  <value.icon className="flex-none" />{" "}
+                  <Typography tag="span" className="flex-none">
+                    {value.label}
+                  </Typography>
+                </span>
+              </Link>
+            );
+          })}
       </div>
     </div>
   );

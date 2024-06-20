@@ -17,6 +17,7 @@ type TypographyProps = React.HTMLAttributes<HTMLHeadingElement> & {
   fontWeight?: FontWeight;
   transform?: TextTransform;
   align?: TextAlign;
+  italic?: boolean;
   label?: boolean;
 };
 
@@ -27,6 +28,7 @@ const Typography = ({
   textColor = "light",
   transform = "none",
   align = "left",
+  italic = false,
   className = "",
   children,
   ...props
@@ -39,6 +41,7 @@ const Typography = ({
     styles[`text__color__${textColor}`],
     styles[`text__transform__${transform}`],
     styles[`text__align__${align}`],
+    { [styles["text__italic"]]: italic },
     className
   );
 

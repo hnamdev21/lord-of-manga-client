@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Checkbox, Form, FormProps, Input, InputNumber, message, Select, Upload } from "antd";
+import { Button, Checkbox, Form, FormProps, Input, InputNumber, message, Popover, Select, Upload } from "antd";
 import { FieldNamesType } from "antd/es/cascader";
 import React from "react";
 
@@ -167,26 +167,42 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
 
           <Form.Item<FormCreateChapter>>
             <div className="flex justify-center gap-[2rem]">
-              <Upload
-                beforeUpload={() => false}
-                multiple={true}
-                onChange={async (info) => {
-                  const fileList: File[] = [];
-                  const base64Images = await Promise.all(
-                    info.fileList.map(async (file) => {
-                      fileList.push(file.originFileObj as File);
-
-                      return await getBase64(file.originFileObj as FieldNamesType);
-                    })
-                  );
-
-                  setFiles([...files, ...fileList]);
-                  setImages([...images, ...base64Images]);
-                }}
-                showUploadList={false}
+              <Popover
+                content={
+                  <React.Fragment>
+                    <Typography className="span" fontSize="sm" style={{ color: "var(--color-light)" }}>
+                      For easier upload, you can select multiple images at once
+                    </Typography>
+                    <Typography className="span" fontSize="sm" style={{ color: "var(--color-light)" }}>
+                      The image name should be in order (1, 2, 3, ...)
+                    </Typography>
+                    <Typography className="span" fontSize="sm" style={{ color: "var(--color-light)" }}>
+                      Supported formats: .jpg, .jpeg, .png
+                    </Typography>
+                  </React.Fragment>
+                }
               >
-                <Button>Add images</Button>
-              </Upload>
+                <Upload
+                  beforeUpload={() => false}
+                  multiple={true}
+                  onChange={async (info) => {
+                    const fileList: File[] = [];
+                    const base64Images = await Promise.all(
+                      info.fileList.map(async (file) => {
+                        fileList.push(file.originFileObj as File);
+
+                        return await getBase64(file.originFileObj as FieldNamesType);
+                      })
+                    );
+
+                    setFiles([...files, ...fileList]);
+                    setImages([...images, ...base64Images]);
+                  }}
+                  showUploadList={false}
+                >
+                  <Button>Add images</Button>
+                </Upload>
+              </Popover>
 
               <Button type="primary" htmlType="submit">
                 Create

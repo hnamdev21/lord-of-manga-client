@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { FaBookmark } from "react-icons/fa";
+import { FaBookmark, FaDollarSign } from "react-icons/fa";
 
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
@@ -13,13 +13,13 @@ type ReadingHistoryCardProps = {
 };
 
 const ReadingHistoryCard = ({ comic, currentOrdinal, onClickRemove }: ReadingHistoryCardProps) => {
-  const { coverPath, title } = comic;
+  const { coverPath, title, type } = comic;
   const currentSlug = comic.chapters.find((chapter) => chapter.ordinal === currentOrdinal)?.slug;
 
   return (
     <div className="w-full h-full rounded-md overflow-hidden relative">
       <Button
-        className="absolute top-0 right-0 z-10 flex items-center justify-center aspect-square"
+        className="absolute top-[.5rem] right-[.5rem] z-10 flex items-center justify-center aspect-square backdrop-blur-xl"
         element="button"
         type="button"
         variant="plain"
@@ -27,10 +27,23 @@ const ReadingHistoryCard = ({ comic, currentOrdinal, onClickRemove }: ReadingHis
         style={{
           color: "var(--color-black)",
           borderColor: "var(--color-black)",
+          backgroundColor: "rgba(255, 255, 255, 0.2)",
         }}
       >
         <FaBookmark />
       </Button>
+
+      <div className="absolute top-[.5rem] left-[.5rem] z-10 flex items-center justify-center backdrop-blur-[2px] px-[.5rem] h-[1.6rem] rounded-md bg-[var(--color-primary)]">
+        {type === "FREE" ? (
+          <Typography tag="span" fontSize="sm" fontWeight="bold">
+            FREE
+          </Typography>
+        ) : (
+          <Typography tag="span" fontSize="sm" fontWeight="bold">
+            <FaDollarSign />
+          </Typography>
+        )}
+      </div>
 
       <div className="w-full h-[90%] relative">
         <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + coverPath} alt={`Cover image of ${title}`} layout="fill" />

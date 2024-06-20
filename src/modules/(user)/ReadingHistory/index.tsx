@@ -40,8 +40,11 @@ const ReadingHistoryModule = () => {
       <Typography tag="h1" fontSize="2xl" align="center">
         Reading History
       </Typography>
+      <Typography tag="p" fontSize="sm" align="center" italic>
+        Reading history only available on this device
+      </Typography>
 
-      <Divider />
+      <Divider className="my-[1rem]" />
 
       <div className="grid grid-cols-12 gap-[2rem] mb-[2rem]">
         {comics.map((comic, index) => (

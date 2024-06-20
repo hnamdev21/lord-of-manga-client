@@ -4,7 +4,7 @@ import { Form, Input } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { FaComment, FaEye } from "react-icons/fa";
+import { FaComment, FaDollarSign, FaEye } from "react-icons/fa";
 import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
@@ -13,6 +13,7 @@ import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { Comic } from "@/types/data";
 import { BaseResponse } from "@/types/response";
+import { timestampToDateTime } from "@/utils/formatter";
 
 type ComicDetailModuleProps = {
   comicSlug: string;
@@ -108,16 +109,30 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
         {chapters?.map((chapter, index) => (
           <div
             key={index}
-            className="col-span-12 flex justify-between p-[2rem] rounded-lg bg-[var(--color-dark)] hover:brightness-110 transition ease-in-out duration-300 cursor-pointer"
+            className="col-span-12 flex justify-between p-[1rem] rounded-lg bg-[var(--color-dark)] hover:brightness-110 transition ease-in-out duration-300 cursor-pointer"
             onClick={() => router.push(`/comics/${comicSlug}/${chapter.slug}`)}
           >
-            <Typography tag="h3" fontSize="xl" fontWeight="md">
-              {chapter.title}
-            </Typography>
+            <div>
+              <div className="flex items-center justify-center px-[.5rem] max-w-max h-[1.6rem] rounded-md bg-[var(--color-primary)]">
+                {chapter.type === "FREE" ? (
+                  <Typography tag="span" fontSize="sm" fontWeight="bold">
+                    FREE
+                  </Typography>
+                ) : (
+                  <Typography tag="span" fontSize="sm" fontWeight="bold">
+                    <FaDollarSign />
+                  </Typography>
+                )}
+              </div>
 
-            <div className="flex flex-col">
+              <Typography tag="h3" fontSize="lg" fontWeight="md">
+                {chapter.title}
+              </Typography>
+            </div>
+
+            <div className="flex flex-col justify-between">
               <Typography tag="p" fontSize="sm">
-                12/12/2021
+                {timestampToDateTime(chapter.createdAt)}
               </Typography>
               <div className="flex items-center gap-[1.5rem]">
                 <Typography tag="h6" className="line-clamp-1 flex items-center gap-[.5rem]">

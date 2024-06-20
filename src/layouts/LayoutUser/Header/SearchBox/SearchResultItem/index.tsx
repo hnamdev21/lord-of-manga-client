@@ -35,9 +35,9 @@ const SearchResultItem = (comic: SearchResultItemProps) => {
         </div>
 
         <div className="flex gap-[.5rem]">
-          {comic.tags.map((tag) => (
-            <Button size="sm" href="#" variant="outline" key={tag.slug}>
-              {tag.name}
+          {comic.categories.map((category) => (
+            <Button size="sm" href="#" variant="outline" key={category.slug}>
+              {category.name}
             </Button>
           ))}
         </div>

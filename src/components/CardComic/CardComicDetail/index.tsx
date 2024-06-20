@@ -9,19 +9,9 @@ import { timestampToDateTime } from "@/utils/formatter";
 
 type CardComicDetailProps = Comic;
 
-const CardComicDetail = ({
-  title,
-  description,
-  author,
-  coverPath,
-  chapters,
-  categories,
-  creator,
-  createdAt,
-  updatedAt,
-  viewCount,
-  slug,
-}: CardComicDetailProps) => {
+const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
+  const { title, description, author, coverPath, chapters, categories, creator, createdAt, updatedAt, viewCount, slug, status } = props;
+
   return (
     <React.Fragment>
       <div
@@ -42,6 +32,9 @@ const CardComicDetail = ({
                 {title}
               </Typography>
 
+              <Typography tag="h6" className="line-clamp-1" fontWeight="extrabold">
+                Status: {status}
+              </Typography>
               <Typography tag="h6" className="line-clamp-1">
                 Author: {author}
               </Typography>
