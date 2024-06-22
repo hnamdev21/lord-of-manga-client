@@ -12,6 +12,8 @@
     "format": "yarn lint:fix && yarn lint:css"
   },
   "dependencies": {
+    "@ant-design/cssinjs": "^1.21.0",
+    "@ant-design/nextjs-registry": "^1.0.0",
     "@ducanh2912/next-pwa": "^10.2.7",
     "@preact/signals": "^1.2.3",
     "@preact/signals-react": "^2.0.1",

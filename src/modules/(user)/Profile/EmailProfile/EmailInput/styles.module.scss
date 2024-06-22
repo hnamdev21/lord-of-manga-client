@@ -1,0 +1,17 @@
+.success {
+  color: var(--color-success) !important;
+  border-color: var(--color-success) !important;
+
+  &::placeholder {
+    color: var(--color-success) !important;
+  }
+}
+
+.warning {
+  color: var(--color-warning) !important;
+  border-color: var(--color-warning) !important;
+
+  &::placeholder {
+    color: var(--color-warning) !important;
+  }
+}

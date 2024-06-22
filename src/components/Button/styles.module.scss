@@ -1,5 +1,7 @@
 .button {
+  width: max-content;
   transition: all 0.3s ease-in-out;
+  text-align: center;
 
   &__size {
     &__xs {

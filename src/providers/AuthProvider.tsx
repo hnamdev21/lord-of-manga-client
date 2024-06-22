@@ -18,7 +18,7 @@ type Auth = {
 export const AuthContext = React.createContext<{
   auth: Auth;
   user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  refreshUser: () => Promise<void>;
   signIn: (token: string) => void;
   signOut: () => void;
   goToSignInIfNotAuthenticated: () => void;
@@ -44,6 +44,13 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     ).data;
 
     return data;
+  };
+
+  const refreshUser = async () => {
+    if (!auth.token) return;
+
+    const user = await getMe(auth.token);
+    setUser(user);
   };
 
   const signIn = async (token: string) => {
@@ -106,7 +113,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  return <AuthContext.Provider value={{ auth, user, setUser, signIn, signOut, goToSignInIfNotAuthenticated }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ auth, user, refreshUser, signIn, signOut, goToSignInIfNotAuthenticated }}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

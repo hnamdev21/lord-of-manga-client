@@ -20,10 +20,7 @@ const CardComic = ({ ...props }: CardComicProps) => {
 
   return (
     <Popover color="var(--color-dark)" content={<CardComicDetail {...props} />} placement="left">
-      <div
-        className="w-full h-[34rem] rounded-md overflow-hidden relative bg-[var(--color-dark)] cursor-pointer"
-        onClick={() => router.push("/comics/" + slug)}
-      >
+      <div className="w-full h-full rounded-md overflow-hidden relative bg-[var(--color-dark)] cursor-pointer" onClick={() => router.push("/comics/" + slug)}>
         <Button
           className="absolute top-[.5rem] right-[.5rem] z-10 flex items-center justify-center aspect-square backdrop-blur-[2px]"
           element="button"

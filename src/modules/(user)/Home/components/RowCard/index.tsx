@@ -35,7 +35,7 @@ const RowCard = ({ category }: RowCardProps) => {
       <div className="grid grid-cols-8 gap-[2rem] h-[34rem]">
         {(comics?.length || 0) > 0 ? (
           comics?.splice(0, 8).map((comic) => (
-            <div key={comic.id} className="col-span-1">
+            <div key={comic.id} className="col-span-1 h-full">
               <CardComic {...comic} />
             </div>
           ))

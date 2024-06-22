@@ -38,7 +38,7 @@ const Hero = () => {
                   <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + comic.coverPath} alt={`Cover image of ${comic.title}`} layout="fill" />
                 </div>
 
-                <Button href={"/comics/" + comic.slug} size="lg" className="block relative text-center">
+                <Button href={"/comics/" + comic.slug} size="lg" className="block relative text-center" style={{ width: "100%" }}>
                   Read now
                 </Button>
               </div>

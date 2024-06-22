@@ -1,5 +1,7 @@
 "use client";
 
+import { StyleProvider } from "@ant-design/cssinjs";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -14,7 +16,11 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
-        <ThemeProvider>{children}</ThemeProvider>
+        <AntdRegistry>
+          <StyleProvider hashPriority="low">
+            <ThemeProvider>{children}</ThemeProvider>
+          </StyleProvider>
+        </AntdRegistry>
       </QueryClientProvider>
     </AuthProvider>
   );

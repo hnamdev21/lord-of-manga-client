@@ -62,100 +62,103 @@ const ComicsModule = () => {
   }, []);
 
   return (
-    <Container className="relative">
-      <div className="col-span-3 sticky top-0">
-        <Form
-          onFinish={onFinish}
-          autoComplete="off"
-          className="rounded-2xl p-[2rem] bg-[var(--color-dark-gray)]"
-          layout="vertical"
-          initialValues={{
-            sortBy: ORDER_BY_OPTIONS[0].value,
-            type: FILTER_COMIC_TYPE_OPTIONS[0].value,
-          }}
-        >
-          <Form.Item<FormComicFilter>
-            label={
-              <Typography className="span" fontSize="sm">
-                Comic title
-              </Typography>
-            }
-            name="title"
+    <React.Fragment>
+      <Container className="mb-[2rem]">
+        <div className="col-span-12 row-span-1 sticky top-0">
+          <Form
+            onFinish={onFinish}
+            layout="vertical"
+            initialValues={{
+              sortBy: ORDER_BY_OPTIONS[0].value,
+              type: FILTER_COMIC_TYPE_OPTIONS[0].value,
+            }}
           >
-            <Input placeholder={"Naruto, Bleach, ..."} />
-          </Form.Item>
+            <div className="w-full grid grid-cols-12 gap-[2rem]">
+              <Form.Item<FormComicFilter>
+                label={
+                  <Typography className="span" fontSize="sm">
+                    Comic title
+                  </Typography>
+                }
+                name="title"
+                className="col-span-2"
+              >
+                <Input placeholder={"Naruto, Bleach, ..."} />
+              </Form.Item>
 
-          <div className="flex gap-[2rem]">
-            <Form.Item<FormComicFilter>
-              label={
-                <Typography className="span" fontSize="sm">
-                  Sort by
-                </Typography>
-              }
-              name="sortBy"
-              className="flex-1"
-            >
-              <Select options={ORDER_BY_OPTIONS} />
-            </Form.Item>
+              <Form.Item<FormComicFilter>
+                label={
+                  <Typography className="span" fontSize="sm">
+                    Sort by
+                  </Typography>
+                }
+                name="sortBy"
+                className="col-span-2"
+              >
+                <Select options={ORDER_BY_OPTIONS} />
+              </Form.Item>
 
-            <Form.Item<FormComicFilter>
-              label={
-                <Typography className="span" fontSize="sm">
-                  Comic type
-                </Typography>
-              }
-              name="type"
-              className="flex-1"
-            >
-              <Select options={FILTER_COMIC_TYPE_OPTIONS} />
-            </Form.Item>
-          </div>
+              <Form.Item<FormComicFilter>
+                label={
+                  <Typography className="span" fontSize="sm">
+                    Comic type
+                  </Typography>
+                }
+                name="type"
+                className="col-span-2"
+              >
+                <Select options={FILTER_COMIC_TYPE_OPTIONS} />
+              </Form.Item>
 
-          <div className="flex gap-[2rem]">
-            <Form.Item<FormComicFilter>
-              label={
-                <Typography className="span" fontSize="sm">
-                  From
-                </Typography>
-              }
-              name="from"
-            >
-              <InputNumber min={0} addonAfter="VND" formatter={(value) => numberFormatter(value || 0)} />
-            </Form.Item>
-            <Form.Item<FormComicFilter>
-              label={
-                <Typography className="span" fontSize="sm">
-                  To
-                </Typography>
-              }
-              name="to"
-            >
-              <InputNumber min={0} addonAfter="VND" formatter={(value) => numberFormatter(value || 0)} />
-            </Form.Item>
-          </div>
+              <Form.Item<FormComicFilter>
+                label={
+                  <Typography className="span" fontSize="sm">
+                    From
+                  </Typography>
+                }
+                name="from"
+                className="col-span-2"
+              >
+                <InputNumber min={0} addonAfter="VND" formatter={(value) => numberFormatter(value || 0)} style={{ width: "100%" }} />
+              </Form.Item>
+              <Form.Item<FormComicFilter>
+                label={
+                  <Typography className="span" fontSize="sm">
+                    To
+                  </Typography>
+                }
+                name="to"
+                className="col-span-2"
+              >
+                <InputNumber min={0} addonAfter="VND" formatter={(value) => numberFormatter(value || 0)} style={{ width: "100%" }} />
+              </Form.Item>
 
-          <Button type="primary" className="block w-full mb-[1rem] bg-[var(--color-primary)]" htmlType="submit">
-            Search
-          </Button>
-        </Form>
-      </div>
+              <div className="col-span-2 flex items-center">
+                <Button type="primary" className="block w-full bg-[var(--color-primary)]" htmlType="submit">
+                  Search
+                </Button>
+              </div>
+            </div>
+          </Form>
+        </div>
 
-      <div className="col-span-9 grid grid-cols-12 gap-[2rem]">
         {data?.content.map((comic) => (
-          <div key={comic.id} className="col-span-2">
+          <div key={comic.id} className="col-span-2 h-[46rem]">
             <CardComic {...comic} />
           </div>
         ))}
-      </div>
+      </Container>
 
-      <div className="col-start-4 col-span-9 flex justify-center">
-        {data?.totalPages && page < data.totalPages && (
-          <Button type="primary" className="bg-[var(--color-primary)]" onClick={onLoadMore}>
-            Load more
-          </Button>
-        )}
-      </div>
-    </Container>
+      <Container className="mb-[2rem]">
+        <div className="col-start-6 col-span-2 flex justify-center">
+          {data?.totalPages && page < data.totalPages && (
+            <Button type="primary" className="bg-[var(--color-primary)]" onClick={onLoadMore}>
+              Load more
+            </Button>
+          )}
+        </div>
+      </Container>
+    </React.Fragment>
   );
 };
 

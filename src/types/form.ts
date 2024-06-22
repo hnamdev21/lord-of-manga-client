@@ -19,6 +19,29 @@ export type FormChangePassword = {
   newPassword: string;
 };
 
+export type FormVerifyEmail = {
+  code: string;
+};
+
+export type FormUpdateEmail = {
+  email: string;
+};
+
+export type FormUpdateUserSetting = {
+  receiveNews: boolean;
+  twoStepVerification: boolean;
+};
+
+export type FormGetVerifyCode = {
+  username: string;
+  email: string;
+};
+
+export type FormUpdatePassword = {
+  oldPassword: string;
+  newPassword: string;
+};
+
 export type FormComicFilter = {
   title: string;
   sortBy: "all" | "createdAt" | "updatedAt" | "title" | "price" | "viewCount" | "searchCount" | "likeCount";

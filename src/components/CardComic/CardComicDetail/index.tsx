@@ -65,6 +65,8 @@ const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
                   <FaEye /> {viewCount}
                 </Typography>
               </div>
+
+              <Typography className="line-clamp-6">{description}</Typography>
             </div>
 
             <div className="flex items-center gap-[1rem]">
@@ -85,10 +87,6 @@ const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
               </Button>
             </div>
           </div>
-        </div>
-
-        <div className="h-1/5">
-          <Typography className="line-clamp-3">{description}</Typography>
         </div>
       </div>
     </React.Fragment>
