@@ -24,7 +24,7 @@ const Sidebar = () => {
       </div>
 
       {/* General Menu */}
-      <Typography tag="h6" fontSize="sm" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
+      <Typography tag="h6" fontSize="xs" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
         Main
       </Typography>
       <div className="w-full flex flex-col gap-[1rem] mb-[2rem]">
@@ -36,7 +36,7 @@ const Sidebar = () => {
       {/* Authenticated Menu */}
       {authContext?.user && (
         <React.Fragment>
-          <Typography tag="h6" fontSize="sm" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
+          <Typography tag="h6" fontSize="xs" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
             User
           </Typography>
 
@@ -49,7 +49,7 @@ const Sidebar = () => {
           {/* Admin Menu */}
           {authContext.user.roles.find((role) => role.name === "ADMIN") && (
             <React.Fragment>
-              <Typography tag="h6" fontSize="sm" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
+              <Typography tag="h6" fontSize="xs" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
                 Admin
               </Typography>
 

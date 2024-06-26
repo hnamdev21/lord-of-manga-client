@@ -25,23 +25,26 @@ const ProfileModule = () => {
       content: React.ReactNode;
     }
   > = React.useMemo(
-    () => ({
-      PROFILE: {
-        title: "Profile",
-        content: authContext.user && authContext.auth.token && <BasicInformationProfile user={authContext.user} token={authContext.auth.token} />,
-      },
-      EMAIL: { title: "Email", content: authContext.user && authContext.auth.token && <EmailProfile user={authContext.user} token={authContext.auth.token} /> },
-      PASSWORD: {
-        title: "Password",
-        content: authContext.user && authContext.auth.token && <PasswordProfile user={authContext.user} token={authContext.auth.token} />,
-      },
-    }),
-    [authContext.user]
+    () =>
+      authContext.user && authContext.auth.token
+        ? {
+            PROFILE: {
+              title: "Profile",
+              content: <BasicInformationProfile user={authContext.user} token={authContext.auth.token} />,
+            },
+            EMAIL: { title: "Email", content: <EmailProfile user={authContext.user} token={authContext.auth.token} /> },
+            PASSWORD: {
+              title: "Password",
+              content: <PasswordProfile user={authContext.user} token={authContext.auth.token} />,
+            },
+          }
+        : {
+            PROFILE: { title: "Profile", content: null },
+            EMAIL: { title: "Email", content: null },
+            PASSWORD: { title: "Password", content: null },
+          },
+    [authContext.user, authContext.auth.token]
   );
-
-  React.useEffect(() => {
-    authContext.goToSignInIfNotAuthenticated();
-  }, [authContext.user]);
 
   return (
     <Container className="flex-1 pt-[4rem]">

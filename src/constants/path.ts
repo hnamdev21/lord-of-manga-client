@@ -3,6 +3,10 @@ const Path = {
     HOME: "/",
     PROFILE: "/profile",
     COMICS: "/comics",
+    COMIC_MANAGEMENT: "/comic-management",
+    RECYCLE_BIN: "/recycle-bin",
+    SAVED_COMICS: "/saved-comics",
+    UPLOAD: "/upload",
   } as const,
   AUTH: {
     SIGN_IN: "/sign-in",

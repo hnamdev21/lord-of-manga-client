@@ -30,10 +30,6 @@ const UploadModule = () => {
     setCreatedComics(data.content);
   };
 
-  React.useEffect(() => {
-    authContext?.goToSignInIfNotAuthenticated();
-  }, [authContext?.user]);
-
   const items: TabsProps["items"] = [
     {
       key: "1",

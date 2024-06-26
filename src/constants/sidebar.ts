@@ -1,4 +1,4 @@
-import { FaBook, FaBookmark, FaBox, FaChartBar, FaClock, FaHome, FaSearch, FaUpload, FaUser, FaUserFriends } from "react-icons/fa";
+import { FaBook, FaBookmark, FaBox, FaChartBar, FaClock, FaHome, FaSearch, FaTrashRestore, FaUpload, FaUser, FaUserFriends } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
 
 export type SidebarItem = {
@@ -38,16 +38,22 @@ export const SidebarAuthenticatedPath = {
     href: "/profile",
     icon: FaUser,
   } as const,
-  COMIC_MANAGEMENT: {
-    label: "Comic Management",
-    href: "/comic-management",
-    icon: FaBox,
-  } as const,
   UPLOAD: {
     label: "Upload Comic",
     href: "/upload",
     icon: FaUpload,
   } as const,
+  COMIC_MANAGEMENT: {
+    label: "Comic Management",
+    href: "/comic-management",
+    icon: FaBox,
+  } as const,
+  RECYCLE_BIN: {
+    label: "Recycle Bin",
+    href: "/recycle-bin",
+    icon: FaTrashRestore,
+  } as const,
+
   SAVED_COMICS: {
     label: "Saved Comics",
     href: "/saved-comics",

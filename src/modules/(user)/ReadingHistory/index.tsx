@@ -16,17 +16,23 @@ const ReadingHistoryModule = () => {
   const lastRead = JSON.parse(localStorage.getItem("lastRead") || "{}");
   const [comics, setComics] = React.useState<Comic[]>([]);
 
-  useQuery(["readingHistory"], async () => {
-    const slugs = Object.keys(lastRead);
-    const { data } = (
-      await AXIOS_INSTANCE.post<BaseResponse<Comic[]>>("/comics/slugs", {
-        slugs,
-      })
-    ).data;
-    setComics(data);
+  useQuery(
+    ["readingHistory"],
+    async () => {
+      const slugs = Object.keys(lastRead);
+      const { data } = (
+        await AXIOS_INSTANCE.post<BaseResponse<Comic[]>>("/comics/slugs", {
+          slugs,
+        })
+      ).data;
+      setComics(data);
 
-    return data;
-  });
+      return data;
+    },
+    {
+      enabled: !!Object.keys(lastRead).length,
+    }
+  );
 
   const onClickRemove = (comic: Comic) => {
     const lastRead = JSON.parse(localStorage.getItem("lastRead") || "{}");

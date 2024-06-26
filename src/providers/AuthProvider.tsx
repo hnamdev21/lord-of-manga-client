@@ -2,7 +2,7 @@
 
 import { message } from "antd";
 import jwt from "jsonwebtoken";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
@@ -12,7 +12,6 @@ import { BaseResponse } from "@/types/response";
 
 type Auth = {
   token: string | null;
-  username: string | null;
 };
 
 export const AuthContext = React.createContext<{
@@ -21,16 +20,25 @@ export const AuthContext = React.createContext<{
   refreshUser: () => Promise<void>;
   signIn: (token: string) => void;
   signOut: () => void;
-  goToSignInIfNotAuthenticated: () => void;
 } | null>(null);
+
+const pathsNeedAuth = [Path.USER.PROFILE, Path.USER.UPLOAD, Path.USER.COMIC_MANAGEMENT, Path.USER.RECYCLE_BIN, Path.USER.SAVED_COMICS];
+const pathsNeedAdminRole = [
+  Path.ADMIN.DASHBOARD,
+  Path.ADMIN.USERS,
+  Path.ADMIN.COMICS,
+  Path.ADMIN.CATEGORIES,
+  Path.ADMIN.TAGS,
+  Path.ADMIN.COMMENTS,
+  Path.ADMIN.CHAPTERS,
+];
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
+  const pathname = usePathname();
 
-  const [loaded, setLoaded] = React.useState<boolean>(false);
   const [auth, setAuth] = React.useState<Auth>({
     token: null,
-    username: null,
   });
   const [user, setUser] = React.useState<User | null>(null);
 
@@ -58,11 +66,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     localStorage.setItem("token", token);
 
-    setLoaded(true);
     setUser(user);
     setAuth({
       token,
-      username: jwt.decode(token)?.sub as string,
     });
 
     router.push(Path.USER.HOME);
@@ -73,47 +79,52 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     setAuth({
       token: null,
-      username: null,
     });
     setUser(null);
-    setLoaded(true);
 
     router.push(Path.AUTH.SIGN_IN);
-  };
-
-  const goToSignInIfNotAuthenticated = () => {
-    if (!loaded) return;
-
-    if (!user) {
-      message.info("Please sign in to continue");
-      router.push(Path.AUTH.SIGN_IN);
-    }
   };
 
   React.useEffect(() => {
     const token = localStorage.getItem("token");
 
     if (token) {
-      jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET || "", async (err, decoded) => {
-        if (err) {
-          message.info("Your session has expired. Please sign in again.");
-          setLoaded(true);
-          signOut();
-          return;
-        }
-
-        const user = await getMe(token);
-        setLoaded(true);
-        setUser(user);
-        setAuth({
-          token,
-          username: (decoded as jwt.JwtPayload).sub as string,
-        });
+      setAuth({
+        token,
       });
+
+      return;
     }
+
+    pathsNeedAuth.forEach((path) => {
+      if (pathname.startsWith(path)) {
+        message.info("Please sign in to continue");
+        router.push(Path.AUTH.SIGN_IN);
+      }
+    });
   }, []);
 
-  return <AuthContext.Provider value={{ auth, user, refreshUser, signIn, signOut, goToSignInIfNotAuthenticated }}>{children}</AuthContext.Provider>;
+  React.useEffect(() => {
+    if (!auth.token) return;
+
+    try {
+      jwt.verify(auth.token, process.env.NEXT_PUBLIC_JWT_SECRET || "");
+
+      getMe(auth.token).then((user) => {
+        setUser(user);
+
+        pathsNeedAdminRole.forEach((path) => {
+          if (pathname.startsWith(path) && !user.roles.some((role) => role.name === "ADMIN")) {
+            router.push(Path.ERROR.FORBIDDEN);
+          }
+        });
+      });
+    } catch (error) {
+      signOut();
+    }
+  }, [auth.token]);
+
+  return <AuthContext.Provider value={{ auth, user, refreshUser, signIn, signOut }}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;
