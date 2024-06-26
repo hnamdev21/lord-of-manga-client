@@ -1,28 +1,32 @@
 "use client";
 
-import { message, notification, Table, TableProps, Tag as TagComponent } from "antd";
+import { message, Modal, notification, Table, TableProps, Tag as AntdTag } from "antd";
 import React from "react";
+import { FaTimes } from "react-icons/fa";
 import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
-import { TypeMapping } from "@/constants/mapping";
-import Path from "@/constants/path";
+import { ComicTypeMapping } from "@/constants/mapping";
 import { AuthContext } from "@/providers/AuthProvider";
-import { Category, Comic, Tag } from "@/types/data";
+import { Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
+import ComicDetail from "./ComicDetail";
+import FormUpdate from "./FormUpdate";
+
 const ComicManagementModule = () => {
   const authContext = React.use(AuthContext);
-  const [notificationApi, contextHolder] = notification.useNotification();
+  const [notificationApi, notificationHolder] = notification.useNotification();
+  const [modalApi, modalHolder] = Modal.useModal();
 
   const { data, refetch } = useQuery(
     "my-comics",
     async () => {
-      if (!authContext?.auth.token) return [];
+      if (!authContext?.auth.token) return null;
 
       const { data } = (
         await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics/mine?all=true", {
@@ -31,7 +35,8 @@ const ComicManagementModule = () => {
           },
         })
       ).data;
-      return data.content;
+
+      return data;
     },
     {
       enabled: !!authContext?.auth.token,
@@ -89,6 +94,62 @@ const ComicManagementModule = () => {
     }
   };
 
+  const onEdit = React.useCallback(
+    (id: string) => {
+      const comic = data?.content.find((comic) => comic.id === id);
+
+      if (!comic) {
+        message.error("Something went wrong. Please try again later");
+        return;
+      }
+
+      modalApi.confirm({
+        title: (
+          <Typography tag="h3" align="center" fontSize="lg">
+            Edit Comic
+          </Typography>
+        ),
+        width: "30%",
+        content: <FormUpdate comic={comic} />,
+        icon: null,
+        centered: true,
+        footer: null,
+        maskClosable: true,
+        closable: true,
+        closeIcon: <FaTimes />,
+      });
+    },
+    [data]
+  );
+
+  const onDetail = React.useCallback(
+    (id: string) => {
+      const comic = data?.content.find((comic) => comic.id === id);
+
+      if (!comic) {
+        message.error("Something went wrong, please try again later");
+        return;
+      }
+
+      modalApi.info({
+        title: (
+          <Typography tag="h1" fontSize="xl" fontWeight="bold" align="center">
+            {comic.title}
+          </Typography>
+        ),
+        width: 1640,
+        content: <ComicDetail comic={comic} />,
+        icon: null,
+        centered: true,
+        footer: null,
+        maskClosable: true,
+        closable: true,
+        closeIcon: <FaTimes />,
+      });
+    },
+    [data]
+  );
+
   const columns: TableProps<Comic>["columns"] = React.useMemo(
     () => [
       {
@@ -116,21 +177,21 @@ const ComicManagementModule = () => {
         dataIndex: "categories",
         key: "categories",
         width: "15%",
-        render: (categories: Category[]) => categories.map((category) => <TagComponent key={category.id}>{category.name}</TagComponent>),
+        render: (_, { categories }) => categories.map((category) => <AntdTag key={category.id}>{category.name}</AntdTag>),
       },
       {
         title: "Tags",
         dataIndex: "tags",
         key: "tags",
         width: "15%",
-        render: (tags: Tag[]) => tags.map((tag) => <TagComponent key={tag.id}>{tag.name}</TagComponent>),
+        render: (_, { tags }) => tags.map((tag) => <AntdTag key={tag.id}>{tag.name}</AntdTag>),
       },
       {
         title: "Type",
         dataIndex: "type",
         key: "type",
         width: "10%",
-        render: (type: string) => TypeMapping[type] || type,
+        render: (_, { type }) => <AntdTag color={type === "FREE" ? "green" : "yellow"}>{ComicTypeMapping[type]}</AntdTag>,
       },
       {
         title: "Price",
@@ -144,6 +205,7 @@ const ComicManagementModule = () => {
         dataIndex: "status",
         key: "status",
         width: "7.5%",
+        render: (_, { status }) => <AntdTag color="blue">{status}</AntdTag>,
       },
       {
         title: "Created At",
@@ -157,12 +219,12 @@ const ComicManagementModule = () => {
         dataIndex: "action",
         key: "action",
         width: "12.5%",
-        render: (_, { id, slug }) => (
+        render: (_, { id }) => (
           <div className="flex gap-[1rem]">
-            <Button href="#" variant="plain" size="sm">
+            <Button element="button" type="button" variant="plain" size="sm" onClick={() => onEdit(id)}>
               Edit
             </Button>
-            <Button href={Path.USER.COMIC_MANAGEMENT + "/" + slug} variant="outline" size="sm">
+            <Button element="button" type="button" variant="outline" size="sm" onClick={() => onDetail(id)}>
               Detail
             </Button>
             <Button element="button" type="button" color="danger" size="sm" onClick={() => onDelete(id)}>
@@ -172,18 +234,20 @@ const ComicManagementModule = () => {
         ),
       },
     ],
-    []
+    [data]
   );
 
   return (
     <React.Fragment>
-      {contextHolder}
+      {notificationHolder}
+      {modalHolder}
+
       <Container noGrid className="mb-[2rem]">
         <Typography align="center" tag="h1" fontSize="xl" fontWeight="bold" className="mb-[1rem]">
           Comic Management
         </Typography>
 
-        <Table columns={columns} dataSource={data} size="small" pagination={false} rowKey={(record: Comic) => record.id} bordered />
+        <Table columns={columns} dataSource={data?.content} size="small" pagination={false} rowKey={(record: Comic) => record.id} bordered />
       </Container>
     </React.Fragment>
   );

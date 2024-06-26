@@ -1,7 +1,31 @@
-export type ComicStatus = "PENDING" | "APPROVED" | "BANNED" | "DELETED";
-export type ChapterStatus = "PENDING" | "APPROVED" | "BANNED" | "DELETED";
-export type ComicType = "FREE" | "PAID_ONCE" | "PAID_PER_CHAPTER";
-export type ChapterType = "FREE" | "PAID";
+export const ComicStatus = {
+  PENDING: "PENDING",
+  BANNED: "BANNED",
+  APPROVED: "APPROVED",
+  DELETED: "DELETED",
+} as const;
+export type ComicStatus = keyof typeof ComicStatus;
+
+export const ChapterStatus = {
+  PENDING: "PENDING",
+  APPROVED: "APPROVED",
+  BANNED: "BANNED",
+  DELETED: "DELETED",
+} as const;
+export type ChapterStatus = keyof typeof ChapterStatus;
+
+export const ComicType = {
+  FREE: "FREE",
+  PAID_ONCE: "PAID_ONCE",
+  PAID_PER_CHAPTER: "PAID_PER_CHAPTER",
+} as const;
+export type ComicType = keyof typeof ComicType;
+
+export const ChapterType = {
+  FREE: "FREE",
+  PAID: "PAID",
+} as const;
+export type ChapterType = keyof typeof ChapterType;
 
 export type BaseEntity = {
   id: string;

@@ -83,7 +83,7 @@ const ComicsModule = () => {
                 name="title"
                 className="col-span-2"
               >
-                <Input placeholder={"Naruto, Bleach, ..."} />
+                <Input placeholder="Naruto, Bleach, ..." />
               </Form.Item>
 
               <Form.Item<FormComicFilter>
@@ -143,7 +143,7 @@ const ComicsModule = () => {
         </div>
 
         {data?.content.map((comic) => (
-          <div key={comic.id} className="col-span-2 h-[46rem]">
+          <div key={comic.id} className="col-span-2 h-[36rem]">
             <CardComic {...comic} />
           </div>
         ))}

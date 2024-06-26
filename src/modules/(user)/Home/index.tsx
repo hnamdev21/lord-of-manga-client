@@ -36,7 +36,7 @@ const HomeModule = () => {
         </div>
       </Container>
 
-      {categories?.map((category) => <RowCard key={category.id} category={category} />)}
+      {categories?.map((category) => <RowCard key={category.id} category={category} numberOfColumns={7} />)}
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
-import Path from "@/constants/path";
+import Path, { adminPaths, authorizedUserPaths } from "@/constants/path";
 import { User } from "@/types/data";
 import { BaseResponse } from "@/types/response";
 
@@ -21,17 +21,6 @@ export const AuthContext = React.createContext<{
   signIn: (token: string) => void;
   signOut: () => void;
 } | null>(null);
-
-const pathsNeedAuth = [Path.USER.PROFILE, Path.USER.UPLOAD, Path.USER.COMIC_MANAGEMENT, Path.USER.RECYCLE_BIN, Path.USER.SAVED_COMICS];
-const pathsNeedAdminRole = [
-  Path.ADMIN.DASHBOARD,
-  Path.ADMIN.USERS,
-  Path.ADMIN.COMICS,
-  Path.ADMIN.CATEGORIES,
-  Path.ADMIN.TAGS,
-  Path.ADMIN.COMMENTS,
-  Path.ADMIN.CHAPTERS,
-];
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -96,7 +85,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
-    pathsNeedAuth.forEach((path) => {
+    authorizedUserPaths.forEach((path) => {
       if (pathname.startsWith(path)) {
         message.info("Please sign in to continue");
         router.push(Path.AUTH.SIGN_IN);
@@ -113,7 +102,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       getMe(auth.token).then((user) => {
         setUser(user);
 
-        pathsNeedAdminRole.forEach((path) => {
+        adminPaths.forEach((path) => {
           if (pathname.startsWith(path) && !user.roles.some((role) => role.name === "ADMIN")) {
             router.push(Path.ERROR.FORBIDDEN);
           }

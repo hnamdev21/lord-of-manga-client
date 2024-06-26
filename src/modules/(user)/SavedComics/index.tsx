@@ -5,7 +5,6 @@ import React from "react";
 
 import CardComic from "@/components/CardComic";
 import Container from "@/components/Container";
-import Pagination from "@/components/Pagination";
 import Typography from "@/components/Typography";
 
 const SavedComicsModule = () => {
@@ -23,18 +22,6 @@ const SavedComicsModule = () => {
             <CardComic />
           </div>
         ))}
-      </div>
-
-      <div className="w-full flex justify-center">
-        <Pagination
-          currentPage={1}
-          onPageChange={() => {
-            //
-          }}
-          totalPages={10}
-          pageSize={12}
-          siblingCount={2}
-        />
       </div>
     </Container>
   );

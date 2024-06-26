@@ -32,4 +32,15 @@ const Path = {
 
 export type Path = (typeof Path)[keyof typeof Path];
 
+export const authorizedUserPaths = [Path.USER.PROFILE, Path.USER.UPLOAD, Path.USER.COMIC_MANAGEMENT, Path.USER.RECYCLE_BIN, Path.USER.SAVED_COMICS];
+export const adminPaths = [
+  Path.ADMIN.DASHBOARD,
+  Path.ADMIN.USERS,
+  Path.ADMIN.COMICS,
+  Path.ADMIN.CATEGORIES,
+  Path.ADMIN.TAGS,
+  Path.ADMIN.COMMENTS,
+  Path.ADMIN.CHAPTERS,
+];
+
 export default Path;

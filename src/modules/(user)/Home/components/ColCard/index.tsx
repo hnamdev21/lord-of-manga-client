@@ -27,8 +27,12 @@ const ColCard = ({ title, fetchUrl }: ColCardProps) => {
       </Typography>
 
       <div className="grid grid-cols-2 gap-[2rem]">
-        <div className="col-span-1 flex flex-col gap-[1rem]">{comics?.slice(0, 4).map((comic) => <CardComicHorizontal key={comic.id} {...comic} />)}</div>
-        <div className="col-span-1 flex flex-col gap-[1rem]">{comics?.slice(4, 8).map((comic) => <CardComicHorizontal key={comic.id} {...comic} />)}</div>
+        <div className="col-span-1 flex flex-col gap-[1rem]">
+          {comics?.slice(0, Math.floor(comics.length / 2)).map((comic) => <CardComicHorizontal key={comic.id} {...comic} />)}
+        </div>
+        <div className="col-span-1 flex flex-col gap-[1rem]">
+          {comics?.slice(Math.floor(comics.length / 2), comics.length).map((comic) => <CardComicHorizontal key={comic.id} {...comic} />)}
+        </div>
       </div>
     </React.Fragment>
   );
