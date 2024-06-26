@@ -34,15 +34,6 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
 
   const onFinish: FormProps<FormCreateChapter>["onFinish"] = async (values: FormCreateChapter) => {
     const formData = fromObjetToFomData({ ...values, files });
-    // const formData = new FormData();
-    // formData.append("title", values.title);
-    // formData.append("comicId", values.comicId);
-    // formData.append("type", values.type);
-    // formData.append("showComment", values.showComment.toString());
-    // formData.append("price", (values.price || 0).toString());
-    // files.forEach((file) => {
-    //   formData.append("files", file);
-    // });
 
     const response = (
       await AXIOS_INSTANCE.post<BaseResponse<Chapter>>("/chapters", formData, {

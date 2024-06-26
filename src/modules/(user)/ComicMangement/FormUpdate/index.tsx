@@ -63,8 +63,8 @@ const FormUpdate = ({ comic }: FormUpdateProps) => {
         "/comics/" + values.id,
         {
           ...values,
-          cover: (values.cover[0] as UploadFile).originFileObj,
-          thumbnail: (values.thumbnail[0] as UploadFile).originFileObj,
+          cover: (values.cover?.[0] as UploadFile)?.originFileObj,
+          thumbnail: (values.thumbnail?.[0] as UploadFile)?.originFileObj,
         },
         {
           headers: {

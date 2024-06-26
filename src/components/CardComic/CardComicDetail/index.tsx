@@ -51,10 +51,10 @@ const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
               </Typography>
 
               <Typography tag="h6" className="line-clamp-1">
-                Published: {timestampToDateTime(createdAt)}
+                Created at: {timestampToDateTime(createdAt)}
               </Typography>
               <Typography tag="h6" className="line-clamp-1">
-                Last updated: {timestampToDateTime(updatedAt)}
+                Last updated at: {timestampToDateTime(updatedAt)}
               </Typography>
 
               <div className="flex items-center gap-[1.5rem]">

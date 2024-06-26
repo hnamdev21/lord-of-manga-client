@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Form, FormProps, Input, InputNumber, Select } from "antd";
+import { Button, Empty, Form, FormProps, Input, InputNumber, Select } from "antd";
 import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
@@ -33,7 +33,7 @@ const ComicsModule = () => {
   const [page, setPage] = React.useState(1);
 
   const onFinish: FormProps<FormComicFilter>["onFinish"] = async (values: FormComicFilter) => {
-    const query = `/comics?pageNumber=1&size=6&` + fromObjetToQuery(values, ignoreData);
+    const query = `/comics?pageNumber=1&size=6&status=APPROVE&` + fromObjetToQuery(values, ignoreData);
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(query)).data;
 
     setPage(1);
@@ -142,20 +142,26 @@ const ComicsModule = () => {
           </Form>
         </div>
 
-        {data?.content.map((comic) => (
-          <div key={comic.id} className="col-span-2 h-[36rem]">
-            <CardComic {...comic} />
+        {!data?.empty ? (
+          data?.content.map((comic) => (
+            <div key={comic.id} className="col-span-2 h-[36rem]">
+              <CardComic {...comic} />
+            </div>
+          ))
+        ) : (
+          <div className="col-span-12 flex justify-center">
+            <Empty />
           </div>
-        ))}
+        )}
       </Container>
 
       <Container className="mb-[2rem]">
         <div className="col-start-6 col-span-2 flex justify-center">
-          {data?.totalPages && page < data.totalPages && (
+          {data?.totalPages && page < data.totalPages ? (
             <Button type="primary" className="bg-[var(--color-primary)]" onClick={onLoadMore}>
               Load more
             </Button>
-          )}
+          ) : null}
         </div>
       </Container>
     </React.Fragment>

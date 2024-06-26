@@ -28,11 +28,11 @@ const HomeModule = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[105%] w-[.1rem] bg-[var(--color-gray)]" />
 
         <div className="col-span-6">
-          <ColCard title="Latest update" fetchUrl="/comics?size=8&sortBy=updatedAt" />
+          <ColCard title="Latest update" fetchUrl="/comics?size=8&sortBy=updatedAt&status=APPROVE" />
         </div>
 
         <div className="col-span-6">
-          <ColCard title="Most viewed" fetchUrl="/comics?size=8&sortBy=viewCount" />
+          <ColCard title="Most viewed" fetchUrl="/comics?size=8&sortBy=viewCount&status=APPROVE" />
         </div>
       </Container>
 

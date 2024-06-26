@@ -1,8 +1,8 @@
 "use client";
 
-import { message, Modal, notification, Table, TableProps, Tag as AntdTag } from "antd";
+import { message, Modal, Table, TableProps, Tag as AntdTag } from "antd";
 import React from "react";
-import { FaEye, FaPen, FaTimes, FaTrash } from "react-icons/fa";
+import { FaEye, FaTimes, FaTrashRestore } from "react-icons/fa";
 import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
@@ -15,21 +15,19 @@ import { Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
-import ComicDetail from "./ComicDetail";
-import FormUpdate from "./FormUpdate";
+import ComicDetail from "../ComicMangement/ComicDetail";
 
-const ComicManagementModule = () => {
+const RecycleBinModule = () => {
   const authContext = React.use(AuthContext);
-  const [notificationApi, notificationHolder] = notification.useNotification();
   const [modalApi, modalHolder] = Modal.useModal();
 
   const { data, refetch } = useQuery(
-    "my-comics",
+    "recycle-bin",
     async () => {
       if (!authContext?.auth.token) return null;
 
       const { data } = (
-        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics/mine?all=true", {
+        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics/mine?all=true&status=DELETED", {
           headers: {
             Authorization: `Bearer ${authContext.auth.token}`,
           },
@@ -57,70 +55,6 @@ const ComicManagementModule = () => {
       message.success("Restored comic from recycle bin");
     }
   };
-
-  const onDelete = async (id: string) => {
-    const response = (
-      await AXIOS_INSTANCE.delete<BaseResponse<boolean>>(`/comics/${id}`, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
-
-    if (response.code === "OK") {
-      refetch();
-      notificationApi.open({
-        message: "",
-        placement: "bottomLeft",
-        closeIcon: null,
-        description: (
-          <React.Fragment>
-            Comic has been moved to recycle bin{" "}
-            <Button
-              onClick={() => {
-                onRestore(id);
-              }}
-              element="button"
-              variant="outline"
-              type="button"
-              size="xs"
-            >
-              Restore
-            </Button>
-          </React.Fragment>
-        ),
-        duration: 5,
-      });
-    }
-  };
-
-  const onEdit = React.useCallback(
-    (id: string) => {
-      const comic = data?.content.find((comic) => comic.id === id);
-
-      if (!comic) {
-        message.error("Something went wrong. Please try again later");
-        return;
-      }
-
-      modalApi.confirm({
-        title: (
-          <Typography tag="h3" align="center" fontSize="lg">
-            Edit Comic
-          </Typography>
-        ),
-        width: "30%",
-        content: <FormUpdate comic={comic} />,
-        icon: null,
-        centered: true,
-        footer: null,
-        maskClosable: true,
-        closable: true,
-        closeIcon: <FaTimes />,
-      });
-    },
-    [data]
-  );
 
   const onDetail = React.useCallback(
     (id: string) => {
@@ -173,20 +107,6 @@ const ComicManagementModule = () => {
         width: "10%",
       },
       {
-        title: "Categories",
-        dataIndex: "categories",
-        key: "categories",
-        width: "15%",
-        render: (_, { categories }) => categories.map((category) => <AntdTag key={category.id}>{category.name}</AntdTag>),
-      },
-      {
-        title: "Tags",
-        dataIndex: "tags",
-        key: "tags",
-        width: "15%",
-        render: (_, { tags }) => tags.map((tag) => <AntdTag key={tag.id}>{tag.name}</AntdTag>),
-      },
-      {
         title: "Type",
         dataIndex: "type",
         key: "type",
@@ -201,18 +121,24 @@ const ComicManagementModule = () => {
         render: (price: number) => numberToCurrency(price),
       },
       {
-        title: "Status",
-        dataIndex: "status",
-        key: "status",
-        width: "7.5%",
-        render: (_, { status }) => <AntdTag color="blue">{status}</AntdTag>,
+        title: "Deleted by",
+        dataIndex: "deletedr",
+        key: "deletedr",
+        width: "10%",
+        render: (_, { deleter }) => (deleter?.roles.some((role) => role.name === "ADMIN") ? "Admin" : "Your self"),
       },
       {
-        title: "Created At",
-        dataIndex: "createdAt",
-        key: "createdAt",
+        title: "Reason",
+        dataIndex: "deletedReason",
+        key: "deletedReason",
+        width: "7.5%",
+      },
+      {
+        title: "Deleted at",
+        dataIndex: "deletedAt",
+        key: "deletedAt",
         width: "10%",
-        render: (createdAt: string) => timestampToDateTime(createdAt),
+        render: ({ deletedAt }) => timestampToDateTime(deletedAt),
       },
       {
         title: "Action",
@@ -224,11 +150,8 @@ const ComicManagementModule = () => {
             <Button element="button" type="button" variant="plain" size="sm" onClick={() => onDetail(id)} className="flex justify-center items-center">
               <FaEye />
             </Button>
-            <Button element="button" type="button" variant="outline" size="sm" onClick={() => onEdit(id)} className="flex justify-center items-center">
-              <FaPen />
-            </Button>
-            <Button element="button" type="button" color="danger" size="sm" onClick={() => onDelete(id)} className="flex justify-center items-center">
-              <FaTrash />
+            <Button element="button" type="button" color="danger" size="sm" onClick={() => onRestore(id)} className="flex justify-center items-center">
+              <FaTrashRestore />
             </Button>
           </div>
         ),
@@ -239,12 +162,11 @@ const ComicManagementModule = () => {
 
   return (
     <React.Fragment>
-      {notificationHolder}
       {modalHolder}
 
       <Container noGrid className="mb-[2rem]">
         <Typography align="center" tag="h1" fontSize="xl" fontWeight="bold" className="mb-[1rem]">
-          Comic Management
+          Recycle Bin
         </Typography>
 
         <Table columns={columns} dataSource={data?.content} size="small" pagination={false} rowKey={(record: Comic) => record.id} bordered />
@@ -253,4 +175,4 @@ const ComicManagementModule = () => {
   );
 };
 
-export default ComicManagementModule;
+export default RecycleBinModule;

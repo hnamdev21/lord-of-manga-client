@@ -110,5 +110,8 @@ export type Comic = BaseEntity & {
   banner: User | null;
   bannedReason: string | null;
   bannedAt: string | null;
+  deleter: User | null;
+  deletedAt: string | null;
+  deletedReason: string | null;
   chapters: Chapter[];
 };
