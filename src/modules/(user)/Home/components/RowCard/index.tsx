@@ -11,6 +11,8 @@ import Typography from "@/components/Typography";
 import { Category, Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 
+import styles from "./styles.module.scss";
+
 type RowCardProps = {
   category: Category;
   numberOfColumns: number;
@@ -24,31 +26,31 @@ const RowCard = ({ category, numberOfColumns }: RowCardProps) => {
 
   return (
     <Container noGrid>
-      <div className="flex justify-between items-center">
-        <Typography tag="h5" fontSize="lg" className="mb-[1.5rem]">
+      <div className={styles.header}>
+        <Typography tag="h5" fontSize="lg">
           {category.name}
         </Typography>
 
-        <Button href="#" size="sm" variant="plain" className="flex items-center gap-[.5rem]">
+        <Button href="#" size="sm" variant="plain" className={styles.header__button}>
           View all <FaArrowRight scale={0.4} />
         </Button>
       </div>
 
       <div
-        className="grid gap-[2rem] h-[34rem]"
+        className={styles.content}
         style={{
           gridTemplateColumns: `repeat(${numberOfColumns}, 1fr)`,
         }}
       >
         {(comics?.length || 0) > numberOfColumns ? (
           comics?.splice(0, numberOfColumns).map((comic) => (
-            <div key={comic.id} className="col-span-1 h-full">
+            <div key={comic.id} className={styles.content__item}>
               <CardComic {...comic} />
             </div>
           ))
         ) : (
           <div
-            className="flex items-center justify-center"
+            className={styles.content__empty}
             style={{
               gridColumn: `span ${numberOfColumns}`,
             }}

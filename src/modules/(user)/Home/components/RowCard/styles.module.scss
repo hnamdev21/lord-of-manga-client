@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: rem(15px);
+
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: rem(5px);
+  }
+}
+
+.content {
+  display: grid;
+  gap: rem(20px);
+  height: rem(340px);
+
+  &__item {
+    grid-column: span 1;
+    height: 100%;
+  }
+
+  &__empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+}

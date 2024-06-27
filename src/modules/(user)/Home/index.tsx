@@ -11,6 +11,7 @@ import { BaseGetResponse, BaseResponse } from "@/types/response";
 import ColCard from "./components/ColCard";
 import Hero from "./components/Hero";
 import RowCard from "./components/RowCard";
+import styles from "./styles.module.scss";
 
 const HomeModule = () => {
   const { data: categories } = useQuery("categories", async () => {
@@ -19,19 +20,19 @@ const HomeModule = () => {
   });
 
   return (
-    <div className="flex flex-col gap-[4rem] mb-[4rem]">
-      <div className="bg-[var(--color-black)]">
+    <div className={styles.page}>
+      <section className={styles.heroSection}>
         <Hero />
-      </div>
+      </section>
 
-      <Container className="relative">
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[105%] w-[.1rem] bg-[var(--color-gray)]" />
+      <Container className={styles.columnSection}>
+        <div className={styles.columnSection__divider} />
 
-        <div className="col-span-6">
+        <div className={styles.columnSection__column}>
           <ColCard title="Latest update" fetchUrl="/comics?size=8&sortBy=updatedAt&status=APPROVE" />
         </div>
 
-        <div className="col-span-6">
+        <div className={styles.columnSection__column}>
           <ColCard title="Most viewed" fetchUrl="/comics?size=8&sortBy=viewCount&status=APPROVE" />
         </div>
       </Container>

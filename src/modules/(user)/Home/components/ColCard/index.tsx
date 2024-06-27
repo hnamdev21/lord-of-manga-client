@@ -9,6 +9,8 @@ import Typography from "@/components/Typography";
 import { Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 
+import styles from "./styles.module.scss";
+
 type ColCardProps = {
   title: string;
   fetchUrl: string;
@@ -22,15 +24,15 @@ const ColCard = ({ title, fetchUrl }: ColCardProps) => {
 
   return (
     <React.Fragment>
-      <Typography tag="h5" fontSize="lg" className="mb-[1rem]">
+      <Typography tag="h5" fontSize="lg" className={styles.title}>
         {title}
       </Typography>
 
-      <div className="grid grid-cols-2 gap-[2rem]">
-        <div className="col-span-1 flex flex-col gap-[1rem]">
+      <div className={styles.columns}>
+        <div className={styles.columns__item}>
           {comics?.slice(0, Math.floor(comics.length / 2)).map((comic) => <CardComicHorizontal key={comic.id} {...comic} />)}
         </div>
-        <div className="col-span-1 flex flex-col gap-[1rem]">
+        <div className={styles.columns__item}>
           {comics?.slice(Math.floor(comics.length / 2), comics.length).map((comic) => <CardComicHorizontal key={comic.id} {...comic} />)}
         </div>
       </div>
