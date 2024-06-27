@@ -1,12 +1,14 @@
 import React from "react";
 
+import UserThemeProvider from "@/providers/UserThemeProvider";
+
 import Footer from "./Footer";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
 const LayoutUser = ({ children }: { children: React.ReactNode }) => {
   return (
-    <React.Fragment>
+    <UserThemeProvider>
       <Sidebar />
 
       <div className="min-h-screen flex flex-col justify-between">
@@ -16,7 +18,7 @@ const LayoutUser = ({ children }: { children: React.ReactNode }) => {
 
         <Footer />
       </div>
-    </React.Fragment>
+    </UserThemeProvider>
   );
 };
 

@@ -148,13 +148,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
 
           <Form.Item<FormCreateChapter> name="showComment" valuePropName="checked" className="flex justify-center">
             <div className="w-full flex items-center justify-between">
-              <Checkbox
-                style={{
-                  color: "var(--color-light)",
-                }}
-              >
-                Show comment
-              </Checkbox>
+              <Checkbox>Show comment</Checkbox>
             </div>
           </Form.Item>
 
@@ -163,13 +157,13 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
               <Popover
                 content={
                   <React.Fragment>
-                    <Typography className="span" fontSize="sm" style={{ color: "var(--color-light)" }}>
+                    <Typography className="span" fontSize="sm">
                       For easier upload, you can select multiple images at once
                     </Typography>
-                    <Typography className="span" fontSize="sm" style={{ color: "var(--color-light)" }}>
+                    <Typography className="span" fontSize="sm">
                       The image name should be in order (1, 2, 3, ...)
                     </Typography>
-                    <Typography className="span" fontSize="sm" style={{ color: "var(--color-light)" }}>
+                    <Typography className="span" fontSize="sm">
                       Supported formats: .jpg, .jpeg, .png
                     </Typography>
                   </React.Fragment>

@@ -138,7 +138,7 @@ const RecycleBinModule = () => {
         dataIndex: "deletedAt",
         key: "deletedAt",
         width: "10%",
-        render: ({ deletedAt }) => timestampToDateTime(deletedAt),
+        render: (_, { deletedAt }) => timestampToDateTime(deletedAt),
       },
       {
         title: "Action",

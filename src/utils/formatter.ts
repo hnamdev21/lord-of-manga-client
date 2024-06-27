@@ -12,7 +12,9 @@ export const numberToCurrency = (value: number) => {
   });
 };
 
-export const timestampToDateTime = (timestamp: string) => {
+export const timestampToDateTime = (timestamp: string | null) => {
+  if (!timestamp) return "";
+
   return new Date(timestamp).toLocaleDateString("vi-VI", {
     year: "numeric",
     month: "2-digit",

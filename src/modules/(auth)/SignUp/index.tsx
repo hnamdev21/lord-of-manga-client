@@ -101,13 +101,7 @@ const SignUpModule = () => {
 
             <Form.Item<FormSignUp> name="receiveNews" valuePropName="checked">
               <div className="w-full flex items-center justify-between">
-                <Checkbox
-                  style={{
-                    color: "var(--color-light)",
-                  }}
-                >
-                  Receive news
-                </Checkbox>
+                <Checkbox>Receive news</Checkbox>
               </div>
             </Form.Item>
 

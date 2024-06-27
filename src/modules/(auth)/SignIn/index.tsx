@@ -70,13 +70,7 @@ const SignInModule = () => {
 
             <Form.Item<FormSignIn> name="remember" valuePropName="checked">
               <div className="w-full flex items-center justify-between">
-                <Checkbox
-                  style={{
-                    color: "var(--color-light)",
-                  }}
-                >
-                  Remember me
-                </Checkbox>
+                <Checkbox>Remember me</Checkbox>
               </div>
             </Form.Item>
 

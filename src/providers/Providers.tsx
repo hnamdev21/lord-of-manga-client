@@ -7,7 +7,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 import AuthProvider from "./AuthProvider";
-import ThemeProvider from "./ThemeProvider";
 
 const queryClient = new QueryClient();
 
@@ -17,9 +16,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
         <AntdRegistry>
-          <StyleProvider hashPriority="low">
-            <ThemeProvider>{children}</ThemeProvider>
-          </StyleProvider>
+          <StyleProvider hashPriority="low">{children}</StyleProvider>
         </AntdRegistry>
       </QueryClientProvider>
     </AuthProvider>
