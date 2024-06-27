@@ -137,12 +137,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
               name="price"
               className="flex-1"
             >
-              <InputNumber
-                addonAfter="VND"
-                min={disablePriceInput ? 0 : 1_000}
-                formatter={(value) => numberFormatter(value || 0)}
-                disabled={disablePriceInput}
-              />
+              <InputNumber addonAfter="₫" min={disablePriceInput ? 0 : 1_000} formatter={(value) => numberFormatter(value || 0)} disabled={disablePriceInput} />
             </Form.Item>
           </div>
 

@@ -30,7 +30,7 @@ const ComicsModule = () => {
   const [page, setPage] = React.useState(1);
 
   const onFinish: FormProps<FormComicFilter>["onFinish"] = async (values: FormComicFilter) => {
-    const query = `/comics?pageNumber=1&size=6&status=PENDING&` + fromObjetToQuery(values, initData);
+    const query = `/comics?pageNumber=1&size=6&status=APPROVE&` + fromObjetToQuery(values, initData);
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(query)).data;
 
     setPage(1);
@@ -116,7 +116,7 @@ const ComicsModule = () => {
               name="from"
               className={styles.form__item}
             >
-              <InputNumber min={0} addonAfter="VND" formatter={(value) => numberFormatter(value || 0)} style={{ width: "100%" }} />
+              <InputNumber min={0} addonAfter="₫" formatter={(value) => numberFormatter(value || 0)} style={{ width: "100%" }} />
             </Form.Item>
             <Form.Item<FormComicFilter>
               label={
@@ -127,7 +127,7 @@ const ComicsModule = () => {
               name="to"
               className={styles.form__item}
             >
-              <InputNumber min={0} addonAfter="VND" formatter={(value) => numberFormatter(value || 0)} style={{ width: "100%" }} />
+              <InputNumber min={0} addonAfter="₫" formatter={(value) => numberFormatter(value || 0)} style={{ width: "100%" }} />
             </Form.Item>
 
             <div className="col-span-2 flex items-center">
@@ -155,7 +155,7 @@ const ComicsModule = () => {
 
       <Container className={styles.container__pagination}>
         {data?.totalPages && page < data.totalPages ? (
-          <Button type="primary" className="bg-[var(--color-primary)]" onClick={onLoadMore}>
+          <Button type="primary" onClick={onLoadMore}>
             Load more
           </Button>
         ) : null}

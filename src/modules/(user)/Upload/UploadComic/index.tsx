@@ -208,7 +208,7 @@ const UploadComic = () => {
           >
             <InputNumber
               disabled={disablePriceInput}
-              addonAfter="VND"
+              addonAfter="₫"
               min={disablePriceInput ? 0 : 1_000}
               formatter={(value) => numberFormatter(value || 0)}
               className="w-full"

@@ -11,6 +11,7 @@ import { Comic } from "@/types/data";
 import { BaseResponse } from "@/types/response";
 
 import ReadingHistoryCard from "./components/ReadingHistoryCard";
+import styles from "./styles.module.scss";
 
 const ReadingHistoryModule = () => {
   const lastRead = JSON.parse(localStorage.getItem("lastRead") || "{}");
@@ -42,7 +43,7 @@ const ReadingHistoryModule = () => {
   };
 
   return (
-    <Container noGrid className="mb-[4rem]">
+    <Container noGrid className={styles.container}>
       <Typography tag="h1" fontSize="2xl" align="center">
         Reading History
       </Typography>
@@ -50,11 +51,11 @@ const ReadingHistoryModule = () => {
         Reading history only available on this device
       </Typography>
 
-      <Divider className="my-[1rem]" />
+      <Divider className={styles.divider} />
 
-      <div className="grid grid-cols-12 gap-[2rem] mb-[2rem]">
+      <div className={styles.container__data}>
         {comics.map((comic, index) => (
-          <div key={index} className="col-span-2 h-[44rem]">
+          <div key={index} className={styles.container__data__item}>
             <ReadingHistoryCard comic={comic} currentOrdinal={lastRead[comic.slug]} onClickRemove={onClickRemove} />
           </div>
         ))}

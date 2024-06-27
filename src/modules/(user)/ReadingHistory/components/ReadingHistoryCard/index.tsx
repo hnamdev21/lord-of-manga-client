@@ -6,6 +6,8 @@ import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import { Comic } from "@/types/data";
 
+import styles from "./styles.module.scss";
+
 type ReadingHistoryCardProps = {
   comic: Comic;
   currentOrdinal: number;
@@ -17,23 +19,12 @@ const ReadingHistoryCard = ({ comic, currentOrdinal, onClickRemove }: ReadingHis
   const currentSlug = comic.chapters.find((chapter) => chapter.ordinal === currentOrdinal)?.slug;
 
   return (
-    <div className="w-full h-full rounded-md overflow-hidden relative">
-      <Button
-        className="absolute top-[.5rem] right-[.5rem] z-10 flex items-center justify-center aspect-square backdrop-blur-xl"
-        element="button"
-        type="button"
-        variant="plain"
-        size="sm"
-        style={{
-          color: "var(--color-black)",
-          borderColor: "var(--color-black)",
-          backgroundColor: "rgba(255, 255, 255, 0.2)",
-        }}
-      >
+    <div className={styles.card}>
+      <Button className={styles.card__bookmark} element="button" type="button" variant="plain" size="sm">
         <FaBookmark />
       </Button>
 
-      <div className="absolute top-[.5rem] left-[.5rem] z-10 flex items-center justify-center backdrop-blur-[2px] px-[.5rem] h-[1.6rem] rounded-md bg-[var(--color-primary)]">
+      <div className={styles.card__type}>
         {type === "FREE" ? (
           <Typography tag="span" fontSize="sm" fontWeight="bold">
             FREE
@@ -45,38 +36,21 @@ const ReadingHistoryCard = ({ comic, currentOrdinal, onClickRemove }: ReadingHis
         )}
       </div>
 
-      <div className="w-full h-[90%] relative">
+      <div className={styles.card__top}>
         <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + coverPath} alt={`Cover image of ${title}`} layout="fill" />
 
-        <div className="absolute bottom-0 left-0 z-10 w-full h-[12.5%] bg-[rgba(0,0,0,.8)] p-[1rem] flex gap-[1rem] backdrop-blur-md">
-          <Button
-            element="button"
-            type="button"
-            variant="outline"
-            size="sm"
-            style={{
-              height: "100%",
-            }}
-            className="flex-1 flex justify-center items-center"
-            onClick={() => onClickRemove(comic)}
-          >
+        <div className={styles.card__top__overlay}>
+          <Button element="button" type="button" variant="outline" size="sm" className={styles.button__remove} onClick={() => onClickRemove(comic)}>
             Remove
           </Button>
-          <Button
-            href={`/comics/${comic.slug}/${currentSlug}`}
-            size="sm"
-            style={{
-              height: "100%",
-            }}
-            className="w-[75%] flex justify-center items-center"
-          >
+          <Button href={`/comics/${comic.slug}/${currentSlug}`} size="sm" className={styles.button__read}>
             Continue Reading
           </Button>
         </div>
       </div>
 
-      <div className="w-full h-[10%] px-[1rem] flex items-center bg-[var(--color-dark)]">
-        <Typography tag="h6" fontSize="md" className="line-clamp-1">
+      <div className={styles.card__bottom}>
+        <Typography tag="h6" className="line-clamp-1">
           {title}
         </Typography>
       </div>
