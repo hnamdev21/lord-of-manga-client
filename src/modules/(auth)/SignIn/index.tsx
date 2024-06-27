@@ -1,9 +1,11 @@
 "use client";
 
 import { Button, Checkbox, Form, type FormProps, Input, message } from "antd";
+import cn from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { FaLock, FaUser } from "react-icons/fa";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Logo from "@/components/Logo";
@@ -12,6 +14,8 @@ import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { FormSignIn } from "@/types/form";
 import { BaseResponse } from "@/types/response";
+
+import styles from "./styles.module.scss";
 
 const SignInModule = () => {
   const router = useRouter();
@@ -32,59 +36,49 @@ const SignInModule = () => {
   return (
     <React.Fragment>
       <div>
-        <Typography tag="h1" fontSize="2xl" align="center" className="mb-[1.6rem]">
+        <Typography tag="h1" fontSize="2xl" align="center" className={styles.title}>
           Welcome to Lord of Manga
         </Typography>
       </div>
 
-      <div className="grid grid-cols-10 gap-[.5rem]">
-        <div className="col-start-3 col-span-6 p-[2rem] bg-[var(--color-dark-gray)] rounded-2xl">
-          <Form layout="vertical" onFinish={onFinish} autoComplete="off">
-            <div className="w-full h-[8rem] mb-[2rem] flex justify-center">
-              <Logo />
-            </div>
+      <div className={cn("grid grid-cols-6 gap-[2rem]", styles.container)}>
+        <div className={cn("col-start-2 col-span-4", styles.inner)}>
+          <div className={styles.logoContainer}>
+            <Logo />
+          </div>
 
-            <Form.Item<FormSignIn>
-              label={
-                <Typography className="span" fontSize="sm">
-                  Username
-                </Typography>
-              }
-              name="username"
-              rules={[{ required: true, type: "string", message: "Please enter your username" }]}
-            >
-              <Input placeholder={"example"} />
+          <Form
+            layout="vertical"
+            onFinish={onFinish}
+            autoComplete="off"
+            initialValues={{
+              remember: false,
+            }}
+            className={styles.form}
+          >
+            <Form.Item<FormSignIn> name="username" rules={[{ required: true, type: "string", message: "Please enter your username" }]}>
+              <Input placeholder="Username" prefix={<FaUser />} />
             </Form.Item>
 
-            <Form.Item<FormSignIn>
-              label={
-                <Typography className="span" fontSize="sm">
-                  Password
-                </Typography>
-              }
-              name="password"
-              rules={[{ required: true, message: "Please enter your password" }]}
-            >
-              <Input.Password placeholder={"********"} />
+            <Form.Item<FormSignIn> name="password" rules={[{ required: true, message: "Please enter your password" }]}>
+              <Input.Password placeholder="Password" prefix={<FaLock />} />
             </Form.Item>
 
             <Form.Item<FormSignIn> name="remember" valuePropName="checked">
-              <div className="w-full flex items-center justify-between">
-                <Checkbox>Remember me</Checkbox>
-              </div>
+              <Checkbox>Remember me</Checkbox>
             </Form.Item>
 
-            <Button type="primary" className="block w-full mb-[1rem] bg-[var(--color-primary)]" htmlType="submit">
+            <Button type="primary" className="block w-full" htmlType="submit">
               Sign In
             </Button>
-
-            <Typography fontSize="sm" align="center">
-              Don&apos;t have an account?{" "}
-              <Link href={Path.AUTH.SIGN_UP} className="underline underline-offset-2">
-                Sign Up
-              </Link>
-            </Typography>
           </Form>
+
+          <Typography fontSize="sm" align="center">
+            Don&apos;t have an account?{" "}
+            <Link href={Path.AUTH.SIGN_UP} className={styles.link}>
+              Sign Up
+            </Link>
+          </Typography>
         </div>
       </div>
     </React.Fragment>

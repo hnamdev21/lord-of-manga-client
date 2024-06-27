@@ -2,8 +2,8 @@ import "./app.scss";
 
 import React from "react";
 
-import AdminThemeProvider from "@/providers/AdminThemeProvider";
+import LayoutAdmin from "@/layouts/LayoutAdmin";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <AdminThemeProvider>{children}</AdminThemeProvider>;
+  return <LayoutAdmin>{children}</LayoutAdmin>;
 }

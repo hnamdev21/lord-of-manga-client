@@ -1,4 +1,20 @@
-import { FaBook, FaBookmark, FaBox, FaChartBar, FaClock, FaHome, FaSearch, FaTrashRestore, FaUpload, FaUser, FaUserFriends } from "react-icons/fa";
+import {
+  FaAddressCard,
+  FaBook,
+  FaBookmark,
+  FaBox,
+  FaCcVisa,
+  FaChartBar,
+  FaClock,
+  FaComment,
+  FaHome,
+  FaSearch,
+  FaTag,
+  FaTags,
+  FaTrashRestore,
+  FaUpload,
+  FaUserFriends,
+} from "react-icons/fa";
 import { IconType } from "react-icons/lib";
 
 export type SidebarItem = {
@@ -36,7 +52,7 @@ export const SidebarAuthenticatedPath = {
   PROFILE: {
     label: "Profile",
     href: "/profile",
-    icon: FaUser,
+    icon: FaAddressCard,
   } as const,
   UPLOAD: {
     label: "Upload Comic",
@@ -73,10 +89,31 @@ export const SidebarAdminPath = {
     href: "/admin/users",
     icon: FaUserFriends,
   } as const,
+
+  CATEGORIES: {
+    label: "Categories",
+    href: "/admin/categories",
+    icon: FaTags,
+  } as const,
+  TAGS: {
+    label: "Tags",
+    href: "/admin/tags",
+    icon: FaTag,
+  } as const,
   COMICS: {
     label: "Comics",
     href: "/admin/comics",
     icon: FaBook,
+  } as const,
+  COMMENTS: {
+    label: "Comments",
+    href: "/admin/comments",
+    icon: FaComment,
+  } as const,
+  PAYMENTS: {
+    label: "Payments",
+    href: "/admin/payments",
+    icon: FaCcVisa,
   } as const,
 };
 export type SidebarAdminPath = (typeof SidebarAdminPath)[keyof typeof SidebarAdminPath];

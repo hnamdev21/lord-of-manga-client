@@ -13,7 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           }}
         />
 
-        <div className="col-start-8 col-span-5 flex justify-center items-center">
+        <div className="col-span-6 flex justify-center items-center">
           <div className="flex-1">{children}</div>
         </div>
       </Container>
