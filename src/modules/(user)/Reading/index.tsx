@@ -31,13 +31,15 @@ const ReadingModule = ({ comicSlug, chapterSlug }: ReadingModuleProps) => {
   const havePrevious = currentIndex > 0;
   const haveNext = currentIndex < (data?.comic.chapters.length || -1) - 1;
 
-  if (data && data.chapter && data.comic) {
+  React.useEffect(() => {
+    if (!data) return;
+
     const lastRead = JSON.parse(localStorage.getItem("lastRead") || "{}");
 
     lastRead[comicSlug] = currentIndex;
 
     localStorage.setItem("lastRead", JSON.stringify(lastRead));
-  }
+  }, [comicSlug, currentIndex]);
 
   return (
     <div>

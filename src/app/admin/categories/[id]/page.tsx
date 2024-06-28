@@ -7,7 +7,7 @@ type PageProps = {
 };
 
 const CategoryDetailManagementPage = ({ params }: PageProps) => {
-  return <div>CategoryDetailManagementPage</div>;
+  return <div>{params.id}</div>;
 };
 
 export default CategoryDetailManagementPage;

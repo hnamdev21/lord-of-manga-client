@@ -16,7 +16,7 @@ const LayoutAdmin = ({ children }: { children: React.ReactNode }) => {
     <AdminThemeProvider>
       <Sidebar />
 
-      <div className="min-h-screen flex flex-col justify-between">
+      <div className="min-h-screen flex flex-col justify-between bg-[var(--color-light)] text-[var(--color-black)]">
         <main className="flex-1 w-full overflow-hidden mx-auto">{children}</main>
       </div>
     </AdminThemeProvider>

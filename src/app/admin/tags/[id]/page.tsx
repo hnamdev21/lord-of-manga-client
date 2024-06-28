@@ -7,7 +7,7 @@ type PageProps = {
 };
 
 const TagDetailManagementPage = ({ params }: PageProps) => {
-  return <div>TagDetailManagementPage</div>;
+  return <div>{params.id}</div>;
 };
 
 export default TagDetailManagementPage;

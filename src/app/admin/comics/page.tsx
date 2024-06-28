@@ -1,5 +1,7 @@
 import React from "react";
 
-export const ComicManagementPage = () => {
+const ComicManagementPage = () => {
   return <div>ComicManagementPage</div>;
 };
+
+export default ComicManagementPage;

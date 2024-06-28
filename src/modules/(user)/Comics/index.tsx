@@ -9,7 +9,7 @@ import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { FILTER_COMIC_TYPE_OPTIONS, ORDER_BY_OPTIONS } from "@/constants/options";
 import { VND_CURRENCY } from "@/constants/sign";
-import { Comic } from "@/types/data";
+import { Comic, ComicStatus } from "@/types/data";
 import { FormComicFilter } from "@/types/form";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberFormatter } from "@/utils/formatter";
@@ -31,7 +31,7 @@ const ComicsModule = () => {
   const [page, setPage] = React.useState(1);
 
   const onFinish: FormProps<FormComicFilter>["onFinish"] = async (values: FormComicFilter) => {
-    const query = `/comics?pageNumber=1&size=6&status=APPROVE&` + fromObjetToQuery(values, initData);
+    const query = `/comics?pageNumber=1&size=6&status=${ComicStatus.APPROVED}&` + fromObjetToQuery(values, initData);
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(query)).data;
 
     setPage(1);

@@ -15,6 +15,8 @@ import { Comic } from "@/types/data";
 import { BaseResponse } from "@/types/response";
 import { timestampToDateTime } from "@/utils/formatter";
 
+import styles from "./styles.module.scss";
+
 type ComicDetailModuleProps = {
   comicSlug: string;
 };
@@ -47,8 +49,8 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
 
   return (
     <React.Fragment>
-      <Container className="h-[60rem] mb-[4rem] relative">
-        <div className="absolute top-0 left-0 w-full h-full brightness-[.5] blur-lg">
+      <Container className={styles.hero}>
+        <div className={styles.hero__thumbnailContainer}>
           <Image
             src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + data?.thumbnailPath}
             alt={`Thumbnail image of ${data?.title}`}
@@ -57,63 +59,55 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
           />
         </div>
 
-        <div className="col-span-3 py-[1rem]">
-          <div className="h-full rounded-2xl overflow-hidden relative">
-            <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + data?.coverPath} alt={`Cover image of ${data?.title}`} layout="fill" />
-          </div>
+        <div className={styles.hero__leftContent}>
+          <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + data?.coverPath} alt={`Cover image of ${data?.title}`} layout="fill" />
         </div>
 
-        <div className="relative col-span-9 flex flex-col justify-between py-[1rem] gap-[2rem]">
-          <div className="w-full flex flex-col gap-[1rem]">
-            <Typography tag="h3" fontSize="8xl" fontWeight="md" className="mb-[.5rem]">
-              {data?.title}
+        <div className={styles.hero__rightContent}>
+          <Typography tag="h3" fontSize="8xl" fontWeight="md" className={styles.hero__rightContent__title}>
+            {data?.title}
+          </Typography>
+
+          <div className={styles.hero__rightContent__categories}>
+            {data?.categories.slice(0, 8).map((category) => (
+              <Button href="#" variant="outline" key={category.slug}>
+                {category.name}
+              </Button>
+            ))}
+          </div>
+
+          <div>
+            <Typography tag="p" fontSize="md">
+              Author: {data?.author}
             </Typography>
-
-            <div className="flex gap-[1rem]">
-              {data?.categories.slice(0, 8).map((category) => (
-                <Button href="#" variant="outline" key={category.slug}>
-                  {category.name}
-                </Button>
-              ))}
-            </div>
-
-            <div>
-              <Typography tag="p" fontSize="md">
-                Author: {data?.author}
-              </Typography>
-              <Typography tag="p" fontSize="md">
-                Publisher: {data?.creator.fullName}
-              </Typography>
-            </div>
-
-            <Typography tag="p" fontSize="md" className="line-clamp-8 ">
-              {data?.description}
+            <Typography tag="p" fontSize="md">
+              Publisher: {data?.creator.fullName}
             </Typography>
           </div>
+
+          <Typography tag="p" fontSize="md" className="line-clamp-8 ">
+            {data?.description}
+          </Typography>
         </div>
       </Container>
 
-      <Container className="mb-[4rem]">
-        <div className="col-span-12 grid grid-col-12 gap-[2rem] items-end">
-          <Typography tag="h3" fontSize="2xl" fontWeight="md" className="mb-[1rem] col-span-1">
+      <Container className={styles.content}>
+        <div className={styles.content__header}>
+          <Typography tag="h3" fontSize="2xl" fontWeight="md" className={styles.content__header__left}>
             Chapters
           </Typography>
 
-          <Form className="col-start-10 col-span-2">
-            <Form.Item name="title">
+          <Form className={styles.content__header__right}>
+            <Form.Item name="title" className={styles.content__header__right__item}>
               <Input placeholder="Search chapter title" onChange={onSearchChange} />
             </Form.Item>
           </Form>
         </div>
 
         {chapters?.map((chapter, index) => (
-          <div
-            key={index}
-            className="col-span-12 flex justify-between p-[1rem] rounded-lg bg-[var(--color-dark)] hover:brightness-110 transition ease-in-out duration-300 cursor-pointer"
-            onClick={() => router.push(`/comics/${comicSlug}/${chapter.slug}`)}
-          >
-            <div>
-              <div className="flex items-center justify-center px-[.5rem] max-w-max h-[1.6rem] rounded-md bg-[var(--color-primary)]">
+          <div key={index} className={styles.content__card} onClick={() => router.push(`/comics/${comicSlug}/${chapter.slug}`)}>
+            <div className={styles.content__card__left}>
+              <div className={styles.content__card__left__tag}>
                 {chapter.type === "FREE" ? (
                   <Typography tag="span" fontSize="sm" fontWeight="bold">
                     FREE
@@ -130,11 +124,11 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
               </Typography>
             </div>
 
-            <div className="flex flex-col justify-between">
+            <div className={styles.content__card__right}>
               <Typography tag="p" fontSize="sm">
                 {timestampToDateTime(chapter.createdAt)}
               </Typography>
-              <div className="flex items-center gap-[1.5rem]">
+              <div className={styles.content__card__right__stats}>
                 <Typography tag="h6" className="line-clamp-1 flex items-center gap-[.5rem]">
                   <FaComment /> {chapter.comments.length}
                 </Typography>

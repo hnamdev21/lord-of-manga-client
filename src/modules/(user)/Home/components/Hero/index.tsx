@@ -9,14 +9,14 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
-import { Comic } from "@/types/data";
+import { Comic, ComicStatus } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 
 import styles from "./styles.module.scss";
 
 const Hero = () => {
   const { data: comics } = useQuery("comics", async () => {
-    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics?size=4&sortBy=createdAt&status=APPROVE")).data;
+    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics?size=4&sortBy=createdAt&status=" + ComicStatus.APPROVED)).data;
     return data.content;
   });
 

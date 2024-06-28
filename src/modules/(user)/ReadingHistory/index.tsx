@@ -14,7 +14,7 @@ import ReadingHistoryCard from "./components/ReadingHistoryCard";
 import styles from "./styles.module.scss";
 
 const ReadingHistoryModule = () => {
-  const lastRead = JSON.parse(localStorage.getItem("lastRead") || "{}");
+  const [lastRead, setLastRead] = React.useState<Record<string, number>>({});
   const [comics, setComics] = React.useState<Comic[]>([]);
 
   useQuery(
@@ -41,6 +41,12 @@ const ReadingHistoryModule = () => {
     setComics(comics.filter((c) => c.slug !== comic.slug));
     localStorage.setItem("lastRead", JSON.stringify(lastRead));
   };
+
+  React.useEffect(() => {
+    const lastRead = JSON.parse(localStorage.getItem("lastRead") || "{}");
+
+    setLastRead(lastRead);
+  }, []);
 
   return (
     <Container noGrid className={styles.container}>

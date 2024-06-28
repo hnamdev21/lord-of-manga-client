@@ -7,7 +7,7 @@ type PageProps = {
 };
 
 const UserDetailManagementPage = ({ params }: PageProps) => {
-  return <div>UserDetailManagementPage</div>;
+  return <div>{params.id}</div>;
 };
 
 export default UserDetailManagementPage;

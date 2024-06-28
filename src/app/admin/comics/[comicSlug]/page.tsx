@@ -7,7 +7,7 @@ type PageProps = {
 };
 
 const ComicDetailManagementPage = ({ params }: PageProps) => {
-  return <div>ComicDetailManagementPage</div>;
+  return <div>{params.comicSlug}</div>;
 };
 
 export default ComicDetailManagementPage;

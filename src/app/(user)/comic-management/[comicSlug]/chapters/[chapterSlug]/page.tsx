@@ -8,7 +8,11 @@ type PageProps = {
 };
 
 const User_ChapterDetailManagementPage = ({ params }: PageProps) => {
-  return <div>User_ChapterDetailManagementPage</div>;
+  return (
+    <div>
+      {params.comicSlug} - {params.chapterSlug}
+    </div>
+  );
 };
 
 export default User_ChapterDetailManagementPage;
