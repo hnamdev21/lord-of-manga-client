@@ -16,9 +16,10 @@ const AXIOS_INSTANCE = axios.create({
 AXIOS_INSTANCE.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response) {
+    if (error.response && process.env.NEXT_PUBLIC_APP_ENV === "development") {
       message.error(error.response.data.message);
     }
+
     if (error.response?.status == StatusCode.UNAUTHORIZED && !(window.location.pathname == "/")) {
       window.location.href = Path.AUTH.SIGN_IN;
     }

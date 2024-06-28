@@ -4,6 +4,7 @@ import React from "react";
 import AXIOS_INSTANCE from "@/apis/instance";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
+import NOTIFICATION from "@/constants/notification";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { FormUpdateEmail, FormUpdateUserSetting } from "@/types/form";
@@ -19,15 +20,21 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
   const isVerified = user.roles.some((role) => role.name === "USER");
 
   const onFinishSetting: FormProps<FormUpdateUserSetting>["onFinish"] = async (values: FormUpdateUserSetting) => {
-    await AXIOS_INSTANCE.put<BaseResponse<User>>("/users/mine/setting", values, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = (
+      await AXIOS_INSTANCE.put<BaseResponse<User>>("/users/mine/setting", values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    ).data;
+
+    if (response.code !== "OK") {
+      message.error(response.message);
+      return;
+    }
 
     await authContext?.refreshUser();
-
-    message.success("Update setting successfully");
+    message.success(NOTIFICATION.SUCCESS_UPDATED("Setting"));
   };
 
   React.useEffect(() => {
@@ -54,7 +61,7 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
               </Typography>
             }
             name="email"
-            rules={[{ type: "email", message: "Invalid email. Example: example@gmail.com" }]}
+            rules={[{ type: "email", message: NOTIFICATION.INVALID("email") }]}
           >
             <EmailInput isVerified={isVerified} username={user.username} token={token} />
           </Form.Item>

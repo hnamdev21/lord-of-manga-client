@@ -4,6 +4,7 @@ import React from "react";
 import AXIOS_INSTANCE from "@/apis/instance";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
+import NOTIFICATION from "@/constants/notification";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { FormTwoFactorAuthentication, FormUpdatePassword } from "@/types/form";
@@ -19,6 +20,28 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
     setIsModalOpen(false);
   };
 
+  const handleResponse = (response: BaseResponse<User>) => {
+    if (response.code === "OK") {
+      message.success(NOTIFICATION.SUCCESS_UPDATED("Password"));
+      setIsModalOpen(false);
+    }
+
+    formTwoFA.resetFields();
+    form.resetFields();
+  };
+
+  const sendRequest = async (values: FormUpdatePassword & Partial<FormTwoFactorAuthentication>) => {
+    const response = (
+      await AXIOS_INSTANCE.put<BaseResponse<User>>("/users/mine/password", values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    ).data;
+
+    handleResponse(response);
+  };
+
   const onFinish: FormProps<FormUpdatePassword>["onFinish"] = async (values: FormUpdatePassword) => {
     if (authContext?.user?.twoStepVerification) {
       AXIOS_INSTANCE.post<BaseResponse<User>>("/mail/two-factor-authentication", {
@@ -30,48 +53,13 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
       return;
     }
 
-    const response = (
-      await AXIOS_INSTANCE.put<BaseResponse<User>>("/users/mine/password", values, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-    ).data;
-
-    if (response.code === "OK") {
-      message.success("Update password successfully");
-      setIsModalOpen(false);
-    } else {
-      message.error(response.message);
-    }
-
-    form.resetFields();
+    sendRequest(values);
   };
 
   const onFinishTwoFA: FormProps<FormTwoFactorAuthentication>["onFinish"] = async (values: FormTwoFactorAuthentication) => {
     const dataUpdatePassword = form.getFieldsValue();
 
-    const response = (
-      await AXIOS_INSTANCE.put<BaseResponse<User>>(
-        "/users/mine/password",
-        { ...dataUpdatePassword, ...values },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-    ).data;
-
-    if (response.code === "OK") {
-      message.success("Update password successfully");
-      setIsModalOpen(false);
-    } else {
-      message.error(response.message);
-    }
-
-    formTwoFA.resetFields();
-    form.resetFields();
+    sendRequest({ ...dataUpdatePassword, ...values });
   };
 
   return (
@@ -85,9 +73,9 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
               </Typography>
             }
             name="oldPassword"
-            rules={[{ required: true, message: "Please enter old password" }]}
+            rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("old password") }]}
           >
-            <Input.Password placeholder="********" />
+            <Input.Password />
           </Form.Item>
 
           <Form.Item<FormUpdatePassword>
@@ -97,9 +85,9 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
               </Typography>
             }
             name="newPassword"
-            rules={[{ required: true, message: "Please enter full name" }]}
+            rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("new password") }]}
           >
-            <Input.Password placeholder="********" />
+            <Input.Password />
           </Form.Item>
 
           <Form.Item<FormUpdatePassword>>

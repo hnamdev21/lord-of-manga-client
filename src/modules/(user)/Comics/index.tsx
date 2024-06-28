@@ -8,6 +8,7 @@ import CardComic from "@/components/CardComic";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { FILTER_COMIC_TYPE_OPTIONS, ORDER_BY_OPTIONS } from "@/constants/options";
+import { VND_CURRENCY } from "@/constants/sign";
 import { Comic } from "@/types/data";
 import { FormComicFilter } from "@/types/form";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
@@ -116,7 +117,7 @@ const ComicsModule = () => {
               name="from"
               className={styles.form__item}
             >
-              <InputNumber min={0} addonAfter="₫" formatter={(value) => numberFormatter(value || 0)} style={{ width: "100%" }} />
+              <InputNumber min={0} addonAfter={VND_CURRENCY} formatter={(value) => numberFormatter(value || 0)} style={{ width: "100%" }} />
             </Form.Item>
             <Form.Item<FormComicFilter>
               label={
@@ -127,7 +128,7 @@ const ComicsModule = () => {
               name="to"
               className={styles.form__item}
             >
-              <InputNumber min={0} addonAfter="₫" formatter={(value) => numberFormatter(value || 0)} style={{ width: "100%" }} />
+              <InputNumber min={0} addonAfter={VND_CURRENCY} formatter={(value) => numberFormatter(value || 0)} style={{ width: "100%" }} />
             </Form.Item>
 
             <div className="col-span-2 flex items-center">

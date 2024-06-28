@@ -2,10 +2,12 @@
 
 import { message } from "antd";
 import jwt from "jsonwebtoken";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
+import LOCAL_STORAGE_KEY from "@/constants/local-key";
+import NOTIFICATION from "@/constants/notification";
 import Path, { adminPaths, authorizedUserPaths } from "@/constants/path";
 import { User } from "@/types/data";
 import { BaseResponse } from "@/types/response";
@@ -23,7 +25,6 @@ export const AuthContext = React.createContext<{
 } | null>(null);
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter();
   const pathname = usePathname();
 
   const [auth, setAuth] = React.useState<Auth>({
@@ -53,29 +54,29 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const signIn = async (token: string) => {
     const user = await getMe(token);
 
-    localStorage.setItem("token", token);
+    localStorage.setItem(LOCAL_STORAGE_KEY.TOKEN, token);
 
     setUser(user);
     setAuth({
       token,
     });
 
-    router.push(Path.USER.HOME);
+    window.location.href = Path.USER.HOME;
   };
 
   const signOut = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem(LOCAL_STORAGE_KEY.TOKEN);
 
     setAuth({
       token: null,
     });
     setUser(null);
 
-    router.push(Path.AUTH.SIGN_IN);
+    window.location.href = Path.AUTH.SIGN_IN;
   };
 
   React.useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem(LOCAL_STORAGE_KEY.TOKEN);
 
     if (token) {
       setAuth({
@@ -87,8 +88,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     authorizedUserPaths.forEach((path) => {
       if (pathname.startsWith(path)) {
-        message.info("Please sign in to continue");
-        router.push(Path.AUTH.SIGN_IN);
+        message.info(NOTIFICATION.SIGN_IN_REQUIRED);
+        window.location.href = Path.AUTH.SIGN_IN;
+      }
+    });
+    adminPaths.forEach((path) => {
+      if (pathname.startsWith(path)) {
+        message.info(NOTIFICATION.SIGN_IN_REQUIRED);
+        window.location.href = Path.AUTH.SIGN_IN;
       }
     });
   }, []);
@@ -104,7 +111,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         adminPaths.forEach((path) => {
           if (pathname.startsWith(path) && !user.roles.some((role) => role.name === "ADMIN")) {
-            router.push(Path.ERROR.FORBIDDEN);
+            message.info(NOTIFICATION.SIGN_IN_AS_ADMIN_REQUIRED);
+            window.location.href = Path.ERROR.FORBIDDEN;
           }
         });
       });

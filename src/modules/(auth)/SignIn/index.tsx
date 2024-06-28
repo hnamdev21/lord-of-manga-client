@@ -10,6 +10,7 @@ import { FaLock, FaUser } from "react-icons/fa";
 import AXIOS_INSTANCE from "@/apis/instance";
 import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
+import NOTIFICATION from "@/constants/notification";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { FormSignIn } from "@/types/form";
@@ -25,11 +26,9 @@ const SignInModule = () => {
     const response = (await AXIOS_INSTANCE.post<BaseResponse<string>>("/auth/sign-in", values)).data;
 
     if (response.code === "OK") {
-      message.success("Welcome to Lord of Manga!");
+      message.success(NOTIFICATION.WELCOME);
       authContext?.signIn(response.data);
       router.push(Path.USER.HOME);
-    } else if (response.code === "BAD_REQUEST") {
-      message.error("Username or password is incorrect");
     }
   };
 
@@ -56,11 +55,11 @@ const SignInModule = () => {
             }}
             className={styles.form}
           >
-            <Form.Item<FormSignIn> name="username" rules={[{ required: true, type: "string", message: "Please enter your username" }]}>
+            <Form.Item<FormSignIn> name="username" rules={[{ required: true, type: "string", message: NOTIFICATION.PLEASE_ENTER("username") }]}>
               <Input placeholder="Username" prefix={<FaUser />} />
             </Form.Item>
 
-            <Form.Item<FormSignIn> name="password" rules={[{ required: true, message: "Please enter your password" }]}>
+            <Form.Item<FormSignIn> name="password" rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("password") }]}>
               <Input.Password placeholder="Password" prefix={<FaLock />} />
             </Form.Item>
 

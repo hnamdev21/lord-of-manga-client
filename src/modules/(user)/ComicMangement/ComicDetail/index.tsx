@@ -7,6 +7,7 @@ import { FaBackspace } from "react-icons/fa";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import { ComicStatusMapping, ComicTypeMapping } from "@/constants/mapping";
+import { VND_CURRENCY } from "@/constants/sign";
 import { Comic } from "@/types/data";
 import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
@@ -51,7 +52,7 @@ const ComicDetail = ({ comic }: ComicDetailProps) => {
           <Statistic title="Saved" value={100000} formatter={formatter} className="col-span-1" />
           <Statistic title="Comments" value={100000} formatter={formatter} className="col-span-1" />
           <Statistic title="User purchase" value={100000} formatter={formatter} className="col-span-1" />
-          <Statistic title="Total purchase" value={100000} formatter={formatter} className="col-span-1" suffix="₫" />
+          <Statistic title="Total purchase" value={100000} formatter={formatter} className="col-span-1" suffix={VND_CURRENCY} />
 
           <div className="col-span-9">
             <Divider style={{ margin: "0" }} />

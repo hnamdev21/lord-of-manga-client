@@ -10,6 +10,7 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { ComicTypeMapping } from "@/constants/mapping";
+import NOTIFICATION from "@/constants/notification";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
@@ -54,7 +55,7 @@ const ComicManagementModule = () => {
 
     if (response.code === "OK") {
       refetch();
-      message.success("Restored comic from recycle bin");
+      message.success(NOTIFICATION.SUCCESS_RESTORED("Comic"));
     }
   };
 
@@ -99,7 +100,7 @@ const ComicManagementModule = () => {
       const comic = data?.content.find((comic) => comic.id === id);
 
       if (!comic) {
-        message.error("Something went wrong. Please try again later");
+        message.error(NOTIFICATION.SOMETHING_WENT_WRONG);
         return;
       }
 
@@ -127,7 +128,7 @@ const ComicManagementModule = () => {
       const comic = data?.content.find((comic) => comic.id === id);
 
       if (!comic) {
-        message.error("Something went wrong, please try again later");
+        message.error(NOTIFICATION.SOMETHING_WENT_WRONG);
         return;
       }
 

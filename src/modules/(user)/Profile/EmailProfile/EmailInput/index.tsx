@@ -4,6 +4,7 @@ import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Typography from "@/components/Typography";
+import NOTIFICATION from "@/constants/notification";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { FormVerifyEmail } from "@/types/form";
@@ -52,10 +53,8 @@ const EmailInput = ({ value, onChange, isVerified, username, token }: EmailInput
 
     if (response.code === "OK") {
       setIsModalOpen(false);
+      message.success(NOTIFICATION.SUCCESS_VERIFIED("Email"));
       await authContext?.refreshUser();
-      formVerifyEmail.resetFields();
-    } else {
-      message.error(response.message);
     }
   };
 
@@ -73,7 +72,6 @@ const EmailInput = ({ value, onChange, isVerified, username, token }: EmailInput
     <React.Fragment>
       <div className="w-full flex gap-[2rem]">
         <Input
-          placeholder="example@gmail.com"
           className={cn("w-[70%]", {
             [styles.success]: isVerified,
           })}
@@ -117,7 +115,7 @@ const EmailInput = ({ value, onChange, isVerified, username, token }: EmailInput
             }
             style={{ width: "75%", padding: "0 4rem", margin: "auto", marginTop: "2rem" }}
             name="code"
-            rules={[{ required: true, message: "Please enter verification code" }]}
+            rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("code") }]}
           >
             <div className="w-full flex gap-[2rem]">
               <Input className="w-2/3" />

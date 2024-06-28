@@ -1,10 +1,17 @@
+"use client";
+
 import React from "react";
 
 import AdminThemeProvider from "@/providers/AdminThemeProvider";
+import { AuthContext } from "@/providers/AuthProvider";
 
 import Sidebar from "./Sidebar";
 
 const LayoutAdmin = ({ children }: { children: React.ReactNode }) => {
+  const authContext = React.use(AuthContext);
+
+  if (!authContext?.user) return null;
+
   return (
     <AdminThemeProvider>
       <Sidebar />

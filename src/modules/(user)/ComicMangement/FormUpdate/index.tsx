@@ -5,7 +5,9 @@ import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Typography from "@/components/Typography";
+import NOTIFICATION from "@/constants/notification";
 import { COMIC_TYPE_OPTIONS } from "@/constants/options";
+import { VND_CURRENCY } from "@/constants/sign";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Category, Comic, Tag } from "@/types/data";
 import { FormUpdateComic } from "@/types/form";
@@ -76,7 +78,7 @@ const FormUpdate = ({ comic }: FormUpdateProps) => {
     ).data;
 
     if (response.code === "OK") {
-      message.success("Comic updated successfully");
+      message.success(NOTIFICATION.SUCCESS_UPDATED("Comic"));
       setSearchValue("");
       setDisablePriceInput(true);
     }
@@ -110,10 +112,10 @@ const FormUpdate = ({ comic }: FormUpdateProps) => {
             </Typography>
           }
           name="title"
-          rules={[{ required: true, message: "Please enter comic title" }]}
+          rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("comic title") }]}
           className="flex-1"
         >
-          <Input placeholder="Enter comic title" />
+          <Input />
         </Form.Item>
         <Form.Item<FormUpdateComic>
           label={
@@ -122,10 +124,10 @@ const FormUpdate = ({ comic }: FormUpdateProps) => {
             </Typography>
           }
           name="author"
-          rules={[{ required: true, message: "Please enter author name" }]}
+          rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("author name") }]}
           className="flex-1"
         >
-          <Input placeholder="Author name" />
+          <Input />
         </Form.Item>
       </div>
 
@@ -137,7 +139,7 @@ const FormUpdate = ({ comic }: FormUpdateProps) => {
             </Typography>
           }
           name="categoryNames"
-          rules={[{ required: true, message: "Please select categories" }]}
+          rules={[{ required: true, message: NOTIFICATION.PLEASE_SELECT("categories") }]}
           className="flex-1"
         >
           <Select mode="multiple" allowClear id="categories" placeholder="-- Select categories --" options={categoryAndTagData?.categories} />
@@ -150,6 +152,7 @@ const FormUpdate = ({ comic }: FormUpdateProps) => {
           }
           name="tagNames"
           className="flex-1"
+          rules={[{ required: true, message: NOTIFICATION.PLEASE_SELECT("tags") }]}
         >
           <Select
             placeholder="-- Select tags --"
@@ -196,7 +199,7 @@ const FormUpdate = ({ comic }: FormUpdateProps) => {
             id="type"
             options={COMIC_TYPE_OPTIONS}
             onChange={(value) => {
-              if (value === "PAID_ONCE") {
+              if (value === COMIC_TYPE_OPTIONS[1].value) {
                 form.setFieldsValue({ price: 1_000 });
                 setDisablePriceInput(false);
               } else {
@@ -217,7 +220,7 @@ const FormUpdate = ({ comic }: FormUpdateProps) => {
         >
           <InputNumber
             disabled={disablePriceInput}
-            addonAfter="VND"
+            addonAfter={VND_CURRENCY}
             min={disablePriceInput ? 0 : 1_000}
             formatter={(value) => numberFormatter(value || 0)}
             className="w-full"
@@ -231,10 +234,10 @@ const FormUpdate = ({ comic }: FormUpdateProps) => {
               Description
             </Typography>
           }
-          name={"description"}
-          rules={[{ required: true, message: "Please enter description" }]}
+          name="description"
+          rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("description") }]}
         >
-          <Input.TextArea rows={4} placeholder="Enter description" />
+          <Input.TextArea rows={4} />
         </Form.Item>
 
         <div className="grid grid-cols-2 gap-[2rem]">

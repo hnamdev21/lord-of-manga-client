@@ -5,6 +5,7 @@ import React from "react";
 
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
+import NOTIFICATION from "@/constants/notification";
 import { FormForgotPassword, FormResetPassword } from "@/types/form";
 
 const ForgotPasswordModule = () => {
@@ -47,9 +48,12 @@ const ForgotPasswordModule = () => {
               </Typography>
             }
             name="email"
-            rules={[{ required: true, type: "email", message: "Please enter email" }]}
+            rules={[
+              { required: true, message: NOTIFICATION.PLEASE_ENTER("email") },
+              { type: "email", message: NOTIFICATION.INVALID("email") },
+            ]}
           >
-            <Input placeholder="example@gmail.com" />
+            <Input />
           </Form.Item>
 
           <Form.Item<FormForgotPassword>>
@@ -82,9 +86,9 @@ const ForgotPasswordModule = () => {
                 </Typography>
               }
               name="password"
-              rules={[{ required: true, message: "Please enter new password" }]}
+              rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("password") }]}
             >
-              <Input.Password placeholder="********" />
+              <Input.Password />
             </Form.Item>
 
             <Form.Item<FormResetPassword>
@@ -94,9 +98,9 @@ const ForgotPasswordModule = () => {
                 </Typography>
               }
               name="confirmPassword"
-              rules={[{ required: true, message: "Please enter confirm password" }]}
+              rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("confirm password") }]}
             >
-              <Input.Password placeholder="********" />
+              <Input.Password />
             </Form.Item>
 
             <Form.Item<FormResetPassword>
@@ -106,7 +110,7 @@ const ForgotPasswordModule = () => {
                 </Typography>
               }
               name="code"
-              rules={[{ required: true, message: "Please enter code" }]}
+              rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("code") }]}
             >
               <div className="w-full flex gap-[2rem]">
                 <Input className="w-2/3" />

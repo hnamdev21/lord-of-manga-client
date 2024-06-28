@@ -34,6 +34,7 @@ export type Path = (typeof Path)[keyof typeof Path];
 
 export const authorizedUserPaths = [Path.USER.PROFILE, Path.USER.UPLOAD, Path.USER.COMIC_MANAGEMENT, Path.USER.RECYCLE_BIN, Path.USER.SAVED_COMICS];
 export const adminPaths = [
+  "/admin",
   Path.ADMIN.DASHBOARD,
   Path.ADMIN.USERS,
   Path.ADMIN.COMICS,

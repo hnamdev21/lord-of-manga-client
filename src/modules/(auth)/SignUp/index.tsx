@@ -10,6 +10,7 @@ import { FaEnvelope, FaIdCard, FaLock, FaUser } from "react-icons/fa";
 import AXIOS_INSTANCE from "@/apis/instance";
 import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
+import NOTIFICATION from "@/constants/notification";
 import Path from "@/constants/path";
 import { User } from "@/types/data";
 import { FormSignUp } from "@/types/form";
@@ -24,10 +25,8 @@ const SignUpModule = () => {
     const response = (await AXIOS_INSTANCE.post<BaseResponse<User>>("/users", values)).data;
 
     if (response.code === "CREATED") {
-      message.success(response.message);
+      message.success(NOTIFICATION.WELCOME);
       router.push(Path.AUTH.SIGN_IN);
-    } else if (response.code === "CONFLICT") {
-      message.error("Username or email already exists");
     }
   };
 
@@ -51,19 +50,19 @@ const SignUpModule = () => {
               <Logo />
             </div>
 
-            <Form.Item<FormSignUp> name="fullName" rules={[{ required: true, type: "string", message: "Please enter your full name" }]}>
+            <Form.Item<FormSignUp> name="fullName" rules={[{ required: true, type: "string", message: NOTIFICATION.PLEASE_ENTER("full name") }]}>
               <Input placeholder="Full name" prefix={<FaIdCard />} />
             </Form.Item>
 
-            <Form.Item<FormSignUp> name="username" rules={[{ required: true, type: "string", message: "Please enter your username" }]}>
+            <Form.Item<FormSignUp> name="username" rules={[{ required: true, type: "string", message: NOTIFICATION.PLEASE_ENTER("username") }]}>
               <Input placeholder="Username" prefix={<FaUser />} />
             </Form.Item>
 
-            <Form.Item<FormSignUp> name="password" rules={[{ required: true, message: "Please enter your password" }]}>
+            <Form.Item<FormSignUp> name="password" rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("password") }]}>
               <Input.Password placeholder="Password" prefix={<FaLock />} />
             </Form.Item>
 
-            <Form.Item<FormSignUp> name="email" rules={[{ type: "email", message: "Please enter your email" }]}>
+            <Form.Item<FormSignUp> name="email" rules={[{ type: "email", message: NOTIFICATION.INVALID("email") }]}>
               <Input placeholder="Email" prefix={<FaEnvelope />} />
             </Form.Item>
 

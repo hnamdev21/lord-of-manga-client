@@ -7,7 +7,9 @@ import React from "react";
 import AXIOS_INSTANCE from "@/apis/instance";
 import MultipleFileInput from "@/components/MultipleFileInput";
 import Typography from "@/components/Typography";
+import NOTIFICATION from "@/constants/notification";
 import { CHAPTER_TYPE_OPTIONS } from "@/constants/options";
+import { VND_CURRENCY } from "@/constants/sign";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Chapter, Comic } from "@/types/data";
 import { FormCreateChapter } from "@/types/form";
@@ -45,7 +47,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
     ).data;
 
     if (response.code === "CREATED") {
-      message.success("Chapter created successfully");
+      message.success(NOTIFICATION.SUCCESS_CREATED("Chapter"));
       form.resetFields();
     }
   };
@@ -82,10 +84,10 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
                 </Typography>
               }
               name="title"
-              rules={[{ required: true, message: "Please enter chapter title" }]}
+              rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("chapter title") }]}
               className="flex-1"
             >
-              <Input placeholder="Enter chapter title" />
+              <Input />
             </Form.Item>
 
             <Form.Item<FormCreateChapter>
@@ -95,7 +97,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
                 </Typography>
               }
               name="comicId"
-              rules={[{ required: true, message: "Please select a comic" }]}
+              rules={[{ required: true, message: NOTIFICATION.PLEASE_SELECT("comic") }]}
               className="flex-1"
             >
               <Select placeholder="-- Select a comic --" options={createdComicOptions} onChange={onComicChange} />
@@ -137,7 +139,12 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
               name="price"
               className="flex-1"
             >
-              <InputNumber addonAfter="₫" min={disablePriceInput ? 0 : 1_000} formatter={(value) => numberFormatter(value || 0)} disabled={disablePriceInput} />
+              <InputNumber
+                addonAfter={VND_CURRENCY}
+                min={disablePriceInput ? 0 : 1_000}
+                formatter={(value) => numberFormatter(value || 0)}
+                disabled={disablePriceInput}
+              />
             </Form.Item>
           </div>
 

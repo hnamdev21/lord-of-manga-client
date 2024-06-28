@@ -7,6 +7,7 @@ import { FaCamera } from "react-icons/fa";
 import AXIOS_INSTANCE from "@/apis/instance";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
+import NOTIFICATION from "@/constants/notification";
 import { GENDER_OPTIONS } from "@/constants/options";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
@@ -32,16 +33,22 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
   const onFinish: FormProps<FormUpdateProfile>["onFinish"] = async (values: FormUpdateProfile) => {
     const formData = fromObjetToFomData({ ...values, file: avatarFile });
 
-    await AXIOS_INSTANCE.put<BaseResponse<User>>("/users/mine", formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = (
+      await AXIOS_INSTANCE.put<BaseResponse<User>>("/users/mine", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+    ).data;
+
+    if (response.code !== "OK") {
+      message.error(response.message);
+      return;
+    }
 
     await authContext?.refreshUser();
-
-    message.success("Update profile successfully");
+    message.success(NOTIFICATION.SUCCESS_UPDATED("Profile"));
   };
 
   const onFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +70,7 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
       <Form layout="vertical" form={form} onFinish={onFinish} className="col-start-4 col-span-2">
         <div className={cn("w-full flex justify-center", styles.container)}>
           <label htmlFor="avatar" className={`${styles.avatarContainer}`}>
-            <Avatar src={avatarSrc} size={120} className={`${styles.avatar}`} alt={`Avatar of ${"Example Ham"}`} />
+            <Avatar src={avatarSrc} size={120} className={`${styles.avatar}`} alt={`Avatar of ${user.fullName}`} />
             <div className={`${styles.overlay}`}>
               <FaCamera />
             </div>
@@ -79,10 +86,10 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
               </Typography>
             }
             name="fullName"
-            rules={[{ required: true, message: "Please enter full name" }]}
+            rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("full name") }]}
             className="w-[60%]"
           >
-            <Input placeholder="Example Ham" />
+            <Input />
           </Form.Item>
 
           <Form.Item<FormUpdateProfile>
@@ -92,7 +99,7 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
               </Typography>
             }
             name="gender"
-            rules={[{ required: true, message: "Pease select gender" }]}
+            rules={[{ required: true, message: NOTIFICATION.PLEASE_SELECT("gender") }]}
             className="w-[40%]"
           >
             <Select options={GENDER_OPTIONS} />
