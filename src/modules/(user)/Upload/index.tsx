@@ -9,7 +9,6 @@ import { AuthContext } from "@/providers/AuthProvider";
 import { Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 
-import styles from "./styles.module.scss";
 import UploadChapter from "./UploadChapter";
 import UploadComic from "./UploadComic";
 
@@ -50,7 +49,6 @@ const UploadModule = () => {
         size="large"
         centered
         items={items}
-        className={styles.tabs}
         onChange={(key) => {
           if (key === "2") {
             fetchCreatedComics();

@@ -12,7 +12,7 @@ import Typography from "@/components/Typography";
 import { ComicTypeMapping } from "@/constants/mapping";
 import NOTIFICATION from "@/constants/notification";
 import { AuthContext } from "@/providers/AuthProvider";
-import { Comic } from "@/types/data";
+import { Comic, ComicStatus } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
@@ -28,7 +28,7 @@ const RecycleBinModule = () => {
       if (!authContext?.auth.token) return null;
 
       const { data } = (
-        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics/mine?all=true&status=DELETED", {
+        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics/mine?all=true&status=" + ComicStatus.DELETED, {
           headers: {
             Authorization: `Bearer ${authContext.auth.token}`,
           },

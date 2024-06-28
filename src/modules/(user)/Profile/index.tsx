@@ -15,7 +15,7 @@ type ActiveTab = "PROFILE" | "EMAIL" | "PASSWORD";
 const ProfileModule = () => {
   const authContext = React.use(AuthContext);
 
-  if (!authContext) return null;
+  if (!authContext?.user) return null;
 
   const [activeTab, setActiveTab] = React.useState<ActiveTab>("PROFILE");
   const tabs: Record<

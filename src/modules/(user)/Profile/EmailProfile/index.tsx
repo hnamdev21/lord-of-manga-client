@@ -28,13 +28,10 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
       })
     ).data;
 
-    if (response.code !== "OK") {
-      message.error(response.message);
-      return;
+    if (response.code === "OK") {
+      await authContext?.refreshUser();
+      message.success(NOTIFICATION.SUCCESS_UPDATED("Setting"));
     }
-
-    await authContext?.refreshUser();
-    message.success(NOTIFICATION.SUCCESS_UPDATED("Setting"));
   };
 
   React.useEffect(() => {

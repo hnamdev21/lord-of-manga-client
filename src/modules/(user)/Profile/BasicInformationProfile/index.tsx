@@ -42,13 +42,10 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
       })
     ).data;
 
-    if (response.code !== "OK") {
-      message.error(response.message);
-      return;
+    if (response.code === "OK") {
+      await authContext?.refreshUser();
+      message.success(NOTIFICATION.SUCCESS_UPDATED("Profile"));
     }
-
-    await authContext?.refreshUser();
-    message.success(NOTIFICATION.SUCCESS_UPDATED("Profile"));
   };
 
   const onFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

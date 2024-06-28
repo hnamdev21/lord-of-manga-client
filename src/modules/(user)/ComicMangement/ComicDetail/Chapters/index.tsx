@@ -6,6 +6,7 @@ import { FaComment, FaEye, FaTimes } from "react-icons/fa";
 
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
+import NOTIFICATION from "@/constants/notification";
 import { Comic } from "@/types/data";
 import { timestampToDateTime } from "@/utils/formatter";
 
@@ -34,7 +35,7 @@ const Chapters = ({ comic }: ChaptersProps) => {
     const chapter = chapters.find((chapter) => chapter.id === id);
 
     if (!chapter) {
-      message.error("Something went wrong. Please try again later");
+      message.error(NOTIFICATION.SOMETHING_WENT_WRONG);
       return;
     }
 
