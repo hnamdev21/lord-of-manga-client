@@ -1,7 +1,9 @@
 import React from "react";
 
-const UserManagementPage = () => {
-  return <div>UserManagementPage</div>;
+import UsersModule from "@/modules/(admin)/Users";
+
+const UsersPage = () => {
+  return <UsersModule />;
 };
 
-export default UserManagementPage;
+export default UsersPage;

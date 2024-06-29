@@ -1,7 +1,9 @@
 import React from "react";
 
-const PaymentManagementPage = () => {
-  return <div>PaymentManagementPage</div>;
+import PaymentsModule from "@/modules/(admin)/Payments";
+
+const PaymentsPage = () => {
+  return <PaymentsModule />;
 };
 
-export default PaymentManagementPage;
+export default PaymentsPage;

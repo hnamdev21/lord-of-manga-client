@@ -1,9 +1,9 @@
 import React from "react";
 
-import ComicsModule from "@/modules/(user)/Comics";
+import User_ComicsModule from "@/modules/(user)/Comics";
 
 const ComicsPage = () => {
-  return <ComicsModule />;
+  return <User_ComicsModule />;
 };
 
 export default ComicsPage;

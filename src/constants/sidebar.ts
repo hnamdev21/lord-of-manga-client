@@ -3,7 +3,6 @@ import {
   FaBook,
   FaBookmark,
   FaBox,
-  FaCcVisa,
   FaChartBar,
   FaClock,
   FaComment,
@@ -14,6 +13,7 @@ import {
   FaTrashRestore,
   FaUpload,
   FaUserFriends,
+  FaWallet,
 } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
 
@@ -69,7 +69,6 @@ export const SidebarAuthenticatedPath = {
     href: "/recycle-bin",
     icon: FaTrashRestore,
   } as const,
-
   SAVED_COMICS: {
     label: "Saved Comics",
     href: "/saved-comics",
@@ -89,7 +88,6 @@ export const SidebarAdminPath = {
     href: "/admin/users",
     icon: FaUserFriends,
   } as const,
-
   CATEGORIES: {
     label: "Categories",
     href: "/admin/categories",
@@ -105,6 +103,11 @@ export const SidebarAdminPath = {
     href: "/admin/comics",
     icon: FaBook,
   } as const,
+  RECYCLE_BIN: {
+    label: "Recycle Bin",
+    href: "/admin/recycle-bin",
+    icon: FaTrashRestore,
+  } as const,
   COMMENTS: {
     label: "Comments",
     href: "/admin/comments",
@@ -113,7 +116,7 @@ export const SidebarAdminPath = {
   PAYMENTS: {
     label: "Payments",
     href: "/admin/payments",
-    icon: FaCcVisa,
+    icon: FaWallet,
   } as const,
 };
 export type SidebarAdminPath = (typeof SidebarAdminPath)[keyof typeof SidebarAdminPath];

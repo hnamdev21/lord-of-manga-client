@@ -88,6 +88,11 @@
       background-color: var(--color-info);
       color: var(--color-light);
     }
+
+    &__transparent {
+      background-color: transparent;
+      color: var(--color-black);
+    }
   }
 
   &__variant {

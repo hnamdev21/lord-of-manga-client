@@ -5,7 +5,7 @@ import cn from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { FaEnvelope, FaIdCard, FaLock, FaUser } from "react-icons/fa";
+import { FaAt, FaIdCard, FaLock, FaUser } from "react-icons/fa";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Logo from "@/components/Logo";
@@ -63,7 +63,7 @@ const SignUpModule = () => {
             </Form.Item>
 
             <Form.Item<FormSignUp> name="email" rules={[{ type: "email", message: NOTIFICATION.INVALID("email") }]}>
-              <Input placeholder="Email" prefix={<FaEnvelope />} />
+              <Input placeholder="Email" prefix={<FaAt />} />
             </Form.Item>
 
             <Form.Item<FormSignUp> name="receiveNews" valuePropName="checked">

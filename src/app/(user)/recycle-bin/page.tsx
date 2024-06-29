@@ -1,9 +1,9 @@
 import React from "react";
 
-import RecycleBinModule from "@/modules/(user)/RecycleBin";
+import User_RecycleBinModule from "@/modules/(user)/RecycleBin";
 
 const RecycleBinPage = () => {
-  return <RecycleBinModule />;
+  return <User_RecycleBinModule />;
 };
 
 export default RecycleBinPage;

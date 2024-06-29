@@ -10,6 +10,10 @@
   overflow: hidden;
   color: var(--color-black);
 
+  &:hover {
+    filter: brightness(0.9);
+  }
+
   &__active {
     background-color: var(--color-primary);
     color: var(--color-light);

@@ -25,7 +25,7 @@ const initData = {
   to: 0,
 };
 
-const ComicsModule = () => {
+const User_ComicsModule = () => {
   const [data, setData] = React.useState<BaseGetResponse<Comic[]> | null>(null);
   const [filter, setFilter] = React.useState<FormComicFilter>(initData);
   const [page, setPage] = React.useState(1);
@@ -165,4 +165,4 @@ const ComicsModule = () => {
   );
 };
 
-export default ComicsModule;
+export default User_ComicsModule;

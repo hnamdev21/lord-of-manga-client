@@ -1,7 +1,9 @@
 import React from "react";
 
-const CategoryManagementPage = () => {
-  return <div>CategoryManagementPage</div>;
+import Categories from "@/modules/(admin)/Categories";
+
+const CategoriesPage = () => {
+  return <Categories />;
 };
 
-export default CategoryManagementPage;
+export default CategoriesPage;

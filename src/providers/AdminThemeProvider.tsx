@@ -18,6 +18,7 @@ const AdminThemeProvider = ({ children }: { children: React.ReactNode }) => {
           borderRadius: 6,
         },
         algorithm: theme.darkAlgorithm,
+        hashed: false,
       }}
     >
       {children}

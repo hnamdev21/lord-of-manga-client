@@ -7,7 +7,7 @@ import React from "react";
 import styles from "./styles.module.scss";
 
 type ButtonSize = "xs" | "sm" | "base" | "md" | "lg";
-type ButtonColor = "primary" | "secondary" | "danger" | "success" | "warning" | "info";
+type ButtonColor = "primary" | "secondary" | "danger" | "success" | "warning" | "info" | "transparent";
 type ButtonVariant = "solid" | "outline" | "plain";
 
 type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {

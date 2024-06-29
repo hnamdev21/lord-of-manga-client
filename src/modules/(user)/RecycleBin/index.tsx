@@ -18,7 +18,7 @@ import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
 import ComicDetail from "../ComicMangement/ComicDetail";
 
-const RecycleBinModule = () => {
+const User_RecycleBinModule = () => {
   const authContext = React.use(AuthContext);
   const [modalApi, modalHolder] = Modal.useModal();
 
@@ -176,4 +176,4 @@ const RecycleBinModule = () => {
   );
 };
 
-export default RecycleBinModule;
+export default User_RecycleBinModule;

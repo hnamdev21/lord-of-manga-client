@@ -16,19 +16,19 @@ const Sidebar = () => {
 
   return (
     <div
-      className="fixed top-0 left-0 z-30 p-[1rem] h-screen w-[5.2rem] hover:w-96 transition-all ease-in-out duration-300"
+      className="p-[1rem] h-screen w-[5.2rem] hover:w-96 transition-all ease-in-out duration-300"
       style={{
         boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)",
       }}
     >
       <div className="w-full h-[4.2rem] pb-[1rem] mb-[4rem] flex justify-center">
-        <Link href={Path.USER.HOME} className="h-full aspect-square w-auto hover:text-red-500 transition ease-in-out duration-300">
+        <Link href={Path.USER.HOME} className="h-full aspect-square w-auto hover:text-red-500 transition ease-in-out duration-300 text-[var(--color-black)]">
           <FaWolfPackBattalion className="h-full aspect-square w-auto" />
         </Link>
       </div>
 
       {/* General Menu */}
-      <Typography tag="h6" fontSize="xs" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
+      <Typography tag="h6" fontSize="xs" fontWeight="bold" align="center" className="w-full mb-[.5rem]" textColor="black">
         Main
       </Typography>
       <div className="w-full flex flex-col gap-[1rem] mb-[2rem]">
@@ -36,9 +36,9 @@ const Sidebar = () => {
       </div>
 
       {/* Admin Menu */}
-      {authContext?.user && authContext.user.roles.find((role) => role.name === "ADMIN") && (
+      {authContext?.user?.roles.find((role) => role.name === "ADMIN") && (
         <React.Fragment>
-          <Typography tag="h6" fontSize="xs" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
+          <Typography tag="h6" fontSize="xs" fontWeight="bold" align="center" className="w-full mb-[.5rem]" textColor="black">
             Admin
           </Typography>
 
