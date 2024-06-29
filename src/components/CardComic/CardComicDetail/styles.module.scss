@@ -1,0 +1,43 @@
+.container {
+  position: relative;
+  width: rem(600px);
+  display: flex;
+  gap: rem(10px);
+
+  &__coverContainer {
+    position: relative;
+    width: 40%;
+    height: rem(380px);
+    border-radius: rem(8px);
+    overflow: hidden;
+  }
+
+  &__info {
+    flex: 1;
+
+    &__stats {
+      display: flex;
+      align-items: center;
+      gap: rem(10px);
+    }
+
+    &__actions {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: rem(10px);
+
+      &__read {
+        flex: 1;
+        display: block;
+      }
+
+      &__bookmark {
+        width: 10%;
+        padding: rem(10px);
+        @include flex-center;
+        aspect-ratio: 1;
+      }
+    }
+  }
+}

@@ -19,7 +19,7 @@ type RowCardProps = {
 };
 
 const RowCard = ({ category, numberOfColumns }: RowCardProps) => {
-  const { data: comics } = useQuery(["comics", category.name], async () => {
+  const { data: comics } = useQuery(["row-card", "comics", category.name], async () => {
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("comics/category/search?term=" + category.name)).data;
     return data.content;
   });
@@ -42,7 +42,7 @@ const RowCard = ({ category, numberOfColumns }: RowCardProps) => {
           gridTemplateColumns: `repeat(${numberOfColumns}, 1fr)`,
         }}
       >
-        {(comics?.length || 0) > numberOfColumns ? (
+        {(comics?.length || 0) > 0 ? (
           comics?.splice(0, numberOfColumns).map((comic) => (
             <div key={comic.id} className={styles.content__item}>
               <CardComic {...comic} />
