@@ -1,11 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import React from "react";
-import { FaWolfPackBattalion } from "react-icons/fa";
 
+import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
-import Path from "@/constants/path";
 import { SidebarAdminPath, SidebarCommonPath } from "@/constants/sidebar";
 import { AuthContext } from "@/providers/AuthProvider";
 
@@ -22,13 +20,11 @@ const Sidebar = () => {
       }}
     >
       <div className="w-full h-[4.2rem] pb-[1rem] mb-[4rem] flex justify-center">
-        <Link href={Path.USER.HOME} className="h-full aspect-square w-auto hover:text-red-500 transition ease-in-out duration-300 text-[var(--color-black)]">
-          <FaWolfPackBattalion className="h-full aspect-square w-auto" />
-        </Link>
+        <Logo />
       </div>
 
       {/* General Menu */}
-      <Typography tag="h6" fontSize="xs" fontWeight="bold" align="center" className="w-full mb-[.5rem]" textColor="black">
+      <Typography tag="h6" fontSize="xs" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
         Main
       </Typography>
       <div className="w-full flex flex-col gap-[1rem] mb-[2rem]">
@@ -38,7 +34,7 @@ const Sidebar = () => {
       {/* Admin Menu */}
       {authContext?.user?.roles.find((role) => role.name === "ADMIN") && (
         <React.Fragment>
-          <Typography tag="h6" fontSize="xs" fontWeight="bold" align="center" className="w-full mb-[.5rem]" textColor="black">
+          <Typography tag="h6" fontSize="xs" fontWeight="bold" align="center" className="w-full mb-[.5rem]">
             Admin
           </Typography>
 

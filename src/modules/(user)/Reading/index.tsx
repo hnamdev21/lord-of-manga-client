@@ -43,7 +43,7 @@ const ReadingModule = ({ comicSlug, chapterSlug }: ReadingModuleProps) => {
 
   return (
     <div>
-      <div className="py-[1rem] bg-[var(--color-black)]">
+      <div className="py-[1rem] bg-[var(--color-light)]">
         <Container>
           <div className="col-start-5 col-span-4 flex gap-[2rem]">
             <div className="w-[20%]">

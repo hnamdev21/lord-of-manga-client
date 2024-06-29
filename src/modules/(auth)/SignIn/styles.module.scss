@@ -7,8 +7,8 @@
 
   .inner {
     padding: rem(20px);
-    background-color: var(--color-dark-gray);
     border-radius: rem(8px);
+    box-shadow: 0 0 rem(20px) rgba(0, 0, 0, 0.2);
 
     .logoContainer {
       width: 100%;

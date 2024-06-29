@@ -15,7 +15,7 @@ import { BaseGetResponse, BaseResponse } from "@/types/response";
 import styles from "./styles.module.scss";
 
 const Hero = () => {
-  const { data: comics } = useQuery("comics", async () => {
+  const { data: comics } = useQuery(["hero", "comics"], async () => {
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics?size=4&sortBy=createdAt&status=" + ComicStatus.APPROVED)).data;
     return data.content;
   });

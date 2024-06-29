@@ -26,7 +26,7 @@ const LayoutAdmin = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AdminThemeProvider>
-      <main className="h-screen flex gap-[2rem] bg-[var(--color-light)] text-[var(--color-black)]">
+      <main className="h-screen flex gap-[2rem]">
         <Sidebar />
         <div className="flex-1 py-[1rem] h-full pr-[2rem] flex flex-col gap-[1rem]">
           <div className="h-[4rem] w-full"></div>
@@ -47,7 +47,7 @@ const LayoutAdmin = ({ children }: { children: React.ReactNode }) => {
                   </Link>
 
                   {breadcrumbItems.indexOf(item) < breadcrumbItems.length - 1 && (
-                    <Typography textColor="black" tag="span" className="mx-[1rem]">
+                    <Typography tag="span" className="mx-[1rem]">
                       /
                     </Typography>
                   )}

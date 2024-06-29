@@ -10,13 +10,13 @@
 
       .input {
         border-radius: rem(25px);
-        border: rem(1px) solid var(--color-light);
-        background-color: var(--color-dark);
+        border: rem(1px) solid var(--color-black);
+        background-color: var(--color-light);
         width: 100%;
         height: rem(32px);
         padding: rem(4px) rem(15px);
         font-size: var(--fs-base);
-        color: var(--color-light);
+        color: var(--color-black);
         transition: all 0.3s ease-in-out;
       }
     }

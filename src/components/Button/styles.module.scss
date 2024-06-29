@@ -47,11 +47,8 @@
   &__color {
     &__primary {
       background-color: var(--color-primary);
+      border-color: var(--color-primary);
       color: var(--color-light);
-
-      &:hover {
-        color: var(--color-light);
-      }
     }
 
     &__secondary {
@@ -98,7 +95,8 @@
   &__variant {
     &__outline {
       background-color: transparent;
-      border: rem(1px) solid var(--color-light);
+      border: rem(1px) solid var(--color-gray);
+      color: var(--color-black);
     }
 
     &__plain {
