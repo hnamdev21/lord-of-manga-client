@@ -222,7 +222,15 @@ const ComicManagementModule = () => {
         width: "12.5%",
         render: (_, { id }) => (
           <div className="flex gap-[1rem]">
-            <Button element="button" type="button" variant="plain" size="sm" onClick={() => onDetail(id)} className="flex justify-center items-center">
+            <Button
+              element="button"
+              type="button"
+              color="transparent"
+              variant="plain"
+              size="sm"
+              onClick={() => onDetail(id)}
+              className="flex justify-center items-center"
+            >
               <FaEye />
             </Button>
             <Button element="button" type="button" variant="outline" size="sm" onClick={() => onEdit(id)} className="flex justify-center items-center">

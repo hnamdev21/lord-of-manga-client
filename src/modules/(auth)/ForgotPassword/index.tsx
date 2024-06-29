@@ -1,8 +1,9 @@
 "use client";
 
-import { Button, Form, FormProps, Input, Modal } from "antd";
+import { Form, FormProps, Input, Modal } from "antd";
 import React from "react";
 
+import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import NOTIFICATION from "@/constants/notification";
@@ -57,7 +58,7 @@ const ForgotPasswordModule = () => {
           </Form.Item>
 
           <Form.Item<FormForgotPassword>>
-            <Button type="primary" htmlType="submit" className="block w-full">
+            <Button element="button" type="submit" className="block w-full">
               Submit
             </Button>
           </Form.Item>
@@ -114,13 +115,13 @@ const ForgotPasswordModule = () => {
             >
               <div className="w-full flex gap-[2rem]">
                 <Input className="w-2/3" />
-                <Button type="dashed" className="w-1/3">
+                <Button type="button" element="button" variant="outline" className="w-1/3">
                   Resend
                 </Button>
               </div>
             </Form.Item>
 
-            <Button type="primary" htmlType="submit" className="block w-full">
+            <Button element="button" type="submit" className="block w-full">
               Save
             </Button>
           </div>

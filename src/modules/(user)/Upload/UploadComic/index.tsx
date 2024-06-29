@@ -1,11 +1,13 @@
 "use client";
 
-import { Button, Divider, Form, FormProps, Input, InputNumber, InputRef, message, Select, Space, Upload } from "antd";
+import { Divider, Form, FormProps, Input, InputNumber, InputRef, message, Select, Space, Upload } from "antd";
 import { RcFile, UploadFile } from "antd/es/upload";
 import React from "react";
+import { FaUpload } from "react-icons/fa";
 import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
+import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import NOTIFICATION from "@/constants/notification";
 import { COMIC_TYPE_OPTIONS } from "@/constants/options";
@@ -162,7 +164,7 @@ const UploadComic = () => {
                       allowClear
                       onKeyDown={(e) => e.stopPropagation()}
                     />
-                    <Button type="primary" danger size="middle" onClick={addItem}>
+                    <Button element="button" type="button" size="xs" onClick={addItem}>
                       Add
                     </Button>
                   </Space>
@@ -231,16 +233,7 @@ const UploadComic = () => {
           </Form.Item>
 
           <div className="grid grid-cols-2 gap-[2rem]">
-            <Form.Item<FormCreateComic>
-              label={
-                <Typography className="span" fontSize="sm">
-                  Cover
-                </Typography>
-              }
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-              name="cover"
-            >
+            <Form.Item<FormCreateComic> valuePropName="fileList" getValueFromEvent={normFile} name="cover">
               <Upload
                 listType="picture"
                 maxCount={1}
@@ -251,19 +244,19 @@ const UploadComic = () => {
                 }}
                 accept=".jpg, .jpeg, .png"
               >
-                <Button onClick={(e) => e.preventDefault()}>Upload cover</Button>
+                <Button
+                  element="button"
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={(e) => e.preventDefault()}
+                  className="flex gap-[.5rem] items-center"
+                >
+                  <FaUpload /> Upload cover
+                </Button>
               </Upload>
             </Form.Item>
-            <Form.Item<FormCreateComic>
-              label={
-                <Typography className="span" fontSize="sm">
-                  Thumbnail
-                </Typography>
-              }
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-              name="thumbnail"
-            >
+            <Form.Item<FormCreateComic> valuePropName="fileList" getValueFromEvent={normFile} name="thumbnail">
               <Upload
                 listType="picture"
                 maxCount={1}
@@ -274,13 +267,22 @@ const UploadComic = () => {
                 }}
                 accept=".jpg, .jpeg, .png"
               >
-                <Button onClick={(e) => e.preventDefault()}>Upload thumbnail</Button>
+                <Button
+                  element="button"
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={(e) => e.preventDefault()}
+                  className="flex gap-[.5rem] items-center"
+                >
+                  <FaUpload /> Upload thumbnail
+                </Button>
               </Upload>
             </Form.Item>
           </div>
 
           <Form.Item<FormCreateComic>>
-            <Button type="primary" htmlType="submit" className="block w-full">
+            <Button element="button" type="submit" className="block mx-auto">
               Create
             </Button>
           </Form.Item>

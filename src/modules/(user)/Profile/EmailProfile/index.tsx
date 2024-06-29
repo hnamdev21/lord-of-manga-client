@@ -1,7 +1,8 @@
-import { Button, Checkbox, Divider, Form, FormProps, message, Popover } from "antd";
+import { Checkbox, Divider, Form, FormProps, message, Popover } from "antd";
 import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
+import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import NOTIFICATION from "@/constants/notification";
@@ -11,6 +12,7 @@ import { FormUpdateEmail, FormUpdateUserSetting } from "@/types/form";
 import { BaseResponse } from "@/types/response";
 
 import EmailInput from "./EmailInput";
+import styles from "./styles.module.scss";
 
 const EmailProfile = ({ user, token }: { user: User; token: string }) => {
   const authContext = React.use(AuthContext);
@@ -98,11 +100,9 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
           </Popover>
         </div>
 
-        <Form.Item<FormUpdateUserSetting>>
-          <Button type="primary" htmlType="submit" className="block w-full">
-            Save
-          </Button>
-        </Form.Item>
+        <Button element="button" type="submit" className={styles.saveBtn}>
+          Save
+        </Button>
       </Form>
     </Container>
   );

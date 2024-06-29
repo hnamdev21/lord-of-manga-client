@@ -1,10 +1,11 @@
 "use client";
 
-import { Button, Checkbox, Form, FormProps, Input, InputNumber, message, Popover, Select, Upload } from "antd";
+import { Checkbox, Form, FormProps, Input, InputNumber, message, Popover, Select, Upload } from "antd";
 import { FieldNamesType } from "antd/es/cascader";
 import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
+import Button from "@/components/Button";
 import MultipleFileInput from "@/components/MultipleFileInput";
 import Typography from "@/components/Typography";
 import NOTIFICATION from "@/constants/notification";
@@ -189,11 +190,13 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
                   }}
                   showUploadList={false}
                 >
-                  <Button>Add images</Button>
+                  <Button element="button" type="button" variant="outline">
+                    Add images
+                  </Button>
                 </Upload>
               </Popover>
 
-              <Button type="primary" htmlType="submit">
+              <Button element="button" type="submit">
                 Create
               </Button>
             </div>

@@ -53,7 +53,7 @@ const ProfileModule = () => {
           <button
             key={key}
             onClick={() => setActiveTab(key as ActiveTab)}
-            className={cn("py-[1rem] px-[1.5rem] border-r-[1px] border-solid text-right transition duration-300 ease-in-out hover:brightness-90", {
+            className={cn("py-[1rem] px-[1.5rem] border-r-[4px] border-solid text-right transition duration-300 ease-in-out hover:brightness-90", {
               "border-[var(--color-primary)]": activeTab === key,
             })}
           >

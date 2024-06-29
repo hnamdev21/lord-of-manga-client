@@ -1,10 +1,11 @@
-import { Avatar, Button, Form, FormProps, Input, message, Select } from "antd";
+import { Avatar, Form, FormProps, Input, message, Select } from "antd";
 import { FieldNamesType } from "antd/es/cascader";
 import cn from "classnames";
 import React from "react";
 import { FaCamera } from "react-icons/fa";
 
 import AXIOS_INSTANCE from "@/apis/instance";
+import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import NOTIFICATION from "@/constants/notification";
@@ -103,11 +104,9 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
           </Form.Item>
         </div>
 
-        <Form.Item<FormUpdateProfile>>
-          <Button type="primary" htmlType="submit" className="block w-full">
-            Save
-          </Button>
-        </Form.Item>
+        <Button element="button" type="submit" className={styles.saveBtn}>
+          Save
+        </Button>
       </Form>
     </Container>
   );

@@ -1,7 +1,8 @@
-import { Button, Form, FormProps, Input, message, Modal } from "antd";
+import { Form, FormProps, Input, message, Modal } from "antd";
 import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
+import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import NOTIFICATION from "@/constants/notification";
@@ -9,6 +10,8 @@ import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { FormTwoFactorAuthentication, FormUpdatePassword } from "@/types/form";
 import { BaseResponse } from "@/types/response";
+
+import styles from "./styles.module.scss";
 
 const PasswordProfile = ({ token }: { user: User; token: string }) => {
   const authContext = React.use(AuthContext);
@@ -90,11 +93,9 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
             <Input.Password />
           </Form.Item>
 
-          <Form.Item<FormUpdatePassword>>
-            <Button type="primary" htmlType="submit" className="block w-full">
-              Change
-            </Button>
-          </Form.Item>
+          <Button element="button" type="submit" className={styles.saveBtn}>
+            Change
+          </Button>
         </Form>
       </Container>
 
@@ -124,7 +125,7 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
           >
             <div className="w-full flex gap-[2rem]">
               <Input className="w-2/3" />
-              <Button type="primary" htmlType="submit" className="w-1/3">
+              <Button element="button" type="submit" className="w-1/3">
                 Submit
               </Button>
             </div>

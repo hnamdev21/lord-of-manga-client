@@ -1,8 +1,9 @@
-import { Button, Form, FormProps, Input, message, Modal } from "antd";
+import { Form, FormProps, Input, message, Modal } from "antd";
 import cn from "classnames";
 import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
+import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import NOTIFICATION from "@/constants/notification";
 import { AuthContext } from "@/providers/AuthProvider";
@@ -82,10 +83,12 @@ const EmailInput = ({ value, onChange, isVerified, username, token }: EmailInput
 
         <div className="w-[30%] flex items-end">
           <Button
+            element="button"
+            type="button"
             className={cn("block flex-1", {
               [styles.success]: isVerified,
             })}
-            disabled={isVerified}
+            // disabled={isVerified} //TODO
             onClick={onVerifyEmail}
           >
             {isVerified ? "Verified" : "Verify"}
@@ -119,7 +122,7 @@ const EmailInput = ({ value, onChange, isVerified, username, token }: EmailInput
           >
             <div className="w-full flex gap-[2rem]">
               <Input className="w-2/3" />
-              <Button type="primary" htmlType="submit" className="w-1/3">
+              <Button element="button" type="submit" className="w-1/3">
                 Submit
               </Button>
             </div>
