@@ -48,11 +48,11 @@ const ComicDetail = ({ comic }: ComicDetailProps) => {
 
       <div className="col-span-9 flex flex-col">
         <div className="w-full  grid grid-cols-9 gap-x-[2rem] gap-y-[1rem]">
-          <Statistic title="Views" value={100000} formatter={formatter} className="col-span-1" />
-          <Statistic title="Saved" value={100000} formatter={formatter} className="col-span-1" />
-          <Statistic title="Comments" value={100000} formatter={formatter} className="col-span-1" />
-          <Statistic title="User purchase" value={100000} formatter={formatter} className="col-span-1" />
-          <Statistic title="Total purchase" value={100000} formatter={formatter} className="col-span-1" suffix={VND_CURRENCY} />
+          <Statistic title="Views" value={100000} formatter={formatter} />
+          <Statistic title="Saved" value={100000} formatter={formatter} />
+          <Statistic title="Comments" value={100000} formatter={formatter} />
+          <Statistic title="User purchase" value={100000} formatter={formatter} />
+          <Statistic title="Total purchase" value={100000} formatter={formatter} suffix={VND_CURRENCY} />
 
           <div className="col-span-9">
             <Divider style={{ margin: "0" }} />

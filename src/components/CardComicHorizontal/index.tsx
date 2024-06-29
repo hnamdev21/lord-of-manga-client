@@ -15,7 +15,7 @@ const CardComicHorizontal = ({ title, coverPath, description, slug, viewCount, c
 
   return (
     <div
-      className="w-full flex rounded-md overflow-hidden bg-[var(--color-dark)] cursor-pointer hover:brightness-125 transition duration-300 ease-in-out"
+      className="w-full flex rounded-md overflow-hidden bg-[var(--color-dark)] cursor-pointer hover:brightness-110 transition duration-300 ease-in-out"
       onClick={() => router.push("/comics/" + slug)}
     >
       <div className="w-1/4 h-[14rem] relative">

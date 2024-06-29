@@ -15,7 +15,7 @@ const SidebarItem = (item: SidebarItem) => {
     <Link
       href={item.href}
       className={cn(
-        "w-full h-[3.2rem] p-[.9rem] flex-items center rounded-xl hover:brightness-50 transition ease-in-out duration-300 bg-[var(--color-dark-gray)] overflow-hidden",
+        "w-full h-[3.2rem] p-[.9rem] flex-items center rounded-xl hover:brightness-90 transition ease-in-out duration-300 bg-[var(--color-dark-gray)] overflow-hidden",
         {
           "bg-[var(--color-primary)]": active,
         }

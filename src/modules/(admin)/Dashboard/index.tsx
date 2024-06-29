@@ -1,13 +1,33 @@
-import React from "react";
+"use client";
 
-import Typography from "@/components/Typography";
+import { Card, Statistic, StatisticProps } from "antd";
+import React from "react";
+import CountUp from "react-countup";
+
+import { VND_CURRENCY } from "@/constants/sign";
+
+const formatter: StatisticProps["formatter"] = (value) => <CountUp end={value as number} separator="." />;
 
 const DashboardModule = () => {
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      <Typography tag="h1" textColor="black">
-        This page is under construction
-      </Typography>
+    <div className="w-full h-full">
+      <div className="grid grid-cols-12 gap-[2rem]">
+        <Card bordered={false} className="col-span-2">
+          <Statistic title="Total users" value={100000} formatter={formatter} />
+        </Card>
+        <Card bordered={false} className="col-span-2">
+          <Statistic title="Total verified users" value={100000} formatter={formatter} />
+        </Card>
+        <Card bordered={false} className="col-span-2">
+          <Statistic title="Total comics" value={100000} formatter={formatter} />
+        </Card>
+        <Card bordered={false} className="col-span-2">
+          <Statistic title="Total pending comics" value={100000} formatter={formatter} />
+        </Card>
+        <Card bordered={false} className="col-span-2">
+          <Statistic title="Total purchase" value={100000} formatter={formatter} suffix={VND_CURRENCY} />
+        </Card>
+      </div>
     </div>
   );
 };

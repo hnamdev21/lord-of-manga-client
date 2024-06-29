@@ -18,8 +18,8 @@ const LayoutAdmin = ({ children }: { children: React.ReactNode }) => {
     .slice(1)
     .split("/")
     .map((path) => ({
-      href: `/${path}`,
-      title: path.charAt(0).toUpperCase() + path.slice(1),
+      href: pathname.replace(new RegExp(`/${path}.*`), `/${path}`),
+      title: (path.charAt(0).toUpperCase() + path.slice(1)).replace(/-/g, " "),
     }));
 
   if (!authContext?.user) return null;
