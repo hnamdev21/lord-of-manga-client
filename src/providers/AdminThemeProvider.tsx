@@ -15,6 +15,7 @@ const AdminThemeProvider = ({ children }: { children: React.ReactNode }) => {
           colorBgBase: "#ffffff",
           colorBgContainer: "#ffffff",
           colorTextBase: "#1b1b1a",
+          colorBorder: "#d1d1d1",
           lineHeight: 1.6,
           borderRadius: 6,
         },
