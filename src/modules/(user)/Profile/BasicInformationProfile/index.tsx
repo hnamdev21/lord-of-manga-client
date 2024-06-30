@@ -104,7 +104,7 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
           </Form.Item>
         </div>
 
-        <Button element="button" type="submit" className={styles.saveBtn}>
+        <Button element="button" type="submit" shape="full">
           Save
         </Button>
       </Form>

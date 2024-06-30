@@ -11,8 +11,6 @@ import { User } from "@/types/data";
 import { FormTwoFactorAuthentication, FormUpdatePassword } from "@/types/form";
 import { BaseResponse } from "@/types/response";
 
-import styles from "./styles.module.scss";
-
 const PasswordProfile = ({ token }: { user: User; token: string }) => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormUpdatePassword>();
@@ -93,7 +91,7 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
             <Input.Password />
           </Form.Item>
 
-          <Button element="button" type="submit" className={styles.saveBtn}>
+          <Button element="button" type="submit" shape="full">
             Change
           </Button>
         </Form>

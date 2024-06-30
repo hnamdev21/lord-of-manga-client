@@ -27,6 +27,20 @@ export const ChapterType = {
 } as const;
 export type ChapterType = keyof typeof ChapterType;
 
+export const PermissionName = {
+  CREATE_COMIC: "CREATE_COMIC",
+  BAN_COMIC: "BAN_COMIC",
+  USER_MANAGEMENT: "USER_MANAGEMENT",
+  APPROVE_CHAPTER: "APPROVE_CHAPTER",
+  APPROVE_COMIC: "APPROVE_COMIC",
+  COMMENT: "COMMENT",
+  BAN_CHAPTER: "BAN_CHAPTER",
+  PREVIEW_COMIC: "PREVIEW_COMIC",
+  READ_COMIC: "READ_COMIC",
+  DISABLE_COMMENT: "DISABLE_COMMENT",
+} as const;
+export type PermissionName = keyof typeof PermissionName;
+
 export type BaseEntity = {
   id: string;
   createdAt: string;
@@ -34,7 +48,7 @@ export type BaseEntity = {
 };
 
 export type Permission = BaseEntity & {
-  name: string;
+  name: PermissionName;
   description: string;
 };
 

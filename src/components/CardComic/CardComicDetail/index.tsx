@@ -72,6 +72,7 @@ const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
               element="button"
               type="button"
               variant="outline"
+              color="dark"
               style={{
                 padding: "1rem",
               }}

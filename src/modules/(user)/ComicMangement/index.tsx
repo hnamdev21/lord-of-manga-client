@@ -2,7 +2,7 @@
 
 import { message, Modal, notification, Table, TableProps, Tag as AntdTag } from "antd";
 import React from "react";
-import { FaEye, FaPen, FaTimes, FaTrash } from "react-icons/fa";
+import { FaEye, FaMarker, FaTimes, FaTrash } from "react-icons/fa";
 import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
@@ -225,7 +225,7 @@ const ComicManagementModule = () => {
             <Button
               element="button"
               type="button"
-              color="transparent"
+              color="dark"
               variant="plain"
               size="sm"
               onClick={() => onDetail(id)}
@@ -234,7 +234,7 @@ const ComicManagementModule = () => {
               <FaEye />
             </Button>
             <Button element="button" type="button" variant="outline" size="sm" onClick={() => onEdit(id)} className="flex justify-center items-center">
-              <FaPen />
+              <FaMarker />
             </Button>
             <Button element="button" type="button" color="danger" size="sm" onClick={() => onDelete(id)} className="flex justify-center items-center">
               <FaTrash />

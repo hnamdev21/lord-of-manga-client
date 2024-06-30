@@ -6,9 +6,10 @@ import {
   FaChartBar,
   FaClock,
   FaComment,
+  FaHashtag,
   FaHome,
+  FaIdCard,
   FaSearch,
-  FaTag,
   FaTags,
   FaTrashRestore,
   FaUpload,
@@ -83,6 +84,11 @@ export const SidebarAdminPath = {
     href: "/admin/dashboard",
     icon: FaChartBar,
   } as const,
+  ROLES: {
+    label: "Roles",
+    href: "/admin/roles",
+    icon: FaIdCard,
+  } as const,
   USERS: {
     label: "Users",
     href: "/admin/users",
@@ -96,7 +102,7 @@ export const SidebarAdminPath = {
   TAGS: {
     label: "Tags",
     href: "/admin/tags",
-    icon: FaTag,
+    icon: FaHashtag,
   } as const,
   COMICS: {
     label: "Comics",

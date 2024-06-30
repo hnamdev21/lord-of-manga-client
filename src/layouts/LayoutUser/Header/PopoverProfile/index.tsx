@@ -9,10 +9,10 @@ const PopoverProfile = () => {
 
   return (
     <div className="w-[10rem] flex flex-col gap-[.5rem]">
-      <Button variant="plain" size="sm" color="transparent" style={{ width: "100%" }} href={Path.USER.PROFILE}>
+      <Button variant="plain" size="sm" color="dark" style={{ width: "100%" }} href={Path.USER.PROFILE}>
         Profile
       </Button>
-      <Button variant="plain" size="sm" color="transparent" style={{ width: "100%" }} element="button" onClick={authContext?.signOut} type="button">
+      <Button variant="plain" size="sm" color="dark" style={{ width: "100%" }} element="button" onClick={authContext?.signOut} type="button">
         Sign Out
       </Button>
     </div>

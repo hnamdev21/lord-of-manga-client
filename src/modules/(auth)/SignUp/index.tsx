@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Checkbox, Form, type FormProps, Input, message } from "antd";
+import { Checkbox, Form, type FormProps, Input, message } from "antd";
 import cn from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -8,6 +8,7 @@ import React from "react";
 import { FaAt, FaIdCard, FaLock, FaUser } from "react-icons/fa";
 
 import AXIOS_INSTANCE from "@/apis/instance";
+import Button from "@/components/Button";
 import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
 import NOTIFICATION from "@/constants/notification";
@@ -38,6 +39,10 @@ const SignUpModule = () => {
 
       <div className={cn("grid grid-cols-6 gap-[2rem]", styles.container)}>
         <div className={cn("col-start-2 col-span-4", styles.inner)}>
+          <div className={styles.logoContainer}>
+            <Logo />
+          </div>
+
           <Form
             onFinish={onFinish}
             autoComplete="off"
@@ -46,10 +51,6 @@ const SignUpModule = () => {
             }}
             className={styles.form}
           >
-            <div className={styles.logoContainer}>
-              <Logo />
-            </div>
-
             <Form.Item<FormSignUp> name="fullName" rules={[{ required: true, type: "string", message: NOTIFICATION.PLEASE_ENTER("full name") }]}>
               <Input placeholder="Full name" prefix={<FaIdCard />} />
             </Form.Item>
@@ -70,7 +71,7 @@ const SignUpModule = () => {
               <Checkbox>Receive news</Checkbox>
             </Form.Item>
 
-            <Button type="primary" className="block w-full" htmlType="submit">
+            <Button element="button" type="submit" shape="full">
               Sign Up
             </Button>
           </Form>

@@ -41,7 +41,7 @@ const Header = () => {
             </Popover>
           ) : (
             <React.Fragment>
-              <Button href={Path.AUTH.SIGN_IN} variant="outline">
+              <Button href={Path.AUTH.SIGN_IN} variant="outline" color="dark">
                 Sign In
               </Button>
               <Button href={Path.AUTH.SIGN_UP}>Sign Up</Button>

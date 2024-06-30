@@ -3,14 +3,14 @@
 import { GetProp, Table, TablePaginationConfig, TableProps, Tag as AntdTag } from "antd";
 import { SorterResult } from "antd/es/table/interface";
 import React from "react";
-import { FaEye, FaPen, FaTrash } from "react-icons/fa";
+import { FaBan, FaCheck, FaEllipsisH, FaEye, FaMarker, FaTrash } from "react-icons/fa";
 import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
-import { ComicTypeMapping } from "@/constants/mapping";
+import { ComicStatusMapping, ComicTypeMapping } from "@/constants/mapping";
 import { AuthContext } from "@/providers/AuthProvider";
-import { Comic } from "@/types/data";
+import { Comic, ComicStatus } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
@@ -77,18 +77,11 @@ const ComicsModule = () => {
         width: "10%",
       },
       {
-        title: "Categories",
-        dataIndex: "categories",
-        key: "categories",
-        width: "15%",
-        render: (_, { categories }) => categories.map((category) => <AntdTag key={category.id}>{category.name}</AntdTag>),
-      },
-      {
-        title: "Tags",
-        dataIndex: "tags",
-        key: "tags",
-        width: "15%",
-        render: (_, { tags }) => tags.map((tag) => <AntdTag key={tag.id}>{tag.name}</AntdTag>),
+        title: "Created By",
+        dataIndex: "creator",
+        key: "creator",
+        width: "10%",
+        render: (_, { creator }) => creator.username,
       },
       {
         title: "Type",
@@ -109,7 +102,32 @@ const ComicsModule = () => {
         dataIndex: "status",
         key: "status",
         width: "7.5%",
-        render: (_, { status }) => <AntdTag color="blue">{status}</AntdTag>,
+        render: (_, { status }) => {
+          let color = "yellow";
+          let icon = <FaEllipsisH />;
+
+          switch (status) {
+            case ComicStatus.APPROVED:
+              color = "green";
+              icon = <FaCheck />;
+              break;
+            case ComicStatus.BANNED:
+              color = "red";
+              icon = <FaBan />;
+              break;
+            case ComicStatus.DELETED:
+              color = "gray";
+              icon = <FaTrash />;
+              break;
+          }
+
+          return (
+            <AntdTag color={color} style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
+              {icon}
+              {ComicStatusMapping[status]}
+            </AntdTag>
+          );
+        },
       },
       {
         title: "Created At",
@@ -119,34 +137,33 @@ const ComicsModule = () => {
         render: (createdAt: string) => timestampToDateTime(createdAt),
       },
       {
+        title: "Updated At",
+        dataIndex: "updatedAt",
+        key: "updatedAt",
+        width: "10%",
+        render: (updatedAt: string) => timestampToDateTime(updatedAt),
+      },
+      {
         title: "Action",
         dataIndex: "action",
         key: "action",
         width: "12.5%",
-        render: (_) => (
+        render: (_, { status }) => (
           <div className="flex gap-[1rem]">
-            <Button
-              element="button"
-              type="button"
-              color="transparent"
-              variant="plain"
-              size="sm"
-              onClick={() => {}}
-              className="flex justify-center items-center"
-            >
+            <Button element="button" type="button" color="dark" variant="plain" size="sm" onClick={() => {}} className="flex justify-center items-center">
               <FaEye />
             </Button>
-            <Button
-              element="button"
-              type="button"
-              color="transparent"
-              variant="outline"
-              size="sm"
-              onClick={() => {}}
-              className="flex justify-center items-center"
-            >
-              <FaPen />
+            <Button element="button" type="button" color="dark" variant="outline" size="sm" onClick={() => {}} className="flex justify-center items-center">
+              <FaMarker />
             </Button>
+            <Button element="button" type="button" color="danger" variant="outline" size="sm" onClick={() => {}} className="flex justify-center items-center">
+              <FaBan />
+            </Button>
+            {status === ComicStatus.PENDING && (
+              <Button element="button" type="button" color="success" size="sm" onClick={() => {}} className="flex justify-center items-center">
+                <FaCheck />
+              </Button>
+            )}
             <Button element="button" type="button" color="danger" size="sm" onClick={() => {}} className="flex justify-center items-center">
               <FaTrash />
             </Button>
@@ -173,7 +190,8 @@ const ComicsModule = () => {
           current: tableParams.pagination?.current,
           pageSize: tableParams.pagination?.pageSize,
           total: data?.totalElements,
-          position: ["bottomCenter"],
+          showQuickJumper: true,
+          showTotal: (total) => `Total ${total} comics`,
         }}
         onChange={(pagination) => {
           setTableParams({

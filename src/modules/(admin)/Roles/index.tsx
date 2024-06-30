@@ -1,15 +1,16 @@
 "use client";
 
-import { GetProp, Table, TablePaginationConfig, TableProps, Tag } from "antd";
+import { GetProp, Table, TablePaginationConfig, TableProps, Tag as AntdTag } from "antd";
 import { SorterResult } from "antd/es/table/interface";
 import React from "react";
-import { FaEye, FaUserSlash } from "react-icons/fa";
+import { FaMarker } from "react-icons/fa";
 import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
+import { PermissionNameMapping } from "@/constants/mapping";
 import { AuthContext } from "@/providers/AuthProvider";
-import { User } from "@/types/data";
+import { Role } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { timestampToDateTime } from "@/utils/formatter";
 
@@ -20,7 +21,7 @@ interface TableParams {
   filters?: Parameters<GetProp<TableProps, "onChange">>[1];
 }
 
-const UsersModule = () => {
+const RolesModule = () => {
   const authContext = React.use(AuthContext);
 
   const [tableParams, setTableParams] = React.useState<TableParams>({
@@ -31,13 +32,13 @@ const UsersModule = () => {
   });
 
   const { data, refetch } = useQuery(
-    "users",
+    "roles",
     async () => {
       if (!authContext?.auth.token) return null;
 
       const { data } = (
-        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<User[]>>>(
-          `/users?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
+        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Role[]>>>(
+          `/roles?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
           {
             headers: {
               Authorization: `Bearer ${authContext.auth.token}`,
@@ -53,64 +54,58 @@ const UsersModule = () => {
     }
   );
 
-  const columns: TableProps<User>["columns"] = React.useMemo(
+  const columns: TableProps<Role>["columns"] = React.useMemo(
     () => [
       {
-        title: "Username",
-        dataIndex: "username",
-        key: "username",
-        width: "8%",
+        title: "Name",
+        dataIndex: "name",
+        key: "name",
+        width: "5%",
       },
       {
-        title: "Full name",
-        dataIndex: "fullName",
-        key: "fullName",
-        width: "8%",
+        title: "Description",
+        dataIndex: "description",
+        key: "description",
+        width: "7.5%",
       },
       {
-        title: "Email",
-        dataIndex: "email",
-        key: "email",
-        width: "8%",
-      },
-      {
-        title: "Gender",
-        dataIndex: "gender",
-        key: "Gender",
-        width: "8%",
-      },
-      {
-        title: "Roles",
-        dataIndex: "roles",
-        key: "roles",
-        width: "8%",
-        render: (_, { roles }) => roles.map((role) => <Tag key={role.id}>{role.name}</Tag>),
-      },
-      {
-        title: "Status",
-        dataIndex: "status",
-        key: "status",
-        width: "8%",
+        title: "Permissions",
+        dataIndex: "permissions",
+        key: "permissions",
+        width: "22.5%",
+        render: (_, { permissions }) => (
+          <div className="flex gap-y-[0.5rem] flex-wrap">
+            {permissions.map((permission) => (
+              <AntdTag key={permission.id} color="blue">
+                {PermissionNameMapping[permission.name]}
+              </AntdTag>
+            ))}
+          </div>
+        ),
       },
       {
         title: "Created At",
         dataIndex: "createdAt",
         key: "createdAt",
-        width: "8%",
+        width: "5%",
         render: (createdAt: string) => timestampToDateTime(createdAt),
+      },
+      {
+        title: "Updated At",
+        dataIndex: "updatedAt",
+        key: "updatedAt",
+        width: "5%",
+        render: (updatedAt: string) => timestampToDateTime(updatedAt),
       },
       {
         title: "Action",
         dataIndex: "action",
         key: "action",
-        width: "8%",
+        width: "5%",
         render: (_) => (
           <div className="flex gap-[1rem]">
-            <Button element="button" type="button" color="dark" variant="plain" size="sm" onClick={() => {}} className="flex justify-center items-center">
-              <FaEye />
-            </Button>
-            <Button element="button" type="button" color="danger" size="sm" onClick={() => {}} className="flex justify-center items-center">
-              <FaUserSlash />
+            <Button element="button" type="button" color="dark" variant="outline" size="sm" onClick={() => {}} className="flex justify-center items-center">
+              <FaMarker />
             </Button>
           </div>
         ),
@@ -129,13 +124,14 @@ const UsersModule = () => {
         columns={columns}
         dataSource={data?.content}
         size="small"
-        rowKey={(record: User) => record.id}
+        rowKey={(record: Role) => record.id}
         bordered
         pagination={{
           current: tableParams.pagination?.current,
           pageSize: tableParams.pagination?.pageSize,
           total: data?.totalElements,
-          position: ["bottomCenter"],
+          showQuickJumper: true,
+          showTotal: (total) => `Total ${total} roles`,
         }}
         onChange={(pagination) => {
           setTableParams({
@@ -147,4 +143,4 @@ const UsersModule = () => {
   );
 };
 
-export default UsersModule;
+export default RolesModule;

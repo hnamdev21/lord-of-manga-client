@@ -8,20 +8,10 @@ const UserThemeProvider = ({ children }: { children: React.ReactNode }) => {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: "#f44336",
-          colorInfo: "#2194f3",
-          colorSuccess: "#32d583",
-          colorWarning: "#fec84b",
-          colorBgLayout: "#f5f7fa",
-          colorBgBase: "#ffffff",
-          colorBgContainer: "#ffffff",
-          colorTextBase: "#1b1b1a",
-          colorBorder: "#d1d1d1",
-          colorLink: "#f44336",
           lineHeight: 1.6,
           borderRadius: 6,
         },
-        algorithm: theme.darkAlgorithm,
+        algorithm: theme.defaultAlgorithm,
       }}
     >
       {children}

@@ -31,7 +31,7 @@ const RowCard = ({ category, numberOfColumns }: RowCardProps) => {
           {category.name}
         </Typography>
 
-        <Button href="#" size="sm" color="transparent" variant="plain" className={styles.header__button}>
+        <Button href="#" size="sm" color="dark" variant="plain" className={styles.header__button}>
           View all <FaArrowRight scale={0.4} />
         </Button>
       </div>

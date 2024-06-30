@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Checkbox, Form, type FormProps, Input, message } from "antd";
+import { Checkbox, Form, type FormProps, Input, message } from "antd";
 import cn from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -8,6 +8,7 @@ import React from "react";
 import { FaLock, FaUser } from "react-icons/fa";
 
 import AXIOS_INSTANCE from "@/apis/instance";
+import Button from "@/components/Button";
 import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
 import NOTIFICATION from "@/constants/notification";
@@ -67,7 +68,7 @@ const SignInModule = () => {
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
 
-            <Button type="primary" className="block w-full" htmlType="submit">
+            <Button element="button" type="submit" shape="full">
               Sign In
             </Button>
           </Form>
