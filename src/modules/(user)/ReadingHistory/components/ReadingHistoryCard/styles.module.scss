@@ -4,7 +4,7 @@
   height: 100%;
   border-radius: rem(6px);
   overflow: hidden;
-  background-color: var(--color-dark-gray);
+  box-shadow: 0 0 rem(10px) rgba(0, 0, 0, 0.1);
 
   &__bookmark {
     position: absolute;
@@ -22,13 +22,12 @@
     }
   }
 
-  &__type {
+  &__tag {
     position: absolute;
     top: rem(5px);
     left: rem(5px);
     z-index: 1;
     @include flex-center;
-    color: var(--color-white);
     background-color: var(--color-primary);
     padding: rem(5px);
     border-radius: rem(6px);
@@ -47,7 +46,7 @@
       z-index: 1;
       width: 100%;
       height: 12.5%;
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: rgba(255, 255, 255, 0.8);
       padding: rem(10px);
       display: flex;
       justify-content: space-between;

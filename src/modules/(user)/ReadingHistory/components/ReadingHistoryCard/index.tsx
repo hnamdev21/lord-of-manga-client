@@ -24,9 +24,9 @@ const ReadingHistoryCard = ({ comic, currentOrdinal, onClickRemove }: ReadingHis
         <FaBookmark />
       </Button>
 
-      <div className={styles.card__type}>
+      <div className={styles.card__tag}>
         {type === "FREE" ? (
-          <Typography tag="span" fontSize="sm" fontWeight="bold">
+          <Typography tag="span" fontSize="sm" fontWeight="bold" textColor="light">
             FREE
           </Typography>
         ) : (
