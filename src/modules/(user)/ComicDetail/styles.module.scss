@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   margin-bottom: rem(40px);
-  height: rem(600px);
+  height: rem(400px);
 
   &__thumbnailContainer {
     position: absolute;
@@ -14,8 +14,9 @@
 
   &__leftContent {
     position: relative;
-    grid-column: span 3;
-    height: 100%;
+    grid-column: span 2;
+    height: calc(100% - rem(20px));
+    margin-top: rem(10px);
     padding: rem(10px) 0;
     border-radius: rem(8px);
     overflow: hidden;
@@ -28,10 +29,6 @@
     flex-direction: column;
     gap: rem(10px);
     padding: rem(10px) 0;
-
-    &__title {
-      margin-bottom: rem(5px);
-    }
 
     &__categories {
       display: flex;
@@ -69,8 +66,8 @@
     align-items: flex-end;
     padding: rem(10px);
     border-radius: rem(8px);
-    background-color: var(--color-dark);
     transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 rem(10px) rgba(0, 0, 0, 0.1);
 
     &:hover {
       filter: brightness(1.1);

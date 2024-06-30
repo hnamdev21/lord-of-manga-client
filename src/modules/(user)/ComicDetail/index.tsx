@@ -64,28 +64,28 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
         </div>
 
         <div className={styles.hero__rightContent}>
-          <Typography tag="h3" fontSize="8xl" fontWeight="md" className={styles.hero__rightContent__title}>
+          <Typography tag="h3" fontSize="6xl" fontWeight="md" textColor="light">
             {data?.title}
           </Typography>
 
           <div className={styles.hero__rightContent__categories}>
             {data?.categories.slice(0, 8).map((category) => (
-              <Button href="#" variant="outline" key={category.slug}>
+              <Button href="#" variant="outline" key={category.slug} color="light" size="sm">
                 {category.name}
               </Button>
             ))}
           </div>
 
           <div>
-            <Typography tag="p" fontSize="md">
+            <Typography tag="p" textColor="light">
               Author: {data?.author}
             </Typography>
-            <Typography tag="p" fontSize="md">
+            <Typography tag="p" textColor="light">
               Publisher: {data?.creator.fullName}
             </Typography>
           </div>
 
-          <Typography tag="p" fontSize="md" className="line-clamp-8 ">
+          <Typography tag="p" className="line-clamp-8" textColor="light">
             {data?.description}
           </Typography>
         </div>
@@ -109,11 +109,11 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
             <div className={styles.content__card__left}>
               <div className={styles.content__card__left__tag}>
                 {chapter.type === "FREE" ? (
-                  <Typography tag="span" fontSize="sm" fontWeight="bold">
+                  <Typography tag="span" fontSize="sm" fontWeight="bold" textColor="light">
                     FREE
                   </Typography>
                 ) : (
-                  <Typography tag="span" fontSize="sm" fontWeight="bold">
+                  <Typography tag="span" fontSize="sm" fontWeight="bold" textColor="light">
                     <FaDollarSign />
                   </Typography>
                 )}
