@@ -2,7 +2,7 @@
 
 import { message } from "antd";
 import jwt from "jsonwebtoken";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
@@ -26,6 +26,7 @@ export const AuthContext = React.createContext<{
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
+  const router = useRouter();
 
   const [auth, setAuth] = React.useState<Auth>({
     token: null,
@@ -72,7 +73,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
     setUser(null);
 
-    window.location.href = Path.AUTH.SIGN_IN;
+    router.push(Path.AUTH.SIGN_IN);
   };
 
   React.useEffect(() => {
@@ -83,21 +84,28 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         token,
       });
 
+      if (pathname === Path.AUTH.SIGN_IN || pathname === Path.AUTH.SIGN_UP) {
+        router.push(Path.USER.HOME);
+      }
+
       return;
     }
 
-    authorizedUserPaths.forEach((path) => {
+    for (const path of authorizedUserPaths) {
       if (pathname.startsWith(path)) {
         message.info(NOTIFICATION.SIGN_IN_REQUIRED);
-        window.location.href = Path.AUTH.SIGN_IN;
+        router.push(Path.AUTH.SIGN_IN);
+        return;
       }
-    });
-    adminPaths.forEach((path) => {
+    }
+
+    for (const path of adminPaths) {
       if (pathname.startsWith(path)) {
         message.info(NOTIFICATION.SIGN_IN_REQUIRED);
-        window.location.href = Path.AUTH.SIGN_IN;
+        router.push(Path.AUTH.SIGN_IN);
+        return;
       }
-    });
+    }
   }, []);
 
   React.useEffect(() => {

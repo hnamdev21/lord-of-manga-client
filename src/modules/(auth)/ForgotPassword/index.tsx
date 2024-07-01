@@ -44,7 +44,7 @@ const ForgotPasswordModule = () => {
         <Form layout="vertical" form={form} onFinish={onFinish} className="col-start-6 col-span-2">
           <Form.Item<FormForgotPassword>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Email
               </Typography>
             }
@@ -82,7 +82,7 @@ const ForgotPasswordModule = () => {
           <div className="w-3/4 px-[4rem] mx-auto mt-[2rem]">
             <Form.Item<FormResetPassword>
               label={
-                <Typography className="span" fontSize="sm">
+                <Typography tag="span" fontSize="sm">
                   Password
                 </Typography>
               }
@@ -94,7 +94,7 @@ const ForgotPasswordModule = () => {
 
             <Form.Item<FormResetPassword>
               label={
-                <Typography className="span" fontSize="sm">
+                <Typography tag="span" fontSize="sm">
                   Confirm Password
                 </Typography>
               }
@@ -106,7 +106,7 @@ const ForgotPasswordModule = () => {
 
             <Form.Item<FormResetPassword>
               label={
-                <Typography className="span" fontSize="sm">
+                <Typography tag="span" fontSize="sm">
                   Code
                 </Typography>
               }

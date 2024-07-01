@@ -69,7 +69,7 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
         <Form layout="vertical" form={form} onFinish={onFinish} className="col-start-4 col-span-2">
           <Form.Item<FormUpdatePassword>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Old password
               </Typography>
             }
@@ -81,7 +81,7 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
 
           <Form.Item<FormUpdatePassword>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 New password
               </Typography>
             }
@@ -113,7 +113,7 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
         <Form layout="vertical" form={formTwoFA} onFinish={onFinishTwoFA}>
           <Form.Item<FormTwoFactorAuthentication>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Code
               </Typography>
             }

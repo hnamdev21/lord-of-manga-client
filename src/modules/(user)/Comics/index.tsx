@@ -74,7 +74,7 @@ const User_ComicsModule = () => {
           >
             <Form.Item<FormComicFilter>
               label={
-                <Typography className="span" fontSize="sm">
+                <Typography tag="span" fontSize="sm">
                   Comic title
                 </Typography>
               }
@@ -86,7 +86,7 @@ const User_ComicsModule = () => {
 
             <Form.Item<FormComicFilter>
               label={
-                <Typography className="span" fontSize="sm">
+                <Typography tag="span" fontSize="sm">
                   Sort by
                 </Typography>
               }
@@ -98,7 +98,7 @@ const User_ComicsModule = () => {
 
             <Form.Item<FormComicFilter>
               label={
-                <Typography className="span" fontSize="sm">
+                <Typography tag="span" fontSize="sm">
                   Comic type
                 </Typography>
               }
@@ -110,7 +110,7 @@ const User_ComicsModule = () => {
 
             <Form.Item<FormComicFilter>
               label={
-                <Typography className="span" fontSize="sm">
+                <Typography tag="span" fontSize="sm">
                   From
                 </Typography>
               }
@@ -121,7 +121,7 @@ const User_ComicsModule = () => {
             </Form.Item>
             <Form.Item<FormComicFilter>
               label={
-                <Typography className="span" fontSize="sm">
+                <Typography tag="span" fontSize="sm">
                   To
                 </Typography>
               }

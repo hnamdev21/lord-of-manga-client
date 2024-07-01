@@ -80,7 +80,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
           <div className="flex gap-[2rem]">
             <Form.Item<FormCreateChapter>
               label={
-                <Typography className="span" fontSize="sm">
+                <Typography tag="span" fontSize="sm">
                   Title
                 </Typography>
               }
@@ -93,7 +93,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
 
             <Form.Item<FormCreateChapter>
               label={
-                <Typography className="span" fontSize="sm">
+                <Typography tag="span" fontSize="sm">
                   Comic
                 </Typography>
               }
@@ -108,7 +108,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
           <div className="flex gap-[2rem]">
             <Form.Item<FormCreateChapter>
               label={
-                <Typography className="span" fontSize="sm">
+                <Typography tag="span" fontSize="sm">
                   Chapter type
                 </Typography>
               }
@@ -133,7 +133,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
             </Form.Item>
             <Form.Item<FormCreateChapter>
               label={
-                <Typography className="span" fontSize="sm">
+                <Typography tag="span" fontSize="sm">
                   Price
                 </Typography>
               }
@@ -160,13 +160,13 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
               <Popover
                 content={
                   <React.Fragment>
-                    <Typography className="span" fontSize="sm">
+                    <Typography tag="span" fontSize="sm">
                       For easier upload, you can select multiple images at once
                     </Typography>
-                    <Typography className="span" fontSize="sm">
+                    <Typography tag="span" fontSize="sm">
                       The image name should be in order (1, 2, 3, ...)
                     </Typography>
-                    <Typography className="span" fontSize="sm">
+                    <Typography tag="span" fontSize="sm">
                       Supported formats: .jpg, .jpeg, .png
                     </Typography>
                   </React.Fragment>

@@ -100,7 +100,7 @@ const UploadComic = () => {
         <div className="flex gap-[2rem]">
           <Form.Item<FormCreateComic>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Title
               </Typography>
             }
@@ -112,7 +112,7 @@ const UploadComic = () => {
           </Form.Item>
           <Form.Item<FormCreateComic>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Author name
               </Typography>
             }
@@ -127,7 +127,7 @@ const UploadComic = () => {
         <div className="flex gap-[2rem]">
           <Form.Item<FormCreateComic>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Categories
               </Typography>
             }
@@ -139,7 +139,7 @@ const UploadComic = () => {
           </Form.Item>
           <Form.Item<FormCreateComic>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Tags
               </Typography>
             }
@@ -179,7 +179,7 @@ const UploadComic = () => {
         <div className="flex gap-[2rem]">
           <Form.Item<FormCreateComic>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Comic type
               </Typography>
             }
@@ -203,7 +203,7 @@ const UploadComic = () => {
           </Form.Item>
           <Form.Item<FormCreateComic>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Price
               </Typography>
             }
@@ -222,7 +222,7 @@ const UploadComic = () => {
         <div>
           <Form.Item<FormCreateComic>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Description
               </Typography>
             }

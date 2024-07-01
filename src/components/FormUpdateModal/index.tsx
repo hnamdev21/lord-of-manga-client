@@ -109,7 +109,7 @@ const FormUpdateModal = ({ comic, refreshData }: FormUpdateProps) => {
       <div className="flex gap-[2rem]">
         <Form.Item<FormUpdateComic>
           label={
-            <Typography className="span" fontSize="sm">
+            <Typography tag="span" fontSize="sm">
               Title
             </Typography>
           }
@@ -121,7 +121,7 @@ const FormUpdateModal = ({ comic, refreshData }: FormUpdateProps) => {
         </Form.Item>
         <Form.Item<FormUpdateComic>
           label={
-            <Typography className="span" fontSize="sm">
+            <Typography tag="span" fontSize="sm">
               Author name
             </Typography>
           }
@@ -136,7 +136,7 @@ const FormUpdateModal = ({ comic, refreshData }: FormUpdateProps) => {
       <div className="flex gap-[2rem]">
         <Form.Item<FormUpdateComic>
           label={
-            <Typography className="span" fontSize="sm">
+            <Typography tag="span" fontSize="sm">
               Categories
             </Typography>
           }
@@ -148,7 +148,7 @@ const FormUpdateModal = ({ comic, refreshData }: FormUpdateProps) => {
         </Form.Item>
         <Form.Item<FormUpdateComic>
           label={
-            <Typography className="span" fontSize="sm">
+            <Typography tag="span" fontSize="sm">
               Tags
             </Typography>
           }
@@ -189,7 +189,7 @@ const FormUpdateModal = ({ comic, refreshData }: FormUpdateProps) => {
       <div className="flex gap-[2rem]">
         <Form.Item<FormUpdateComic>
           label={
-            <Typography className="span" fontSize="sm">
+            <Typography tag="span" fontSize="sm">
               Comic type
             </Typography>
           }
@@ -213,7 +213,7 @@ const FormUpdateModal = ({ comic, refreshData }: FormUpdateProps) => {
         </Form.Item>
         <Form.Item<FormUpdateComic>
           label={
-            <Typography className="span" fontSize="sm">
+            <Typography tag="span" fontSize="sm">
               Price
             </Typography>
           }
@@ -232,7 +232,7 @@ const FormUpdateModal = ({ comic, refreshData }: FormUpdateProps) => {
       <div>
         <Form.Item<FormUpdateComic>
           label={
-            <Typography className="span" fontSize="sm">
+            <Typography tag="span" fontSize="sm">
               Description
             </Typography>
           }
@@ -245,7 +245,7 @@ const FormUpdateModal = ({ comic, refreshData }: FormUpdateProps) => {
         <div className="grid grid-cols-2 gap-[2rem]">
           <Form.Item<FormUpdateComic>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Cover
               </Typography>
             }
@@ -268,7 +268,7 @@ const FormUpdateModal = ({ comic, refreshData }: FormUpdateProps) => {
           </Form.Item>
           <Form.Item<FormUpdateComic>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Thumbnail
               </Typography>
             }

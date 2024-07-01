@@ -55,7 +55,7 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
         >
           <Form.Item<FormUpdateEmail>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Email
               </Typography>
             }

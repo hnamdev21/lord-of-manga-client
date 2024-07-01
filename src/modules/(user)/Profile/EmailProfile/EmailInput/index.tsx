@@ -112,7 +112,7 @@ const EmailInput = ({ value, onChange, isVerified, username, token }: EmailInput
         <Form layout="vertical" form={formVerifyEmail} onFinish={onFinish} className="col-start-6 col-span-2">
           <Form.Item<FormVerifyEmail>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Code
               </Typography>
             }

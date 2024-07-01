@@ -79,7 +79,7 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
         <div className="flex gap-[2rem] mt-[4rem]">
           <Form.Item<FormUpdateProfile>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Full name
               </Typography>
             }
@@ -92,7 +92,7 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
 
           <Form.Item<FormUpdateProfile>
             label={
-              <Typography className="span" fontSize="sm">
+              <Typography tag="span" fontSize="sm">
                 Gender
               </Typography>
             }

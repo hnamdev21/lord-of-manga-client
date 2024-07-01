@@ -2,7 +2,7 @@ import React from "react";
 
 import Container from "@/components/Container";
 
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
