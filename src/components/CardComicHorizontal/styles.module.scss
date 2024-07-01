@@ -1,0 +1,54 @@
+.container {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  border-radius: rem(8px);
+  box-shadow: 0 0 rem(10px) rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+
+  &__coverContainer {
+    width: 25%;
+    height: 100%;
+    position: relative;
+  }
+
+  &__content {
+    flex: 1;
+    padding: rem(10px) rem(20px);
+    display: flex;
+    flex-direction: column;
+    gap: rem(10px);
+    justify-content: space-between;
+
+    &__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &__categories {
+        flex: 1;
+        display: flex;
+        gap: rem(10px);
+      }
+
+      &__stats {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+        gap: rem(10px);
+
+        &__item {
+          display: flex;
+          gap: rem(5px);
+          align-items: center;
+        }
+      }
+    }
+  }
+}

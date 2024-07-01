@@ -8,6 +8,9 @@ import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
+import ComicDetailModal from "@/components/ComicDetailModal";
+import FormDeleteModal from "@/components/FormDeleteModal";
+import FormUpdateModal from "@/components/FormUpdateModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import { ComicStatusMapping, ComicTypeMapping } from "@/constants/mapping";
@@ -19,10 +22,7 @@ import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
 import ActionButtons from "./components/ActionButtons";
-import ComicDetailModal from "./components/ComicDetailModal";
 import FormBanModal from "./components/FormBanModal";
-import FormDeleteModal from "./components/FormDeleteModal";
-import FormUpdateModal from "./components/FormUpdateModal";
 
 interface TableParams {
   pagination?: TablePaginationConfig;

@@ -67,21 +67,11 @@ const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
               Read
             </Button>
 
-            <Button
-              className="w-[10%] flex items-center justify-center aspect-square"
-              element="button"
-              type="button"
-              variant="outline"
-              color="dark"
-              style={{
-                padding: "1rem",
-              }}
-            >
+            <Button className="w-[10%] flex items-center justify-center" element="button" type="button" variant="outline" color="dark" shape="square">
               <FaBookmark />
             </Button>
           </div>
         </div>
-        {/* </div> */}
       </div>
     </React.Fragment>
   );

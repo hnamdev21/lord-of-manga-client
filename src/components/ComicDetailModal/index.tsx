@@ -11,6 +11,8 @@ import { VND_CURRENCY } from "@/constants/sign";
 import { Comic } from "@/types/data";
 import { timestampToDateTime } from "@/utils/formatter";
 
+import styles from "./styles.module.scss";
+
 type ComicDetailModalProps = {
   comic: Comic;
 };
@@ -19,31 +21,26 @@ const formatter: StatisticProps["formatter"] = (value) => <CountUp end={value as
 
 const ComicDetailModal = ({ comic }: ComicDetailModalProps) => {
   return (
-    <div className="h-[80vh] max-h-[60vh] flex flex-col gap-[1rem]">
-      <div className="w-full h-[72.5%] grid grid-cols-12 gap-[1rem]">
-        <div className="col-span-2 relative rounded-[8px] overflow-hidden shadow-lg">
+    <div className={styles.container}>
+      <div className={styles.container__header}>
+        <div className={styles.coverContainer}>
           <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + comic.coverPath} alt={`Cover image of ${comic.title}`} layout="fill" />
         </div>
 
-        <div
-          className="col-span-10 grid grid-cols-10 gap-[1rem]"
-          style={{
-            gridAutoRows: "min-content",
-          }}
-        >
-          <Card bordered={false} className="col-span-2" style={{ height: "max-content" }}>
+        <div className={styles.container__header__content}>
+          <Card bordered={false} className={styles.item}>
             <Statistic title="Views" value={100000} formatter={formatter} />
           </Card>
-          <Card bordered={false} className="col-span-2" style={{ height: "max-content" }}>
+          <Card bordered={false} className={styles.item}>
             <Statistic title="Saved" value={100000} formatter={formatter} />
           </Card>
-          <Card bordered={false} className="col-span-2" style={{ height: "max-content" }}>
+          <Card bordered={false} className={styles.item}>
             <Statistic title="Comments" value={100000} formatter={formatter} />
           </Card>
-          <Card bordered={false} className="col-span-2" style={{ height: "max-content" }}>
+          <Card bordered={false} className={styles.item}>
             <Statistic title="User purchase" value={100000} formatter={formatter} />
           </Card>
-          <Card bordered={false} className="col-span-2" style={{ height: "max-content" }}>
+          <Card bordered={false} className={styles.item}>
             <Statistic title="Total purchase" value={100000} formatter={formatter} suffix={VND_CURRENCY} />
           </Card>
 

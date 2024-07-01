@@ -1,0 +1,34 @@
+.container {
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  gap: rem(10px);
+
+  &__top {
+    width: 100%;
+    height: 72.5%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: rem(10px);
+
+    .coverContainer {
+      position: relative;
+      grid-column: span 2;
+      border-radius: rem(8px);
+      box-shadow: 0 0 rem(10px) rgba(0, 0, 0, 0.1);
+    }
+
+    .content {
+      grid-column: span 10;
+      display: grid;
+      grid-template-rows: repeat(10, 1fr);
+      gap: rem(10px);
+      grid-auto-rows: min-content;
+
+      &__item {
+        grid-column: span 2;
+        height: max-content;
+      }
+    }
+  }
+}

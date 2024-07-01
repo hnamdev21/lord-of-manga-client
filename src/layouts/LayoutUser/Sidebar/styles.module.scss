@@ -1,0 +1,36 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: rem(52px);
+  transition: all 0.3s ease-in-out;
+  background-color: var(--color-light);
+  box-shadow: 0 0 rem(20px) rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    width: rem(240px);
+  }
+
+  &__logo {
+    width: 100%;
+    height: rem(42px);
+    padding-bottom: rem(10px);
+    margin-bottom: rem(40px);
+    display: flex;
+    justify-content: center;
+  }
+
+  &__title {
+    width: 100%;
+    margin-bottom: rem(5px);
+  }
+
+  &__menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: rem(10px);
+    margin-bottom: rem(20px);
+  }
+}
