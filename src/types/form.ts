@@ -75,6 +75,7 @@ export type FormCreateComic = Pick<Comic, "title" | "description" | "author" | "
 export type FormUpdateComic = FormCreateComic & Pick<Comic, "id">;
 
 export type FormBanComic = Pick<Comic, "bannedReason">;
+export type FormDeleteComic = Pick<Comic, "deletedReason">;
 
 export type FormCreateChapter = Pick<Chapter, "title" | "showComment" | "type" | "price"> & {
   comicId: string;
