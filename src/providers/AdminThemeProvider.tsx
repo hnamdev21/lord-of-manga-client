@@ -8,7 +8,7 @@ const AdminThemeProvider = ({ children }: { children: React.ReactNode }) => {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: "var(--color-primary)",
+          colorPrimary: "#f44336",
           lineHeight: 1.6,
           borderRadius: 6,
         },

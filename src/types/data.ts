@@ -1,3 +1,10 @@
+export const Gender = {
+  MALE: "MALE",
+  FEMALE: "FEMALE",
+  OTHER: "OTHER",
+} as const;
+export type Gender = keyof typeof Gender;
+
 export const ComicStatus = {
   PENDING: "PENDING",
   BANNED: "BANNED",
@@ -61,6 +68,7 @@ export type Role = BaseEntity & {
 export type User = BaseEntity & {
   fullName: string;
   username: string;
+  gender: Gender;
   email?: string;
   avatarPath?: string;
   roles: Role[];
@@ -83,7 +91,7 @@ export type Category = BaseEntity & {
 export type Comment = BaseEntity & {
   commenter: User;
   parentComment: Comment | null;
-  chapterId: string;
+  chapter: Chapter;
   content: string;
   isDisabled: boolean;
   disabledReason: string;

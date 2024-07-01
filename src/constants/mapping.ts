@@ -1,4 +1,4 @@
-import { ComicStatus, ComicType, PermissionName } from "@/types/data";
+import { ComicStatus, ComicType, Gender, PermissionName } from "@/types/data";
 
 export const ComicTypeMapping: Record<ComicType, string> = {
   [ComicType.FREE]: "Free",
@@ -24,4 +24,10 @@ export const PermissionNameMapping = {
   [PermissionName.PREVIEW_COMIC]: "Preview comic",
   [PermissionName.READ_COMIC]: "Read comic",
   [PermissionName.DISABLE_COMMENT]: "Disable comment",
+} as const;
+
+export const GenderMapping: Record<Gender, string> = {
+  [Gender.MALE]: "Male",
+  [Gender.FEMALE]: "Female",
+  [Gender.OTHER]: "Other",
 } as const;

@@ -1,17 +1,14 @@
 import { FieldNamesType } from "antd/es/cascader";
 
-export type FormSignIn = {
-  username: string;
+import { Category, Chapter, Comic, Comment, Role, Tag, User } from "./data";
+
+export type FormSignIn = Pick<User, "username"> & {
   password: string;
   remember: boolean;
 };
 
-export type FormSignUp = {
-  fullName: string;
-  username: string;
+export type FormSignUp = Pick<User, "fullName" | "username" | "email" | "receiveNews"> & {
   password: string;
-  email?: string;
-  receiveNews: boolean;
 };
 
 export type FormChangePassword = {
@@ -23,14 +20,8 @@ export type FormVerifyEmail = {
   code: string;
 };
 
-export type FormUpdateEmail = {
-  email: string;
-};
-
-export type FormUpdateUserSetting = {
-  receiveNews: boolean;
-  twoStepVerification: boolean;
-};
+export type FormUpdateEmail = Pick<User, "email">;
+export type FormUpdateUserSetting = Pick<User, "twoStepVerification" | "receiveNews">;
 
 export type FormGetVerifyCode = {
   username: string;
@@ -64,70 +55,31 @@ export type FormTwoFactorAuthentication = {
   code: string;
 };
 
-export type FormUpdateProfile = {
-  fullName: string;
-  twoStepVerification: boolean;
-  gender: string;
-  receiveNews: boolean;
-  email: string;
-};
+export type FormUpdateProfile = Pick<User, "fullName" | "twoStepVerification" | "gender" | "receiveNews">;
 
-export type FormCreateComment = {
-  parentId: string;
-  chapterId: string;
-  content: string;
-};
+export type FormCreateComment = Pick<Comment, "parentComment" | "chapter" | "content">;
+export type FormUpdateComment = Pick<Comment, "id" | "content">;
 
-export type FormUpdateComment = {
-  id: string;
-  content: string;
-};
+export type FormCreateTag = Pick<Tag, "name">;
+export type FormUpdateTag = FormCreateTag & Pick<Tag, "id">;
 
-export type FormCreateTag = {
-  name: string;
-};
+export type FormCreateCategory = Pick<Category, "name">;
+export type FormUpdateCategory = FormCreateCategory & Pick<Category, "id">;
 
-export type FormUpdateTag = FormCreateTag & {
-  id: string;
-};
-
-export type FormCreateCategory = {
-  name: string;
-};
-
-export type FormUpdateCategory = FormCreateCategory & {
-  id: string;
-};
-
-export type FormCreateComic = {
-  title: string;
-  description: string;
-  author: string;
+export type FormCreateComic = Pick<Comic, "title" | "description" | "author" | "type" | "price"> & {
   tagNames: string[];
   categoryNames: string[];
   cover: FieldNamesType[];
   thumbnail: FieldNamesType[];
-  type: "FREE" | "PAID_PER_CHAPTER" | "PAID_ONCE";
-  price: number;
-  showComment: boolean;
 };
+export type FormUpdateComic = FormCreateComic & Pick<Comic, "id">;
 
-export type FormUpdateComic = FormCreateComic & {
-  id: string;
-};
+export type FormBanComic = Pick<Comic, "bannedReason">;
 
-export type FormCreateChapter = {
+export type FormCreateChapter = Pick<Chapter, "title" | "showComment" | "type" | "price"> & {
   comicId: string;
-  title: string;
-  showComment: boolean;
-  type: "FREE" | "PAID";
-  price: number;
 };
+export type FormUpdateChapter = FormCreateChapter & Pick<Chapter, "id">;
 
-export type FormUpdateChapter = FormCreateChapter & {
-  id: string;
-};
-
-export type FormCreateRole = {
-  title: string;
-};
+export type FormCreateRole = Pick<Role, "name" | "description" | "permissions">;
+export type FormUpdateRole = FormCreateRole & Pick<Role, "id">;

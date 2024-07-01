@@ -7,7 +7,7 @@ import React from "react";
 import styles from "./styles.module.scss";
 
 type ButtonSize = "xs" | "sm" | "base" | "md" | "lg";
-type ButtonColor = "primary" | "secondary" | "danger" | "success" | "warning" | "info" | "transparent" | "dark" | "light";
+type ButtonColor = "primary" | "secondary" | "danger" | "success" | "warning" | "info" | "transparent" | "dark" | "light" | "gray";
 type ButtonVariant = "solid" | "outline" | "plain";
 type ButtonShape = "circle" | "full" | "square";
 

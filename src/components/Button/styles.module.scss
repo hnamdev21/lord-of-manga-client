@@ -85,6 +85,11 @@
       --color-contrast: var(--color-light);
     }
 
+    &__gray {
+      --color: var(--color-gray);
+      --color-contrast: var(--color-light);
+    }
+
     &__transparent {
       background-color: transparent;
       --color: var(--color-black);
@@ -123,6 +128,7 @@
   &__shape {
     &__square {
       aspect-ratio: 1;
+      padding: rem(5px);
     }
 
     &__circle {

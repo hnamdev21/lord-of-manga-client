@@ -96,14 +96,7 @@ const ComicManagementModule = () => {
   };
 
   const onEdit = React.useCallback(
-    (id: string) => {
-      const comic = data?.content.find((comic) => comic.id === id);
-
-      if (!comic) {
-        message.error(NOTIFICATION.SOMETHING_WENT_WRONG);
-        return;
-      }
-
+    (comic: Comic) => {
       modalApi.confirm({
         title: (
           <Typography tag="h3" align="center" fontSize="lg">
@@ -123,15 +116,8 @@ const ComicManagementModule = () => {
     [data]
   );
 
-  const onDetail = React.useCallback(
-    (id: string) => {
-      const comic = data?.content.find((comic) => comic.id === id);
-
-      if (!comic) {
-        message.error(NOTIFICATION.SOMETHING_WENT_WRONG);
-        return;
-      }
-
+  const onView = React.useCallback(
+    (comic: Comic) => {
       modalApi.info({
         title: (
           <Typography tag="h1" fontSize="xl" fontWeight="bold" align="center">
@@ -220,7 +206,7 @@ const ComicManagementModule = () => {
         dataIndex: "action",
         key: "action",
         width: "12.5%",
-        render: (_, { id }) => (
+        render: (_, comic) => (
           <div className="flex gap-[1rem]">
             <Button
               element="button"
@@ -228,15 +214,15 @@ const ComicManagementModule = () => {
               color="dark"
               variant="plain"
               size="sm"
-              onClick={() => onDetail(id)}
+              onClick={() => onView(comic)}
               className="flex justify-center items-center"
             >
               <FaEye />
             </Button>
-            <Button element="button" type="button" variant="outline" size="sm" onClick={() => onEdit(id)} className="flex justify-center items-center">
+            <Button element="button" type="button" variant="outline" size="sm" onClick={() => onEdit(comic)} className="flex justify-center items-center">
               <FaMarker />
             </Button>
-            <Button element="button" type="button" color="danger" size="sm" onClick={() => onDelete(id)} className="flex justify-center items-center">
+            <Button element="button" type="button" color="danger" size="sm" onClick={() => onDelete(comic.id)} className="flex justify-center items-center">
               <FaTrash />
             </Button>
           </div>

@@ -1,17 +1,9 @@
-export const GENDER_OPTIONS = [
-  {
-    label: "Male",
-    value: "MALE",
-  },
-  {
-    label: "Female",
-    value: "FEMALE",
-  },
-  {
-    label: "Other",
-    value: "OTHER",
-  },
-];
+import { GenderMapping } from "./mapping";
+
+export const GENDER_OPTIONS = Object.entries(GenderMapping).map(([key, value]) => ({
+  label: value,
+  value: key,
+}));
 
 export const ORDER_BY_OPTIONS: {
   label: string;

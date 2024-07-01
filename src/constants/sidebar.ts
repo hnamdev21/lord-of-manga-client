@@ -4,7 +4,6 @@ import {
   FaBookmark,
   FaBox,
   FaChartBar,
-  FaClock,
   FaComment,
   FaHashtag,
   FaHome,
@@ -17,6 +16,8 @@ import {
   FaWallet,
 } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
+
+import { FaClockRotateLeft } from "@/components/Icons";
 
 export type SidebarItem = {
   label: string;
@@ -40,11 +41,10 @@ export const SidebarCommonPath = {
     href: "/library",
     icon: FaBook,
   } as const,
-
   READING_HISTORY: {
     label: "Reading History",
     href: "/reading-history",
-    icon: FaClock,
+    icon: FaClockRotateLeft,
   } as const,
 } as const;
 export type SidebarCommonPath = (typeof SidebarCommonPath)[keyof typeof SidebarCommonPath];
