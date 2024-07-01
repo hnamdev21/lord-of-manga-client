@@ -26,6 +26,7 @@ const NOTIFICATION = {
   SUCCESS_RESTORED: (field: string) => `${field} restored successfully`,
   SUCCESS_APPROVED: (field: string) => `${field} approved successfully`,
   SUCCESS_VERIFIED: (field: string) => `${field} verified successfully`,
+  SUCCESS_BAN: (field: string) => `${field} banned successfully`,
 
   // Error
   SOMETHING_WENT_WRONG: "Something went wrong",

@@ -11,9 +11,10 @@ import { BaseResponse } from "@/types/response";
 
 type FormDeleteModalProps = {
   comic: Comic;
+  refreshData: () => void;
 };
 
-const FormDeleteModal = ({ comic }: FormDeleteModalProps) => {
+const FormDeleteModal = ({ comic, refreshData }: FormDeleteModalProps) => {
   const authContext = React.use(AuthContext);
   const [notificationApi, contextHolder] = notification.useNotification();
 
@@ -27,6 +28,7 @@ const FormDeleteModal = ({ comic }: FormDeleteModalProps) => {
     ).data;
 
     if (data) {
+      refreshData();
       message.success("Restore comic successfully");
     }
   };
@@ -41,6 +43,7 @@ const FormDeleteModal = ({ comic }: FormDeleteModalProps) => {
     ).data;
 
     if (data) {
+      refreshData();
       notificationApi.open({
         message: null,
         placement: "bottomLeft",

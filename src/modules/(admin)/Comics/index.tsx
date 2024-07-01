@@ -1,6 +1,6 @@
 "use client";
 
-import { GetProp, Modal, Table, TablePaginationConfig, TableProps, Tag as AntdTag } from "antd";
+import { GetProp, message, Modal, Table, TablePaginationConfig, TableProps, Tag as AntdTag } from "antd";
 import { SorterResult } from "antd/es/table/interface";
 import React from "react";
 import { FaBan, FaCheck, FaEllipsisH, FaTimes, FaTrash } from "react-icons/fa";
@@ -11,6 +11,7 @@ import Button from "@/components/Button";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import { ComicStatusMapping, ComicTypeMapping } from "@/constants/mapping";
+import NOTIFICATION from "@/constants/notification";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Comic, ComicStatus } from "@/types/data";
@@ -20,6 +21,8 @@ import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 import ActionButtons from "./components/ActionButtons";
 import ComicDetailModal from "./components/ComicDetailModal";
 import FormBanModal from "./components/FormBanModal";
+import FormDeleteModal from "./components/FormDeleteModal";
+import FormUpdateModal from "./components/FormUpdateModal";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
@@ -83,7 +86,26 @@ const ComicsModule = () => {
     [data]
   );
 
-  const onEdit = React.useCallback((comic: Comic) => {}, []);
+  const onEdit = React.useCallback(async (comic: Comic) => {
+    modalApi.warning({
+      title: (
+        <Typography tag="h1" fontSize="md" align="center">
+          Update comic:{" "}
+          <Typography tag="span" fontSize="md" fontWeight="bold">
+            {comic.title}
+          </Typography>
+        </Typography>
+      ),
+      width: "30%",
+      icon: null,
+      centered: true,
+      footer: null,
+      maskClosable: true,
+      closable: true,
+      closeIcon: <FaTimes />,
+      content: <FormUpdateModal refreshData={() => refetch()} comic={comic} />,
+    });
+  }, []);
 
   const onBan = React.useCallback((comic: Comic) => {
     modalApi.warning({
@@ -101,13 +123,43 @@ const ComicsModule = () => {
       maskClosable: true,
       closable: true,
       closeIcon: <FaTimes />,
-      content: <FormBanModal comic={comic} />,
+      content: <FormBanModal refreshData={() => refetch()} comic={comic} />,
     });
   }, []);
 
-  const onApprove = React.useCallback((comic: Comic) => {}, []);
+  const onApprove = React.useCallback(async (comic: Comic) => {
+    const { data } = (
+      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/comics/${comic.id}/approve`, null, {
+        headers: {
+          Authorization: `Bearer ${authContext?.auth.token}`,
+        },
+      })
+    ).data;
 
-  const onDelete = React.useCallback((comic: Comic) => {}, []);
+    if (data) {
+      message.success(NOTIFICATION.SUCCESS_APPROVED(comic.title));
+    }
+  }, []);
+
+  const onDelete = React.useCallback((comic: Comic) => {
+    modalApi.warning({
+      title: (
+        <Typography tag="h1" fontSize="md" align="center">
+          Delete comic:{" "}
+          <Typography tag="span" fontSize="md" fontWeight="bold">
+            {comic.title}
+          </Typography>
+        </Typography>
+      ),
+      icon: null,
+      centered: true,
+      footer: null,
+      maskClosable: true,
+      closable: true,
+      closeIcon: <FaTimes />,
+      content: <FormDeleteModal refreshData={() => refetch()} comic={comic} />,
+    });
+  }, []);
 
   const columns: TableProps<Comic>["columns"] = React.useMemo(
     () => [

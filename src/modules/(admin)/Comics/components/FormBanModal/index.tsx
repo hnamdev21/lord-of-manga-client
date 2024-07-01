@@ -3,6 +3,7 @@ import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
+import NOTIFICATION from "@/constants/notification";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Comic } from "@/types/data";
 import { FormBanComic } from "@/types/form";
@@ -10,9 +11,10 @@ import { BaseResponse } from "@/types/response";
 
 type FormBanModalProps = {
   comic: Comic;
+  refreshData: () => void;
 };
 
-const FormBanModal = ({ comic }: FormBanModalProps) => {
+const FormBanModal = ({ comic, refreshData }: FormBanModalProps) => {
   const authContext = React.use(AuthContext);
 
   const onFinish = async (values: FormBanComic) => {
@@ -25,7 +27,8 @@ const FormBanModal = ({ comic }: FormBanModalProps) => {
     ).data;
 
     if (data) {
-      message.success("Comic has been banned");
+      refreshData();
+      message.success(NOTIFICATION.SUCCESS_BAN(comic.title));
     }
   };
 
