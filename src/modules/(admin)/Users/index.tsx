@@ -37,7 +37,7 @@ const UsersModule = () => {
 
       const { data } = (
         await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<User[]>>>(
-          `/users?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
+          `/admin/users?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
           {
             headers: {
               Authorization: `Bearer ${authContext.auth.token}`,

@@ -1,9 +1,8 @@
 import { Popover } from "antd";
 import React from "react";
-import { FaBan, FaCheck, FaEye, FaList, FaTrash } from "react-icons/fa";
+import { FaBan, FaCheck, FaEye, FaTrash } from "react-icons/fa";
 
 import Button from "@/components/Button";
-import Path from "@/constants/path";
 import { Comic, ComicStatus } from "@/types/data";
 
 type ActionButtonsProps = {
@@ -15,7 +14,7 @@ type ActionButtonsProps = {
   onDelete: () => void;
 };
 
-const ActionButtons = ({ slug, status, onViewDetail, onBan, onApprove, onDelete }: ActionButtonsProps) => {
+const ActionButtons = ({ status, onViewDetail, onBan, onApprove, onDelete }: ActionButtonsProps) => {
   return (
     <React.Fragment>
       <Popover content="View detail">
@@ -32,25 +31,6 @@ const ActionButtons = ({ slug, status, onViewDetail, onBan, onApprove, onDelete 
           <FaEye />
         </Button>
       </Popover>
-      <Popover content="View all chapters">
-        <Button shape="square" href={Path.ADMIN.COMICS + "/" + slug} color="dark" variant="plain" size="sm" className="flex justify-center items-center">
-          <FaList />
-        </Button>
-      </Popover>
-      {/* <Popover content="Edit">
-        <Button
-          shape="square"
-          element="button"
-          type="button"
-          color="dark"
-          variant="outline"
-          size="sm"
-          onClick={onEdit}
-          className="flex justify-center items-center"
-        >
-          <FaMarker />
-        </Button>
-      </Popover> */}
       <Popover content="Ban">
         <Button
           shape="square"

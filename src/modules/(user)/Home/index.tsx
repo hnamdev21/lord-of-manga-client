@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Container from "@/components/Container";
-import { Category, ComicStatus } from "@/types/data";
+import { Category } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 
 import ColCard from "./components/ColCard";
@@ -29,11 +29,11 @@ const HomeModule = () => {
         <div className={styles.columnSection__divider} />
 
         <div className={styles.columnSection__column}>
-          <ColCard title="Latest update" fetchUrl={"/comics?size=8&sortBy=updatedAt&status=" + ComicStatus.APPROVED} />
+          <ColCard title="Latest update" fetchUrl={"/comics?size=8&sortBy=updatedAt"} />
         </div>
 
         <div className={styles.columnSection__column}>
-          <ColCard title="Most viewed" fetchUrl={"/comics?size=8&sortBy=viewCount&status=" + ComicStatus.APPROVED} />
+          <ColCard title="Most viewed" fetchUrl={"/comics?size=8&sortBy=viewCount"} />
         </div>
       </Container>
 

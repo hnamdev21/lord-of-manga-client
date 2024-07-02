@@ -15,11 +15,12 @@ import styles from "./styles.module.scss";
 
 type ComicDetailModalProps = {
   comic: Comic;
+  page?: "admin" | "user";
 };
 
 const formatter: StatisticProps["formatter"] = (value) => <CountUp end={value as number} separator="." />;
 
-const ComicDetailModal = ({ comic }: ComicDetailModalProps) => {
+const ComicDetailModal = ({ comic, page = "admin" }: ComicDetailModalProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.container__header}>
@@ -54,14 +55,20 @@ const ComicDetailModal = ({ comic }: ComicDetailModalProps) => {
 
             <Typography className="flex items-center">
               Uploaded by: {comic.creator.username}
-              <Button href={Path.ADMIN.USERS + "/" + comic.creator.username} size="xs" shape="square" color="dark" variant="plain">
+              <Button
+                href={`${page === "admin" ? Path.ADMIN.USERS : Path.USER.PROFILE}/${comic.creator.username}`}
+                size="xs"
+                shape="square"
+                color="dark"
+                variant="plain"
+              >
                 <FaUpRightFromSquare />
               </Button>
             </Typography>
 
             <Typography className="flex items-center">
               Total chapters: {comic.chapters.length} chapters
-              <Button href={Path.ADMIN.COMICS + "/" + comic.slug} size="xs" shape="square" color="dark" variant="plain">
+              <Button href={`${page === "admin" ? Path.ADMIN.COMICS : Path.USER.COMICS}/${comic.slug}`} size="xs" shape="square" color="dark" variant="plain">
                 <FaUpRightFromSquare />
               </Button>
             </Typography>

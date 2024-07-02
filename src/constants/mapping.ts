@@ -1,4 +1,4 @@
-import { ComicStatus, ComicType, Gender, PermissionName } from "@/types/data";
+import { ChapterStatus, ChapterType, ComicStatus, ComicType, Gender, PermissionName } from "@/types/data";
 
 export const ComicTypeMapping: Record<ComicType, string> = {
   [ComicType.FREE]: "Free",
@@ -11,6 +11,18 @@ export const ComicStatusMapping: Record<ComicStatus, string> = {
   [ComicStatus.BANNED]: "Banned",
   [ComicStatus.APPROVED]: "Approved",
   [ComicStatus.DELETED]: "Deleted",
+} as const;
+
+export const ChapterTypeMapping: Record<ChapterType, string> = {
+  [ChapterType.FREE]: "Free",
+  [ChapterType.PAID]: "Paid",
+} as const;
+
+export const ChapterStatusMapping: Record<ChapterStatus, string> = {
+  [ChapterStatus.PENDING]: "Pending",
+  [ChapterStatus.BANNED]: "Banned",
+  [ChapterStatus.APPROVED]: "Approved",
+  [ChapterStatus.DELETED]: "Deleted",
 } as const;
 
 export const PermissionNameMapping = {

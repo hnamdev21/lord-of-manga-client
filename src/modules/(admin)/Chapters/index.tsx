@@ -8,20 +8,21 @@ import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
-import ComicDetailModal from "@/components/ComicDetailModal";
-import FormDeleteModal from "@/components/FormDeleteModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
-import { ComicStatusMapping, ComicTypeMapping } from "@/constants/mapping";
+import { ChapterStatusMapping, ChapterTypeMapping } from "@/constants/mapping";
 import NOTIFICATION from "@/constants/notification";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
-import { Comic, ComicStatus } from "@/types/data";
+import { Chapter, ChapterStatus } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
-import ActionButtons from "./components/ActionButtons";
-import FormBanModal from "./components/FormBanModal";
+import ActionButtons from "./ActionButtons";
+
+type ChaptersModuleProps = {
+  comicSlug: string;
+};
 
 interface TableParams {
   pagination?: TablePaginationConfig;
@@ -30,7 +31,7 @@ interface TableParams {
   filters?: Parameters<GetProp<TableProps, "onChange">>[1];
 }
 
-const ComicsModule = () => {
+const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
   const authContext = React.use(AuthContext);
   const [modalApi, contextHolder] = Modal.useModal();
 
@@ -42,13 +43,13 @@ const ComicsModule = () => {
   });
 
   const { data, refetch } = useQuery(
-    ["admin", "comics", tableParams.pagination?.current, tableParams.pagination?.pageSize],
+    ["admin", "chapters", comicSlug, tableParams.pagination?.current, tableParams.pagination?.pageSize],
     async () => {
       if (!authContext?.auth.token) return null;
 
       const { data } = (
-        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(
-          `/admin/comics?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
+        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Chapter[]>>>(
+          `/admin/chapters/comic/slug/${comicSlug}?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
           {
             headers: {
               Authorization: `Bearer ${authContext.auth.token}`,
@@ -65,15 +66,15 @@ const ComicsModule = () => {
   );
 
   const onViewDetail = React.useCallback(
-    (comic: Comic) => {
+    (chapter: Chapter) => {
       modalApi.info({
         title: (
           <Typography tag="h1" fontSize="xl" fontWeight="bold" align="center">
-            {comic.title}
+            {chapter.title}
           </Typography>
         ),
         width: "80%",
-        content: <ComicDetailModal comic={comic} />,
+        content: <></>,
         icon: null,
         centered: true,
         footer: null,
@@ -85,13 +86,13 @@ const ComicsModule = () => {
     [data]
   );
 
-  const onBan = React.useCallback((comic: Comic) => {
+  const onBan = React.useCallback((chapter: Chapter) => {
     modalApi.warning({
       title: (
         <Typography tag="h1" fontSize="md" align="center">
-          Ban comic:{" "}
+          Ban chapter:{" "}
           <Typography tag="span" fontSize="md" fontWeight="bold">
-            {comic.title}
+            {chapter.title}
           </Typography>
         </Typography>
       ),
@@ -101,13 +102,13 @@ const ComicsModule = () => {
       maskClosable: true,
       closable: true,
       closeIcon: <FaTimes />,
-      content: <FormBanModal refreshData={() => refetch()} comic={comic} />,
+      content: <></>,
     });
   }, []);
 
-  const onApprove = React.useCallback(async (comic: Comic) => {
+  const onApprove = React.useCallback(async (chapter: Chapter) => {
     const { data } = (
-      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/comics/${comic.id}/approve`, null, {
+      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/chapters/${chapter.id}/approve`, null, {
         headers: {
           Authorization: `Bearer ${authContext?.auth.token}`,
         },
@@ -115,17 +116,17 @@ const ComicsModule = () => {
     ).data;
 
     if (data) {
-      message.success(NOTIFICATION.SUCCESS_APPROVED(comic.title));
+      message.success(NOTIFICATION.SUCCESS_APPROVED(chapter.title));
     }
   }, []);
 
-  const onDelete = React.useCallback((comic: Comic) => {
+  const onDelete = React.useCallback((chapter: Chapter) => {
     modalApi.warning({
       title: (
         <Typography tag="h1" fontSize="md" align="center">
-          Delete comic:{" "}
+          Delete chapter:{" "}
           <Typography tag="span" fontSize="md" fontWeight="bold">
-            {comic.title}
+            {chapter.title}
           </Typography>
         </Typography>
       ),
@@ -135,12 +136,18 @@ const ComicsModule = () => {
       maskClosable: true,
       closable: true,
       closeIcon: <FaTimes />,
-      content: <FormDeleteModal refreshData={() => refetch()} comic={comic} />,
+      content: <></>,
     });
   }, []);
 
-  const columns: TableProps<Comic>["columns"] = React.useMemo(
+  const columns: TableProps<Chapter>["columns"] = React.useMemo(
     () => [
+      {
+        title: "NO.",
+        dataIndex: "ordinal",
+        key: "ordinal",
+        width: "5%",
+      },
       {
         title: "Title",
         dataIndex: "title",
@@ -160,31 +167,24 @@ const ComicsModule = () => {
         render: (_, { title, slug }) => (
           <React.Fragment>
             {title.length > 30 ? title.slice(0, 30) + "..." : title}
-            <Button shape="square" href={Path.USER.COMICS + "/" + slug} color="dark" variant="plain" size="sm" className="inline-block">
+            <Button shape="square" href={Path.USER.COMICS + "/" + comicSlug + "/" + slug} color="dark" variant="plain" size="sm" className="inline-block">
               <FaUpRightFromSquare />
             </Button>
           </React.Fragment>
         ),
       },
       {
-        title: "Author",
-        dataIndex: "author",
-        key: "author",
-        width: "10%",
-      },
-      {
-        title: "Created By",
-        dataIndex: "creator",
-        key: "creator",
-        width: "10%",
-        render: (_, { creator }) => creator.username,
+        title: "Total pages",
+        dataIndex: "totalPages",
+        key: "totalPages",
+        width: "5%",
       },
       {
         title: "Type",
         dataIndex: "type",
         key: "type",
         width: "10%",
-        render: (_, { type }) => <AntdTag color={type === "FREE" ? "success" : "warning"}>{ComicTypeMapping[type]}</AntdTag>,
+        render: (_, { type }) => <AntdTag color={type === "FREE" ? "success" : "warning"}>{ChapterTypeMapping[type]}</AntdTag>,
       },
       {
         title: "Price",
@@ -203,15 +203,15 @@ const ComicsModule = () => {
           let icon = <FaEllipsisH />;
 
           switch (status) {
-            case ComicStatus.APPROVED:
+            case ChapterStatus.APPROVED:
               color = "green";
               icon = <FaCheck />;
               break;
-            case ComicStatus.BANNED:
+            case ChapterStatus.BANNED:
               color = "red";
               icon = <FaBan />;
               break;
-            case ComicStatus.DELETED:
+            case ChapterStatus.DELETED:
               color = "gray";
               icon = <FaTrash />;
               break;
@@ -220,10 +220,17 @@ const ComicsModule = () => {
           return (
             <AntdTag color={color} style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
               {icon}
-              {ComicStatusMapping[status]}
+              {ChapterStatusMapping[status]}
             </AntdTag>
           );
         },
+      },
+      {
+        title: "Total comments",
+        dataIndex: "totalComments",
+        key: "totalComments",
+        width: "10%",
+        render: (_, { comments }) => comments.length,
       },
       {
         title: "Created At",
@@ -244,15 +251,15 @@ const ComicsModule = () => {
         dataIndex: "action",
         key: "action",
         width: "15%",
-        render: (_, comic) => (
+        render: (_, chapter) => (
           <div className="flex gap-[1rem]">
             <ActionButtons
-              slug={comic.slug}
-              status={comic.status}
-              onViewDetail={() => onViewDetail(comic)}
-              onBan={() => onBan(comic)}
-              onApprove={() => onApprove(comic)}
-              onDelete={() => onDelete(comic)}
+              slug={chapter.slug}
+              status={chapter.status}
+              onViewDetail={() => onViewDetail(chapter)}
+              onBan={() => onBan(chapter)}
+              onApprove={() => onApprove(chapter)}
+              onDelete={() => onDelete(chapter)}
             />
           </div>
         ),
@@ -272,9 +279,9 @@ const ComicsModule = () => {
 
         <div className="w-full flex-1 relative">
           <div className="absolute z-10 -translate-y-[100%] w-full h-[2.5rem] flex">
+            <div className="w-[5%] h-full" />
             <div className="w-[15%] h-full" />
-            <div className="w-[10%] h-full" />
-            <div className="w-[10%] h-full" />
+            <div className="w-[5%] h-full" />
             <div className="w-[10%] h-full" />
             <div className="w-[10%] h-full" />
             <div className="w-[10%] bg-[var(--color-gray-2)] h-full rounded-tl-2xl rounded-tr-2xl border border-solid border-gray-200 py-[.25rem] flex items-center justify-center gap-[.5rem]">
@@ -329,6 +336,7 @@ const ComicsModule = () => {
             </div>
             <div className="w-[10%] h-full" />
             <div className="w-[10%] h-full" />
+            <div className="w-[10%] h-full" />
             <div className="w-[15%] h-full" />
           </div>
 
@@ -336,14 +344,14 @@ const ComicsModule = () => {
             columns={columns}
             dataSource={data?.content}
             size="small"
-            rowKey={(record: Comic) => record.id}
+            rowKey={(record: Chapter) => record.id}
             bordered
             pagination={{
               current: tableParams.pagination?.current,
               pageSize: tableParams.pagination?.pageSize,
               total: data?.totalElements,
               showQuickJumper: true,
-              showTotal: (total) => `Total ${total} comics`,
+              showTotal: (total) => `Total ${total} chapters`,
             }}
             onChange={(pagination) => {
               setTableParams({
@@ -359,4 +367,4 @@ const ComicsModule = () => {
   );
 };
 
-export default ComicsModule;
+export default ChaptersModule;
