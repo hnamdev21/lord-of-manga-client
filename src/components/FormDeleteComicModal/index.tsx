@@ -10,12 +10,12 @@ import { Comic } from "@/types/data";
 import { FormDeleteComic } from "@/types/form";
 import { BaseResponse } from "@/types/response";
 
-type FormDeleteModalProps = {
+type FormDeleteComicModalProps = {
   comic: Comic;
   refreshData: () => void;
 };
 
-const FormDeleteModal = ({ comic, refreshData }: FormDeleteModalProps) => {
+const FormDeleteComicModal = ({ comic, refreshData }: FormDeleteComicModalProps) => {
   const authContext = React.use(AuthContext);
   const [notificationApi, contextHolder] = notification.useNotification();
 
@@ -85,4 +85,4 @@ const FormDeleteModal = ({ comic, refreshData }: FormDeleteModalProps) => {
   );
 };
 
-export default FormDeleteModal;
+export default FormDeleteComicModal;

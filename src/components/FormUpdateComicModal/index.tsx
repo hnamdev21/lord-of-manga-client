@@ -14,7 +14,7 @@ import { FormUpdateComic } from "@/types/form";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberFormatter } from "@/utils/formatter";
 
-type FormUpdateProps = {
+type FormUpdateComicModalProps = {
   comic: Comic;
   refreshData: () => void;
 };
@@ -36,7 +36,7 @@ const normFile = (e: any) => {
   return e?.fileList;
 };
 
-const FormUpdateModal = ({ comic, refreshData }: FormUpdateProps) => {
+const FormUpdateComicModal = ({ comic, refreshData }: FormUpdateComicModalProps) => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormUpdateComic>();
 
@@ -301,4 +301,4 @@ const FormUpdateModal = ({ comic, refreshData }: FormUpdateProps) => {
   );
 };
 
-export default FormUpdateModal;
+export default FormUpdateComicModal;

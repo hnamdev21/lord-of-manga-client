@@ -23,25 +23,25 @@ const formatter: StatisticProps["formatter"] = (value) => <CountUp end={value as
 const ComicDetailModal = ({ comic, page = "admin" }: ComicDetailModalProps) => {
   return (
     <div className={styles.container}>
-      <div className={styles.container__header}>
+      <div className={styles.container__top}>
         <div className={styles.coverContainer}>
           <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + comic.coverPath} alt={`Cover image of ${comic.title}`} layout="fill" />
         </div>
 
-        <div className={styles.container__header__content}>
-          <Card bordered={false} className={styles.item}>
+        <div className={styles.content}>
+          <Card bordered={false} className={styles.content__item}>
             <Statistic title="Views" value={100000} formatter={formatter} />
           </Card>
-          <Card bordered={false} className={styles.item}>
+          <Card bordered={false} className={styles.content__item}>
             <Statistic title="Saved" value={100000} formatter={formatter} />
           </Card>
-          <Card bordered={false} className={styles.item}>
+          <Card bordered={false} className={styles.content__item}>
             <Statistic title="Comments" value={100000} formatter={formatter} />
           </Card>
-          <Card bordered={false} className={styles.item}>
+          <Card bordered={false} className={styles.content__item}>
             <Statistic title="User purchase" value={100000} formatter={formatter} />
           </Card>
-          <Card bordered={false} className={styles.item}>
+          <Card bordered={false} className={styles.content__item}>
             <Statistic title="Total purchase" value={100000} formatter={formatter} suffix={VND_CURRENCY} />
           </Card>
 

@@ -8,17 +8,20 @@ import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
+import ChapterDetailModal from "@/components/ChapterDetailModal";
+import FormDeleteChapterModal from "@/components/FormDeleteChapterModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import { ChapterStatusMapping, ChapterTypeMapping } from "@/constants/mapping";
 import NOTIFICATION from "@/constants/notification";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
-import { Chapter, ChapterStatus } from "@/types/data";
+import { Chapter, ChapterStatus, Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
-import ActionButtons from "./ActionButtons";
+import ActionButtons from "./components/ActionButtons";
+import FormBanModal from "./components/FormBanModal";
 
 type ChaptersModuleProps = {
   comicSlug: string;
@@ -42,7 +45,13 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
     },
   });
 
-  const { data, refetch } = useQuery(
+  const { data: comic } = useQuery(["admin", "comic", comicSlug], async () => {
+    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<Comic>>(`/comics/slug/${comicSlug}`)).data;
+
+    return data;
+  });
+
+  const { data: chapters, refetch } = useQuery(
     ["admin", "chapters", comicSlug, tableParams.pagination?.current, tableParams.pagination?.pageSize],
     async () => {
       if (!authContext?.auth.token) return null;
@@ -73,8 +82,8 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
             {chapter.title}
           </Typography>
         ),
-        width: "80%",
-        content: <></>,
+        width: "50%",
+        content: comic ? <ChapterDetailModal comic={comic} chapter={chapter} /> : null,
         icon: null,
         centered: true,
         footer: null,
@@ -83,7 +92,7 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
         closeIcon: <FaTimes />,
       });
     },
-    [data]
+    [comic, chapters]
   );
 
   const onBan = React.useCallback((chapter: Chapter) => {
@@ -102,7 +111,7 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
       maskClosable: true,
       closable: true,
       closeIcon: <FaTimes />,
-      content: <></>,
+      content: <FormBanModal chapter={chapter} refreshData={refetch} />,
     });
   }, []);
 
@@ -136,7 +145,7 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
       maskClosable: true,
       closable: true,
       closeIcon: <FaTimes />,
-      content: <></>,
+      content: <FormDeleteChapterModal chapter={chapter} refreshData={refetch} />,
     });
   }, []);
 
@@ -265,7 +274,7 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
         ),
       },
     ],
-    [data]
+    [chapters]
   );
 
   React.useEffect(() => {
@@ -342,14 +351,14 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
 
           <Table
             columns={columns}
-            dataSource={data?.content}
+            dataSource={chapters?.content}
             size="small"
             rowKey={(record: Chapter) => record.id}
             bordered
             pagination={{
               current: tableParams.pagination?.current,
               pageSize: tableParams.pagination?.pageSize,
-              total: data?.totalElements,
+              total: chapters?.totalElements,
               showQuickJumper: true,
               showTotal: (total) => `Total ${total} chapters`,
             }}

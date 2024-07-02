@@ -1,5 +1,5 @@
 .container {
-  height: 60vh;
+  height: 20vh;
   display: flex;
   flex-direction: column;
   gap: rem(10px);
@@ -11,16 +11,8 @@
     grid-template-columns: repeat(12, 1fr);
     gap: rem(10px);
 
-    .coverContainer {
-      position: relative;
-      overflow: hidden;
-      grid-column: span 2 / span 2;
-      border-radius: rem(8px);
-      box-shadow: 0 0 rem(10px) rgba(0, 0, 0, 0.1);
-    }
-
     .content {
-      grid-column: span 10 / span 10;
+      grid-column: span 12 / span 12;
       display: grid;
       grid-template-columns: repeat(10, 1fr);
       gap: rem(10px);

@@ -112,6 +112,9 @@ export type Chapter = BaseEntity & {
   banner: User | null;
   bannedReason: string | null;
   bannedAt: string | null;
+  deleter: User | null;
+  deletedAt: string | null;
+  deletedReason: string | null;
 };
 
 export type Comic = BaseEntity & {

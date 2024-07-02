@@ -9,7 +9,7 @@ import { useQuery } from "react-query";
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import ComicDetailModal from "@/components/ComicDetailModal";
-import FormDeleteModal from "@/components/FormDeleteModal";
+import FormDeleteComicModal from "@/components/FormDeleteComicModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import { ComicStatusMapping, ComicTypeMapping } from "@/constants/mapping";
@@ -135,7 +135,7 @@ const ComicsModule = () => {
       maskClosable: true,
       closable: true,
       closeIcon: <FaTimes />,
-      content: <FormDeleteModal refreshData={() => refetch()} comic={comic} />,
+      content: <FormDeleteComicModal refreshData={() => refetch()} comic={comic} />,
     });
   }, []);
 
