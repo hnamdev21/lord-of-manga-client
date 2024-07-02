@@ -117,7 +117,7 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
 
   const onApprove = React.useCallback(async (chapter: Chapter) => {
     const { data } = (
-      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/chapters/${chapter.id}/approve`, null, {
+      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/chapters/${chapter.id}/approve`, null, {
         headers: {
           Authorization: `Bearer ${authContext?.auth.token}`,
         },

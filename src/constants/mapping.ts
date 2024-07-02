@@ -27,14 +27,16 @@ export const ChapterStatusMapping: Record<ChapterStatus, string> = {
 
 export const PermissionNameMapping = {
   [PermissionName.CREATE_COMIC]: "Create comic",
-  [PermissionName.BAN_COMIC]: "Ban comic",
-  [PermissionName.USER_MANAGEMENT]: "User management",
-  [PermissionName.APPROVE_CHAPTER]: "Approve chapter",
-  [PermissionName.APPROVE_COMIC]: "Approve comic",
-  [PermissionName.COMMENT]: "Comment",
-  [PermissionName.BAN_CHAPTER]: "Ban chapter",
-  [PermissionName.PREVIEW_COMIC]: "Preview comic",
   [PermissionName.READ_COMIC]: "Read comic",
+  [PermissionName.PREVIEW_COMIC]: "Preview comic",
+  [PermissionName.USER_MANAGEMENT]: "User management",
+  [PermissionName.APPROVE_COMIC]: "Approve comic",
+  [PermissionName.APPROVE_CHAPTER]: "Approve chapter",
+  [PermissionName.BAN_COMIC]: "Ban comic",
+  [PermissionName.BAN_CHAPTER]: "Ban chapter",
+  [PermissionName.DELETE_COMIC]: "Delete comic",
+  [PermissionName.DELETE_CHAPTER]: "Delete chapter",
+  [PermissionName.COMMENT]: "Comment",
   [PermissionName.DISABLE_COMMENT]: "Disable comment",
 } as const;
 

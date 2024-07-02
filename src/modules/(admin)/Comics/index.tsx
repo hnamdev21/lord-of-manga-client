@@ -107,7 +107,7 @@ const ComicsModule = () => {
 
   const onApprove = React.useCallback(async (comic: Comic) => {
     const { data } = (
-      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/comics/${comic.id}/approve`, null, {
+      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/comics/${comic.id}/approve`, null, {
         headers: {
           Authorization: `Bearer ${authContext?.auth.token}`,
         },
@@ -116,6 +116,7 @@ const ComicsModule = () => {
 
     if (data) {
       message.success(NOTIFICATION.SUCCESS_APPROVED(comic.title));
+      refetch();
     }
   }, []);
 

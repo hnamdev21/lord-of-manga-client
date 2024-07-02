@@ -65,13 +65,13 @@ const ActionButtons = ({ slug, status, onViewDetail, onBan, onApprove, onDelete 
           <FaBan />
         </Button>
       </Popover>
-      <Popover content="Approve">
-        {status === ComicStatus.PENDING && (
+      {status === ComicStatus.PENDING && (
+        <Popover content="Approve">
           <Button shape="square" element="button" type="button" color="success" size="sm" onClick={onApprove} className="flex justify-center items-center">
             <FaCheck />
           </Button>
-        )}
-      </Popover>
+        </Popover>
+      )}
       <Popover content="Delete">
         <Button shape="square" element="button" type="button" color="danger" size="sm" onClick={onDelete} className="flex justify-center items-center">
           <FaTrash />
