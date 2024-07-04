@@ -1,28 +1,43 @@
 "use client";
 
-import { message, Modal, notification, Table, TableProps, Tag as AntdTag } from "antd";
+import { GetProp, Modal, Table, TablePaginationConfig, TableProps, Tag as AntdTag } from "antd";
+import { SorterResult } from "antd/es/table/interface";
 import React from "react";
-import { FaEye, FaMarker, FaTimes, FaTrash } from "react-icons/fa";
+import { FaBan, FaCheck, FaEllipsisH, FaTimes, FaTrash } from "react-icons/fa";
 import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
-import Container from "@/components/Container";
+import ComicDetailModal from "@/components/ComicDetailModal";
+import FormDeleteComicModal from "@/components/FormDeleteComicModal";
+import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
-import { ComicTypeMapping } from "@/constants/mapping";
-import NOTIFICATION from "@/constants/notification";
+import { ComicStatusMapping, ComicTypeMapping } from "@/constants/mapping";
+import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
-import { Comic } from "@/types/data";
+import { Comic, ComicStatus } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
-import ComicDetail from "./ComicDetail";
-import FormUpdate from "./FormUpdate";
+import ActionButtons from "./components/ActionButtons";
+
+interface TableParams {
+  pagination?: TablePaginationConfig;
+  sortField?: SorterResult<any>["field"];
+  sortOrder?: SorterResult<any>["order"];
+  filters?: Parameters<GetProp<TableProps, "onChange">>[1];
+}
 
 const ComicManagementModule = () => {
   const authContext = React.use(AuthContext);
-  const [notificationApi, notificationHolder] = notification.useNotification();
   const [modalApi, modalHolder] = Modal.useModal();
+
+  const [tableParams, setTableParams] = React.useState<TableParams>({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+    },
+  });
 
   const { data, refetch } = useQuery(
     "my-comics",
@@ -44,79 +59,7 @@ const ComicManagementModule = () => {
     }
   );
 
-  const onRestore = async (id: string) => {
-    const response = (
-      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/comics/${id}/restore`, null, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
-
-    if (response.code === "OK") {
-      refetch();
-      message.success(NOTIFICATION.SUCCESS_RESTORED("Comic"));
-    }
-  };
-
-  const onDelete = async (id: string) => {
-    const response = (
-      await AXIOS_INSTANCE.delete<BaseResponse<boolean>>(`/comics/${id}`, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
-
-    if (response.code === "OK") {
-      refetch();
-      notificationApi.open({
-        message: "",
-        placement: "bottomLeft",
-        closeIcon: null,
-        description: (
-          <React.Fragment>
-            Comic has been moved to recycle bin{" "}
-            <Button
-              onClick={() => {
-                onRestore(id);
-              }}
-              element="button"
-              variant="outline"
-              type="button"
-              size="xs"
-            >
-              Restore
-            </Button>
-          </React.Fragment>
-        ),
-        duration: 5,
-      });
-    }
-  };
-
-  const onEdit = React.useCallback(
-    (comic: Comic) => {
-      modalApi.confirm({
-        title: (
-          <Typography tag="h3" align="center" fontSize="lg">
-            Edit Comic
-          </Typography>
-        ),
-        width: "30%",
-        content: <FormUpdate comic={comic} />,
-        icon: null,
-        centered: true,
-        footer: null,
-        maskClosable: true,
-        closable: true,
-        closeIcon: <FaTimes />,
-      });
-    },
-    [data]
-  );
-
-  const onView = React.useCallback(
+  const onViewDetail = React.useCallback(
     (comic: Comic) => {
       modalApi.info({
         title: (
@@ -124,8 +67,8 @@ const ComicManagementModule = () => {
             {comic.title}
           </Typography>
         ),
-        width: 1640,
-        content: <ComicDetail comic={comic} />,
+        width: "80%",
+        content: <ComicDetailModal comic={comic} page="user" />,
         icon: null,
         centered: true,
         footer: null,
@@ -136,6 +79,26 @@ const ComicManagementModule = () => {
     },
     [data]
   );
+
+  const onDelete = React.useCallback((comic: Comic) => {
+    modalApi.warning({
+      title: (
+        <Typography tag="h1" fontSize="md" align="center">
+          Delete comic:{" "}
+          <Typography tag="span" fontSize="md" fontWeight="bold">
+            {comic.title}
+          </Typography>
+        </Typography>
+      ),
+      icon: null,
+      centered: true,
+      footer: null,
+      maskClosable: true,
+      closable: true,
+      closeIcon: <FaTimes />,
+      content: <FormDeleteComicModal refreshData={() => refetch()} comic={comic} />,
+    });
+  }, []);
 
   const columns: TableProps<Comic>["columns"] = React.useMemo(
     () => [
@@ -145,13 +108,24 @@ const ComicManagementModule = () => {
         key: "title",
         onCell: (_) => ({
           style: {
+            display: "flex",
+            alignItems: "center",
+            gap: ".5rem",
+            flexWrap: "nowrap",
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
-            maxWidth: 0,
           },
         }),
         width: "15%",
+        render: (_, { title, slug }) => (
+          <React.Fragment>
+            {title.length > 30 ? title.slice(0, 30) + "..." : title}
+            <Button shape="square" href={Path.USER.COMICS + "/" + slug} color="dark" variant="plain" size="sm" className="inline-block">
+              <FaUpRightFromSquare />
+            </Button>
+          </React.Fragment>
+        ),
       },
       {
         title: "Author",
@@ -160,25 +134,18 @@ const ComicManagementModule = () => {
         width: "10%",
       },
       {
-        title: "Categories",
-        dataIndex: "categories",
-        key: "categories",
-        width: "15%",
-        render: (_, { categories }) => categories.map((category) => <AntdTag key={category.id}>{category.name}</AntdTag>),
-      },
-      {
-        title: "Tags",
-        dataIndex: "tags",
-        key: "tags",
-        width: "15%",
-        render: (_, { tags }) => tags.map((tag) => <AntdTag key={tag.id}>{tag.name}</AntdTag>),
+        title: "Created By",
+        dataIndex: "creator",
+        key: "creator",
+        width: "10%",
+        render: (_, { creator }) => creator.username,
       },
       {
         title: "Type",
         dataIndex: "type",
         key: "type",
         width: "10%",
-        render: (_, { type }) => <AntdTag color={type === "FREE" ? "green" : "yellow"}>{ComicTypeMapping[type]}</AntdTag>,
+        render: (_, { type }) => <AntdTag color={type === "FREE" ? "success" : "warning"}>{ComicTypeMapping[type]}</AntdTag>,
       },
       {
         title: "Price",
@@ -191,8 +158,33 @@ const ComicManagementModule = () => {
         title: "Status",
         dataIndex: "status",
         key: "status",
-        width: "7.5%",
-        render: (_, { status }) => <AntdTag color="blue">{status}</AntdTag>,
+        width: "10%",
+        render: (_, { status }) => {
+          let color = "yellow";
+          let icon = <FaEllipsisH />;
+
+          switch (status) {
+            case ComicStatus.APPROVED:
+              color = "green";
+              icon = <FaCheck />;
+              break;
+            case ComicStatus.BANNED:
+              color = "red";
+              icon = <FaBan />;
+              break;
+            case ComicStatus.DELETED:
+              color = "gray";
+              icon = <FaTrash />;
+              break;
+          }
+
+          return (
+            <AntdTag color={color} style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
+              {icon}
+              {ComicStatusMapping[status]}
+            </AntdTag>
+          );
+        },
       },
       {
         title: "Created At",
@@ -202,29 +194,20 @@ const ComicManagementModule = () => {
         render: (createdAt: string) => timestampToDateTime(createdAt),
       },
       {
+        title: "Updated At",
+        dataIndex: "updatedAt",
+        key: "updatedAt",
+        width: "10%",
+        render: (updatedAt: string) => timestampToDateTime(updatedAt),
+      },
+      {
         title: "Action",
         dataIndex: "action",
         key: "action",
-        width: "12.5%",
+        width: "15%",
         render: (_, comic) => (
           <div className="flex gap-[1rem]">
-            <Button
-              element="button"
-              type="button"
-              color="dark"
-              variant="plain"
-              size="sm"
-              onClick={() => onView(comic)}
-              className="flex justify-center items-center"
-            >
-              <FaEye />
-            </Button>
-            <Button element="button" type="button" variant="outline" size="sm" onClick={() => onEdit(comic)} className="flex justify-center items-center">
-              <FaMarker />
-            </Button>
-            <Button element="button" type="button" color="danger" size="sm" onClick={() => onDelete(comic.id)} className="flex justify-center items-center">
-              <FaTrash />
-            </Button>
+            <ActionButtons slug={comic.slug} onViewDetail={() => onViewDetail(comic)} onDelete={() => onDelete(comic)} onEdit={() => {}} />
           </div>
         ),
       },
@@ -232,18 +215,100 @@ const ComicManagementModule = () => {
     [data]
   );
 
+  React.useEffect(() => {
+    refetch();
+  }, [tableParams.pagination]);
+
   return (
     <React.Fragment>
-      {notificationHolder}
-      {modalHolder}
+      <div className="w-full h-full flex flex-col gap-[3.5rem]">
+        <div className="w-full h-[4rem] bg-black" />
 
-      <Container noGrid className="mb-[2rem]">
-        <Typography align="center" tag="h1" fontSize="xl" fontWeight="bold" className="mb-[1rem]">
-          Comic Management
-        </Typography>
+        <div className="w-full flex-1 relative">
+          <div className="absolute z-10 -translate-y-[100%] w-full h-[2.5rem] flex">
+            <div className="w-[15%] h-full" />
+            <div className="w-[10%] h-full" />
+            <div className="w-[10%] h-full" />
+            <div className="w-[10%] h-full" />
+            <div className="w-[10%] h-full" />
+            <div className="w-[10%] bg-[var(--color-gray-2)] h-full rounded-tl-2xl rounded-tr-2xl border border-solid border-gray-200 py-[.25rem] flex items-center justify-center gap-[.5rem]">
+              <Button
+                element="button"
+                shape="square"
+                type="button"
+                color="warning"
+                variant="outline"
+                size="xs"
+                onClick={() => {}}
+                className="flex justify-center items-center"
+              >
+                <FaEllipsisH />
+              </Button>
+              <Button
+                element="button"
+                shape="square"
+                type="button"
+                color="success"
+                variant="outline"
+                size="xs"
+                onClick={() => {}}
+                className="flex justify-center items-center"
+              >
+                <FaCheck />
+              </Button>
+              <Button
+                element="button"
+                shape="square"
+                type="button"
+                color="danger"
+                variant="outline"
+                size="xs"
+                onClick={() => {}}
+                className="flex justify-center items-center"
+              >
+                <FaBan />
+              </Button>
+              <Button
+                element="button"
+                shape="square"
+                type="button"
+                color="gray"
+                variant="outline"
+                size="xs"
+                onClick={() => {}}
+                className="flex justify-center items-center"
+              >
+                <FaTrash />
+              </Button>
+            </div>
+            <div className="w-[10%] h-full" />
+            <div className="w-[10%] h-full" />
+            <div className="w-[15%] h-full" />
+          </div>
 
-        <Table columns={columns} dataSource={data?.content} size="small" pagination={false} rowKey={(record: Comic) => record.id} bordered />
-      </Container>
+          <Table
+            columns={columns}
+            dataSource={data?.content}
+            size="small"
+            rowKey={(record: Comic) => record.id}
+            bordered
+            pagination={{
+              current: tableParams.pagination?.current,
+              pageSize: tableParams.pagination?.pageSize,
+              total: data?.totalElements,
+              showQuickJumper: true,
+              showTotal: (total) => `Total ${total} comics`,
+            }}
+            onChange={(pagination) => {
+              setTableParams({
+                pagination,
+              });
+            }}
+          />
+
+          {modalHolder}
+        </div>
+      </div>
     </React.Fragment>
   );
 };

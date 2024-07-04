@@ -1,6 +1,6 @@
 "use client";
 
-import { GetProp, message, Modal, Table, TablePaginationConfig, TableProps, Tag as AntdTag } from "antd";
+import { GetProp, Modal, Table, TablePaginationConfig, TableProps, Tag as AntdTag } from "antd";
 import { SorterResult } from "antd/es/table/interface";
 import React from "react";
 import { FaBan, FaCheck, FaEllipsisH, FaTimes, FaTrash } from "react-icons/fa";
@@ -13,7 +13,6 @@ import FormDeleteChapterModal from "@/components/FormDeleteChapterModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import { ChapterStatusMapping, ChapterTypeMapping } from "@/constants/mapping";
-import NOTIFICATION from "@/constants/notification";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Chapter, ChapterStatus, Comic } from "@/types/data";
@@ -21,9 +20,8 @@ import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
 import ActionButtons from "./components/ActionButtons";
-import FormBanModal from "./components/FormBanModal";
 
-type ChaptersModuleProps = {
+type ChapterManagementModuleProps = {
   comicSlug: string;
 };
 
@@ -34,7 +32,7 @@ interface TableParams {
   filters?: Parameters<GetProp<TableProps, "onChange">>[1];
 }
 
-const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
+const ChapterManagementModule = ({ comicSlug }: ChapterManagementModuleProps) => {
   const authContext = React.use(AuthContext);
   const [modalApi, contextHolder] = Modal.useModal();
 
@@ -45,20 +43,20 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
     },
   });
 
-  const { data: comic } = useQuery(["admin", "comic", comicSlug], async () => {
-    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<Comic>>(`/comics/slug/${comicSlug}`)).data; // TODO: MOVE URL TO ADMIN
+  const { data: comic } = useQuery(["mine", "comic", comicSlug], async () => {
+    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<Comic>>(`/comics/slug/${comicSlug}/mine`)).data;
 
     return data;
   });
 
   const { data: chapters, refetch } = useQuery(
-    ["admin", "chapters", comicSlug, tableParams.pagination?.current, tableParams.pagination?.pageSize],
+    ["mine", "chapters", comicSlug, tableParams.pagination?.current, tableParams.pagination?.pageSize],
     async () => {
       if (!authContext?.auth.token) return null;
 
       const { data } = (
         await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Chapter[]>>>(
-          `/admin/chapters/comic/slug/${comicSlug}?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
+          `/chapters/comic/slug/${comicSlug}/me?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
           {
             headers: {
               Authorization: `Bearer ${authContext.auth.token}`,
@@ -83,7 +81,7 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
           </Typography>
         ),
         width: "50%",
-        content: comic ? <ChapterDetailModal comic={comic} chapter={chapter} /> : null,
+        content: comic ? <ChapterDetailModal comic={comic} chapter={chapter} page="user" /> : null,
         icon: null,
         centered: true,
         footer: null,
@@ -94,40 +92,6 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
     },
     [comic, chapters]
   );
-
-  const onBan = React.useCallback((chapter: Chapter) => {
-    modalApi.warning({
-      title: (
-        <Typography tag="h1" fontSize="md" align="center">
-          Ban chapter:{" "}
-          <Typography tag="span" fontSize="md" fontWeight="bold">
-            {chapter.title}
-          </Typography>
-        </Typography>
-      ),
-      icon: null,
-      centered: true,
-      footer: null,
-      maskClosable: true,
-      closable: true,
-      closeIcon: <FaTimes />,
-      content: <FormBanModal chapter={chapter} refreshData={refetch} />,
-    });
-  }, []);
-
-  const onApprove = React.useCallback(async (chapter: Chapter) => {
-    const { data } = (
-      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/chapters/${chapter.id}/approve`, null, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
-
-    if (data) {
-      message.success(NOTIFICATION.SUCCESS_APPROVED(chapter.title));
-    }
-  }, []);
 
   const onDelete = React.useCallback((chapter: Chapter) => {
     modalApi.warning({
@@ -262,14 +226,7 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
         width: "15%",
         render: (_, chapter) => (
           <div className="flex gap-[1rem]">
-            <ActionButtons
-              slug={chapter.slug}
-              status={chapter.status}
-              onViewDetail={() => onViewDetail(chapter)}
-              onBan={() => onBan(chapter)}
-              onApprove={() => onApprove(chapter)}
-              onDelete={() => onDelete(chapter)}
-            />
+            <ActionButtons slug={chapter.slug} onViewDetail={() => onViewDetail(chapter)} onDelete={() => onDelete(chapter)} onEdit={() => {}} />
           </div>
         ),
       },
@@ -376,4 +333,4 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
   );
 };
 
-export default ChaptersModule;
+export default ChapterManagementModule;

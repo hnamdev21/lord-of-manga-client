@@ -1,21 +1,19 @@
 import { Popover } from "antd";
 import React from "react";
-import { FaBan, FaCheck, FaEye, FaList, FaTrash } from "react-icons/fa";
+import { FaEye, FaList, FaMarker, FaTrash } from "react-icons/fa";
 
 import Button from "@/components/Button";
 import Path from "@/constants/path";
-import { Comic, ComicStatus } from "@/types/data";
+import { Comic } from "@/types/data";
 
 type ActionButtonsProps = {
   slug: Comic["slug"];
-  status: Comic["status"];
   onViewDetail: () => void;
-  onBan: () => void;
-  onApprove: () => void;
+  onEdit: () => void;
   onDelete: () => void;
 };
 
-const ActionButtons = ({ slug, status, onViewDetail, onBan, onApprove, onDelete }: ActionButtonsProps) => {
+const ActionButtons = ({ slug, onViewDetail, onEdit, onDelete }: ActionButtonsProps) => {
   return (
     <React.Fragment>
       <Popover content="View detail">
@@ -37,27 +35,20 @@ const ActionButtons = ({ slug, status, onViewDetail, onBan, onApprove, onDelete 
           <FaList />
         </Button>
       </Popover>
-      <Popover content="Ban">
+      <Popover content="Edit">
         <Button
           shape="square"
           element="button"
           type="button"
-          color="danger"
+          color="dark"
           variant="outline"
           size="sm"
-          onClick={onBan}
+          onClick={onEdit}
           className="flex justify-center items-center"
         >
-          <FaBan />
+          <FaMarker />
         </Button>
       </Popover>
-      {status === ComicStatus.PENDING && (
-        <Popover content="Approve">
-          <Button shape="square" element="button" type="button" color="success" size="sm" onClick={onApprove} className="flex justify-center items-center">
-            <FaCheck />
-          </Button>
-        </Popover>
-      )}
       <Popover content="Delete">
         <Button shape="square" element="button" type="button" color="danger" size="sm" onClick={onDelete} className="flex justify-center items-center">
           <FaTrash />

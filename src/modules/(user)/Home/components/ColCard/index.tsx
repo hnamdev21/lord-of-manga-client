@@ -17,7 +17,7 @@ type ColCardProps = {
 };
 
 const ColCard = ({ title, fetchUrl }: ColCardProps) => {
-  const { data: comics } = useQuery(["comics", fetchUrl], async () => {
+  const { data } = useQuery(["home", "comics", fetchUrl], async () => {
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(fetchUrl)).data;
     return data.content;
   });
@@ -30,10 +30,10 @@ const ColCard = ({ title, fetchUrl }: ColCardProps) => {
 
       <div className={styles.columns}>
         <div className={styles.columns__item}>
-          {comics?.slice(0, Math.floor(comics.length / 2)).map((comic) => <CardComicHorizontal key={comic.id} {...comic} />)}
+          {data?.slice(0, Math.floor(data.length / 2)).map((comic) => <CardComicHorizontal key={comic.id} {...comic} />)}
         </div>
         <div className={styles.columns__item}>
-          {comics?.slice(Math.floor(comics.length / 2), comics.length).map((comic) => <CardComicHorizontal key={comic.id} {...comic} />)}
+          {data?.slice(Math.floor(data.length / 2), data.length).map((comic) => <CardComicHorizontal key={comic.id} {...comic} />)}
         </div>
       </div>
     </React.Fragment>

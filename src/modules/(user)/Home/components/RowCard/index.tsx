@@ -19,8 +19,8 @@ type RowCardProps = {
 };
 
 const RowCard = ({ category, numberOfColumns }: RowCardProps) => {
-  const { data: comics } = useQuery(["row-card", "comics", category.name], async () => {
-    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("comics/category/search?term=" + category.name)).data; // TODO: BAKCEND
+  const { data: comics } = useQuery(["row-card", "comics", category.slug], async () => {
+    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics?categorySlug=" + category.slug)).data;
     return data.content;
   });
 

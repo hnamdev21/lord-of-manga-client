@@ -22,7 +22,7 @@ const SearchBox = () => {
   });
 
   const searchComic = async (term: string) => {
-    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<SearchComicResponse>>(`/comics/search?term=${term}`)).data;
+    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<SearchComicResponse>>(`/search?term=${term}`)).data;
     setData(data);
   };
 

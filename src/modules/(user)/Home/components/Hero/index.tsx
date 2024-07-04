@@ -46,28 +46,28 @@ const Hero = () => {
               </div>
 
               <div className={styles.rightContent}>
-                <Typography tag="h3" fontSize="8xl" fontWeight="md" className={styles.rightContent__title}>
+                <Typography textColor="light" tag="h3" fontSize="8xl" fontWeight="md" className={styles.rightContent__title}>
                   {comic.title}
                 </Typography>
 
                 <div className={styles.rightContent__categories}>
                   {comic.categories.slice(0, 8).map((category) => (
-                    <Button href="#" variant="outline" key={category.slug}>
+                    <Button href="#" color="light" variant="outline" key={category.slug}>
                       {category.name}
                     </Button>
                   ))}
                 </div>
 
                 <div>
-                  <Typography tag="p" fontSize="md">
+                  <Typography tag="p" fontSize="md" textColor="light">
                     Author: {comic.author}
                   </Typography>
-                  <Typography tag="p" fontSize="md">
+                  <Typography tag="p" fontSize="md" textColor="light">
                     Publisher: {comic.creator.fullName}
                   </Typography>
                 </div>
 
-                <Typography tag="p" fontSize="md" className="line-clamp-8">
+                <Typography tag="p" fontSize="md" className="line-clamp-8" textColor="light">
                   {comic.description}
                 </Typography>
               </div>

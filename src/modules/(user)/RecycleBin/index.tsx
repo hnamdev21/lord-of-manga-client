@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
+import ComicDetailModal from "@/components/ComicDetailModal";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { ComicTypeMapping } from "@/constants/mapping";
@@ -15,8 +16,6 @@ import { AuthContext } from "@/providers/AuthProvider";
 import { Comic, ComicStatus } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
-
-import ComicDetail from "../ComicMangement/ComicDetail";
 
 const User_RecycleBinModule = () => {
   const authContext = React.use(AuthContext);
@@ -73,7 +72,7 @@ const User_RecycleBinModule = () => {
           </Typography>
         ),
         width: 1640,
-        content: <ComicDetail comic={comic} />,
+        content: <ComicDetailModal comic={comic} page="user" />,
         icon: null,
         centered: true,
         footer: null,

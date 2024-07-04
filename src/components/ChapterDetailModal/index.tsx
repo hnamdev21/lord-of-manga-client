@@ -13,6 +13,7 @@ import PreviewChapterImageModal from "./PreviewChapterImageModal";
 import styles from "./styles.module.scss";
 
 type ChapterDetailModalProps = {
+  page?: "admin" | "user";
   comic: Comic;
   chapter: Chapter;
 };

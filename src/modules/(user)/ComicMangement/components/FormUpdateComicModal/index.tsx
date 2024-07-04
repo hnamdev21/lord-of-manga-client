@@ -14,12 +14,13 @@ import { FormUpdateComic } from "@/types/form";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberFormatter } from "@/utils/formatter";
 
-type FormUpdateProps = {
+type FormUpdateComicModalProps = {
   comic: Comic;
+  refreshData: () => void;
 };
 
 const checkFile = (resolve: any, file: RcFile) => {
-  const isLt5M = file.size / 1024 / 1024 <= 2;
+  const isLt5M = file.size / 1024 / 1024 <= 5;
   if (!isLt5M) {
     return;
   }
@@ -27,7 +28,15 @@ const checkFile = (resolve: any, file: RcFile) => {
   resolve(true);
 };
 
-const FormUpdate = ({ comic }: FormUpdateProps) => {
+const normFile = (e: any) => {
+  if (Array.isArray(e)) {
+    return e;
+  }
+
+  return e?.fileList;
+};
+
+const FormUpdateComicModal = ({ comic, refreshData }: FormUpdateComicModalProps) => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormUpdateComic>();
 
@@ -51,18 +60,10 @@ const FormUpdate = ({ comic }: FormUpdateProps) => {
     return { categories: categoryOptions, tags: tagOptions };
   });
 
-  const normFile = (e: any) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-
-    return e?.fileList;
-  };
-
   const onFinish: FormProps<FormUpdateComic>["onFinish"] = async (values: FormUpdateComic) => {
     const response = (
       await AXIOS_INSTANCE.put<BaseResponse<Comic>>(
-        "/comics/" + values.id,
+        "/comics/" + values.id + "/mine",
         {
           ...values,
           cover: (values.cover?.[0] as UploadFile)?.originFileObj,
@@ -78,6 +79,7 @@ const FormUpdate = ({ comic }: FormUpdateProps) => {
     ).data;
 
     if (response.code === "OK") {
+      refreshData();
       message.success(NOTIFICATION.SUCCESS_UPDATED("Comic"));
       setSearchValue("");
       setDisablePriceInput(true);
@@ -299,4 +301,4 @@ const FormUpdate = ({ comic }: FormUpdateProps) => {
   );
 };
 
-export default FormUpdate;
+export default FormUpdateComicModal;

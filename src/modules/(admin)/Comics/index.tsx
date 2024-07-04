@@ -32,7 +32,7 @@ interface TableParams {
 
 const ComicsModule = () => {
   const authContext = React.use(AuthContext);
-  const [modalApi, contextHolder] = Modal.useModal();
+  const [modalApi, modalHolder] = Modal.useModal();
 
   const [tableParams, setTableParams] = React.useState<TableParams>({
     pagination: {
@@ -353,7 +353,7 @@ const ComicsModule = () => {
             }}
           />
 
-          {contextHolder}
+          {modalHolder}
         </div>
       </div>
     </React.Fragment>

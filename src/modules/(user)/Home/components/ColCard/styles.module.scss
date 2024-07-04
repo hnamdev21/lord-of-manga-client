@@ -9,6 +9,7 @@
 
   &__item {
     grid-column: span 1;
+    grid-template-rows: rem(200px);
     display: flex;
     flex-direction: column;
     gap: rem(10px);
