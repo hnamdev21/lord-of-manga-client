@@ -7,6 +7,8 @@ const Table = {
   LOVED_COMICS: "loved_comics",
   COMMENTS: "comments",
   USER_PAYMENTS: "user_payments",
+  // FOLLOWERS: "followers",
+  // REPORTS: "reports",
 } as const;
 
 export type Table = (typeof Table)[keyof typeof Table];

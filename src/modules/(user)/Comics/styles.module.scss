@@ -1,0 +1,40 @@
+.container {
+  margin-bottom: rem(20px);
+
+  &__filter {
+    grid-column: span 12;
+
+    .form {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: rem(20px);
+
+      &__item {
+        grid-column: span 2;
+      }
+    }
+  }
+
+  &__data {
+    grid-column: span 12;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: rem(20px);
+
+    &__item {
+      grid-column: span 2;
+      height: rem(400px);
+    }
+
+    &__empty {
+      grid-column: span 12;
+      @include flex-center;
+    }
+  }
+
+  &__pagination {
+    @include flex-center;
+    margin-bottom: rem(20px);
+  }
+}

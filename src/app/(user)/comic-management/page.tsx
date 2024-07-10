@@ -1,7 +1,9 @@
 import React from "react";
 
+import ComicManagementModule from "@/modules/(user)/ComicMangement";
+
 const User_ComicManagementPage = () => {
-  return <div>User_ComicManagementPage</div>;
+  return <ComicManagementModule />;
 };
 
 export default User_ComicManagementPage;

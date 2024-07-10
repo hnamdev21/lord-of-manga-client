@@ -1,5 +1,9 @@
 import React from "react";
 
-export const ComicManagementPage = () => {
-  return <div>ComicManagementPage</div>;
+import ComicsModule from "@/modules/(admin)/Comics";
+
+const ComicsPage = () => {
+  return <ComicsModule />;
 };
+
+export default ComicsPage;

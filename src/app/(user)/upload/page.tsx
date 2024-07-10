@@ -1,5 +1,9 @@
 import React from "react";
 
-export const UploadPage = () => {
-  return <div>UploadPage</div>;
+import UploadModule from "@/modules/(user)/Upload";
+
+const UploadPage = () => {
+  return <UploadModule />;
 };
+
+export default UploadPage;

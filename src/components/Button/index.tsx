@@ -6,18 +6,19 @@ import React from "react";
 
 import styles from "./styles.module.scss";
 
-type ButtonSize = "sm" | "base" | "md" | "lg";
-type ButtonColor = "primary" | "secondary" | "danger" | "success" | "warning" | "info";
+type ButtonSize = "xs" | "sm" | "base" | "md" | "lg";
+type ButtonColor = "primary" | "secondary" | "danger" | "success" | "warning" | "info" | "transparent" | "dark" | "light" | "gray";
 type ButtonVariant = "solid" | "outline" | "plain";
+type ButtonShape = "circle" | "full" | "square";
 
 type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
-  as: "button";
+  element: "button";
   type: "button" | "submit" | "reset";
   children: React.ReactNode;
 };
 
 type LinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-  as?: "a";
+  element?: "a";
   href: string;
   children: React.ReactNode;
 };
@@ -26,22 +27,28 @@ type DefaultButtonProps = {
   size?: ButtonSize;
   color?: ButtonColor;
   variant?: ButtonVariant;
+  shape?: ButtonShape;
   icon?: boolean;
+  disabled?: boolean;
 };
 
 type Props = (DefaultButtonProps & ButtonProps) | (DefaultButtonProps & LinkProps);
 
-const Button = ({ size = "base", color = "primary", variant = "solid", icon = false, children, className = "", ...props }: Props) => {
+const Button = ({ size = "base", color = "primary", variant = "solid", shape, icon = false, disabled = false, children, className = "", ...props }: Props) => {
   const classes = cn(
     styles.button,
     styles[`button__size__${size}`],
     styles[`button__color__${color}`],
     styles[`button__variant__${variant}`],
-    icon && styles["button__icon"],
+    {
+      [styles["button__icon"]]: icon,
+      [styles[`button__shape__${shape}`]]: shape,
+      [styles["button__disabled"]]: disabled,
+    },
     className
   );
 
-  if (props.as === "button") {
+  if (props.element === "button") {
     return (
       <button {...props} className={classes}>
         {children}
@@ -50,7 +57,7 @@ const Button = ({ size = "base", color = "primary", variant = "solid", icon = fa
   }
 
   return (
-    <Link {...props} className={classes}>
+    <Link {...props} className={classes} href={props.href}>
       {children}
     </Link>
   );

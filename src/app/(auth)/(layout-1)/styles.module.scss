@@ -1,0 +1,24 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+
+  &__inner {
+    height: 100%;
+
+    &__left {
+      grid-column: span 6;
+      height: 100%;
+      background: url(/images/auth-background.png) no-repeat center center / contain;
+    }
+
+    &__right {
+      grid-column: span 6;
+      height: 100%;
+      @include flex-center;
+
+      &__content {
+        flex: 1;
+      }
+    }
+  }
+}

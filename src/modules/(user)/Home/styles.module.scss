@@ -1,0 +1,28 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: rem(40px);
+  margin-bottom: rem(40px);
+
+  .heroSection {
+    background-color: var(--color-gray-2);
+  }
+
+  .columnSection {
+    position: relative;
+
+    &__divider {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: rem(1px);
+      height: 105%;
+      background-color: var(--color-gray);
+    }
+
+    &__column {
+      grid-column: span 6;
+    }
+  }
+}

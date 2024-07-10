@@ -1,5 +1,30 @@
+.title {
+  margin-bottom: rem(16px);
+}
+
 .container {
-  padding: rem(40px) rem(115px);
-  border-radius: rem(12px);
-  background-color: var(--color-dark-gray);
+  display: grid;
+
+  .inner {
+    padding: rem(20px);
+    border-radius: rem(8px);
+    box-shadow: 0 0 rem(20px) rgba(0, 0, 0, 0.2);
+
+    .logoContainer {
+      width: 100%;
+      height: rem(80px);
+      margin-bottom: rem(20px);
+      display: flex;
+      justify-content: center;
+    }
+
+    .form {
+      display: block;
+      margin-bottom: rem(20px);
+    }
+
+    .link {
+      color: var(--color-primary);
+    }
+  }
 }

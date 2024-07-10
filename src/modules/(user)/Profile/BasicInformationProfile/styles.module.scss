@@ -1,0 +1,43 @@
+.container {
+  width: rem(120px);
+  height: rem(120px);
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
+
+  .avatarContainer {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: inherit;
+    border-radius: inherit;
+    cursor: pointer;
+
+    .avatar {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+    }
+
+    .overlay {
+      @include flex-center;
+      display: none;
+      width: 100%;
+      height: 100%;
+      background-color: rgba($color: #000000, $alpha: 0.35);
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: #fff;
+      font-size: rem(28px);
+    }
+
+    &:hover {
+      .overlay {
+        display: flex;
+      }
+    }
+  }
+}

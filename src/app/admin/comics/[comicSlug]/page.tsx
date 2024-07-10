@@ -1,13 +1,15 @@
 import React from "react";
 
-type PageProps = {
+import ChaptersModule from "@/modules/(admin)/Chapters";
+
+type ChaptersPageProps = {
   params: {
     comicSlug: string;
   };
 };
 
-const ComicDetailManagementPage = ({ params }: PageProps) => {
-  return <div>ComicDetailManagementPage</div>;
+const ChaptersPage = ({ params }: ChaptersPageProps) => {
+  return <ChaptersModule comicSlug={params.comicSlug} />;
 };
 
-export default ComicDetailManagementPage;
+export default ChaptersPage;

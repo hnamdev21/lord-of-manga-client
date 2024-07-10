@@ -1,15 +1,15 @@
 import { message } from "antd";
 import axios from "axios";
 
+import { isDevelopment, localApiUrl } from "@/constants/config";
 import Path from "@/constants/path";
 import StatusCode from "@/constants/status-code";
 
 const AXIOS_INSTANCE = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_LOCAL_API_URL,
+  baseURL: isDevelopment ? localApiUrl : "",
   headers: {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Credentials": "true",
-    accept: "application/json",
+    accept: "*/*",
   },
   withCredentials: true,
 });
@@ -17,9 +17,10 @@ const AXIOS_INSTANCE = axios.create({
 AXIOS_INSTANCE.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response) {
+    if (error.response && isDevelopment) {
       message.error(error.response.data.message);
     }
+
     if (error.response?.status == StatusCode.UNAUTHORIZED && !(window.location.pathname == "/")) {
       window.location.href = Path.AUTH.SIGN_IN;
     }

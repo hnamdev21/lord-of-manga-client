@@ -1,79 +1,43 @@
-import { Carousel } from "antd";
+"use client";
+
 import React from "react";
+import { useQuery } from "react-query";
 
-import CardComicHorizontal from "@/components/CardComicHorizontal";
+import AXIOS_INSTANCE from "@/apis/instance";
 import Container from "@/components/Container";
-import Typography from "@/components/Typography";
+import { Category } from "@/types/data";
+import { BaseGetResponse, BaseResponse } from "@/types/response";
 
+import ColCard from "./components/ColCard";
+import Hero from "./components/Hero";
 import RowCard from "./components/RowCard";
-
-const contentStyles: React.CSSProperties = {
-  height: "600px",
-  padding: "20px 0",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  color: "#fff",
-};
+import styles from "./styles.module.scss";
 
 const HomeModule = () => {
+  const { data: categories } = useQuery("categories", async () => {
+    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Category[]>>>("/categories?size=4")).data;
+    return data.content;
+  });
+
   return (
-    <div className="flex flex-col gap-[4rem]">
-      <Container noGrid>
-        <Carousel autoplay arrows dotPosition="left" className="w-full h-[60rem]">
-          <div>
-            <h3 style={contentStyles}>1</h3>
-          </div>
-          <div>
-            <h3 style={contentStyles}>2</h3>
-          </div>
-          <div>
-            <h3 style={contentStyles}>3</h3>
-          </div>
-          <div>
-            <h3 style={contentStyles}>4</h3>
-          </div>
-        </Carousel>
-      </Container>
+    <div className={styles.page}>
+      <section className={styles.heroSection}>
+        <Hero />
+      </section>
 
-      <Container className="relative">
-        <div
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[105%] w-[.1rem]"
-          style={{ backgroundColor: "var(--color-gray)" }}
-        />
+      <Container className={styles.columnSection}>
+        <div className={styles.columnSection__divider} />
 
-        <div className="col-span-6">
-          <Typography tag="h5" fontSize="lg" className="mb-[2rem]">
-            Latest update
-          </Typography>
-
-          <div className="flex flex-col gap-[2rem]">
-            <div className="col-span-12 flex flex-col gap-[1rem]">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <CardComicHorizontal key={index} />
-              ))}
-            </div>
-          </div>
+        <div className={styles.columnSection__column}>
+          <ColCard title="Latest update" fetchUrl={"/comics?size=8&sortBy=updatedAt"} />
         </div>
 
-        <div className="col-span-6">
-          <Typography tag="h5" fontSize="lg" className="mb-[2rem]">
-            Most viewed
-          </Typography>
-
-          <div className="flex flex-col gap-[2rem]">
-            <div className="col-span-12 flex flex-col gap-[1rem]">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <CardComicHorizontal key={index} />
-              ))}
-            </div>
-          </div>
+        <div className={styles.columnSection__column}>
+          <ColCard title="Most viewed" fetchUrl={"/comics?size=8&sortBy=viewCount"} />
         </div>
       </Container>
 
-      {Array.from({ length: 4 }).map((_, index) => (
-        <RowCard key={index} />
-      ))}
+      {categories?.map((category) => <RowCard key={category.id} category={category} numberOfColumns={7} />)}
     </div>
   );
 };

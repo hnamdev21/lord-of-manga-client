@@ -1,0 +1,78 @@
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: rem(6px);
+  overflow: hidden;
+  box-shadow: 0 0 rem(10px) rgba(0, 0, 0, 0.1);
+
+  &__bookmark {
+    position: absolute;
+    top: rem(5px);
+    right: rem(5px);
+    z-index: 1;
+    aspect-ratio: 1;
+    backdrop-filter: blur(24px);
+    @include flex-center;
+    color: var(--color-black);
+    background-color: rgba(255, 255, 255, 0.2);
+
+    &__active {
+      color: var(--color-primary);
+    }
+  }
+
+  &__tag {
+    position: absolute;
+    top: rem(5px);
+    left: rem(5px);
+    z-index: 1;
+    @include flex-center;
+    background-color: var(--color-primary);
+    padding: rem(5px);
+    border-radius: rem(6px);
+    font-size: rem(12px);
+  }
+
+  &__top {
+    position: relative;
+    width: 100%;
+    height: 90%;
+
+    &__overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      height: 12.5%;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: rem(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: rem(10px);
+      backdrop-filter: blur(24px);
+
+      .button {
+        height: 100%;
+
+        &__remove {
+          flex: 1;
+        }
+
+        &__read {
+          width: 80%;
+        }
+      }
+    }
+  }
+
+  &__bottom {
+    width: 100%;
+    height: 10%;
+    padding: 0 rem(10px);
+    display: flex;
+    align-items: center;
+  }
+}

@@ -1,0 +1,21 @@
+.link {
+  width: 100%;
+  height: rem(32px);
+  padding: rem(9px);
+  display: flex;
+  align-items: center;
+  border-radius: rem(6px);
+  background-color: #e5e7eb;
+  transition: all 300ms ease-in-out;
+  overflow: hidden;
+  color: var(--color-black);
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  &__active {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+  }
+}

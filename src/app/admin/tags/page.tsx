@@ -1,7 +1,9 @@
 import React from "react";
 
-const TagManagementPage = () => {
-  return <div>TagManagementPage</div>;
+import TagsModule from "@/modules/(admin)/Tags";
+
+const TagsPage = () => {
+  return <TagsModule />;
 };
 
-export default TagManagementPage;
+export default TagsPage;

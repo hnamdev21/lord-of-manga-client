@@ -49,7 +49,14 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: [process.env.NEXT_PUBLIC_API_HOSTING || "localhost:3000"],
+    remotePatterns: [
+      {
+        hostname: "localhost",
+        pathname: "/manga-service/api/uploads/**",
+        port: "8081",
+        protocol: "http",
+      },
+    ],
   },
 };
 

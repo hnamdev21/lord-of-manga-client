@@ -1,116 +1,88 @@
 "use client";
 
-import { Button, Checkbox, Form as FormAnt, type FormProps, Input } from "antd";
+import { Checkbox, Form, type FormProps, Input, message } from "antd";
+import cn from "classnames";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
+import { FaAt, FaIdCard, FaLock, FaUser } from "react-icons/fa";
 
+import AXIOS_INSTANCE from "@/apis/instance";
+import Button from "@/components/Button";
+import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
+import Notification from "@/constants/notification";
+import Path from "@/constants/path";
+import { User } from "@/types/data";
 import { FormSignUp } from "@/types/form";
+import { BaseResponse } from "@/types/response";
 
 import styles from "./styles.module.scss";
 
-type FieldType = FormSignUp;
-
 const SignUpModule = () => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const router = useRouter();
 
-  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-    try {
-      setIsLoading(true);
-    } catch (error) {
-      //
-    } finally {
-      setIsLoading(false);
+  const onFinish: FormProps<FormSignUp>["onFinish"] = async (values: FormSignUp) => {
+    const response = (await AXIOS_INSTANCE.post<BaseResponse<User>>("/users", values)).data;
+
+    if (response.code === "CREATED") {
+      message.success(Notification.WELCOME);
+      router.push(Path.AUTH.SIGN_IN);
     }
-  };
-
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (_errorInfo) => {
-    //
   };
 
   return (
     <React.Fragment>
-      <div>
-        <Typography tag="h1" fontSize="2xl" align="center" className="mb-[1.6rem]">
-          Welcome to Lord of Manga
-        </Typography>
-      </div>
+      <Typography tag="h1" fontSize="2xl" align="center" className={styles.title}>
+        Welcome to Lord of Manga
+      </Typography>
 
-      <div className={styles.container}>
-        <FormAnt name="basic" layout={"vertical"} initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
-          <FormAnt.Item<FieldType>
-            label={
-              <Typography className="span" fontSize="sm">
-                Full name
-              </Typography>
-            }
-            name="fullName"
-            rules={[{ required: true, type: "string", message: "Please enter your fullName" }]}
+      <div className={cn("grid grid-cols-6 gap-[2rem]", styles.container)}>
+        <div className={cn("col-start-2 col-span-4", styles.inner)}>
+          <div className={styles.logoContainer}>
+            <Logo />
+          </div>
+
+          <Form
+            onFinish={onFinish}
+            autoComplete="off"
+            initialValues={{
+              receiveNews: false,
+            }}
+            className={styles.form}
           >
-            <Input size={"large"} placeholder={"Example Ham"} />
-          </FormAnt.Item>
+            <Form.Item<FormSignUp> name="fullName" rules={[{ required: true, type: "string", message: Notification.PLEASE_ENTER("full name") }]}>
+              <Input placeholder="Full name" prefix={<FaIdCard />} />
+            </Form.Item>
 
-          <FormAnt.Item<FieldType>
-            label={
-              <Typography className="span" fontSize="sm">
-                Username
-              </Typography>
-            }
-            name="username"
-            rules={[{ required: true, type: "string", message: "Please enter your username" }]}
-          >
-            <Input size={"large"} placeholder={"example"} />
-          </FormAnt.Item>
+            <Form.Item<FormSignUp> name="username" rules={[{ required: true, type: "string", message: Notification.PLEASE_ENTER("username") }]}>
+              <Input placeholder="Username" prefix={<FaUser />} />
+            </Form.Item>
 
-          <FormAnt.Item<FieldType>
-            label={
-              <Typography className="span" fontSize="sm">
-                Password
-              </Typography>
-            }
-            name="password"
-            rules={[{ required: true, message: "Please enter your password" }]}
-          >
-            <Input.Password size={"large"} placeholder={"********"} />
-          </FormAnt.Item>
+            <Form.Item<FormSignUp> name="password" rules={[{ required: true, message: Notification.PLEASE_ENTER("password") }]}>
+              <Input.Password placeholder="Password" prefix={<FaLock />} />
+            </Form.Item>
 
-          <FormAnt.Item<FieldType>
-            label={
-              <Typography className="span" fontSize="sm">
-                Email
-              </Typography>
-            }
-            name="password"
-            rules={[{ type: "email", message: "Please enter your email" }]}
-          >
-            <Input size={"large"} placeholder={"example@gmail.com"} />
-          </FormAnt.Item>
+            <Form.Item<FormSignUp> name="email" rules={[{ type: "email", message: Notification.INVALID("email") }]}>
+              <Input placeholder="Email" prefix={<FaAt />} />
+            </Form.Item>
 
-          <FormAnt.Item<FieldType> name="receiveNews" valuePropName="checked">
-            <div className={"w-full flex items-center justify-between"}>
-              <Checkbox
-                style={{
-                  color: "var(--color-light)",
-                }}
-              >
-                Receive news
-              </Checkbox>
-            </div>
-          </FormAnt.Item>
+            <Form.Item<FormSignUp> name="receiveNews" valuePropName="checked">
+              <Checkbox>Receive news</Checkbox>
+            </Form.Item>
 
-          <FormAnt.Item>
-            <Button
-              type="primary"
-              style={{
-                backgroundColor: "var(--color-primary)",
-              }}
-              className={"w-full"}
-              size={"large"}
-              htmlType="submit"
-            >
+            <Button element="button" type="submit" shape="full">
               Sign Up
             </Button>
-          </FormAnt.Item>
-        </FormAnt>
+          </Form>
+
+          <Typography fontSize="sm" align="center">
+            Already have an account?{" "}
+            <Link href={Path.AUTH.SIGN_IN} className={styles.link}>
+              Sign In
+            </Link>
+          </Typography>
+        </div>
       </div>
     </React.Fragment>
   );

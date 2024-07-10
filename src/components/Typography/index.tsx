@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./styles.module.scss";
 
 type FontColor = "info" | "danger" | "warning" | "success" | "primary" | "secondary" | "dark" | "light" | "white" | "black";
-type FontSize = "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl" | "8xl" | "9xl";
+type FontSize = "xs" | "sm" | "base" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl" | "8xl" | "9xl";
 type FontWeight = "thin" | "base" | "md" | "bold" | "extrabold";
 type TextTransform = "uppercase" | "lowercase" | "capitalize" | "normal" | "none";
 type TextAlign = "left" | "center" | "right" | "justify";
@@ -17,6 +17,7 @@ type TypographyProps = React.HTMLAttributes<HTMLHeadingElement> & {
   fontWeight?: FontWeight;
   transform?: TextTransform;
   align?: TextAlign;
+  italic?: boolean;
   label?: boolean;
 };
 
@@ -24,10 +25,10 @@ const Typography = ({
   tag: Tag = "p",
   fontSize = "base",
   fontWeight = "base",
-  textColor = "light",
+  textColor = "black",
   transform = "none",
   align = "left",
-  label = false,
+  italic = false,
   className = "",
   children,
   ...props
@@ -40,11 +41,12 @@ const Typography = ({
     styles[`text__color__${textColor}`],
     styles[`text__transform__${transform}`],
     styles[`text__align__${align}`],
+    { [styles["text__italic"]]: italic },
     className
   );
 
   return (
-    <TagName {...props} className={classes} style={{ fontFamily: label ? "var(--font-source-code-pro)" : "var(--font-roboto)" }}>
+    <TagName {...props} className={classes}>
       {children}
     </TagName>
   );

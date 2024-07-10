@@ -3,6 +3,8 @@
   padding: 0;
   border: 0;
   box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 body,
@@ -127,9 +129,9 @@ img:is([loading="lazy"]) {
 }
 
 img {
-  display: block;
   width: 100%;
+  max-width: 100%;
   height: auto;
-  max-height: 100% !important;
+  vertical-align: middle;
   object-fit: cover;
 }

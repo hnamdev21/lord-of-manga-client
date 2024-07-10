@@ -1,19 +1,24 @@
 import React from "react";
 
+import UserThemeProvider from "@/providers/UserThemeProvider";
+
 import Footer from "./Footer";
 import Header from "./Header";
+import Sidebar from "./Sidebar";
 
 const LayoutUser = ({ children }: { children: React.ReactNode }) => {
   return (
-    <React.Fragment>
+    <UserThemeProvider>
+      <Sidebar />
+
       <div className="min-h-screen flex flex-col justify-between">
         <Header />
 
-        <main className="flex-1 w-full overflow-hidden max-w-8xl mx-auto">{children}</main>
+        <main className="flex-1 w-full overflow-hidden mx-auto">{children}</main>
 
         <Footer />
       </div>
-    </React.Fragment>
+    </UserThemeProvider>
   );
 };
 

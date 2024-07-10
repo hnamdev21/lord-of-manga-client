@@ -1,0 +1,19 @@
+.container {
+  margin-bottom: rem(40px);
+
+  &__divider {
+    margin: 0 rem(10px);
+  }
+
+  &__data {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: rem(20px);
+    margin-bottom: rem(20px);
+
+    &__item {
+      grid-column: span 2;
+      height: rem(460px);
+    }
+  }
+}
