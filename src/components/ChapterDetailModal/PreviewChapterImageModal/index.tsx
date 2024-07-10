@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
+import { localApiUrl } from "@/constants/config";
 import { Chapter, Comic } from "@/types/data";
 
 type PreviewChapterImageModalProps = {
@@ -14,7 +15,7 @@ const PreviewChapterImageModal = ({ comic, chapter }: PreviewChapterImageModalPr
       {Array.from({ length: chapter.totalPages }).map((_, index) => (
         <div className="col-start-3 col-span-8 relative" key={index}>
           <Image
-            src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/comic/" + comic.id + "/chapter-" + chapter.ordinal + "/" + index + ".png"}
+            src={localApiUrl + "/uploads/comic/" + comic.id + "/chapter-" + chapter.ordinal + "/" + index + ".png"}
             alt={`Chapter image of ${index}`}
             width={1920}
             height={1080}

@@ -1,5 +1,6 @@
-const LOCAL_STORAGE_KEY = {
+const LocalStorageKey = {
   TOKEN: "token",
-};
+  LAST_READ: "lastRead",
+} as const;
 
-export default LOCAL_STORAGE_KEY;
+export default LocalStorageKey;

@@ -5,7 +5,7 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
-import NOTIFICATION from "@/constants/notification";
+import Notification from "@/constants/notification";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { FormUpdateEmail, FormUpdateUserSetting } from "@/types/form";
@@ -32,7 +32,7 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
 
     if (response.code === "OK") {
       await authContext?.refreshUser();
-      message.success(NOTIFICATION.SUCCESS_UPDATED("Setting"));
+      message.success(Notification.SUCCESS_UPDATED("Setting"));
     }
   };
 
@@ -60,7 +60,7 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
               </Typography>
             }
             name="email"
-            rules={[{ type: "email", message: NOTIFICATION.INVALID("email") }]}
+            rules={[{ type: "email", message: Notification.INVALID("email") }]}
           >
             <EmailInput isVerified={isVerified} username={user.username} token={token} />
           </Form.Item>

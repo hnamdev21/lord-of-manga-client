@@ -29,11 +29,12 @@ type DefaultButtonProps = {
   variant?: ButtonVariant;
   shape?: ButtonShape;
   icon?: boolean;
+  disabled?: boolean;
 };
 
 type Props = (DefaultButtonProps & ButtonProps) | (DefaultButtonProps & LinkProps);
 
-const Button = ({ size = "base", color = "primary", variant = "solid", shape, icon = false, children, className = "", ...props }: Props) => {
+const Button = ({ size = "base", color = "primary", variant = "solid", shape, icon = false, disabled = false, children, className = "", ...props }: Props) => {
   const classes = cn(
     styles.button,
     styles[`button__size__${size}`],
@@ -42,6 +43,7 @@ const Button = ({ size = "base", color = "primary", variant = "solid", shape, ic
     {
       [styles["button__icon"]]: icon,
       [styles[`button__shape__${shape}`]]: shape,
+      [styles["button__disabled"]]: disabled,
     },
     className
   );

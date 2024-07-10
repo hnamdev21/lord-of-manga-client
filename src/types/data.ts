@@ -78,6 +78,8 @@ export type User = BaseEntity & {
   receiveNews: boolean;
   bannedReason: string | null;
   bannedAt: string | null;
+  verifiedUser: boolean;
+  bannedUser: boolean;
 };
 
 export type Tag = BaseEntity & {

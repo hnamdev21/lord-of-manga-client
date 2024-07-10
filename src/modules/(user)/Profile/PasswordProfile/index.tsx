@@ -5,7 +5,7 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
-import NOTIFICATION from "@/constants/notification";
+import Notification from "@/constants/notification";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { FormTwoFactorAuthentication, FormUpdatePassword } from "@/types/form";
@@ -23,7 +23,7 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
 
   const handleResponse = (response: BaseResponse<User>) => {
     if (response.code === "OK") {
-      message.success(NOTIFICATION.SUCCESS_UPDATED("Password"));
+      message.success(Notification.SUCCESS_UPDATED("Password"));
       setIsModalOpen(false);
     }
 
@@ -74,7 +74,7 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
               </Typography>
             }
             name="oldPassword"
-            rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("old password") }]}
+            rules={[{ required: true, message: Notification.PLEASE_ENTER("old password") }]}
           >
             <Input.Password />
           </Form.Item>
@@ -86,7 +86,7 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
               </Typography>
             }
             name="newPassword"
-            rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("new password") }]}
+            rules={[{ required: true, message: Notification.PLEASE_ENTER("new password") }]}
           >
             <Input.Password />
           </Form.Item>

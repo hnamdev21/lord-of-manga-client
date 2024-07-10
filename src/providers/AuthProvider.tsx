@@ -6,8 +6,9 @@ import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
-import LOCAL_STORAGE_KEY from "@/constants/local-key";
-import NOTIFICATION from "@/constants/notification";
+import { DefaultRoleName } from "@/constants/default-data";
+import LocalStorageKey from "@/constants/local-key";
+import Notification from "@/constants/notification";
 import Path, { adminPaths, authorizedUserPaths } from "@/constants/path";
 import { User } from "@/types/data";
 import { BaseResponse } from "@/types/response";
@@ -55,7 +56,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const signIn = async (token: string) => {
     const user = await getMe(token);
 
-    localStorage.setItem(LOCAL_STORAGE_KEY.TOKEN, token);
+    localStorage.setItem(LocalStorageKey.TOKEN, token);
 
     setUser(user);
     setAuth({
@@ -66,7 +67,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signOut = () => {
-    localStorage.removeItem(LOCAL_STORAGE_KEY.TOKEN);
+    localStorage.removeItem(LocalStorageKey.TOKEN);
 
     setAuth({
       token: null,
@@ -77,7 +78,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   React.useEffect(() => {
-    const token = localStorage.getItem(LOCAL_STORAGE_KEY.TOKEN);
+    const token = localStorage.getItem(LocalStorageKey.TOKEN);
 
     if (token) {
       setAuth({
@@ -93,7 +94,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     for (const path of authorizedUserPaths) {
       if (pathname.startsWith(path)) {
-        message.info(NOTIFICATION.SIGN_IN_REQUIRED);
+        message.info(Notification.SIGN_IN_REQUIRED);
         router.push(Path.AUTH.SIGN_IN);
         return;
       }
@@ -101,7 +102,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     for (const path of adminPaths) {
       if (pathname.startsWith(path)) {
-        message.info(NOTIFICATION.SIGN_IN_REQUIRED);
+        message.info(Notification.SIGN_IN_REQUIRED);
         router.push(Path.AUTH.SIGN_IN);
         return;
       }
@@ -117,9 +118,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       getMe(auth.token).then((user) => {
         setUser(user);
 
+        if (user.roles.length === 0) {
+          message.info(Notification.BANNED);
+          signOut();
+        }
+
         adminPaths.forEach((path) => {
-          if (pathname.startsWith(path) && !user.roles.some((role) => role.name === "ADMIN")) {
-            message.info(NOTIFICATION.SIGN_IN_AS_ADMIN_REQUIRED);
+          if (pathname.startsWith(path) && !user.roles.some((role) => role.name === DefaultRoleName.ADMIN)) {
+            message.info(Notification.SIGN_IN_AS_ADMIN_REQUIRED);
             window.location.href = Path.ERROR.FORBIDDEN;
           }
         });

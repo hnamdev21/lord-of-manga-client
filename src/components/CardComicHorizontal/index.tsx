@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { FaComment, FaEye } from "react-icons/fa";
 
+import { localApiUrl } from "@/constants/config";
 import { Comic } from "@/types/data";
 
 import Button from "../Button";
@@ -17,7 +18,7 @@ const CardComicHorizontal = ({ title, coverPath, description, slug, viewCount, c
   return (
     <div className={styles.container} onClick={() => router.push("/comics/" + slug)}>
       <div className={styles.container__coverContainer}>
-        <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + coverPath} alt={`Cover image of ${title}`} layout="fill" objectFit="cover" />
+        <Image src={localApiUrl + "/uploads/" + coverPath} alt={`Cover image of ${title}`} layout="fill" objectFit="cover" />
       </div>
 
       <div className={styles.container__content}>

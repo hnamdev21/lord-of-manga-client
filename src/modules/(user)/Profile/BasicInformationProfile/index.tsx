@@ -8,8 +8,9 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
-import NOTIFICATION from "@/constants/notification";
-import { GENDER_OPTIONS } from "@/constants/options";
+import { localApiUrl } from "@/constants/config";
+import Notification from "@/constants/notification";
+import { GenderOptions } from "@/constants/options";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { FormUpdateProfile } from "@/types/form";
@@ -28,7 +29,7 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
 
   const avatarSrc =
     base64Image ||
-    (user.avatarPath ? `${process.env.NEXT_PUBLIC_LOCAL_API_URL}/uploads/${user.avatarPath}` : null) ||
+    (user.avatarPath ? `${localApiUrl}/uploads/${user.avatarPath}` : null) ||
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
   const onFinish: FormProps<FormUpdateProfile>["onFinish"] = async (values: FormUpdateProfile) => {
@@ -45,7 +46,7 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
 
     if (response.code === "OK") {
       await authContext?.refreshUser();
-      message.success(NOTIFICATION.SUCCESS_UPDATED("Profile"));
+      message.success(Notification.SUCCESS_UPDATED("Profile"));
     }
   };
 
@@ -84,7 +85,7 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
               </Typography>
             }
             name="fullName"
-            rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("full name") }]}
+            rules={[{ required: true, message: Notification.PLEASE_ENTER("full name") }]}
             className="w-[60%]"
           >
             <Input />
@@ -97,10 +98,10 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
               </Typography>
             }
             name="gender"
-            rules={[{ required: true, message: NOTIFICATION.PLEASE_SELECT("gender") }]}
+            rules={[{ required: true, message: Notification.PLEASE_SELECT("gender") }]}
             className="w-[40%]"
           >
-            <Select options={GENDER_OPTIONS} />
+            <Select options={GenderOptions} />
           </Form.Item>
         </div>
 

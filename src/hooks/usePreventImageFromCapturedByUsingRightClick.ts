@@ -2,8 +2,10 @@
 
 import React from "react";
 
+import { isDevelopment } from "@/constants/config";
+
 const usePreventImageFromCapturedByUsingRightClick = () => {
-  if (process.env.NEXT_PUBLIC_APP_ENV === "development") return;
+  if (isDevelopment) return;
 
   const handleContextMenu = (event: MouseEvent) => {
     event.preventDefault();

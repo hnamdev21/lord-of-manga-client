@@ -11,6 +11,7 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
+import { localApiUrl } from "@/constants/config";
 import { Comic } from "@/types/data";
 import { BaseResponse } from "@/types/response";
 import { timestampToDateTime } from "@/utils/formatter";
@@ -51,16 +52,11 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
     <React.Fragment>
       <Container className={styles.hero}>
         <div className={styles.hero__thumbnailContainer}>
-          <Image
-            src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + data?.thumbnailPath}
-            alt={`Thumbnail image of ${data?.title}`}
-            layout="fill"
-            objectFit="cover"
-          />
+          <Image src={localApiUrl + "/uploads/" + data?.thumbnailPath} alt={`Thumbnail image of ${data?.title}`} layout="fill" objectFit="cover" />
         </div>
 
         <div className={styles.hero__leftContent}>
-          <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + data?.coverPath} alt={`Cover image of ${data?.title}`} layout="fill" />
+          <Image src={localApiUrl + "/uploads/" + data?.coverPath} alt={`Cover image of ${data?.title}`} layout="fill" />
         </div>
 
         <div className={styles.hero__rightContent}>

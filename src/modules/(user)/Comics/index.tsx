@@ -7,7 +7,7 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import CardComic from "@/components/CardComic";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
-import { FILTER_COMIC_TYPE_OPTIONS, ORDER_BY_OPTIONS } from "@/constants/options";
+import { FilterComicTypeOptions, OrderByOptions } from "@/constants/options";
 import { VND_CURRENCY } from "@/constants/sign";
 import { Comic, ComicStatus } from "@/types/data";
 import { FormComicFilter } from "@/types/form";
@@ -19,8 +19,8 @@ import styles from "./styles.module.scss";
 
 const initData = {
   title: "",
-  sortBy: ORDER_BY_OPTIONS[0].value,
-  type: FILTER_COMIC_TYPE_OPTIONS[0].value,
+  sortBy: OrderByOptions[0].value,
+  type: FilterComicTypeOptions[0].value,
   from: 0,
   to: 0,
 };
@@ -67,8 +67,8 @@ const User_ComicsModule = () => {
             onFinish={onFinish}
             layout="vertical"
             initialValues={{
-              sortBy: ORDER_BY_OPTIONS[0].value,
-              type: FILTER_COMIC_TYPE_OPTIONS[0].value,
+              sortBy: OrderByOptions[0].value,
+              type: FilterComicTypeOptions[0].value,
             }}
             className={styles.form}
           >
@@ -93,7 +93,7 @@ const User_ComicsModule = () => {
               name="sortBy"
               className={styles.form__item}
             >
-              <Select options={ORDER_BY_OPTIONS} />
+              <Select options={OrderByOptions} />
             </Form.Item>
 
             <Form.Item<FormComicFilter>
@@ -105,7 +105,7 @@ const User_ComicsModule = () => {
               name="type"
               className={styles.form__item}
             >
-              <Select options={FILTER_COMIC_TYPE_OPTIONS} />
+              <Select options={FilterComicTypeOptions} />
             </Form.Item>
 
             <Form.Item<FormComicFilter>

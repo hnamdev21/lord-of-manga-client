@@ -10,8 +10,9 @@ import Button from "@/components/Button";
 import ComicDetailModal from "@/components/ComicDetailModal";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
+import { DefaultRoleName } from "@/constants/default-data";
 import { ComicTypeMapping } from "@/constants/mapping";
-import NOTIFICATION from "@/constants/notification";
+import Notification from "@/constants/notification";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Comic, ComicStatus } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
@@ -52,7 +53,7 @@ const User_RecycleBinModule = () => {
 
     if (response.code === "OK") {
       refetch();
-      message.success(NOTIFICATION.SUCCESS_RESTORED("Comic"));
+      message.success(Notification.SUCCESS_RESTORED("Comic"));
     }
   };
 
@@ -61,7 +62,7 @@ const User_RecycleBinModule = () => {
       const comic = data?.content.find((comic) => comic.id === id);
 
       if (!comic) {
-        message.error(NOTIFICATION.SOMETHING_WENT_WRONG);
+        message.error(Notification.SOMETHING_WENT_WRONG);
         return;
       }
 
@@ -125,7 +126,7 @@ const User_RecycleBinModule = () => {
         dataIndex: "deletedr",
         key: "deletedr",
         width: "10%",
-        render: (_, { deleter }) => (deleter?.roles.some((role) => role.name === "ADMIN") ? "Admin" : "Your self"),
+        render: (_, { deleter }) => (deleter?.roles.some((role) => role.name === DefaultRoleName.ADMIN) ? "Admin" : "Your self"),
       },
       {
         title: "Reason",

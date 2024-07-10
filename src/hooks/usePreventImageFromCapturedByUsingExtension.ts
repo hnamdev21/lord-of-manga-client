@@ -1,7 +1,9 @@
 "use client";
 
+import { isDevelopment } from "@/constants/config";
+
 const usePreventImageFromCapturedByUsingExtension = () => {
-  if (process.env.NEXT_PUBLIC_APP_ENV === "development") return;
+  if (isDevelopment) return;
 };
 
 export default usePreventImageFromCapturedByUsingExtension;

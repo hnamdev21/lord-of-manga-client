@@ -8,8 +8,8 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import MultipleFileInput from "@/components/MultipleFileInput";
 import Typography from "@/components/Typography";
-import NOTIFICATION from "@/constants/notification";
-import { CHAPTER_TYPE_OPTIONS } from "@/constants/options";
+import Notification from "@/constants/notification";
+import { chapterTypeOptions } from "@/constants/options";
 import { VND_CURRENCY } from "@/constants/sign";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Chapter, Comic } from "@/types/data";
@@ -48,7 +48,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
     ).data;
 
     if (response.code === "CREATED") {
-      message.success(NOTIFICATION.SUCCESS_CREATED("Chapter"));
+      message.success(Notification.SUCCESS_CREATED("Chapter"));
       form.resetFields();
     }
   };
@@ -69,7 +69,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
           layout="vertical"
           form={form}
           initialValues={{
-            type: CHAPTER_TYPE_OPTIONS[0].value,
+            type: chapterTypeOptions[0].value,
             showComment: true,
             comicId: createdComicOptions.length > 0 ? createdComicOptions[0].value : undefined,
             price: disablePriceInput ? 0 : 1_000,
@@ -85,7 +85,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
                 </Typography>
               }
               name="title"
-              rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("chapter title") }]}
+              rules={[{ required: true, message: Notification.PLEASE_ENTER("chapter title") }]}
               className="flex-1"
             >
               <Input />
@@ -98,7 +98,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
                 </Typography>
               }
               name="comicId"
-              rules={[{ required: true, message: NOTIFICATION.PLEASE_SELECT("comic") }]}
+              rules={[{ required: true, message: Notification.PLEASE_SELECT("comic") }]}
               className="flex-1"
             >
               <Select placeholder="-- Select a comic --" options={createdComicOptions} onChange={onComicChange} />
@@ -118,7 +118,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
               <Select
                 allowClear
                 id="type"
-                options={CHAPTER_TYPE_OPTIONS}
+                options={chapterTypeOptions}
                 disabled={disablePriceInput}
                 onChange={(value) => {
                   if (value === "PAID") {

@@ -4,6 +4,7 @@ import { FaBookmark, FaComment, FaEye } from "react-icons/fa";
 
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
+import { localApiUrl } from "@/constants/config";
 import { Comic } from "@/types/data";
 import { timestampToDateTime } from "@/utils/formatter";
 
@@ -18,7 +19,7 @@ const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
     <React.Fragment>
       <div className={styles.container}>
         <div className={styles.container__coverContainer}>
-          <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + coverPath} alt={`Cover image of ${title}`} layout="fill" objectFit="cover" />
+          <Image src={localApiUrl + "/uploads/" + coverPath} alt={`Cover image of ${title}`} layout="fill" objectFit="cover" />
         </div>
 
         <div className={styles.container__info}>

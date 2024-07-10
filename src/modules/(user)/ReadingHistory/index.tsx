@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import AXIOS_INSTANCE from "@/apis/instance";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
+import LocalStorageKey from "@/constants/local-key";
 import { Comic } from "@/types/data";
 import { BaseResponse } from "@/types/response";
 
@@ -36,14 +37,14 @@ const ReadingHistoryModule = () => {
   );
 
   const onClickRemove = (comic: Comic) => {
-    const lastRead = JSON.parse(localStorage.getItem("lastRead") || "{}");
+    const lastRead = JSON.parse(localStorage.getItem(LocalStorageKey.LAST_READ) || "{}");
     delete lastRead[comic.slug];
     setComics(comics.filter((c) => c.slug !== comic.slug));
-    localStorage.setItem("lastRead", JSON.stringify(lastRead));
+    localStorage.setItem(LocalStorageKey.LAST_READ, JSON.stringify(lastRead));
   };
 
   React.useEffect(() => {
-    const lastRead = JSON.parse(localStorage.getItem("lastRead") || "{}");
+    const lastRead = JSON.parse(localStorage.getItem(LocalStorageKey.LAST_READ) || "{}");
 
     setLastRead(lastRead);
   }, []);

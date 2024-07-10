@@ -4,7 +4,7 @@ import React from "react";
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
-import NOTIFICATION from "@/constants/notification";
+import Notification from "@/constants/notification";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Comic } from "@/types/data";
 import { FormDeleteComic } from "@/types/form";
@@ -30,7 +30,7 @@ const FormDeleteComicModal = ({ comic, refreshData }: FormDeleteComicModalProps)
 
     if (data) {
       refreshData();
-      message.success(NOTIFICATION.SUCCESS_RESTORED(comic.title));
+      message.success(Notification.SUCCESS_RESTORED(comic.title));
     }
   };
 

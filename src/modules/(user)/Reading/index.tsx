@@ -8,6 +8,8 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
+import { localApiUrl } from "@/constants/config";
+import LocalStorageKey from "@/constants/local-key";
 import { Chapter, Comic } from "@/types/data";
 import { BaseResponse } from "@/types/response";
 
@@ -34,11 +36,11 @@ const ReadingModule = ({ comicSlug, chapterSlug }: ReadingModuleProps) => {
   React.useEffect(() => {
     if (!data) return;
 
-    const lastRead = JSON.parse(localStorage.getItem("lastRead") || "{}");
+    const lastRead = JSON.parse(localStorage.getItem(LocalStorageKey.LAST_READ) || "{}");
 
     lastRead[comicSlug] = currentIndex;
 
-    localStorage.setItem("lastRead", JSON.stringify(lastRead));
+    localStorage.setItem(LocalStorageKey.LAST_READ, JSON.stringify(lastRead));
   }, [comicSlug, currentIndex]);
 
   return (
@@ -83,7 +85,7 @@ const ReadingModule = ({ comicSlug, chapterSlug }: ReadingModuleProps) => {
           Array.from({ length: data?.chapter.totalPages }).map((_, index) => (
             <div className="col-start-3 col-span-8 relative" key={index}>
               <Image
-                src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/comic/" + data?.comic.id + "/chapter-" + data?.chapter.ordinal + "/" + index + ".png"}
+                src={localApiUrl + "/uploads/comic/" + data?.comic.id + "/chapter-" + data?.chapter.ordinal + "/" + index + ".png"}
                 alt={`Chapter image of ${index}`}
                 width={1920}
                 height={1080}

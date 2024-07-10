@@ -13,7 +13,7 @@ import FormDeleteComicModal from "@/components/FormDeleteComicModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import { ComicStatusMapping, ComicTypeMapping } from "@/constants/mapping";
-import NOTIFICATION from "@/constants/notification";
+import Notification from "@/constants/notification";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Comic, ComicStatus } from "@/types/data";
@@ -115,7 +115,7 @@ const ComicsModule = () => {
     ).data;
 
     if (data) {
-      message.success(NOTIFICATION.SUCCESS_APPROVED(comic.title));
+      message.success(Notification.SUCCESS_APPROVED(comic.title));
       refetch();
     }
   }, []);

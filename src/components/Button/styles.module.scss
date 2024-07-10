@@ -3,6 +3,10 @@
   transition: all 0.3s ease-in-out;
   text-align: center;
 
+  &:hover {
+    filter: brightness(0.9);
+  }
+
   &__size {
     &__xs {
       height: rem(20px);
@@ -146,7 +150,8 @@
     padding: rem(10px);
   }
 
-  &:hover {
-    filter: brightness(0.9);
+  &__disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }

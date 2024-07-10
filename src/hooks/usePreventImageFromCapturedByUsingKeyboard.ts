@@ -2,8 +2,10 @@
 
 import React from "react";
 
+import { isDevelopment } from "@/constants/config";
+
 const usePreventImageFromCapturedByUsingKeyboard = () => {
-  if (process.env.NEXT_PUBLIC_APP_ENV === "development") return;
+  if (isDevelopment) return;
 
   const isSavePageShortcut = (event: KeyboardEvent) => (event.ctrlKey && event.key === "s") || (event.metaKey && event.key === "s");
   const isPrintPageShortcut = (event: KeyboardEvent) => (event.ctrlKey && event.key === "p") || (event.metaKey && event.key === "p");

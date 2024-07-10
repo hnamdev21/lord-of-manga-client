@@ -3,7 +3,7 @@ import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
-import NOTIFICATION from "@/constants/notification";
+import Notification from "@/constants/notification";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Chapter } from "@/types/data";
 import { FormBanChapter } from "@/types/form";
@@ -28,7 +28,7 @@ const FormBanModal = ({ chapter, refreshData }: FormBanModalProps) => {
 
     if (data) {
       refreshData();
-      message.success(NOTIFICATION.SUCCESS_BAN(chapter.title));
+      message.success(Notification.SUCCESS_BAN(chapter.title));
     }
   };
 

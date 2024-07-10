@@ -5,7 +5,7 @@ import React from "react";
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
-import NOTIFICATION from "@/constants/notification";
+import Notification from "@/constants/notification";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { FormVerifyEmail } from "@/types/form";
@@ -54,7 +54,7 @@ const EmailInput = ({ value, onChange, isVerified, username, token }: EmailInput
 
     if (response.code === "OK") {
       setIsModalOpen(false);
-      message.success(NOTIFICATION.SUCCESS_VERIFIED("Email"));
+      message.success(Notification.SUCCESS_VERIFIED("Email"));
       await authContext?.refreshUser();
     }
   };
@@ -85,10 +85,9 @@ const EmailInput = ({ value, onChange, isVerified, username, token }: EmailInput
           <Button
             element="button"
             type="button"
-            className={cn("block flex-1", {
-              [styles.success]: isVerified,
-            })}
-            // disabled={isVerified} //TODO
+            className="block flex-1"
+            color={isVerified ? "success" : "primary"}
+            disabled={isVerified}
             onClick={onVerifyEmail}
           >
             {isVerified ? "Verified" : "Verify"}
@@ -118,7 +117,7 @@ const EmailInput = ({ value, onChange, isVerified, username, token }: EmailInput
             }
             style={{ width: "75%", padding: "0 4rem", margin: "auto", marginTop: "2rem" }}
             name="code"
-            rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("code") }]}
+            rules={[{ required: true, message: Notification.PLEASE_ENTER("code") }]}
           >
             <div className="w-full flex gap-[2rem]">
               <Input className="w-2/3" />

@@ -2,8 +2,10 @@
 
 import React from "react";
 
+import { isDevelopment } from "@/constants/config";
+
 const usePreventImageFromCapturedByUsingThirdParty = () => {
-  if (process.env.NEXT_PUBLIC_APP_ENV === "development") return;
+  if (isDevelopment) return;
 
   const handleUserLeavePage = (_: BeforeUnloadEvent) => {
     if (document.visibilityState === "hidden") {

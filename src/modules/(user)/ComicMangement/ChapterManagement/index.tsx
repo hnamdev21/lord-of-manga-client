@@ -56,7 +56,7 @@ const ChapterManagementModule = ({ comicSlug }: ChapterManagementModuleProps) =>
 
       const { data } = (
         await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Chapter[]>>>(
-          `/chapters/comic/slug/${comicSlug}/me?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
+          `/chapters/comic/slug/${comicSlug}/mine?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
           {
             headers: {
               Authorization: `Bearer ${authContext.auth.token}`,

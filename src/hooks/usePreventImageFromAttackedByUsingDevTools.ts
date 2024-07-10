@@ -2,10 +2,12 @@
 
 import React from "react";
 
+import { isDevelopment } from "@/constants/config";
+
 const VALID_URLS = ["http://localhost:3000", "/_next/image?url", "https://theguild.sgp1.digitaloceanspaces.com", "data:", "/images"];
 
 const usePreventImageFromAttackedByUsingDevTools = () => {
-  if (process.env.NEXT_PUBLIC_APP_ENV === "development") return;
+  if (isDevelopment) return;
 
   const animateFrame = React.useRef<number | null>(null);
 

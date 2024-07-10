@@ -5,8 +5,8 @@ import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Typography from "@/components/Typography";
-import NOTIFICATION from "@/constants/notification";
-import { COMIC_TYPE_OPTIONS } from "@/constants/options";
+import Notification from "@/constants/notification";
+import { comicTypeOptions } from "@/constants/options";
 import { VND_CURRENCY } from "@/constants/sign";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Category, Comic, Tag } from "@/types/data";
@@ -45,7 +45,7 @@ const FormUpdateComicModal = ({ comic, refreshData }: FormUpdateComicModalProps)
   const [searchValue, setSearchValue] = React.useState<string>("");
   const [disablePriceInput, setDisablePriceInput] = React.useState<boolean>(true);
 
-  const { data: categoryAndTagData } = useQuery(["edit-comic", "categories", "tags"], async () => {
+  const { data: categoryAndTagData } = useQuery(["categories", "tags"], async () => {
     const [responseCategories, responseTags] = await Promise.all([
       AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Category[]>>>("/categories"),
       AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Tag[]>>>("/tags"),
@@ -63,7 +63,7 @@ const FormUpdateComicModal = ({ comic, refreshData }: FormUpdateComicModalProps)
   const onFinish: FormProps<FormUpdateComic>["onFinish"] = async (values: FormUpdateComic) => {
     const response = (
       await AXIOS_INSTANCE.put<BaseResponse<Comic>>(
-        "/comics/" + values.id + "/mine",
+        "/comics/" + values.id,
         {
           ...values,
           cover: (values.cover?.[0] as UploadFile)?.originFileObj,
@@ -80,7 +80,7 @@ const FormUpdateComicModal = ({ comic, refreshData }: FormUpdateComicModalProps)
 
     if (response.code === "OK") {
       refreshData();
-      message.success(NOTIFICATION.SUCCESS_UPDATED("Comic"));
+      message.success(Notification.SUCCESS_UPDATED("Comic"));
       setSearchValue("");
       setDisablePriceInput(true);
     }
@@ -114,7 +114,7 @@ const FormUpdateComicModal = ({ comic, refreshData }: FormUpdateComicModalProps)
             </Typography>
           }
           name="title"
-          rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("comic title") }]}
+          rules={[{ required: true, message: Notification.PLEASE_ENTER("comic title") }]}
           className="flex-1"
         >
           <Input />
@@ -126,7 +126,7 @@ const FormUpdateComicModal = ({ comic, refreshData }: FormUpdateComicModalProps)
             </Typography>
           }
           name="author"
-          rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("author name") }]}
+          rules={[{ required: true, message: Notification.PLEASE_ENTER("author name") }]}
           className="flex-1"
         >
           <Input />
@@ -141,7 +141,7 @@ const FormUpdateComicModal = ({ comic, refreshData }: FormUpdateComicModalProps)
             </Typography>
           }
           name="categoryNames"
-          rules={[{ required: true, message: NOTIFICATION.PLEASE_SELECT("categories") }]}
+          rules={[{ required: true, message: Notification.PLEASE_SELECT("categories") }]}
           className="flex-1"
         >
           <Select mode="multiple" allowClear id="categories" placeholder="-- Select categories --" options={categoryAndTagData?.categories} />
@@ -154,7 +154,7 @@ const FormUpdateComicModal = ({ comic, refreshData }: FormUpdateComicModalProps)
           }
           name="tagNames"
           className="flex-1"
-          rules={[{ required: true, message: NOTIFICATION.PLEASE_SELECT("tags") }]}
+          rules={[{ required: true, message: Notification.PLEASE_SELECT("tags") }]}
         >
           <Select
             placeholder="-- Select tags --"
@@ -199,9 +199,9 @@ const FormUpdateComicModal = ({ comic, refreshData }: FormUpdateComicModalProps)
           <Select
             allowClear
             id="type"
-            options={COMIC_TYPE_OPTIONS}
+            options={comicTypeOptions}
             onChange={(value) => {
-              if (value === COMIC_TYPE_OPTIONS[1].value) {
+              if (value === comicTypeOptions[1].value) {
                 form.setFieldsValue({ price: 1_000 });
                 setDisablePriceInput(false);
               } else {
@@ -237,7 +237,7 @@ const FormUpdateComicModal = ({ comic, refreshData }: FormUpdateComicModalProps)
             </Typography>
           }
           name="description"
-          rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("description") }]}
+          rules={[{ required: true, message: Notification.PLEASE_ENTER("description") }]}
         >
           <Input.TextArea rows={4} />
         </Form.Item>

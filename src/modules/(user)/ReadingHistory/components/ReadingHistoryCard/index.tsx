@@ -4,6 +4,7 @@ import { FaBookmark, FaDollarSign } from "react-icons/fa";
 
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
+import { localApiUrl } from "@/constants/config";
 import { Comic } from "@/types/data";
 
 import styles from "./styles.module.scss";
@@ -37,7 +38,7 @@ const ReadingHistoryCard = ({ comic, currentOrdinal, onClickRemove }: ReadingHis
       </div>
 
       <div className={styles.card__top}>
-        <Image src={process.env.NEXT_PUBLIC_LOCAL_API_URL + "/uploads/" + coverPath} alt={`Cover image of ${title}`} layout="fill" />
+        <Image src={localApiUrl + "/uploads/" + coverPath} alt={`Cover image of ${title}`} layout="fill" />
 
         <div className={styles.card__top__overlay}>
           <Button element="button" type="button" variant="outline" size="sm" className={styles.button__remove} onClick={() => onClickRemove(comic)}>

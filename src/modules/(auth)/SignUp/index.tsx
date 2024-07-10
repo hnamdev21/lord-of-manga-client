@@ -11,7 +11,7 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
-import NOTIFICATION from "@/constants/notification";
+import Notification from "@/constants/notification";
 import Path from "@/constants/path";
 import { User } from "@/types/data";
 import { FormSignUp } from "@/types/form";
@@ -26,7 +26,7 @@ const SignUpModule = () => {
     const response = (await AXIOS_INSTANCE.post<BaseResponse<User>>("/users", values)).data;
 
     if (response.code === "CREATED") {
-      message.success(NOTIFICATION.WELCOME);
+      message.success(Notification.WELCOME);
       router.push(Path.AUTH.SIGN_IN);
     }
   };
@@ -51,19 +51,19 @@ const SignUpModule = () => {
             }}
             className={styles.form}
           >
-            <Form.Item<FormSignUp> name="fullName" rules={[{ required: true, type: "string", message: NOTIFICATION.PLEASE_ENTER("full name") }]}>
+            <Form.Item<FormSignUp> name="fullName" rules={[{ required: true, type: "string", message: Notification.PLEASE_ENTER("full name") }]}>
               <Input placeholder="Full name" prefix={<FaIdCard />} />
             </Form.Item>
 
-            <Form.Item<FormSignUp> name="username" rules={[{ required: true, type: "string", message: NOTIFICATION.PLEASE_ENTER("username") }]}>
+            <Form.Item<FormSignUp> name="username" rules={[{ required: true, type: "string", message: Notification.PLEASE_ENTER("username") }]}>
               <Input placeholder="Username" prefix={<FaUser />} />
             </Form.Item>
 
-            <Form.Item<FormSignUp> name="password" rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("password") }]}>
+            <Form.Item<FormSignUp> name="password" rules={[{ required: true, message: Notification.PLEASE_ENTER("password") }]}>
               <Input.Password placeholder="Password" prefix={<FaLock />} />
             </Form.Item>
 
-            <Form.Item<FormSignUp> name="email" rules={[{ type: "email", message: NOTIFICATION.INVALID("email") }]}>
+            <Form.Item<FormSignUp> name="email" rules={[{ type: "email", message: Notification.INVALID("email") }]}>
               <Input placeholder="Email" prefix={<FaAt />} />
             </Form.Item>
 

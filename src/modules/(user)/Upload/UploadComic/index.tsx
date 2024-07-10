@@ -9,8 +9,8 @@ import { useQuery } from "react-query";
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
-import NOTIFICATION from "@/constants/notification";
-import { COMIC_TYPE_OPTIONS } from "@/constants/options";
+import Notification from "@/constants/notification";
+import { comicTypeOptions } from "@/constants/options";
 import { VND_CURRENCY } from "@/constants/sign";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Category, Comic, Tag } from "@/types/data";
@@ -69,7 +69,7 @@ const UploadComic = () => {
     ).data;
 
     if (response.code === "CREATED") {
-      message.success(NOTIFICATION.SUCCESS_CREATED("Comic"));
+      message.success(Notification.SUCCESS_CREATED("Comic"));
       form.resetFields();
       setSearchValue("");
       setDisablePriceInput(true);
@@ -94,7 +94,7 @@ const UploadComic = () => {
         layout="vertical"
         onFinish={onFinish}
         form={form}
-        initialValues={{ type: COMIC_TYPE_OPTIONS[0].value, price: disablePriceInput ? 0 : 1_000 }}
+        initialValues={{ type: comicTypeOptions[0].value, price: disablePriceInput ? 0 : 1_000 }}
         className="col-start-5 col-span-4"
       >
         <div className="flex gap-[2rem]">
@@ -105,7 +105,7 @@ const UploadComic = () => {
               </Typography>
             }
             name="title"
-            rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("comic title") }]}
+            rules={[{ required: true, message: Notification.PLEASE_ENTER("comic title") }]}
             className="flex-1"
           >
             <Input />
@@ -117,7 +117,7 @@ const UploadComic = () => {
               </Typography>
             }
             name="author"
-            rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("author name") }]}
+            rules={[{ required: true, message: Notification.PLEASE_ENTER("author name") }]}
             className="flex-1"
           >
             <Input />
@@ -132,7 +132,7 @@ const UploadComic = () => {
               </Typography>
             }
             name="categoryNames"
-            rules={[{ required: true, message: NOTIFICATION.PLEASE_SELECT("categories") }]}
+            rules={[{ required: true, message: Notification.PLEASE_SELECT("categories") }]}
             className="flex-1"
           >
             <Select mode="multiple" allowClear id="categories" placeholder="-- Select categories --" options={data?.categories} />
@@ -189,7 +189,7 @@ const UploadComic = () => {
             <Select
               allowClear
               id="type"
-              options={COMIC_TYPE_OPTIONS}
+              options={comicTypeOptions}
               onChange={(value) => {
                 if (value === "PAID_ONCE") {
                   form.setFieldsValue({ price: 1_000 });
@@ -227,7 +227,7 @@ const UploadComic = () => {
               </Typography>
             }
             name={"description"}
-            rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("description") }]}
+            rules={[{ required: true, message: Notification.PLEASE_ENTER("description") }]}
           >
             <Input.TextArea rows={4} />
           </Form.Item>

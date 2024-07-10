@@ -11,7 +11,7 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
-import NOTIFICATION from "@/constants/notification";
+import Notification from "@/constants/notification";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { FormSignIn } from "@/types/form";
@@ -27,7 +27,7 @@ const SignInModule = () => {
     const response = (await AXIOS_INSTANCE.post<BaseResponse<string>>("/auth/sign-in", values)).data;
 
     if (response.code === "OK") {
-      message.success(NOTIFICATION.WELCOME);
+      message.success(Notification.WELCOME);
       authContext?.signIn(response.data);
       router.push(Path.USER.HOME);
     }
@@ -56,11 +56,11 @@ const SignInModule = () => {
             }}
             className={styles.form}
           >
-            <Form.Item<FormSignIn> name="username" rules={[{ required: true, type: "string", message: NOTIFICATION.PLEASE_ENTER("username") }]}>
+            <Form.Item<FormSignIn> name="username" rules={[{ required: true, type: "string", message: Notification.PLEASE_ENTER("username") }]}>
               <Input placeholder="Username" prefix={<FaUser />} />
             </Form.Item>
 
-            <Form.Item<FormSignIn> name="password" rules={[{ required: true, message: NOTIFICATION.PLEASE_ENTER("password") }]}>
+            <Form.Item<FormSignIn> name="password" rules={[{ required: true, message: Notification.PLEASE_ENTER("password") }]}>
               <Input.Password placeholder="Password" prefix={<FaLock />} />
             </Form.Item>
 

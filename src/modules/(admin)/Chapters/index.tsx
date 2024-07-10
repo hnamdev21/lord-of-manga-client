@@ -13,7 +13,7 @@ import FormDeleteChapterModal from "@/components/FormDeleteChapterModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import { ChapterStatusMapping, ChapterTypeMapping } from "@/constants/mapping";
-import NOTIFICATION from "@/constants/notification";
+import Notification from "@/constants/notification";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Chapter, ChapterStatus, Comic } from "@/types/data";
@@ -125,7 +125,8 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
     ).data;
 
     if (data) {
-      message.success(NOTIFICATION.SUCCESS_APPROVED(chapter.title));
+      message.success(Notification.SUCCESS_APPROVED(chapter.title));
+      refetch();
     }
   }, []);
 

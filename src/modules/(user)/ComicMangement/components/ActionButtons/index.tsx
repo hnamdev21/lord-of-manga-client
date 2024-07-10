@@ -31,7 +31,14 @@ const ActionButtons = ({ slug, onViewDetail, onEdit, onDelete }: ActionButtonsPr
         </Button>
       </Popover>
       <Popover content="View all chapters">
-        <Button shape="square" href={Path.ADMIN.COMICS + "/" + slug} color="dark" variant="plain" size="sm" className="flex justify-center items-center">
+        <Button
+          shape="square"
+          href={Path.USER.COMIC_MANAGEMENT + "/" + slug}
+          color="dark"
+          variant="plain"
+          size="sm"
+          className="flex justify-center items-center"
+        >
           <FaList />
         </Button>
       </Popover>

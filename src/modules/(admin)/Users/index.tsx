@@ -3,15 +3,20 @@
 import { GetProp, Table, TablePaginationConfig, TableProps, Tag } from "antd";
 import { SorterResult } from "antd/es/table/interface";
 import React from "react";
-import { FaEye, FaUserSlash } from "react-icons/fa";
 import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
+import { FaUpRightFromSquare } from "@/components/Icons";
+import { DefaultRoleName } from "@/constants/default-data";
+import { GenderMapping } from "@/constants/mapping";
+import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { timestampToDateTime } from "@/utils/formatter";
+
+import ActionButtons from "./components/ActionButtons";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
@@ -53,6 +58,16 @@ const UsersModule = () => {
     }
   );
 
+  const onBan = async (user: User) => {
+    await AXIOS_INSTANCE.patch<BaseResponse<any>>(`/admin/users/${user.id}/ban`, null, {
+      headers: {
+        Authorization: `Bearer ${authContext?.auth.token}`,
+      },
+    });
+
+    refetch();
+  };
+
   const columns: TableProps<User>["columns"] = React.useMemo(
     () => [
       {
@@ -60,6 +75,25 @@ const UsersModule = () => {
         dataIndex: "username",
         key: "username",
         width: "8%",
+        onCell: (_) => ({
+          style: {
+            display: "flex",
+            alignItems: "center",
+            gap: ".5rem",
+            flexWrap: "nowrap",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          },
+        }),
+        render: (_, { id, username }) => (
+          <React.Fragment>
+            {username.length > 30 ? username.slice(0, 30) + "..." : username}
+            <Button shape="square" href={Path.USER.PROFILE + "/" + id} color="dark" variant="plain" size="sm" className="inline-block">
+              <FaUpRightFromSquare />
+            </Button>
+          </React.Fragment>
+        ),
       },
       {
         title: "Full name",
@@ -78,6 +112,7 @@ const UsersModule = () => {
         dataIndex: "gender",
         key: "Gender",
         width: "8%",
+        render: (_, { gender }) => GenderMapping[gender],
       },
       {
         title: "Roles",
@@ -87,10 +122,11 @@ const UsersModule = () => {
         render: (_, { roles }) => roles.map((role) => <Tag key={role.id}>{role.name}</Tag>),
       },
       {
-        title: "Status",
-        dataIndex: "status",
-        key: "status",
+        title: "Verified",
+        dataIndex: "verifiedUser",
+        key: "verifiedUser",
         width: "8%",
+        render: (_, { verifiedUser }) => (verifiedUser ? <Tag color="green">Verified</Tag> : <Tag color="red">Not Verified</Tag>),
       },
       {
         title: "Created At",
@@ -104,14 +140,9 @@ const UsersModule = () => {
         dataIndex: "action",
         key: "action",
         width: "8%",
-        render: (_) => (
+        render: (_, user) => (
           <div className="flex gap-[1rem]">
-            <Button element="button" type="button" color="dark" variant="plain" size="sm" onClick={() => {}} className="flex justify-center items-center">
-              <FaEye />
-            </Button>
-            <Button element="button" type="button" color="danger" size="sm" onClick={() => {}} className="flex justify-center items-center">
-              <FaUserSlash />
-            </Button>
+            {user.roles.some((role) => role.name === DefaultRoleName.ADMIN) ? null : <ActionButtons onBan={() => onBan(user)} onViewDetail={() => {}} />}
           </div>
         ),
       },

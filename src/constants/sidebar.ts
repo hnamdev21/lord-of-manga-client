@@ -1,5 +1,6 @@
 import {
   FaAddressCard,
+  FaBan,
   FaBook,
   FaBookmark,
   FaBox,
@@ -13,6 +14,7 @@ import {
   FaTrashRestore,
   FaUpload,
   FaUserFriends,
+  FaUsersSlash,
   FaWallet,
 } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
@@ -94,6 +96,11 @@ export const SidebarAdminPath = {
     href: "/admin/users",
     icon: FaUserFriends,
   } as const,
+  BANNED_USERS: {
+    label: "Banned Users",
+    href: "/admin/banned-users",
+    icon: FaUsersSlash,
+  } as const,
   CATEGORIES: {
     label: "Categories",
     href: "/admin/categories",
@@ -108,6 +115,11 @@ export const SidebarAdminPath = {
     label: "Comics",
     href: "/admin/comics",
     icon: FaBook,
+  } as const,
+  BANNED_COMICS: {
+    label: "Banned Comics",
+    href: "/admin/banned-comics",
+    icon: FaBan,
   } as const,
   RECYCLE_BIN: {
     label: "Recycle Bin",

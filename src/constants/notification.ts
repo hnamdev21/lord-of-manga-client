@@ -1,4 +1,4 @@
-const NOTIFICATION = {
+const Notification = {
   WELCOME: "Welcome to Lord of Manga!",
 
   // Authorization
@@ -6,6 +6,7 @@ const NOTIFICATION = {
   SIGN_IN_REQUIRED: "Please sign in to continue",
   SIGN_IN_AS_ADMIN_REQUIRED: "Please sign in as an admin to continue",
   INCORRECT_USERNAME_OR_PASSWORD: "Incorrect username or password",
+  BANNED: "You are banned from the system",
 
   // Input
   PLEASE_ENTER: (field: string) => `Please enter ${field}`,
@@ -42,4 +43,4 @@ const NOTIFICATION = {
   NOT_FOUND: (field: string) => `${field} not found`,
 };
 
-export default NOTIFICATION;
+export default Notification;

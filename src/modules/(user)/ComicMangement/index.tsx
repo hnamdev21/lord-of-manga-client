@@ -9,6 +9,7 @@ import { useQuery } from "react-query";
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import ComicDetailModal from "@/components/ComicDetailModal";
+import Container from "@/components/Container";
 import FormDeleteComicModal from "@/components/FormDeleteComicModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
@@ -20,6 +21,7 @@ import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
 import ActionButtons from "./components/ActionButtons";
+import FormUpdateComicModal from "./components/FormUpdateComicModal";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
@@ -45,11 +47,14 @@ const ComicManagementModule = () => {
       if (!authContext?.auth.token) return null;
 
       const { data } = (
-        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics/mine?all=true", {
-          headers: {
-            Authorization: `Bearer ${authContext.auth.token}`,
-          },
-        })
+        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(
+          `/comics/mine?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
+          {
+            headers: {
+              Authorization: `Bearer ${authContext.auth.token}`,
+            },
+          }
+        )
       ).data;
 
       return data;
@@ -97,6 +102,24 @@ const ComicManagementModule = () => {
       closable: true,
       closeIcon: <FaTimes />,
       content: <FormDeleteComicModal refreshData={() => refetch()} comic={comic} />,
+    });
+  }, []);
+
+  const onEdit = React.useCallback((comic: Comic) => {
+    modalApi.confirm({
+      title: (
+        <Typography tag="h3" align="center" fontSize="lg">
+          Edit Comic
+        </Typography>
+      ),
+      width: "30%",
+      content: <FormUpdateComicModal comic={comic} refreshData={() => refetch()} />,
+      icon: null,
+      centered: true,
+      footer: null,
+      maskClosable: true,
+      closable: true,
+      closeIcon: <FaTimes />,
     });
   }, []);
 
@@ -207,7 +230,7 @@ const ComicManagementModule = () => {
         width: "15%",
         render: (_, comic) => (
           <div className="flex gap-[1rem]">
-            <ActionButtons slug={comic.slug} onViewDetail={() => onViewDetail(comic)} onDelete={() => onDelete(comic)} onEdit={() => {}} />
+            <ActionButtons slug={comic.slug} onViewDetail={() => onViewDetail(comic)} onDelete={() => onDelete(comic)} onEdit={() => onEdit(comic)} />
           </div>
         ),
       },
@@ -220,8 +243,8 @@ const ComicManagementModule = () => {
   }, [tableParams.pagination]);
 
   return (
-    <React.Fragment>
-      <div className="w-full h-full flex flex-col gap-[3.5rem]">
+    <Container noGrid className="mt-[4rem]">
+      <div className="w-full flex flex-col gap-[3.5rem]">
         <div className="w-full h-[4rem] bg-black" />
 
         <div className="w-full flex-1 relative">
@@ -309,7 +332,7 @@ const ComicManagementModule = () => {
           {modalHolder}
         </div>
       </div>
-    </React.Fragment>
+    </Container>
   );
 };
 

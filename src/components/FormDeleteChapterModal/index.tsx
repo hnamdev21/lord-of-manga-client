@@ -4,7 +4,7 @@ import React from "react";
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
-import NOTIFICATION from "@/constants/notification";
+import Notification from "@/constants/notification";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Chapter } from "@/types/data";
 import { FormDeleteChapter } from "@/types/form";
@@ -30,7 +30,7 @@ const FormDeleteChapterModal = ({ chapter, refreshData }: FormDeleteChapterModal
 
     if (data) {
       refreshData();
-      message.success(NOTIFICATION.SUCCESS_RESTORED(chapter.title));
+      message.success(Notification.SUCCESS_RESTORED(chapter.title));
     }
   };
 

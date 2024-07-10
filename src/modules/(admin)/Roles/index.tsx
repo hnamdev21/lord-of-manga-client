@@ -14,6 +14,8 @@ import { Role } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { timestampToDateTime } from "@/utils/formatter";
 
+import ActionButtons from "./ActionButtons";
+
 interface TableParams {
   pagination?: TablePaginationConfig;
   sortField?: SorterResult<any>["field"];
@@ -102,11 +104,9 @@ const RolesModule = () => {
         dataIndex: "action",
         key: "action",
         width: "5%",
-        render: (_) => (
+        render: (_, role) => (
           <div className="flex gap-[1rem]">
-            <Button element="button" type="button" color="dark" variant="outline" size="sm" onClick={() => {}} className="flex justify-center items-center">
-              <FaMarker />
-            </Button>
+            <ActionButtons role={role} />
           </div>
         ),
       },

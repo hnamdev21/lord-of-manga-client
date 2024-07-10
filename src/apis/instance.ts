@@ -1,11 +1,12 @@
 import { message } from "antd";
 import axios from "axios";
 
+import { isDevelopment, localApiUrl } from "@/constants/config";
 import Path from "@/constants/path";
 import StatusCode from "@/constants/status-code";
 
 const AXIOS_INSTANCE = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_LOCAL_API_URL,
+  baseURL: isDevelopment ? localApiUrl : "",
   headers: {
     "Content-Type": "application/json",
     accept: "*/*",
@@ -16,7 +17,7 @@ const AXIOS_INSTANCE = axios.create({
 AXIOS_INSTANCE.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && process.env.NEXT_PUBLIC_APP_ENV === "development") {
+    if (error.response && isDevelopment) {
       message.error(error.response.data.message);
     }
 
