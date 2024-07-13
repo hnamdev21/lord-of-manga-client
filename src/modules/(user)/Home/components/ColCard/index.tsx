@@ -11,12 +11,12 @@ import { BaseGetResponse, BaseResponse } from "@/types/response";
 
 import styles from "./styles.module.scss";
 
-type ColCardProps = {
+type Props = {
   title: string;
   fetchUrl: string;
 };
 
-const ColCard = ({ title, fetchUrl }: ColCardProps) => {
+const ColCard = ({ title, fetchUrl }: Props) => {
   const { data } = useQuery(["home", "comics", fetchUrl], async () => {
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(fetchUrl)).data;
     return data.content;
@@ -29,10 +29,21 @@ const ColCard = ({ title, fetchUrl }: ColCardProps) => {
       </Typography>
 
       <div className={styles.columns}>
-        <div className={styles.columns__item}>
+        <div
+          className={styles.columns__item}
+          style={{
+            gridTemplateRows: `repeat(${Math.ceil((data?.length || 0) / 2)}, 1fr)`,
+          }}
+        >
           {data?.slice(0, Math.floor(data.length / 2)).map((comic) => <CardComicHorizontal key={comic.id} {...comic} />)}
         </div>
-        <div className={styles.columns__item}>
+
+        <div
+          className={styles.columns__item}
+          style={{
+            gridTemplateRows: `repeat(${Math.ceil((data?.length || 0) / 2)}, 1fr)`,
+          }}
+        >
           {data?.slice(Math.floor(data.length / 2), data.length).map((comic) => <CardComicHorizontal key={comic.id} {...comic} />)}
         </div>
       </div>

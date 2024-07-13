@@ -1,17 +1,20 @@
 "use client";
 
-import { GetProp, Table, TablePaginationConfig, TableProps } from "antd";
+import { GetProp, Popover, Table, TablePaginationConfig, TableProps } from "antd";
 import { SorterResult } from "antd/es/table/interface";
 import React from "react";
-import { FaTrash } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
+import Typography from "@/components/Typography";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Category } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { timestampToDateTime } from "@/utils/formatter";
+
+import CategoryActions from "./components/ActionButtons";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
@@ -81,9 +84,7 @@ const CategoriesModule = () => {
         width: "8%",
         render: (_) => (
           <div className="flex gap-[1rem]">
-            <Button element="button" type="button" color="danger" size="sm" onClick={() => {}} className="flex justify-center items-center">
-              <FaTrash />
-            </Button>
+            <CategoryActions onEdit={() => {}} onDelete={() => {}} />
           </div>
         ),
       },
@@ -97,6 +98,14 @@ const CategoriesModule = () => {
 
   return (
     <div className="w-full h-full">
+      <Popover content={<Typography fontSize="sm">Add new one</Typography>}>
+        <Button element="button" type="button" size="sm" shape="square" className="mb-[1rem] flex items-center justify-center">
+          <FaPlus />
+        </Button>
+      </Popover>
+
+      <Typography>Total 0/{tableParams.pagination?.pageSize} selected record(s)</Typography>
+
       <Table
         columns={columns}
         dataSource={data?.content}
@@ -107,7 +116,8 @@ const CategoriesModule = () => {
           current: tableParams.pagination?.current,
           pageSize: tableParams.pagination?.pageSize,
           total: data?.totalElements,
-          position: ["bottomCenter"],
+          showQuickJumper: true,
+          showTotal: (total) => `Total ${total} record(s)`,
         }}
         onChange={(pagination) => {
           setTableParams({

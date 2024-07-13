@@ -21,3 +21,7 @@ export const timestampToDateTime = (timestamp: string | null) => {
     day: "2-digit",
   });
 };
+
+export const conciseText = (text: string, maxLength: number) => {
+  return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
+};

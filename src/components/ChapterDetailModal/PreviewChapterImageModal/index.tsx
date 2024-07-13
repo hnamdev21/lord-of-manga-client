@@ -4,12 +4,12 @@ import React from "react";
 import { localApiUrl } from "@/constants/config";
 import { Chapter, Comic } from "@/types/data";
 
-type PreviewChapterImageModalProps = {
+type Props = {
   comic: Comic;
   chapter: Chapter;
 };
 
-const PreviewChapterImageModal = ({ comic, chapter }: PreviewChapterImageModalProps) => {
+const PreviewChapterImages = ({ comic, chapter }: Props) => {
   return (
     <div className="w-full max-h-[60vh] overflow-y-auto">
       {Array.from({ length: chapter.totalPages }).map((_, index) => (
@@ -34,4 +34,4 @@ const PreviewChapterImageModal = ({ comic, chapter }: PreviewChapterImageModalPr
   );
 };
 
-export default PreviewChapterImageModal;
+export default PreviewChapterImages;

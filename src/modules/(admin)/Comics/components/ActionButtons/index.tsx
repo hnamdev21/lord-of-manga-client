@@ -6,7 +6,7 @@ import Button from "@/components/Button";
 import Path from "@/constants/path";
 import { Comic, ComicStatus } from "@/types/data";
 
-type ActionButtonsProps = {
+type Props = {
   slug: Comic["slug"];
   status: Comic["status"];
   onViewDetail: () => void;
@@ -15,7 +15,7 @@ type ActionButtonsProps = {
   onDelete: () => void;
 };
 
-const ActionButtons = ({ slug, status, onViewDetail, onBan, onApprove, onDelete }: ActionButtonsProps) => {
+const ComicActions = ({ slug, status, onViewDetail, onBan, onApprove, onDelete }: Props) => {
   return (
     <React.Fragment>
       <Popover content="View detail">
@@ -67,4 +67,4 @@ const ActionButtons = ({ slug, status, onViewDetail, onBan, onApprove, onDelete 
   );
 };
 
-export default ActionButtons;
+export default ComicActions;

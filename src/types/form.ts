@@ -23,10 +23,7 @@ export type FormVerifyEmail = {
 export type FormUpdateEmail = Pick<User, "email">;
 export type FormUpdateUserSetting = Pick<User, "twoStepVerification" | "receiveNews">;
 
-export type FormGetVerifyCode = {
-  username: string;
-  email: string;
-};
+export type FormGetVerifyCode = Pick<User, "username" | "email">;
 
 export type FormUpdatePassword = {
   oldPassword: string;
@@ -41,9 +38,7 @@ export type FormComicFilter = {
   to: number;
 };
 
-export type FormForgotPassword = {
-  email: string;
-};
+export type FormForgotPassword = Required<Pick<User, "email">>;
 
 export type FormResetPassword = {
   password: string;
@@ -81,7 +76,7 @@ export type FormBanChapter = Pick<Chapter, "bannedReason">;
 export type FormDeleteChapter = Pick<Chapter, "deletedReason">;
 
 export type FormCreateChapter = Pick<Chapter, "title" | "showComment" | "type" | "price"> & {
-  comicId: string;
+  comicId: Comic["id"];
 };
 export type FormUpdateChapter = FormCreateChapter & Pick<Chapter, "id">;
 

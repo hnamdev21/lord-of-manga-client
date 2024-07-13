@@ -13,12 +13,12 @@ import { BaseGetResponse, BaseResponse } from "@/types/response";
 
 import styles from "./styles.module.scss";
 
-type RowCardProps = {
+type Props = {
   category: Category;
   numberOfColumns: number;
 };
 
-const RowCard = ({ category, numberOfColumns }: RowCardProps) => {
+const RowCard = ({ category, numberOfColumns }: Props) => {
   const { data: comics } = useQuery(["row-card", "comics", category.slug], async () => {
     const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics?categorySlug=" + category.slug)).data;
     return data.content;

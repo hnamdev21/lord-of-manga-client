@@ -11,6 +11,8 @@ const UserThemeProvider = ({ children }: { children: React.ReactNode }) => {
           colorPrimary: "#f44336",
           lineHeight: 1.6,
           borderRadius: 6,
+          colorLinkHover: "#ffffff",
+          colorLink: "#f44336",
         },
         algorithm: theme.defaultAlgorithm,
       }}

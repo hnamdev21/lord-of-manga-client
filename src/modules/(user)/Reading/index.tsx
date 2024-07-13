@@ -13,12 +13,12 @@ import LocalStorageKey from "@/constants/local-key";
 import { Chapter, Comic } from "@/types/data";
 import { BaseResponse } from "@/types/response";
 
-type ReadingModuleProps = {
+type Props = {
   comicSlug: string;
   chapterSlug: string;
 };
 
-const ReadingModule = ({ comicSlug, chapterSlug }: ReadingModuleProps) => {
+const ReadingModule = ({ comicSlug, chapterSlug }: Props) => {
   const { data } = useQuery(["comic", comicSlug, "chapter", chapterSlug], async () => {
     const { data: comic } = (await AXIOS_INSTANCE.get<BaseResponse<Comic>>("/comics/slug/" + comicSlug)).data;
     const { data: chapter } = (await AXIOS_INSTANCE.get<BaseResponse<Chapter>>("/chapters/slug/" + chapterSlug + "/comic/" + comic.id)).data;

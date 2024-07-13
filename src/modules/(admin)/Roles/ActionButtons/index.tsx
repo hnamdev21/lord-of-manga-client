@@ -5,11 +5,11 @@ import Button from "@/components/Button";
 import { DefaultRoleNames } from "@/constants/default-data";
 import { Role } from "@/types/data";
 
-type ActionButtonsProps = {
+type Props = {
   role: Role;
 };
 
-const ActionButtons = ({ role }: ActionButtonsProps) => {
+const RoleActions = ({ role }: Props) => {
   const isDefaultRole = DefaultRoleNames.includes(role.name);
 
   return (
@@ -32,4 +32,4 @@ const ActionButtons = ({ role }: ActionButtonsProps) => {
   );
 };
 
-export default ActionButtons;
+export default RoleActions;

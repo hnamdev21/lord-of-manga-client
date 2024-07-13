@@ -5,11 +5,11 @@
 .columns {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: rem(320px);
   gap: rem(20px);
 
   &__item {
     grid-column: span 1;
-    grid-template-rows: rem(200px);
     display: flex;
     flex-direction: column;
     gap: rem(10px);

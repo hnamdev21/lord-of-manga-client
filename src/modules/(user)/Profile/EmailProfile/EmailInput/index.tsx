@@ -13,7 +13,7 @@ import { BaseResponse } from "@/types/response";
 
 import styles from "./styles.module.scss";
 
-type EmailInputProps = {
+type Props = {
   value?: string;
   onChange?: (value: string) => void;
   isVerified: boolean;
@@ -21,20 +21,26 @@ type EmailInputProps = {
   token: string;
 };
 
-const EmailInput = ({ value, onChange, isVerified, username, token }: EmailInputProps) => {
+const EmailInput = ({ value, onChange, isVerified, username, token }: Props) => {
   const authContext = React.use(AuthContext);
   const [formVerifyEmail] = Form.useForm<FormVerifyEmail>();
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
-  const headerRequest = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const baseBody = {
-    username: username,
-    email: value,
-  };
+  const headerRequest = React.useMemo(
+    () => ({
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+    [token]
+  );
+  const baseBody = React.useMemo(
+    () => ({
+      username,
+      email: value,
+    }),
+    [username, value]
+  );
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange?.(e.target.value);

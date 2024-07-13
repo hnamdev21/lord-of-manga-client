@@ -14,9 +14,9 @@ import Typography from "../Typography";
 import CardComicDetail from "./CardComicDetail";
 import styles from "./styles.module.scss";
 
-type CardComicProps = Comic;
+type Props = Comic;
 
-const CardComic = ({ ...props }: CardComicProps) => {
+const CardComic = ({ ...props }: Props) => {
   const router = useRouter();
   const { coverPath, title, slug, type } = props;
 

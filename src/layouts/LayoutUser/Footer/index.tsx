@@ -7,7 +7,7 @@ import { FastAccessColProps } from "@/types/component";
 
 import FastAccessCol from "./FastAccessCol";
 
-const MOCK: Array<FastAccessColProps> = [
+const fastAccessColumns: Array<FastAccessColProps> = [
   {
     fetch: true,
     title: "Categories",
@@ -38,13 +38,13 @@ const MOCK: Array<FastAccessColProps> = [
       },
     ],
   },
-];
+] as const;
 
 const Footer = () => {
   return (
     <footer>
       <Container className="py-[2rem] bg-[var(--color-gray-2)]">
-        {MOCK.map((props, index) => (
+        {fastAccessColumns.map((props, index) => (
           <div key={index} className="col-span-2">
             <FastAccessCol {...props} />
           </div>

@@ -10,12 +10,12 @@ import { Chapter } from "@/types/data";
 import { FormDeleteChapter } from "@/types/form";
 import { BaseResponse } from "@/types/response";
 
-type FormDeleteChapterModalProps = {
+type Props = {
   chapter: Chapter;
   refreshData: () => void;
 };
 
-const FormDeleteChapterModal = ({ chapter, refreshData }: FormDeleteChapterModalProps) => {
+const DeleteChapterForm = ({ chapter, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
   const [notificationApi, contextHolder] = notification.useNotification();
 
@@ -85,4 +85,4 @@ const FormDeleteChapterModal = ({ chapter, refreshData }: FormDeleteChapterModal
   );
 };
 
-export default FormDeleteChapterModal;
+export default DeleteChapterForm;

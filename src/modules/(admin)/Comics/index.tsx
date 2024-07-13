@@ -8,8 +8,8 @@ import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
-import ComicDetailModal from "@/components/ComicDetailModal";
-import FormDeleteComicModal from "@/components/FormDeleteComicModal";
+import ComicDetail from "@/components/ComicDetailModal";
+import DeleteComicForm from "@/components/FormDeleteComicModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import { ComicStatusMapping, ComicTypeMapping } from "@/constants/mapping";
@@ -18,10 +18,10 @@ import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Comic, ComicStatus } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
-import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
+import { conciseText, numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
-import ActionButtons from "./components/ActionButtons";
-import FormBanModal from "./components/FormBanModal";
+import ComicActions from "./components/ActionButtons";
+import BanComicForm from "./components/BanComicForm";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
@@ -73,7 +73,7 @@ const ComicsModule = () => {
           </Typography>
         ),
         width: "80%",
-        content: <ComicDetailModal comic={comic} />,
+        content: <ComicDetail comic={comic} />,
         icon: null,
         centered: true,
         footer: null,
@@ -101,7 +101,7 @@ const ComicsModule = () => {
       maskClosable: true,
       closable: true,
       closeIcon: <FaTimes />,
-      content: <FormBanModal refreshData={() => refetch()} comic={comic} />,
+      content: <BanComicForm refreshData={() => refetch()} comic={comic} />,
     });
   }, []);
 
@@ -136,7 +136,7 @@ const ComicsModule = () => {
       maskClosable: true,
       closable: true,
       closeIcon: <FaTimes />,
-      content: <FormDeleteComicModal refreshData={() => refetch()} comic={comic} />,
+      content: <DeleteComicForm refreshData={() => refetch()} comic={comic} />,
     });
   }, []);
 
@@ -160,7 +160,7 @@ const ComicsModule = () => {
         width: "15%",
         render: (_, { title, slug }) => (
           <React.Fragment>
-            {title.length > 30 ? title.slice(0, 30) + "..." : title}
+            {conciseText(title, 30)}
             <Button shape="square" href={Path.USER.COMICS + "/" + slug} color="dark" variant="plain" size="sm" className="inline-block">
               <FaUpRightFromSquare />
             </Button>
@@ -247,7 +247,7 @@ const ComicsModule = () => {
         width: "15%",
         render: (_, comic) => (
           <div className="flex gap-[1rem]">
-            <ActionButtons
+            <ComicActions
               slug={comic.slug}
               status={comic.status}
               onViewDetail={() => onViewDetail(comic)}
@@ -344,7 +344,7 @@ const ComicsModule = () => {
               pageSize: tableParams.pagination?.pageSize,
               total: data?.totalElements,
               showQuickJumper: true,
-              showTotal: (total) => `Total ${total} comics`,
+              showTotal: (total) => `Total ${total} record(s)`,
             }}
             onChange={(pagination) => {
               setTableParams({

@@ -3,18 +3,16 @@
 import { GetProp, Table, TablePaginationConfig, TableProps, Tag as AntdTag } from "antd";
 import { SorterResult } from "antd/es/table/interface";
 import React from "react";
-import { FaMarker } from "react-icons/fa";
 import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
-import Button from "@/components/Button";
 import { PermissionNameMapping } from "@/constants/mapping";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Role } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { timestampToDateTime } from "@/utils/formatter";
 
-import ActionButtons from "./ActionButtons";
+import RoleActions from "./ActionButtons";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
@@ -106,7 +104,7 @@ const RolesModule = () => {
         width: "5%",
         render: (_, role) => (
           <div className="flex gap-[1rem]">
-            <ActionButtons role={role} />
+            <RoleActions role={role} />
           </div>
         ),
       },

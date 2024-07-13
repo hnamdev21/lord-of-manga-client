@@ -5,14 +5,14 @@ import { FaEye, FaMarker, FaTrash } from "react-icons/fa";
 import Button from "@/components/Button";
 import { Comic } from "@/types/data";
 
-type ActionButtonsProps = {
+type Props = {
   slug: Comic["slug"];
   onViewDetail: () => void;
   onEdit: () => void;
   onDelete: () => void;
 };
 
-const ActionButtons = ({ onEdit, onViewDetail, onDelete }: ActionButtonsProps) => {
+const ChapterActions = ({ onEdit, onViewDetail, onDelete }: Props) => {
   return (
     <React.Fragment>
       <Popover content="View detail">
@@ -52,4 +52,4 @@ const ActionButtons = ({ onEdit, onViewDetail, onDelete }: ActionButtonsProps) =
   );
 };
 
-export default ActionButtons;
+export default ChapterActions;

@@ -7,9 +7,9 @@ import Typography from "@/components/Typography";
 import { localApiUrl } from "@/constants/config";
 import { Comic } from "@/types/data";
 
-type SearchResultItemProps = Comic;
+type Props = Comic;
 
-const SearchResultItem = (comic: SearchResultItemProps) => {
+const SearchResultItem = (comic: Props) => {
   const router = useRouter();
 
   return (

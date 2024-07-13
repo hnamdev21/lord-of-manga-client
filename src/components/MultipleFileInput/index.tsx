@@ -15,12 +15,12 @@ function checkSizeGrid(size: number | any): number {
   return 10;
 }
 
-type MultipleFileInputProps = {
+type Props = {
   images: string[];
   setImages: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-const MultipleFileInput = ({ images, setImages }: MultipleFileInputProps) => {
+const MultipleFileInput = ({ images, setImages }: Props) => {
   const size = useWindowSize();
 
   function onChange(_sourceId: string, sourceIndex: number, targetIndex: number) {

@@ -2,12 +2,13 @@ import React from "react";
 
 import { User } from "@/types/data";
 
-type UserDetailModalProps = {
+type Props = {
   user: User;
 };
 
-const UserDetailModal = ({ user }: UserDetailModalProps) => {
+const UserDetail = ({ user }: Props) => {
+  user;
   return <div>UserDetailModal</div>;
 };
 
-export default UserDetailModal;
+export default UserDetail;

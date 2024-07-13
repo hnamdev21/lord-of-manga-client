@@ -10,9 +10,9 @@ import { timestampToDateTime } from "@/utils/formatter";
 
 import styles from "./styles.module.scss";
 
-type CardComicDetailProps = Comic;
+type Props = Comic;
 
-const CardComicDetail = ({ ...props }: CardComicDetailProps) => {
+const CardComicDetail = ({ ...props }: Props) => {
   const { title, description, author, coverPath, chapters, categories, creator, createdAt, updatedAt, viewCount, slug, status } = props;
 
   return (

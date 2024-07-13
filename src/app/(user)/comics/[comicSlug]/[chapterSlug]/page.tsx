@@ -2,14 +2,14 @@ import React from "react";
 
 import ReadingModule from "@/modules/(user)/Reading";
 
-type PageProps = {
+type Props = {
   params: {
     comicSlug: string;
     chapterSlug: string;
   };
 };
 
-const ReadingPage = ({ params }: PageProps) => {
+const ReadingPage = ({ params }: Props) => {
   return <ReadingModule {...params} />;
 };
 

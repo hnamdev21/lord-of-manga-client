@@ -9,7 +9,7 @@ import { useQuery } from "react-query";
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import ChapterDetailModal from "@/components/ChapterDetailModal";
-import FormDeleteChapterModal from "@/components/FormDeleteChapterModal";
+import DeleteChapterForm from "@/components/FormDeleteChapterModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import { ChapterStatusMapping, ChapterTypeMapping } from "@/constants/mapping";
@@ -17,9 +17,9 @@ import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Chapter, ChapterStatus, Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
-import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
+import { conciseText, numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
-import ActionButtons from "./components/ActionButtons";
+import ChapterActions from "./components/ActionButtons";
 
 type ChapterManagementModuleProps = {
   comicSlug: string;
@@ -109,7 +109,7 @@ const ChapterManagementModule = ({ comicSlug }: ChapterManagementModuleProps) =>
       maskClosable: true,
       closable: true,
       closeIcon: <FaTimes />,
-      content: <FormDeleteChapterModal chapter={chapter} refreshData={refetch} />,
+      content: <DeleteChapterForm chapter={chapter} refreshData={refetch} />,
     });
   }, []);
 
@@ -139,7 +139,7 @@ const ChapterManagementModule = ({ comicSlug }: ChapterManagementModuleProps) =>
         width: "15%",
         render: (_, { title, slug }) => (
           <React.Fragment>
-            {title.length > 30 ? title.slice(0, 30) + "..." : title}
+            {conciseText(title, 30)}
             <Button shape="square" href={Path.USER.COMICS + "/" + comicSlug + "/" + slug} color="dark" variant="plain" size="sm" className="inline-block">
               <FaUpRightFromSquare />
             </Button>
@@ -226,7 +226,7 @@ const ChapterManagementModule = ({ comicSlug }: ChapterManagementModuleProps) =>
         width: "15%",
         render: (_, chapter) => (
           <div className="flex gap-[1rem]">
-            <ActionButtons slug={chapter.slug} onViewDetail={() => onViewDetail(chapter)} onDelete={() => onDelete(chapter)} onEdit={() => {}} />
+            <ChapterActions slug={chapter.slug} onViewDetail={() => onViewDetail(chapter)} onDelete={() => onDelete(chapter)} onEdit={() => {}} />
           </div>
         ),
       },

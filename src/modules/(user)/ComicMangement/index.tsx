@@ -8,9 +8,9 @@ import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
-import ComicDetailModal from "@/components/ComicDetailModal";
+import ComicDetail from "@/components/ComicDetailModal";
 import Container from "@/components/Container";
-import FormDeleteComicModal from "@/components/FormDeleteComicModal";
+import DeleteComicForm from "@/components/FormDeleteComicModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import { ComicStatusMapping, ComicTypeMapping } from "@/constants/mapping";
@@ -18,9 +18,9 @@ import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Comic, ComicStatus } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
-import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
+import { conciseText, numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
-import ActionButtons from "./components/ActionButtons";
+import ComicActions from "./components/ActionButtons";
 import FormUpdateComicModal from "./components/FormUpdateComicModal";
 
 interface TableParams {
@@ -73,7 +73,7 @@ const ComicManagementModule = () => {
           </Typography>
         ),
         width: "80%",
-        content: <ComicDetailModal comic={comic} page="user" />,
+        content: <ComicDetail comic={comic} page="user" />,
         icon: null,
         centered: true,
         footer: null,
@@ -101,7 +101,7 @@ const ComicManagementModule = () => {
       maskClosable: true,
       closable: true,
       closeIcon: <FaTimes />,
-      content: <FormDeleteComicModal refreshData={() => refetch()} comic={comic} />,
+      content: <DeleteComicForm refreshData={() => refetch()} comic={comic} />,
     });
   }, []);
 
@@ -143,7 +143,7 @@ const ComicManagementModule = () => {
         width: "15%",
         render: (_, { title, slug }) => (
           <React.Fragment>
-            {title.length > 30 ? title.slice(0, 30) + "..." : title}
+            {conciseText(title, 30)}
             <Button shape="square" href={Path.USER.COMICS + "/" + slug} color="dark" variant="plain" size="sm" className="inline-block">
               <FaUpRightFromSquare />
             </Button>
@@ -230,7 +230,7 @@ const ComicManagementModule = () => {
         width: "15%",
         render: (_, comic) => (
           <div className="flex gap-[1rem]">
-            <ActionButtons slug={comic.slug} onViewDetail={() => onViewDetail(comic)} onDelete={() => onDelete(comic)} onEdit={() => onEdit(comic)} />
+            <ComicActions slug={comic.slug} onViewDetail={() => onViewDetail(comic)} onDelete={() => onDelete(comic)} onEdit={() => onEdit(comic)} />
           </div>
         ),
       },

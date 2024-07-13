@@ -9,12 +9,12 @@ import { Comic } from "@/types/data";
 import { FormBanComic } from "@/types/form";
 import { BaseResponse } from "@/types/response";
 
-type FormBanModalProps = {
+type Props = {
   comic: Comic;
   refreshData: () => void;
 };
 
-const FormBanModal = ({ comic, refreshData }: FormBanModalProps) => {
+const BanComicForm = ({ comic, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
 
   const onFinish = async (values: FormBanComic) => {
@@ -47,4 +47,4 @@ const FormBanModal = ({ comic, refreshData }: FormBanModalProps) => {
   );
 };
 
-export default FormBanModal;
+export default BanComicForm;

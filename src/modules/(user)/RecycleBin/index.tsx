@@ -7,7 +7,7 @@ import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
-import ComicDetailModal from "@/components/ComicDetailModal";
+import ComicDetail from "@/components/ComicDetailModal";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { DefaultRoleName } from "@/constants/default-data";
@@ -73,7 +73,7 @@ const User_RecycleBinModule = () => {
           </Typography>
         ),
         width: 1640,
-        content: <ComicDetailModal comic={comic} page="user" />,
+        content: <ComicDetail comic={comic} page="user" />,
         icon: null,
         centered: true,
         footer: null,

@@ -2,13 +2,13 @@ import React from "react";
 
 import ComicDetailModule from "@/modules/(user)/ComicDetail";
 
-type PageProps = {
+type Props = {
   params: {
     comicSlug: string;
   };
 };
 
-const ComicDetailPage = ({ params }: PageProps) => {
+const ComicDetailPage = ({ params }: Props) => {
   return <ComicDetailModule comicSlug={params.comicSlug} />;
 };
 

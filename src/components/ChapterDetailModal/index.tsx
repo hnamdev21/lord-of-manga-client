@@ -9,7 +9,7 @@ import { VND_CURRENCY } from "@/constants/sign";
 import { Chapter, Comic } from "@/types/data";
 import { timestampToDateTime } from "@/utils/formatter";
 
-import PreviewChapterImageModal from "./PreviewChapterImageModal";
+import PreviewChapterImages from "./PreviewChapterImageModal";
 import styles from "./styles.module.scss";
 
 type ChapterDetailModalProps = {
@@ -30,7 +30,7 @@ const ChapterDetailModal = ({ comic, chapter }: ChapterDetailModalProps) => {
           Preview {chapter.title}
         </Typography>
       ),
-      content: <PreviewChapterImageModal comic={comic} chapter={chapter} />,
+      content: <PreviewChapterImages comic={comic} chapter={chapter} />,
       width: "50%",
       icon: null,
       centered: true,

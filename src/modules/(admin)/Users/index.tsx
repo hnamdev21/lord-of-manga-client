@@ -8,15 +8,16 @@ import { useQuery } from "react-query";
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import { FaUpRightFromSquare } from "@/components/Icons";
+import Typography from "@/components/Typography";
 import { DefaultRoleName } from "@/constants/default-data";
 import { GenderMapping } from "@/constants/mapping";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
-import { timestampToDateTime } from "@/utils/formatter";
+import { conciseText, timestampToDateTime } from "@/utils/formatter";
 
-import ActionButtons from "./components/ActionButtons";
+import UserActions from "./components/ActionButtons";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
@@ -42,7 +43,7 @@ const UsersModule = () => {
 
       const { data } = (
         await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<User[]>>>(
-          `/admin/users?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
+          `/admin/users?pageNumber=${tableParams.pagination?.current || "0"}&size=${tableParams.pagination?.pageSize || "10"}`,
           {
             headers: {
               Authorization: `Bearer ${authContext.auth.token}`,
@@ -59,7 +60,7 @@ const UsersModule = () => {
   );
 
   const onBan = async (user: User) => {
-    await AXIOS_INSTANCE.patch<BaseResponse<any>>(`/admin/users/${user.id}/ban`, null, {
+    await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/users/${user.id}/ban`, null, {
       headers: {
         Authorization: `Bearer ${authContext?.auth.token}`,
       },
@@ -88,7 +89,7 @@ const UsersModule = () => {
         }),
         render: (_, { id, username }) => (
           <React.Fragment>
-            {username.length > 30 ? username.slice(0, 30) + "..." : username}
+            {conciseText(username, 30)}
             <Button shape="square" href={Path.USER.PROFILE + "/" + id} color="dark" variant="plain" size="sm" className="inline-block">
               <FaUpRightFromSquare />
             </Button>
@@ -142,7 +143,7 @@ const UsersModule = () => {
         width: "8%",
         render: (_, user) => (
           <div className="flex gap-[1rem]">
-            {user.roles.some((role) => role.name === DefaultRoleName.ADMIN) ? null : <ActionButtons onBan={() => onBan(user)} onViewDetail={() => {}} />}
+            {user.roles.some((role) => role.name === DefaultRoleName.ADMIN) ? null : <UserActions onBan={() => onBan(user)} onViewDetail={() => {}} />}
           </div>
         ),
       },
@@ -156,6 +157,8 @@ const UsersModule = () => {
 
   return (
     <div className="w-full h-full">
+      <Typography>Total 0/{tableParams.pagination?.pageSize} selected record(s)</Typography>
+
       <Table
         columns={columns}
         dataSource={data?.content}
@@ -166,7 +169,8 @@ const UsersModule = () => {
           current: tableParams.pagination?.current,
           pageSize: tableParams.pagination?.pageSize,
           total: data?.totalElements,
-          position: ["bottomCenter"],
+          showQuickJumper: true,
+          showTotal: (total) => `Total ${total} record(s)`,
         }}
         onChange={(pagination) => {
           setTableParams({

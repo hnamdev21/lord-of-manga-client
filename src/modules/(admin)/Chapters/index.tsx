@@ -9,7 +9,7 @@ import { useQuery } from "react-query";
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import ChapterDetailModal from "@/components/ChapterDetailModal";
-import FormDeleteChapterModal from "@/components/FormDeleteChapterModal";
+import DeleteChapterForm from "@/components/FormDeleteChapterModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import { ChapterStatusMapping, ChapterTypeMapping } from "@/constants/mapping";
@@ -18,12 +18,12 @@ import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Chapter, ChapterStatus, Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
-import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
+import { conciseText, numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
-import ActionButtons from "./components/ActionButtons";
-import FormBanModal from "./components/FormBanModal";
+import ChapterActions from "./components/ActionButtons";
+import BanChapterForm from "./components/BanChapterForm";
 
-type ChaptersModuleProps = {
+type Props = {
   comicSlug: string;
 };
 
@@ -34,7 +34,7 @@ interface TableParams {
   filters?: Parameters<GetProp<TableProps, "onChange">>[1];
 }
 
-const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
+const ChaptersModule = ({ comicSlug }: Props) => {
   const authContext = React.use(AuthContext);
   const [modalApi, contextHolder] = Modal.useModal();
 
@@ -111,7 +111,7 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
       maskClosable: true,
       closable: true,
       closeIcon: <FaTimes />,
-      content: <FormBanModal chapter={chapter} refreshData={refetch} />,
+      content: <BanChapterForm chapter={chapter} refreshData={refetch} />,
     });
   }, []);
 
@@ -146,7 +146,7 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
       maskClosable: true,
       closable: true,
       closeIcon: <FaTimes />,
-      content: <FormDeleteChapterModal chapter={chapter} refreshData={refetch} />,
+      content: <DeleteChapterForm chapter={chapter} refreshData={refetch} />,
     });
   }, []);
 
@@ -176,7 +176,7 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
         width: "15%",
         render: (_, { title, slug }) => (
           <React.Fragment>
-            {title.length > 30 ? title.slice(0, 30) + "..." : title}
+            {conciseText(title, 30)}
             <Button shape="square" href={Path.USER.COMICS + "/" + comicSlug + "/" + slug} color="dark" variant="plain" size="sm" className="inline-block">
               <FaUpRightFromSquare />
             </Button>
@@ -263,7 +263,7 @@ const ChaptersModule = ({ comicSlug }: ChaptersModuleProps) => {
         width: "15%",
         render: (_, chapter) => (
           <div className="flex gap-[1rem]">
-            <ActionButtons
+            <ChapterActions
               slug={chapter.slug}
               status={chapter.status}
               onViewDetail={() => onViewDetail(chapter)}

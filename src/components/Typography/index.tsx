@@ -10,7 +10,7 @@ type TextTransform = "uppercase" | "lowercase" | "capitalize" | "normal" | "none
 type TextAlign = "left" | "center" | "right" | "justify";
 type Tag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span";
 
-type TypographyProps = React.HTMLAttributes<HTMLHeadingElement> & {
+type Props = React.HTMLAttributes<HTMLHeadingElement> & {
   tag?: Tag;
   fontSize?: FontSize;
   textColor?: FontColor;
@@ -32,7 +32,7 @@ const Typography = ({
   className = "",
   children,
   ...props
-}: TypographyProps & { children: React.ReactNode }) => {
+}: Props & { children: React.ReactNode }) => {
   const TagName = Tag;
   const classes = cn(
     styles.text,

@@ -10,9 +10,9 @@ import Button from "../Button";
 import Typography from "../Typography";
 import styles from "./styles.module.scss";
 
-type CardComicHorizontalProps = Comic;
+type Props = Comic;
 
-const CardComicHorizontal = ({ title, coverPath, description, slug, viewCount, categories }: CardComicHorizontalProps) => {
+const CardComicHorizontal = ({ title, coverPath, description, slug, viewCount, categories }: Props) => {
   const router = useRouter();
 
   return (

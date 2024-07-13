@@ -14,14 +14,14 @@ import { timestampToDateTime } from "@/utils/formatter";
 
 import styles from "./styles.module.scss";
 
-type ComicDetailModalProps = {
+type Props = {
   comic: Comic;
   page?: "admin" | "user";
 };
 
 const formatter: StatisticProps["formatter"] = (value) => <CountUp end={value as number} separator="." />;
 
-const ComicDetailModal = ({ comic, page = "admin" }: ComicDetailModalProps) => {
+const ComicDetail = ({ comic, page = "admin" }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.container__top}>
@@ -88,4 +88,4 @@ const ComicDetailModal = ({ comic, page = "admin" }: ComicDetailModalProps) => {
   );
 };
 
-export default ComicDetailModal;
+export default ComicDetail;

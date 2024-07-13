@@ -2,13 +2,13 @@ import React from "react";
 
 import ChapterManagementModule from "@/modules/(user)/ComicMangement/ChapterManagement";
 
-type ChaptersPageProps = {
+type Props = {
   params: {
     comicSlug: string;
   };
 };
 
-const ChapterManagementPage = ({ params }: ChaptersPageProps) => {
+const ChapterManagementPage = ({ params }: Props) => {
   return <ChapterManagementModule comicSlug={params.comicSlug} />;
 };
 
