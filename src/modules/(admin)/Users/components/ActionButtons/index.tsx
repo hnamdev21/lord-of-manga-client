@@ -11,10 +11,10 @@ type Props = {
 const UserActions = ({ onViewDetail, onBan }: Props) => {
   return (
     <React.Fragment>
-      <Button element="button" type="button" color="dark" variant="plain" size="sm" onClick={onViewDetail} className="flex justify-center items-center">
+      <Button element="button" type="button" color="dark" variant="plain" size="sm" onClick={onViewDetail} icon>
         <FaEye />
       </Button>
-      <Button element="button" type="button" color="danger" size="sm" onClick={onBan} className="flex justify-center items-center">
+      <Button element="button" type="button" color="danger" size="sm" onClick={onBan} icon>
         <FaUserSlash />
       </Button>
     </React.Fragment>

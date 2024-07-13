@@ -177,7 +177,7 @@ const ChaptersModule = ({ comicSlug }: Props) => {
         render: (_, { title, slug }) => (
           <React.Fragment>
             {conciseText(title, 30)}
-            <Button shape="square" href={Path.USER.COMICS + "/" + comicSlug + "/" + slug} color="dark" variant="plain" size="sm" className="inline-block">
+            <Button icon href={Path.USER.COMICS + "/" + comicSlug + "/" + slug} color="dark" variant="plain" size="sm" className="inline-block">
               <FaUpRightFromSquare />
             </Button>
           </React.Fragment>
@@ -295,52 +295,16 @@ const ChaptersModule = ({ comicSlug }: Props) => {
             <div className="w-[10%] h-full" />
             <div className="w-[10%] h-full" />
             <div className="w-[10%] bg-[var(--color-gray-2)] h-full rounded-tl-2xl rounded-tr-2xl border border-solid border-gray-200 py-[.25rem] flex items-center justify-center gap-[.5rem]">
-              <Button
-                element="button"
-                shape="square"
-                type="button"
-                color="warning"
-                variant="outline"
-                size="xs"
-                onClick={() => {}}
-                className="flex justify-center items-center"
-              >
+              <Button element="button" icon type="button" color="warning" variant="outline" size="xs" onClick={() => {}}>
                 <FaEllipsisH />
               </Button>
-              <Button
-                element="button"
-                shape="square"
-                type="button"
-                color="success"
-                variant="outline"
-                size="xs"
-                onClick={() => {}}
-                className="flex justify-center items-center"
-              >
+              <Button element="button" icon type="button" color="success" variant="outline" size="xs" onClick={() => {}}>
                 <FaCheck />
               </Button>
-              <Button
-                element="button"
-                shape="square"
-                type="button"
-                color="danger"
-                variant="outline"
-                size="xs"
-                onClick={() => {}}
-                className="flex justify-center items-center"
-              >
+              <Button element="button" icon type="button" color="danger" variant="outline" size="xs" onClick={() => {}}>
                 <FaBan />
               </Button>
-              <Button
-                element="button"
-                shape="square"
-                type="button"
-                color="gray"
-                variant="outline"
-                size="xs"
-                onClick={() => {}}
-                className="flex justify-center items-center"
-              >
+              <Button element="button" icon type="button" color="gray" variant="outline" size="xs" onClick={() => {}}>
                 <FaTrash />
               </Button>
             </div>

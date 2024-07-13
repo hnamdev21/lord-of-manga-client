@@ -68,7 +68,7 @@ const CardComicDetail = ({ ...props }: Props) => {
               Read
             </Button>
 
-            <Button className="w-[10%] flex items-center justify-center" element="button" type="button" variant="outline" color="dark" shape="square">
+            <Button className="w-[10%]" element="button" type="button" variant="outline" color="dark" icon>
               <FaBookmark />
             </Button>
           </div>

@@ -14,21 +14,12 @@ const TagActions = ({ onEdit, onDelete }: ActionButtonsProps) => {
   return (
     <React.Fragment>
       <Popover content={<Typography fontSize="sm">Edit</Typography>}>
-        <Button
-          element="button"
-          type="button"
-          shape="square"
-          color="dark"
-          variant="outline"
-          size="sm"
-          onClick={onEdit}
-          className="flex justify-center items-center"
-        >
+        <Button element="button" type="button" icon color="dark" variant="outline" size="sm" onClick={onEdit}>
           <FaMarker />
         </Button>
       </Popover>
       <Popover content={<Typography fontSize="sm">Delete</Typography>}>
-        <Button element="button" type="button" shape="square" color="danger" size="sm" onClick={onDelete} className="flex justify-center items-center">
+        <Button element="button" type="button" color="danger" size="sm" onClick={onDelete}>
           <FaTrash />
         </Button>
       </Popover>

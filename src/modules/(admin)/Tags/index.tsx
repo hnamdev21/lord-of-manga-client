@@ -99,7 +99,7 @@ const TagsModule = () => {
   return (
     <div className="w-full h-full">
       <Popover content={<Typography fontSize="sm">Add new one</Typography>}>
-        <Button element="button" type="button" size="sm" shape="square" className="mb-[1rem] flex items-center justify-center">
+        <Button element="button" type="button" size="sm" icon className="mb-[1rem]">
           <FaPlus />
         </Button>
       </Popover>

@@ -18,42 +18,24 @@ const ChapterActions = ({ status, onViewDetail, onBan, onApprove, onDelete }: Pr
   return (
     <React.Fragment>
       <Popover content="View detail">
-        <Button
-          shape="square"
-          element="button"
-          type="button"
-          color="dark"
-          variant="plain"
-          size="sm"
-          onClick={onViewDetail}
-          className="flex justify-center items-center"
-        >
+        <Button icon element="button" type="button" color="dark" variant="plain" size="sm" onClick={onViewDetail}>
           <FaEye />
         </Button>
       </Popover>
       <Popover content="Ban">
-        <Button
-          shape="square"
-          element="button"
-          type="button"
-          color="danger"
-          variant="outline"
-          size="sm"
-          onClick={onBan}
-          className="flex justify-center items-center"
-        >
+        <Button icon element="button" type="button" color="danger" variant="outline" size="sm" onClick={onBan}>
           <FaBan />
         </Button>
       </Popover>
       {status === ComicStatus.PENDING && (
         <Popover content="Approve">
-          <Button shape="square" element="button" type="button" color="success" size="sm" onClick={onApprove} className="flex justify-center items-center">
+          <Button icon element="button" type="button" color="success" size="sm" onClick={onApprove}>
             <FaCheck />
           </Button>
         </Popover>
       )}
       <Popover content="Delete">
-        <Button shape="square" element="button" type="button" color="danger" size="sm" onClick={onDelete} className="flex justify-center items-center">
+        <Button icon element="button" type="button" color="danger" size="sm" onClick={onDelete}>
           <FaTrash />
         </Button>
       </Popover>

@@ -146,8 +146,10 @@
   }
 
   &__icon {
-    border-radius: 50%;
-    padding: rem(10px);
+    aspect-ratio: 1;
+    border-radius: rem(4px);
+    padding: rem(5px);
+    @include flex-center;
   }
 
   &__disabled {

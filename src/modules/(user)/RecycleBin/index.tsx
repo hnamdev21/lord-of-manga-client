@@ -148,10 +148,10 @@ const User_RecycleBinModule = () => {
         width: "12.5%",
         render: (_, { id }) => (
           <div className="flex gap-[1rem]">
-            <Button element="button" type="button" variant="plain" size="sm" onClick={() => onDetail(id)} className="flex justify-center items-center">
+            <Button element="button" type="button" variant="plain" size="sm" onClick={() => onDetail(id)} icon>
               <FaEye />
             </Button>
-            <Button element="button" type="button" color="danger" size="sm" onClick={() => onRestore(id)} className="flex justify-center items-center">
+            <Button element="button" type="button" color="danger" size="sm" onClick={() => onRestore(id)} icon>
               <FaTrashRestore />
             </Button>
           </div>

@@ -56,20 +56,14 @@ const ComicDetail = ({ comic, page = "admin" }: Props) => {
 
             <Typography className="flex items-center">
               Uploaded by: {comic.creator.username}
-              <Button
-                href={`${page === "admin" ? Path.ADMIN.USERS : Path.USER.PROFILE}/${comic.creator.username}`}
-                size="xs"
-                shape="square"
-                color="dark"
-                variant="plain"
-              >
+              <Button href={`${page === "admin" ? Path.ADMIN.USERS : Path.USER.PROFILE}/${comic.creator.username}`} size="xs" icon color="dark" variant="plain">
                 <FaUpRightFromSquare />
               </Button>
             </Typography>
 
             <Typography className="flex items-center">
               Total chapters: {comic.chapters.length} chapters
-              <Button href={`${page === "admin" ? Path.ADMIN.COMICS : Path.USER.COMICS}/${comic.slug}`} size="xs" shape="square" color="dark" variant="plain">
+              <Button href={`${page === "admin" ? Path.ADMIN.COMICS : Path.USER.COMICS}/${comic.slug}`} size="xs" icon color="dark" variant="plain">
                 <FaUpRightFromSquare />
               </Button>
             </Typography>

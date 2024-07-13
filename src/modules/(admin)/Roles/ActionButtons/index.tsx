@@ -15,16 +15,7 @@ const RoleActions = ({ role }: Props) => {
   return (
     <React.Fragment>
       {!isDefaultRole && (
-        <Button
-          element="button"
-          type="button"
-          shape="square"
-          color="dark"
-          variant="outline"
-          size="sm"
-          onClick={() => {}}
-          className="flex justify-center items-center"
-        >
+        <Button element="button" type="button" color="dark" variant="outline" size="sm" onClick={() => {}}>
           <FaMarker />
         </Button>
       )}

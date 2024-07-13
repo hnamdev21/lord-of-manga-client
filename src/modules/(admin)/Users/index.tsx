@@ -90,7 +90,7 @@ const UsersModule = () => {
         render: (_, { id, username }) => (
           <React.Fragment>
             {conciseText(username, 30)}
-            <Button shape="square" href={Path.USER.PROFILE + "/" + id} color="dark" variant="plain" size="sm" className="inline-block">
+            <Button icon href={Path.USER.PROFILE + "/" + id} color="dark" variant="plain" size="sm" className="inline-block">
               <FaUpRightFromSquare />
             </Button>
           </React.Fragment>
