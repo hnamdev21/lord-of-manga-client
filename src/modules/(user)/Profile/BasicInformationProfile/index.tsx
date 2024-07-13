@@ -10,7 +10,7 @@ import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { localApiUrl } from "@/constants/config";
 import Notification from "@/constants/notification";
-import { GenderOptions } from "@/constants/options";
+import { genderOptions } from "@/constants/options";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { FormUpdateProfile } from "@/types/form";
@@ -101,7 +101,7 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
             rules={[{ required: true, message: Notification.PLEASE_SELECT("gender") }]}
             className="w-[40%]"
           >
-            <Select options={GenderOptions} />
+            <Select options={genderOptions} />
           </Form.Item>
         </div>
 

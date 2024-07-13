@@ -12,7 +12,7 @@ import { timestampToDateTime } from "@/utils/formatter";
 import PreviewChapterImages from "./PreviewChapterImageModal";
 import styles from "./styles.module.scss";
 
-type ChapterDetailModalProps = {
+type Props = {
   page?: "admin" | "user";
   comic: Comic;
   chapter: Chapter;
@@ -20,7 +20,7 @@ type ChapterDetailModalProps = {
 
 const formatter: StatisticProps["formatter"] = (value) => <CountUp end={value as number} separator="." />;
 
-const ChapterDetailModal = ({ comic, chapter }: ChapterDetailModalProps) => {
+const ChapterDetail = ({ comic, chapter }: Props) => {
   const [modalApi, contextHolder] = Modal.useModal();
 
   const onPreview = () => {
@@ -82,4 +82,4 @@ const ChapterDetailModal = ({ comic, chapter }: ChapterDetailModalProps) => {
   );
 };
 
-export default ChapterDetailModal;
+export default ChapterDetail;

@@ -1,14 +1,16 @@
 import { GenderMapping } from "./mapping";
 
-export const GenderOptions = Object.entries(GenderMapping).map(([key, value]) => ({
+type Option = {
+  label: string;
+  value: string;
+};
+
+export const genderOptions: Option[] = Object.entries(GenderMapping).map(([key, value]) => ({
   label: value,
   value: key,
 }));
 
-export const OrderByOptions: {
-  label: string;
-  value: "all" | "createdAt" | "updatedAt" | "title" | "price" | "viewCount" | "searchCount" | "likeCount";
-}[] = [
+export const orderByOptions: Option[] = [
   {
     label: "All",
     value: "all",
@@ -31,10 +33,7 @@ export const OrderByOptions: {
   } as const,
 ];
 
-export const FilterComicTypeOptions: {
-  label: string;
-  value: "all" | "FREE" | "PAID_ONCE" | "PAID_PER_CHAPTER";
-}[] = [
+export const filterComicTypeOptions: Option[] = [
   {
     label: "All",
     value: "all",
@@ -51,9 +50,9 @@ export const FilterComicTypeOptions: {
     label: "Paid per chapter",
     value: "PAID_PER_CHAPTER",
   } as const,
-];
+] as const;
 
-export const comicTypeOptions = [
+export const comicTypeOptions: Option[] = [
   {
     label: "Free",
     value: "FREE",
@@ -68,7 +67,7 @@ export const comicTypeOptions = [
   } as const,
 ] as const;
 
-export const chapterTypeOptions = [
+export const chapterTypeOptions: Option[] = [
   {
     label: "Free",
     value: "FREE",

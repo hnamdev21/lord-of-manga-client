@@ -21,7 +21,7 @@ import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { conciseText, numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
 import ComicActions from "./components/ActionButtons";
-import FormUpdateComicModal from "./components/FormUpdateComicModal";
+import UpdateComicForm from "./components/FormUpdateComicModal";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
@@ -113,7 +113,7 @@ const ComicManagementModule = () => {
         </Typography>
       ),
       width: "30%",
-      content: <FormUpdateComicModal comic={comic} refreshData={() => refetch()} />,
+      content: <UpdateComicForm comic={comic} refreshData={() => refetch()} />,
       icon: null,
       centered: true,
       footer: null,

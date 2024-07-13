@@ -8,7 +8,7 @@ import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
-import ChapterDetailModal from "@/components/ChapterDetailModal";
+import ChapterDetail from "@/components/ChapterDetailModal";
 import DeleteChapterForm from "@/components/FormDeleteChapterModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
@@ -81,7 +81,7 @@ const ChapterManagementModule = ({ comicSlug }: ChapterManagementModuleProps) =>
           </Typography>
         ),
         width: "50%",
-        content: comic ? <ChapterDetailModal comic={comic} chapter={chapter} page="user" /> : null,
+        content: comic ? <ChapterDetail comic={comic} chapter={chapter} page="user" /> : null,
         icon: null,
         centered: true,
         footer: null,
