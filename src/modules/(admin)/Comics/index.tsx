@@ -16,7 +16,7 @@ import { ComicStatusMapping, ComicTypeMapping } from "@/constants/mapping";
 import Notification from "@/constants/notification";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
-import { Comic, ComicStatus } from "@/types/data";
+import { Comic, ComicStatus, ComicType } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { conciseText, numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
@@ -115,7 +115,7 @@ const ComicsModule = () => {
     ).data;
 
     if (data) {
-      message.success(Notification.SUCCESS_APPROVED(comic.title));
+      message.success(Notification.approveSuccess(comic.title));
       refetch();
     }
   }, []);
@@ -185,7 +185,7 @@ const ComicsModule = () => {
         dataIndex: "type",
         key: "type",
         width: "10%",
-        render: (_, { type }) => <AntdTag color={type === "FREE" ? "success" : "warning"}>{ComicTypeMapping[type]}</AntdTag>,
+        render: (_, { type }) => <AntdTag color={type === ComicType.FREE ? "success" : "warning"}>{ComicTypeMapping[type]}</AntdTag>,
       },
       {
         title: "Price",

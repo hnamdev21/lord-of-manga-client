@@ -17,7 +17,7 @@ type Props = {
 
 const DeleteChapterForm = ({ chapter, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
-  const [notificationApi, contextHolder] = notification.useNotification();
+  const [notificationApi, modalHolder] = notification.useNotification();
 
   const onRestore = async () => {
     const { data } = (
@@ -30,7 +30,7 @@ const DeleteChapterForm = ({ chapter, refreshData }: Props) => {
 
     if (data) {
       refreshData();
-      message.success(Notification.SUCCESS_RESTORED(chapter.title));
+      message.success(Notification.restoreSuccess(chapter.title));
     }
   };
 
@@ -80,7 +80,7 @@ const DeleteChapterForm = ({ chapter, refreshData }: Props) => {
         </Button>
       </div>
 
-      {contextHolder}
+      {modalHolder}
     </Form>
   );
 };

@@ -11,6 +11,7 @@ import Typography from "@/components/Typography";
 import { localApiUrl } from "@/constants/config";
 import Notification from "@/constants/notification";
 import { genderOptions } from "@/constants/options";
+import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { FormUpdateProfile } from "@/types/form";
@@ -44,9 +45,9 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
       })
     ).data;
 
-    if (response.code === "OK") {
-      await authContext?.refreshUser();
-      message.success(Notification.SUCCESS_UPDATED("Profile"));
+    if (response.code === StatusCode.OK) {
+      authContext?.refreshUser();
+      message.success(Notification.updateSuccess("Profile"));
     }
   };
 
@@ -85,7 +86,7 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
               </Typography>
             }
             name="fullName"
-            rules={[{ required: true, message: Notification.PLEASE_ENTER("full name") }]}
+            rules={[{ required: true, message: Notification.pleaseEnter("full name") }]}
             className="w-[60%]"
           >
             <Input />
@@ -98,7 +99,7 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
               </Typography>
             }
             name="gender"
-            rules={[{ required: true, message: Notification.PLEASE_SELECT("gender") }]}
+            rules={[{ required: true, message: Notification.pleaseSelect("gender") }]}
             className="w-[40%]"
           >
             <Select options={genderOptions} />

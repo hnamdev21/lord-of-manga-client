@@ -28,7 +28,7 @@ const BanComicForm = ({ comic, refreshData }: Props) => {
 
     if (data) {
       refreshData();
-      message.success(Notification.SUCCESS_BAN(comic.title));
+      message.success(Notification.banSuccess(comic.title));
     }
   };
 

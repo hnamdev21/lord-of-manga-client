@@ -7,7 +7,7 @@ import React from "react";
 import { FaBookmark, FaDollarSign } from "react-icons/fa";
 
 import { localApiUrl } from "@/constants/config";
-import { Comic } from "@/types/data";
+import { Comic, ComicType } from "@/types/data";
 
 import Button from "../Button";
 import Typography from "../Typography";
@@ -28,7 +28,7 @@ const CardComic = ({ ...props }: Props) => {
         </Button>
 
         <div className={styles.card__tag}>
-          {type === "FREE" ? (
+          {type === ComicType.FREE ? (
             <Typography tag="span" fontWeight="bold" textColor="light">
               FREE
             </Typography>

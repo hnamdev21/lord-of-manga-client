@@ -12,7 +12,7 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { localApiUrl } from "@/constants/config";
-import { Comic } from "@/types/data";
+import { ChapterType, Comic } from "@/types/data";
 import { BaseResponse } from "@/types/response";
 import { timestampToDateTime } from "@/utils/formatter";
 
@@ -104,7 +104,7 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
           <div key={index} className={styles.content__card} onClick={() => router.push(`/comics/${comicSlug}/${chapter.slug}`)}>
             <div className={styles.content__card__left}>
               <div className={styles.content__card__left__tag}>
-                {chapter.type === "FREE" ? (
+                {chapter.type === ChapterType.FREE ? (
                   <Typography tag="span" fontSize="sm" fontWeight="bold" textColor="light">
                     FREE
                   </Typography>

@@ -1,9 +1,9 @@
 "use client";
 
-import { GetProp, Popover, Table, TablePaginationConfig, TableProps } from "antd";
+import { GetProp, Modal, Popover, Table, TablePaginationConfig, TableProps } from "antd";
 import { SorterResult } from "antd/es/table/interface";
 import React from "react";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaTimes } from "react-icons/fa";
 import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
@@ -15,6 +15,7 @@ import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { timestampToDateTime } from "@/utils/formatter";
 
 import CategoryActions from "./components/ActionButtons";
+import CreateCategoryForm from "./components/CreateCategoryForm";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
@@ -25,6 +26,7 @@ interface TableParams {
 
 const CategoriesModule = () => {
   const authContext = React.use(AuthContext);
+  const [modalApi, modalHolder] = Modal.useModal();
 
   const [tableParams, setTableParams] = React.useState<TableParams>({
     pagination: {
@@ -92,40 +94,61 @@ const CategoriesModule = () => {
     [data]
   );
 
+  const onAddNew = () => {
+    modalApi.info({
+      title: (
+        <Typography tag="h1" fontSize="md" align="center">
+          Add new category
+        </Typography>
+      ),
+      icon: null,
+      centered: true,
+      footer: null,
+      maskClosable: true,
+      closable: true,
+      closeIcon: <FaTimes />,
+      content: <CreateCategoryForm refreshData={() => refetch()} />,
+    });
+  };
+
   React.useEffect(() => {
     refetch();
   }, [tableParams.pagination?.current]);
 
   return (
-    <div className="w-full h-full">
-      <Popover content={<Typography fontSize="sm">Add new one</Typography>}>
-        <Button element="button" type="button" size="sm" icon className="mb-[1rem]">
-          <FaPlus />
-        </Button>
-      </Popover>
+    <React.Fragment>
+      <div className="w-full h-full">
+        <Popover content={<Typography fontSize="sm">Add new one</Typography>}>
+          <Button element="button" type="button" size="sm" icon className="mb-[1rem]" onClick={() => onAddNew()}>
+            <FaPlus />
+          </Button>
+        </Popover>
 
-      <Typography>Total 0/{tableParams.pagination?.pageSize} selected record(s)</Typography>
+        <Typography>Total 0/{tableParams.pagination?.pageSize} selected record(s)</Typography>
 
-      <Table
-        columns={columns}
-        dataSource={data?.content}
-        size="small"
-        rowKey={(record: Category) => record.id}
-        bordered
-        pagination={{
-          current: tableParams.pagination?.current,
-          pageSize: tableParams.pagination?.pageSize,
-          total: data?.totalElements,
-          showQuickJumper: true,
-          showTotal: (total) => `Total ${total} record(s)`,
-        }}
-        onChange={(pagination) => {
-          setTableParams({
-            pagination,
-          });
-        }}
-      />
-    </div>
+        <Table
+          columns={columns}
+          dataSource={data?.content}
+          size="small"
+          rowKey={(record: Category) => record.id}
+          bordered
+          pagination={{
+            current: tableParams.pagination?.current,
+            pageSize: tableParams.pagination?.pageSize,
+            total: data?.totalElements,
+            showQuickJumper: true,
+            showTotal: (total) => `Total ${total} record(s)`,
+          }}
+          onChange={(pagination) => {
+            setTableParams({
+              pagination,
+            });
+          }}
+        />
+      </div>
+
+      {modalHolder}
+    </React.Fragment>
   );
 };
 

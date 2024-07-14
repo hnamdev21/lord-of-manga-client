@@ -16,7 +16,7 @@ import { ChapterStatusMapping, ChapterTypeMapping } from "@/constants/mapping";
 import Notification from "@/constants/notification";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
-import { Chapter, ChapterStatus, Comic } from "@/types/data";
+import { Chapter, ChapterStatus, ChapterType, Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { conciseText, numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
@@ -36,7 +36,7 @@ interface TableParams {
 
 const ChaptersModule = ({ comicSlug }: Props) => {
   const authContext = React.use(AuthContext);
-  const [modalApi, contextHolder] = Modal.useModal();
+  const [modalApi, modalHolder] = Modal.useModal();
 
   const [tableParams, setTableParams] = React.useState<TableParams>({
     pagination: {
@@ -125,7 +125,7 @@ const ChaptersModule = ({ comicSlug }: Props) => {
     ).data;
 
     if (data) {
-      message.success(Notification.SUCCESS_APPROVED(chapter.title));
+      message.success(Notification.approveSuccess(chapter.title));
       refetch();
     }
   }, []);
@@ -194,7 +194,7 @@ const ChaptersModule = ({ comicSlug }: Props) => {
         dataIndex: "type",
         key: "type",
         width: "10%",
-        render: (_, { type }) => <AntdTag color={type === "FREE" ? "success" : "warning"}>{ChapterTypeMapping[type]}</AntdTag>,
+        render: (_, { type }) => <AntdTag color={type === ChapterType.FREE ? "success" : "warning"}>{ChapterTypeMapping[type]}</AntdTag>,
       },
       {
         title: "Price",
@@ -334,7 +334,7 @@ const ChaptersModule = ({ comicSlug }: Props) => {
             }}
           />
 
-          {contextHolder}
+          {modalHolder}
         </div>
       </div>
     </React.Fragment>

@@ -17,7 +17,7 @@ type Props = {
 
 const DeleteComicForm = ({ comic, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
-  const [notificationApi, contextHolder] = notification.useNotification();
+  const [notificationApi, modalHolder] = notification.useNotification();
 
   const onRestore = async () => {
     const { data } = (
@@ -30,7 +30,7 @@ const DeleteComicForm = ({ comic, refreshData }: Props) => {
 
     if (data) {
       refreshData();
-      message.success(Notification.SUCCESS_RESTORED(comic.title));
+      message.success(Notification.restoreSuccess(comic.title));
     }
   };
 
@@ -80,7 +80,7 @@ const DeleteComicForm = ({ comic, refreshData }: Props) => {
         </Button>
       </div>
 
-      {contextHolder}
+      {modalHolder}
     </Form>
   );
 };

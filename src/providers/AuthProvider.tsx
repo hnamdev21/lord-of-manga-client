@@ -94,7 +94,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     for (const path of authorizedUserPaths) {
       if (pathname.startsWith(path)) {
-        message.info(Notification.SIGN_IN_REQUIRED);
+        message.info(Notification.signInRequired);
         router.push(Path.AUTH.SIGN_IN);
         return;
       }
@@ -102,7 +102,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     for (const path of adminPaths) {
       if (pathname.startsWith(path)) {
-        message.info(Notification.SIGN_IN_REQUIRED);
+        message.info(Notification.signInRequired);
         router.push(Path.AUTH.SIGN_IN);
         return;
       }
@@ -119,13 +119,13 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(user);
 
         if (user.roles.length === 0) {
-          message.info(Notification.BANNED);
+          message.info(Notification.banned);
           signOut();
         }
 
         adminPaths.forEach((path) => {
           if (pathname.startsWith(path) && !user.roles.some((role) => role.name === DefaultRoleName.ADMIN)) {
-            message.info(Notification.SIGN_IN_AS_ADMIN_REQUIRED);
+            message.info(Notification.signInAsAdminRequired);
             window.location.href = Path.ERROR.FORBIDDEN;
           }
         });

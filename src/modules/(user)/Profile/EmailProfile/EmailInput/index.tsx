@@ -6,6 +6,7 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
+import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { FormVerifyEmail } from "@/types/form";
@@ -58,10 +59,10 @@ const EmailInput = ({ value, onChange, isVerified, username, token }: Props) => 
       )
     ).data;
 
-    if (response.code === "OK") {
+    if (response.code === StatusCode.OK) {
       setIsModalOpen(false);
-      message.success(Notification.SUCCESS_VERIFIED("Email"));
-      await authContext?.refreshUser();
+      authContext?.refreshUser();
+      message.success(Notification.successVerified("Email"));
     }
   };
 
@@ -123,7 +124,7 @@ const EmailInput = ({ value, onChange, isVerified, username, token }: Props) => 
             }
             style={{ width: "75%", padding: "0 4rem", margin: "auto", marginTop: "2rem" }}
             name="code"
-            rules={[{ required: true, message: Notification.PLEASE_ENTER("code") }]}
+            rules={[{ required: true, message: Notification.pleaseEnter("code") }]}
           >
             <div className="w-full flex gap-[2rem]">
               <Input className="w-2/3" />

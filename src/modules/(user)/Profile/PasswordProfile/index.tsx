@@ -6,6 +6,7 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
+import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { FormTwoFactorAuthentication, FormUpdatePassword } from "@/types/form";
@@ -22,8 +23,8 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
   };
 
   const handleResponse = (response: BaseResponse<User>) => {
-    if (response.code === "OK") {
-      message.success(Notification.SUCCESS_UPDATED("Password"));
+    if (response.code === StatusCode.OK) {
+      message.success(Notification.updateSuccess("Password"));
       setIsModalOpen(false);
     }
 
@@ -74,7 +75,7 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
               </Typography>
             }
             name="oldPassword"
-            rules={[{ required: true, message: Notification.PLEASE_ENTER("old password") }]}
+            rules={[{ required: true, message: Notification.pleaseEnter("old password") }]}
           >
             <Input.Password />
           </Form.Item>
@@ -86,7 +87,7 @@ const PasswordProfile = ({ token }: { user: User; token: string }) => {
               </Typography>
             }
             name="newPassword"
-            rules={[{ required: true, message: Notification.PLEASE_ENTER("new password") }]}
+            rules={[{ required: true, message: Notification.pleaseEnter("new password") }]}
           >
             <Input.Password />
           </Form.Item>

@@ -8,6 +8,7 @@ import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import { comicTypeOptions } from "@/constants/options";
 import { VND_CURRENCY } from "@/constants/sign";
+import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Category, Comic, Tag } from "@/types/data";
 import { FormUpdateComic } from "@/types/form";
@@ -78,11 +79,11 @@ const UpdateComicForm = ({ comic, refreshData }: Props) => {
       )
     ).data;
 
-    if (response.code === "OK") {
-      refreshData();
-      message.success(Notification.SUCCESS_UPDATED("Comic"));
+    if (response.code === StatusCode.OK) {
+      message.success(Notification.updateSuccess("Comic"));
       setSearchValue("");
       setDisablePriceInput(true);
+      refreshData();
     }
   };
 
@@ -114,7 +115,7 @@ const UpdateComicForm = ({ comic, refreshData }: Props) => {
             </Typography>
           }
           name="title"
-          rules={[{ required: true, message: Notification.PLEASE_ENTER("comic title") }]}
+          rules={[{ required: true, message: Notification.pleaseEnter("comic title") }]}
           className="flex-1"
         >
           <Input />
@@ -126,7 +127,7 @@ const UpdateComicForm = ({ comic, refreshData }: Props) => {
             </Typography>
           }
           name="author"
-          rules={[{ required: true, message: Notification.PLEASE_ENTER("author name") }]}
+          rules={[{ required: true, message: Notification.pleaseEnter("author name") }]}
           className="flex-1"
         >
           <Input />
@@ -141,7 +142,7 @@ const UpdateComicForm = ({ comic, refreshData }: Props) => {
             </Typography>
           }
           name="categoryNames"
-          rules={[{ required: true, message: Notification.PLEASE_SELECT("categories") }]}
+          rules={[{ required: true, message: Notification.pleaseSelect("categories") }]}
           className="flex-1"
         >
           <Select mode="multiple" allowClear id="categories" placeholder="-- Select categories --" options={categoryAndTagData?.categories} />
@@ -154,7 +155,7 @@ const UpdateComicForm = ({ comic, refreshData }: Props) => {
           }
           name="tagNames"
           className="flex-1"
-          rules={[{ required: true, message: Notification.PLEASE_SELECT("tags") }]}
+          rules={[{ required: true, message: Notification.pleaseSelect("tags") }]}
         >
           <Select
             placeholder="-- Select tags --"
@@ -237,7 +238,7 @@ const UpdateComicForm = ({ comic, refreshData }: Props) => {
             </Typography>
           }
           name="description"
-          rules={[{ required: true, message: Notification.PLEASE_ENTER("description") }]}
+          rules={[{ required: true, message: Notification.pleaseEnter("description") }]}
         >
           <Input.TextArea rows={4} />
         </Form.Item>

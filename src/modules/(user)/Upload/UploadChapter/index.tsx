@@ -11,8 +11,9 @@ import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import { chapterTypeOptions } from "@/constants/options";
 import { VND_CURRENCY } from "@/constants/sign";
+import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
-import { Chapter, Comic } from "@/types/data";
+import { Chapter, Comic, ComicType } from "@/types/data";
 import { FormCreateChapter } from "@/types/form";
 import { BaseResponse } from "@/types/response";
 import { numberFormatter } from "@/utils/formatter";
@@ -47,15 +48,15 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
       })
     ).data;
 
-    if (response.code === "CREATED") {
-      message.success(Notification.SUCCESS_CREATED("Chapter"));
+    if (response.code === StatusCode.CREATED) {
+      message.success(Notification.createSuccess("Chapter"));
       form.resetFields();
     }
   };
 
   const onComicChange = (comicId: string) => {
     const comic = createdComics.find((comic) => comic.id === comicId);
-    if (comic?.type === "PAID_PER_CHAPTER") {
+    if (comic?.type === ComicType.PAID_PER_CHAPTER) {
       setDisablePriceInput(false);
     } else {
       setDisablePriceInput(true);
@@ -85,7 +86,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
                 </Typography>
               }
               name="title"
-              rules={[{ required: true, message: Notification.PLEASE_ENTER("chapter title") }]}
+              rules={[{ required: true, message: Notification.pleaseEnter("chapter title") }]}
               className="flex-1"
             >
               <Input />
@@ -98,7 +99,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
                 </Typography>
               }
               name="comicId"
-              rules={[{ required: true, message: Notification.PLEASE_SELECT("comic") }]}
+              rules={[{ required: true, message: Notification.pleaseSelect("comic") }]}
               className="flex-1"
             >
               <Select placeholder="-- Select a comic --" options={createdComicOptions} onChange={onComicChange} />

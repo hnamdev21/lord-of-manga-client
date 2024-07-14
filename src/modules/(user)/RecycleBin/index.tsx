@@ -13,8 +13,9 @@ import Typography from "@/components/Typography";
 import { DefaultRoleName } from "@/constants/default-data";
 import { ComicTypeMapping } from "@/constants/mapping";
 import Notification from "@/constants/notification";
+import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
-import { Comic, ComicStatus } from "@/types/data";
+import { Comic, ComicStatus, ComicType } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
@@ -51,9 +52,9 @@ const User_RecycleBinModule = () => {
       })
     ).data;
 
-    if (response.code === "OK") {
+    if (response.code === StatusCode.OK) {
       refetch();
-      message.success(Notification.SUCCESS_RESTORED("Comic"));
+      message.success(Notification.restoreSuccess("Comic"));
     }
   };
 
@@ -62,7 +63,7 @@ const User_RecycleBinModule = () => {
       const comic = data?.content.find((comic) => comic.id === id);
 
       if (!comic) {
-        message.error(Notification.SOMETHING_WENT_WRONG);
+        message.error(Notification.unexpectedError);
         return;
       }
 
@@ -112,7 +113,7 @@ const User_RecycleBinModule = () => {
         dataIndex: "type",
         key: "type",
         width: "10%",
-        render: (_, { type }) => <AntdTag color={type === "FREE" ? "green" : "yellow"}>{ComicTypeMapping[type]}</AntdTag>,
+        render: (_, { type }) => <AntdTag color={type === ComicType.FREE ? "green" : "yellow"}>{ComicTypeMapping[type]}</AntdTag>,
       },
       {
         title: "Price",

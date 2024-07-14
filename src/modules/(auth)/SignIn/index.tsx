@@ -13,6 +13,7 @@ import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import Path from "@/constants/path";
+import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
 import { FormSignIn } from "@/types/form";
 import { BaseResponse } from "@/types/response";
@@ -26,8 +27,8 @@ const SignInModule = () => {
   const onFinish: FormProps<FormSignIn>["onFinish"] = async (values: FormSignIn) => {
     const response = (await AXIOS_INSTANCE.post<BaseResponse<string>>("/auth/sign-in", values)).data;
 
-    if (response.code === "OK") {
-      message.success(Notification.WELCOME);
+    if (response.code === StatusCode.OK) {
+      message.success(Notification.welcome);
       authContext?.signIn(response.data);
       router.push(Path.USER.HOME);
     }
@@ -56,11 +57,11 @@ const SignInModule = () => {
             }}
             className={styles.form}
           >
-            <Form.Item<FormSignIn> name="username" rules={[{ required: true, type: "string", message: Notification.PLEASE_ENTER("username") }]}>
+            <Form.Item<FormSignIn> name="username" rules={[{ required: true, type: "string", message: Notification.pleaseEnter("username") }]}>
               <Input placeholder="Username" prefix={<FaUser />} />
             </Form.Item>
 
-            <Form.Item<FormSignIn> name="password" rules={[{ required: true, message: Notification.PLEASE_ENTER("password") }]}>
+            <Form.Item<FormSignIn> name="password" rules={[{ required: true, message: Notification.pleaseEnter("password") }]}>
               <Input.Password placeholder="Password" prefix={<FaLock />} />
             </Form.Item>
 

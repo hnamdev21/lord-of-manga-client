@@ -15,7 +15,7 @@ import Typography from "@/components/Typography";
 import { ChapterStatusMapping, ChapterTypeMapping } from "@/constants/mapping";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
-import { Chapter, ChapterStatus, Comic } from "@/types/data";
+import { Chapter, ChapterStatus, Comic, ComicType } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { conciseText, numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
@@ -34,7 +34,7 @@ interface TableParams {
 
 const ChapterManagementModule = ({ comicSlug }: ChapterManagementModuleProps) => {
   const authContext = React.use(AuthContext);
-  const [modalApi, contextHolder] = Modal.useModal();
+  const [modalApi, modalHolder] = Modal.useModal();
 
   const [tableParams, setTableParams] = React.useState<TableParams>({
     pagination: {
@@ -157,7 +157,7 @@ const ChapterManagementModule = ({ comicSlug }: ChapterManagementModuleProps) =>
         dataIndex: "type",
         key: "type",
         width: "10%",
-        render: (_, { type }) => <AntdTag color={type === "FREE" ? "success" : "warning"}>{ChapterTypeMapping[type]}</AntdTag>,
+        render: (_, { type }) => <AntdTag color={type === ComicType.FREE ? "success" : "warning"}>{ChapterTypeMapping[type]}</AntdTag>,
       },
       {
         title: "Price",
@@ -290,7 +290,7 @@ const ChapterManagementModule = ({ comicSlug }: ChapterManagementModuleProps) =>
             }}
           />
 
-          {contextHolder}
+          {modalHolder}
         </div>
       </div>
     </React.Fragment>

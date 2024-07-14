@@ -5,7 +5,9 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
+import { DefaultRoleName } from "@/constants/default-data";
 import Notification from "@/constants/notification";
+import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { FormUpdateEmail, FormUpdateUserSetting } from "@/types/form";
@@ -19,7 +21,7 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
   const [form] = Form.useForm<FormUpdateEmail>();
   const [formSetting] = Form.useForm<FormUpdateUserSetting>();
 
-  const isVerified = user.roles.some((role) => role.name === "USER");
+  const isVerified = user.roles.some((role) => role.name === DefaultRoleName.USER);
 
   const onFinishSetting: FormProps<FormUpdateUserSetting>["onFinish"] = async (values: FormUpdateUserSetting) => {
     const response = (
@@ -30,9 +32,9 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
       })
     ).data;
 
-    if (response.code === "OK") {
-      await authContext?.refreshUser();
-      message.success(Notification.SUCCESS_UPDATED("Setting"));
+    if (response.code === StatusCode.OK) {
+      authContext?.refreshUser();
+      message.success(Notification.updateSuccess("Setting"));
     }
   };
 
@@ -42,7 +44,7 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
   }, [user]);
 
   return (
-    <Container className="h-full" style={{ padding: 0, gridTemplateColumns: "repeat(10, minmax(0, 1fr))", gap: "2rem" }}>
+    <Container className="h-full" style={{ padding: 0, gridTemplateColumns: "repeat(10, minmax(0, 1fr))" }}>
       <Form layout="vertical" form={form} initialValues={{ email: user.email }} className="col-start-4 col-span-2">
         <Popover
           content={
@@ -60,7 +62,7 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
               </Typography>
             }
             name="email"
-            rules={[{ type: "email", message: Notification.INVALID("email") }]}
+            rules={[{ type: "email", message: Notification.invalid("email") }]}
           >
             <EmailInput isVerified={isVerified} username={user.username} token={token} />
           </Form.Item>

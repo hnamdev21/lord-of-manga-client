@@ -16,7 +16,7 @@ import Typography from "@/components/Typography";
 import { ComicStatusMapping, ComicTypeMapping } from "@/constants/mapping";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
-import { Comic, ComicStatus } from "@/types/data";
+import { Comic, ComicStatus, ComicType } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { conciseText, numberToCurrency, timestampToDateTime } from "@/utils/formatter";
 
@@ -168,7 +168,7 @@ const ComicManagementModule = () => {
         dataIndex: "type",
         key: "type",
         width: "10%",
-        render: (_, { type }) => <AntdTag color={type === "FREE" ? "success" : "warning"}>{ComicTypeMapping[type]}</AntdTag>,
+        render: (_, { type }) => <AntdTag color={type === ComicType.FREE ? "success" : "warning"}>{ComicTypeMapping[type]}</AntdTag>,
       },
       {
         title: "Price",

@@ -50,8 +50,8 @@ const ForgotPasswordModule = () => {
             }
             name="email"
             rules={[
-              { required: true, message: Notification.PLEASE_ENTER("email") },
-              { type: "email", message: Notification.INVALID("email") },
+              { required: true, message: Notification.pleaseEnter("email") },
+              { type: "email", message: Notification.invalid("email") },
             ]}
           >
             <Input />
@@ -87,7 +87,7 @@ const ForgotPasswordModule = () => {
                 </Typography>
               }
               name="password"
-              rules={[{ required: true, message: Notification.PLEASE_ENTER("password") }]}
+              rules={[{ required: true, message: Notification.pleaseEnter("password") }]}
             >
               <Input.Password />
             </Form.Item>
@@ -99,7 +99,7 @@ const ForgotPasswordModule = () => {
                 </Typography>
               }
               name="confirmPassword"
-              rules={[{ required: true, message: Notification.PLEASE_ENTER("confirm password") }]}
+              rules={[{ required: true, message: Notification.pleaseEnter("confirm password") }]}
             >
               <Input.Password />
             </Form.Item>
@@ -111,7 +111,7 @@ const ForgotPasswordModule = () => {
                 </Typography>
               }
               name="code"
-              rules={[{ required: true, message: Notification.PLEASE_ENTER("code") }]}
+              rules={[{ required: true, message: Notification.pleaseEnter("code") }]}
             >
               <div className="w-full flex gap-[2rem]">
                 <Input className="w-2/3" />

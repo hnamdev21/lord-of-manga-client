@@ -5,7 +5,7 @@ import { FaBookmark, FaDollarSign } from "react-icons/fa";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import { localApiUrl } from "@/constants/config";
-import { Comic } from "@/types/data";
+import { Comic, ComicType } from "@/types/data";
 
 import styles from "./styles.module.scss";
 
@@ -26,7 +26,7 @@ const ReadingHistoryCard = ({ comic, currentOrdinal, onClickRemove }: ReadingHis
       </Button>
 
       <div className={styles.card__tag}>
-        {type === "FREE" ? (
+        {type === ComicType.FREE ? (
           <Typography tag="span" fontSize="sm" fontWeight="bold" textColor="light">
             FREE
           </Typography>

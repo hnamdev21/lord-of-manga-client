@@ -21,7 +21,7 @@ type Props = {
 const formatter: StatisticProps["formatter"] = (value) => <CountUp end={value as number} separator="." />;
 
 const ChapterDetail = ({ comic, chapter }: Props) => {
-  const [modalApi, contextHolder] = Modal.useModal();
+  const [modalApi, modalHolder] = Modal.useModal();
 
   const onPreview = () => {
     modalApi.info({
@@ -77,7 +77,7 @@ const ChapterDetail = ({ comic, chapter }: Props) => {
         </div>
       </div>
 
-      {contextHolder}
+      {modalHolder}
     </React.Fragment>
   );
 };
