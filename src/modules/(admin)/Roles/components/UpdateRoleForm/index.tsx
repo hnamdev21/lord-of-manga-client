@@ -44,7 +44,7 @@ const UpdateRoleForm = ({ role, refreshData }: Props) => {
 
   const onFinish = async (values: FormUpdateRole) => {
     const response = (
-      await AXIOS_INSTANCE.put<BaseResponse<boolean>>(
+      await AXIOS_INSTANCE.put<BaseResponse<Role>>(
         `/roles/${role.id}`,
         {
           ...values,

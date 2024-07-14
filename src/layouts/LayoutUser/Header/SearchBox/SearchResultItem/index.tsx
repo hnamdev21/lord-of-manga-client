@@ -4,7 +4,7 @@ import React from "react";
 
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
-import { localApiUrl } from "@/constants/config";
+import { apiUrl } from "@/constants/config";
 import { Comic } from "@/types/data";
 
 type Props = Comic;
@@ -15,7 +15,7 @@ const SearchResultItem = (comic: Props) => {
   return (
     <div className="flex h-[15rem] gap-[1rem] cursor-pointer" onClick={() => router.push("/comics/" + comic.slug)}>
       <div className="w-1/5 bg-white rounded-md overflow-hidden">
-        <Image src={localApiUrl + "/uploads/" + comic.coverPath} alt={`Cover image of ${comic.title}`} width={400} height={400} className="object-cover" />
+        <Image src={apiUrl + "/uploads/" + comic.coverPath} alt={`Cover image of ${comic.title}`} width={400} height={400} className="object-cover" />
       </div>
 
       <div className="flex-1 flex flex-col justify-between">

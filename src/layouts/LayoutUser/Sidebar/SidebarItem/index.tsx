@@ -5,13 +5,25 @@ import React from "react";
 
 import Typography from "@/components/Typography";
 import { type SidebarItem } from "@/constants/sidebar";
+import { AuthContext } from "@/providers/AuthProvider";
+import { isUserHavePermission, isUserHaveRole } from "@/types/data";
 
 import styles from "./styles.module.scss";
 
 const SidebarItem = (item: SidebarItem) => {
+  const authContext = React.use(AuthContext);
+  const isAvailable =
+    (item.availablePermissions.length === 0 && item.availableRoles.length === 0) ||
+    item.availablePermissions.some((permission) => authContext?.user && isUserHavePermission(authContext?.user, permission)) ||
+    item.availableRoles.some((role) => authContext?.user && isUserHaveRole(authContext?.user, role));
+
   const pathname = usePathname();
   const routes = pathname.split("/");
   const active = item.href.split("/").every((path, index) => path === routes[index]);
+
+  if (!isAvailable) {
+    return null;
+  }
 
   return (
     <Link

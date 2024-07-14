@@ -9,7 +9,7 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
-import { localApiUrl } from "@/constants/config";
+import { apiUrl } from "@/constants/config";
 import { Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 
@@ -28,12 +28,12 @@ const Hero = () => {
           <div key={comic.id}>
             <Container noGrid className={styles.carousel__item}>
               <div className={styles.thumbnailContainer}>
-                <Image src={localApiUrl + "/uploads/" + comic.thumbnailPath} alt={`Thumbnail image of ${comic.title}`} layout="fill" objectFit="cover" />
+                <Image src={apiUrl + "/uploads/" + comic.thumbnailPath} alt={`Thumbnail image of ${comic.title}`} layout="fill" objectFit="cover" />
               </div>
 
               <div className={styles.leftContent}>
                 <div className={styles.leftContent__coverContainer}>
-                  <Image src={localApiUrl + "/uploads/" + comic.coverPath} alt={`Cover image of ${comic.title}`} layout="fill" />
+                  <Image src={apiUrl + "/uploads/" + comic.coverPath} alt={`Cover image of ${comic.title}`} layout="fill" />
                 </div>
 
                 <Button href={"/comics/" + comic.slug} size="lg" className="block relative text-center" style={{ width: "100%" }}>

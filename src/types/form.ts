@@ -84,3 +84,8 @@ export type FormCreateRole = Pick<Role, "name" | "description"> & {
   permissionIds: Permission["id"][];
 };
 export type FormUpdateRole = FormCreateRole & Pick<Role, "id">;
+
+export type FormCreateEmployee = Pick<User, "fullName" | "username" | "email" | "gender"> & {
+  roleIds: Role["id"][];
+};
+export type FormUpdateEmployee = FormCreateEmployee & Pick<User, "id">;

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { FaBookmark, FaDollarSign } from "react-icons/fa";
 
-import { localApiUrl } from "@/constants/config";
+import { apiUrl } from "@/constants/config";
 import { Comic, ComicType } from "@/types/data";
 
 import Button from "../Button";
@@ -40,7 +40,7 @@ const CardComic = ({ ...props }: Props) => {
         </div>
 
         <div className={styles.card__coverContainer}>
-          <Image src={localApiUrl + "/uploads/" + coverPath} alt={`Cover image of ${title}`} layout="fill" />
+          <Image src={apiUrl + "/uploads/" + coverPath} alt={`Cover image of ${title}`} layout="fill" />
         </div>
 
         <div className={styles.card__title}>

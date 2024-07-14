@@ -39,8 +39,8 @@ const LayoutAdmin = ({ children }: { children: React.ReactNode }) => {
           >
             <div className="w-full">
               {breadcrumbItems.map((item) => (
-                <React.Fragment>
-                  <Link key={item.href} href={item.href}>
+                <React.Fragment key={item.href}>
+                  <Link href={item.href}>
                     <Typography tag="span" textColor={breadcrumbItems.indexOf(item) < breadcrumbItems.length - 1 ? "black" : "primary"}>
                       {item.title}
                     </Typography>

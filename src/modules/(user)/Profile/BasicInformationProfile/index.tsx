@@ -8,7 +8,7 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
-import { localApiUrl } from "@/constants/config";
+import { apiUrl } from "@/constants/config";
 import Notification from "@/constants/notification";
 import { genderOptions } from "@/constants/options";
 import StatusCode from "@/constants/status-code";
@@ -30,7 +30,7 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
 
   const avatarSrc =
     base64Image ||
-    (user.avatarPath ? `${localApiUrl}/uploads/${user.avatarPath}` : null) ||
+    (user.avatarPath ? `${apiUrl}/uploads/${user.avatarPath}` : null) ||
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
   const onFinish: FormProps<FormUpdateProfile>["onFinish"] = async (values: FormUpdateProfile) => {

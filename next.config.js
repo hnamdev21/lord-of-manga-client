@@ -1,6 +1,6 @@
 const path = require("path");
 
-const isProd = process.env.NODE_ENV === "production";
+const isProd = process.env.NEXT_PUBLIC_APP_ENV === "production";
 const needPrefix = process.env.NEXT_PUBLIC_APP_ENV === "production" || process.env.NEXT_PUBLIC_APP_ENV === "development";
 
 /** @type {import('next').NextConfig} */
@@ -10,8 +10,9 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   compiler: {
-    // Enables the styled-components SWC transform
     styledComponents: true,
+    styledJsx: true,
+    removeConsole: isProd,
   },
   poweredByHeader: false,
   productionBrowserSourceMaps: false,

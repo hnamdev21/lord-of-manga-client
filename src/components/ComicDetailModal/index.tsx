@@ -6,7 +6,7 @@ import CountUp from "react-countup";
 import Button from "@/components/Button";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
-import { localApiUrl } from "@/constants/config";
+import { apiUrl } from "@/constants/config";
 import Path from "@/constants/path";
 import { VND_CURRENCY } from "@/constants/sign";
 import { Comic } from "@/types/data";
@@ -26,7 +26,7 @@ const ComicDetail = ({ comic, page = "admin" }: Props) => {
     <div className={styles.container}>
       <div className={styles.container__top}>
         <div className={styles.coverContainer}>
-          <Image src={localApiUrl + "/uploads/" + comic.coverPath} alt={`Cover image of ${comic.title}`} layout="fill" />
+          <Image src={apiUrl + "/uploads/" + comic.coverPath} alt={`Cover image of ${comic.title}`} layout="fill" />
         </div>
 
         <div className={styles.content}>

@@ -51,6 +51,8 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
     if (response.code === StatusCode.CREATED) {
       message.success(Notification.createSuccess("Chapter"));
       form.resetFields();
+      setFiles([]);
+      setImages([]);
     }
   };
 

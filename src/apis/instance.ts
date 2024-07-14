@@ -1,12 +1,12 @@
 import { message } from "antd";
 import axios from "axios";
 
-import { isDevelopment, localApiUrl } from "@/constants/config";
+import { apiUrl, isDevelopment } from "@/constants/config";
 import Path from "@/constants/path";
 import StatusCode from "@/constants/status-code";
 
 const AXIOS_INSTANCE = axios.create({
-  baseURL: isDevelopment ? localApiUrl : "",
+  baseURL: isDevelopment ? apiUrl : "",
   headers: {
     "Content-Type": "application/json",
     accept: "*/*",

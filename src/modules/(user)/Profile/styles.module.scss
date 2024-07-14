@@ -1,0 +1,20 @@
+.button {
+  padding: rem(10px) rem(15px);
+  border-right: rem(2px) solid;
+  border-color: var(--color-gray-2);
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: rem(10px);
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    border-color: var(--color-gray);
+    color: var(--color-gray);
+  }
+
+  &__active {
+    border-color: var(--color-primary) !important;
+    color: var(--color-primary) !important;
+  }
+}

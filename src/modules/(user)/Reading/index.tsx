@@ -8,7 +8,7 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
-import { localApiUrl } from "@/constants/config";
+import { apiUrl } from "@/constants/config";
 import LocalStorageKey from "@/constants/local-key";
 import { Chapter, Comic } from "@/types/data";
 import { BaseResponse } from "@/types/response";
@@ -85,7 +85,7 @@ const ReadingModule = ({ comicSlug, chapterSlug }: Props) => {
           Array.from({ length: data?.chapter.totalPages }).map((_, index) => (
             <div className="col-start-3 col-span-8 relative" key={index}>
               <Image
-                src={localApiUrl + "/uploads/comic/" + data?.comic.id + "/chapter-" + data?.chapter.ordinal + "/" + index + ".png"}
+                src={apiUrl + "/uploads/comic/" + data?.comic.id + "/chapter-" + data?.chapter.ordinal + "/" + index + ".png"}
                 alt={`Chapter image of ${index}`}
                 width={1920}
                 height={1080}

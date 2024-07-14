@@ -7,7 +7,7 @@ import React from "react";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Logo from "@/components/Logo";
-import { localApiUrl } from "@/constants/config";
+import { apiUrl } from "@/constants/config";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 
@@ -19,7 +19,7 @@ const Header = () => {
   const authContext = React.use(AuthContext);
 
   const avatarSrc =
-    (authContext?.user?.avatarPath ? `${localApiUrl}/uploads/${authContext?.user.avatarPath}` : null) ||
+    (authContext?.user?.avatarPath ? `${apiUrl}/uploads/${authContext?.user.avatarPath}` : null) ||
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
   return (

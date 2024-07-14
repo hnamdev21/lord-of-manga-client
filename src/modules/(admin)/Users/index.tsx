@@ -1,8 +1,9 @@
 "use client";
 
-import { GetProp, Table, TablePaginationConfig, TableProps, Tag } from "antd";
+import { GetProp, Modal, Popover, Table, TablePaginationConfig, TableProps, Tag } from "antd";
 import { SorterResult } from "antd/es/table/interface";
 import React from "react";
+import { FaPlus, FaTimes } from "react-icons/fa";
 import { useQuery } from "react-query";
 
 import AXIOS_INSTANCE from "@/apis/instance";
@@ -17,6 +18,8 @@ import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { conciseText, timestampToDateTime, toReadable } from "@/utils/formatter";
 
 import UserActions from "./components/ActionButtons";
+import CreateEmployeeForm from "./components/CreateEmployeeForm";
+import UpdateEmployeeForm from "./components/UpdateEmployeeForm";
 
 interface TableParams {
   pagination?: TablePaginationConfig;
@@ -27,6 +30,7 @@ interface TableParams {
 
 const UsersModule = () => {
   const authContext = React.use(AuthContext);
+  const [modalApi, modalHolder] = Modal.useModal();
 
   const [tableParams, setTableParams] = React.useState<TableParams>({
     pagination: {
@@ -57,6 +61,40 @@ const UsersModule = () => {
       enabled: !!authContext?.auth.token,
     }
   );
+
+  const onAddNew = () => {
+    modalApi.info({
+      title: (
+        <Typography tag="h1" fontSize="md" align="center">
+          Create new Employee
+        </Typography>
+      ),
+      icon: null,
+      centered: true,
+      footer: null,
+      maskClosable: true,
+      closable: true,
+      closeIcon: <FaTimes />,
+      content: <CreateEmployeeForm refreshData={() => refetch()} />,
+    });
+  };
+
+  const onEdit = (user: User) => {
+    modalApi.info({
+      title: (
+        <Typography tag="h1" fontSize="md" align="center">
+          Edit employee {user.username}
+        </Typography>
+      ),
+      icon: null,
+      centered: true,
+      footer: null,
+      maskClosable: true,
+      closable: true,
+      closeIcon: <FaTimes />,
+      content: <UpdateEmployeeForm user={user} refreshData={() => refetch()} />,
+    });
+  };
 
   const onBan = async (user: User) => {
     await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/users/${user.id}/ban`, null, {
@@ -142,7 +180,9 @@ const UsersModule = () => {
         width: "8%",
         render: (_, user) => (
           <div className="flex gap-[1rem]">
-            {user.roles.some((role) => role.value === DefaultRoleValue.ADMIN) ? null : <UserActions onBan={() => onBan(user)} onViewDetail={() => {}} />}
+            {user.roles.some((role) => role.value === DefaultRoleValue.ADMIN) ? null : (
+              <UserActions user={user} onBan={() => onBan(user)} onViewDetail={() => {}} onEdit={() => onEdit(user)} />
+            )}
           </div>
         ),
       },
@@ -156,6 +196,12 @@ const UsersModule = () => {
 
   return (
     <div className="w-full h-full">
+      <Popover content={<Typography fontSize="sm">Create new Employee account</Typography>}>
+        <Button element="button" type="button" size="sm" icon className="mb-[1rem]" onClick={() => onAddNew()}>
+          <FaPlus />
+        </Button>
+      </Popover>
+
       <Typography>Total 0/{tableParams.pagination?.pageSize} selected record(s)</Typography>
 
       <Table
@@ -177,6 +223,8 @@ const UsersModule = () => {
           });
         }}
       />
+
+      {modalHolder}
     </div>
   );
 };

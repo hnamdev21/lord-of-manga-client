@@ -21,7 +21,7 @@ const UpdateCategoryForm = ({ category, refreshData }: Props) => {
 
   const onFinish = async (values: FormUpdateCategory) => {
     const response = (
-      await AXIOS_INSTANCE.put<BaseResponse<boolean>>(`/categories/${category.id}`, values, {
+      await AXIOS_INSTANCE.put<BaseResponse<Category>>(`/categories/${category.id}`, values, {
         headers: {
           Authorization: `Bearer ${authContext?.auth.token}`,
         },

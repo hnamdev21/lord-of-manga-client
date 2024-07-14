@@ -21,7 +21,7 @@ const UpdateTagForm = ({ tag, refreshData }: Props) => {
 
   const onFinish = async (values: FormUpdateTag) => {
     const response = (
-      await AXIOS_INSTANCE.put<BaseResponse<boolean>>(`/tags/${tag.id}`, values, {
+      await AXIOS_INSTANCE.put<BaseResponse<Tag>>(`/tags/${tag.id}`, values, {
         headers: {
           Authorization: `Bearer ${authContext?.auth.token}`,
         },

@@ -80,6 +80,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   React.useEffect(() => {
     const token = localStorage.getItem(LocalStorageKey.TOKEN);
 
+    console.log("🚀 -> file: AuthProvider.tsx:83 -> React.useEffect -> token ::", token);
+
     if (token) {
       setAuth({
         token,
@@ -107,7 +109,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return;
       }
     }
-  }, []);
+  }, [pathname]);
 
   React.useEffect(() => {
     if (!auth.token) return;

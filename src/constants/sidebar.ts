@@ -21,10 +21,14 @@ import { IconType } from "react-icons/lib";
 
 import { FaClockRotateLeft } from "@/components/Icons";
 
+import { DefaultPermissionValue, DefaultRoleValue } from "./default-data";
+
 export type SidebarItem = {
   label: string;
   href: string;
   icon: IconType;
+  availableRoles: DefaultRoleValue[];
+  availablePermissions: DefaultPermissionValue[];
 };
 
 export const SidebarCommonPath = {
@@ -32,23 +36,31 @@ export const SidebarCommonPath = {
     label: "Home",
     href: "/",
     icon: FaHome,
-  } as const,
+    availableRoles: [],
+    availablePermissions: [],
+  },
   COMICS: {
     label: "Search",
     href: "/comics",
     icon: FaSearch,
-  } as const,
+    availableRoles: [],
+    availablePermissions: [],
+  },
   LIBRARY: {
     label: "Library",
     href: "/library",
     icon: FaBook,
-  } as const,
+    availableRoles: [],
+    availablePermissions: [],
+  },
   READING_HISTORY: {
     label: "Reading History",
     href: "/reading-history",
     icon: FaClockRotateLeft,
-  } as const,
-} as const;
+    availableRoles: [],
+    availablePermissions: [],
+  },
+};
 export type SidebarCommonPath = (typeof SidebarCommonPath)[keyof typeof SidebarCommonPath];
 
 export const SidebarAuthenticatedPath = {
@@ -56,27 +68,37 @@ export const SidebarAuthenticatedPath = {
     label: "Profile",
     href: "/profile",
     icon: FaAddressCard,
-  } as const,
+    availableRoles: [],
+    availablePermissions: [],
+  },
   UPLOAD: {
     label: "Upload Comic",
     href: "/upload",
     icon: FaUpload,
-  } as const,
+    availableRoles: [DefaultRoleValue.CREATOR],
+    availablePermissions: [DefaultPermissionValue.CREATE_COMIC],
+  },
   COMIC_MANAGEMENT: {
     label: "Comic Management",
     href: "/comic-management",
     icon: FaBox,
-  } as const,
+    availableRoles: [DefaultRoleValue.CREATOR],
+    availablePermissions: [DefaultPermissionValue.CREATE_COMIC],
+  },
   RECYCLE_BIN: {
     label: "Recycle Bin",
     href: "/recycle-bin",
     icon: FaTrashRestore,
-  } as const,
+    availableRoles: [DefaultRoleValue.CREATOR],
+    availablePermissions: [DefaultPermissionValue.CREATE_COMIC],
+  },
   SAVED_COMICS: {
     label: "Saved Comics",
     href: "/saved-comics",
     icon: FaBookmark,
-  } as const,
+    availableRoles: [],
+    availablePermissions: [],
+  },
 };
 export type SidebarPathAuthenticatedPath = (typeof SidebarAuthenticatedPath)[keyof typeof SidebarAuthenticatedPath];
 
@@ -85,56 +107,78 @@ export const SidebarAdminPath = {
     label: "Dashboard",
     href: "/admin/dashboard",
     icon: FaChartBar,
-  } as const,
+    availableRoles: [],
+    availablePermissions: [],
+  },
   ROLES: {
     label: "Roles",
     href: "/admin/roles",
     icon: FaIdCard,
-  } as const,
+    availableRoles: [DefaultRoleValue.HUMAN_RESOURCE],
+    availablePermissions: [DefaultPermissionValue.USER_MANAGER],
+  },
   USERS: {
     label: "Users",
     href: "/admin/users",
     icon: FaUserFriends,
-  } as const,
+    availableRoles: [DefaultRoleValue.HUMAN_RESOURCE],
+    availablePermissions: [DefaultPermissionValue.USER_MANAGER],
+  },
   BANNED_USERS: {
     label: "Banned Users",
     href: "/admin/banned-users",
     icon: FaUsersSlash,
-  } as const,
+    availableRoles: [DefaultRoleValue.HUMAN_RESOURCE],
+    availablePermissions: [DefaultPermissionValue.USER_MANAGER],
+  },
   CATEGORIES: {
     label: "Categories",
     href: "/admin/categories",
     icon: FaTags,
-  } as const,
+    availableRoles: [],
+    availablePermissions: [],
+  },
   TAGS: {
     label: "Tags",
     href: "/admin/tags",
     icon: FaHashtag,
-  } as const,
+    availableRoles: [],
+    availablePermissions: [],
+  },
   COMICS: {
     label: "Comics",
     href: "/admin/comics",
     icon: FaBook,
-  } as const,
+    availableRoles: [DefaultRoleValue.COMIC_CENSOR],
+    availablePermissions: [],
+  },
   BANNED_COMICS: {
     label: "Banned Comics",
     href: "/admin/banned-comics",
     icon: FaBan,
-  } as const,
+    availableRoles: [DefaultRoleValue.COMIC_CENSOR],
+    availablePermissions: [DefaultPermissionValue.BAN_COMIC],
+  },
   RECYCLE_BIN: {
     label: "Recycle Bin",
     href: "/admin/recycle-bin",
     icon: FaTrashRestore,
-  } as const,
+    availableRoles: [DefaultRoleValue.COMIC_CENSOR],
+    availablePermissions: [DefaultPermissionValue.DELETE_COMIC],
+  },
   COMMENTS: {
     label: "Comments",
     href: "/admin/comments",
     icon: FaComment,
-  } as const,
+    availableRoles: [DefaultRoleValue.COMMENT_CENSOR],
+    availablePermissions: [DefaultPermissionValue.DISABLE_COMMENT],
+  },
   PAYMENTS: {
     label: "Payments",
     href: "/admin/payments",
     icon: FaWallet,
-  } as const,
+    availableRoles: [],
+    availablePermissions: [],
+  },
 };
 export type SidebarAdminPath = (typeof SidebarAdminPath)[keyof typeof SidebarAdminPath];

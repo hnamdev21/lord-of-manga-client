@@ -2,6 +2,7 @@
 
 import cn from "classnames";
 import React from "react";
+import { FaAt, FaIdCard, FaLock } from "react-icons/fa";
 
 import Container from "@/components/Container";
 import { AuthContext } from "@/providers/AuthProvider";
@@ -9,6 +10,7 @@ import { AuthContext } from "@/providers/AuthProvider";
 import BasicInformationProfile from "./BasicInformationProfile";
 import EmailProfile from "./EmailProfile";
 import PasswordProfile from "./PasswordProfile";
+import styles from "./styles.module.scss";
 
 type ActiveTab = "PROFILE" | "EMAIL" | "PASSWORD";
 
@@ -23,6 +25,7 @@ const ProfileModule = () => {
     {
       title: string;
       content: React.ReactNode;
+      icon: React.ReactNode;
     }
   > = React.useMemo(
     () =>
@@ -31,17 +34,19 @@ const ProfileModule = () => {
             PROFILE: {
               title: "Profile",
               content: <BasicInformationProfile user={authContext.user} token={authContext.auth.token} />,
+              icon: <FaIdCard />,
             },
-            EMAIL: { title: "Email", content: <EmailProfile user={authContext.user} token={authContext.auth.token} /> },
+            EMAIL: { title: "Email", content: <EmailProfile user={authContext.user} token={authContext.auth.token} />, icon: <FaAt /> },
             PASSWORD: {
               title: "Password",
               content: <PasswordProfile user={authContext.user} token={authContext.auth.token} />,
+              icon: <FaLock />,
             },
           }
         : {
-            PROFILE: { title: "Profile", content: null },
-            EMAIL: { title: "Email", content: null },
-            PASSWORD: { title: "Password", content: null },
+            PROFILE: { title: "Profile", content: null, icon: null },
+            EMAIL: { title: "Email", content: null, icon: null },
+            PASSWORD: { title: "Password", content: null, icon: null },
           },
     [authContext.user, authContext.auth.token]
   );
@@ -49,15 +54,15 @@ const ProfileModule = () => {
   return (
     <Container className="flex-1 pt-[4rem]">
       <div className="col-start-2 col-span-1 flex flex-col">
-        {Object.entries(tabs).map(([key, { title }]) => (
+        {Object.entries(tabs).map(([key, { title, icon }]) => (
           <button
             key={key}
             onClick={() => setActiveTab(key as ActiveTab)}
-            className={cn("py-[1rem] px-[1.5rem] border-r-[4px] border-solid text-right transition duration-300 ease-in-out hover:brightness-90", {
-              "border-[var(--color-primary)]": activeTab === key,
+            className={cn(styles.button, {
+              [styles.button__active]: activeTab === key,
             })}
           >
-            {title}
+            {title} {icon}
           </button>
         ))}
       </div>

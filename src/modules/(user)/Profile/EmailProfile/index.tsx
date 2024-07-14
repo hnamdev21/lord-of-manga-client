@@ -5,7 +5,6 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
-import { DefaultRoleValue } from "@/constants/default-data";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
@@ -20,8 +19,6 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormUpdateEmail>();
   const [formSetting] = Form.useForm<FormUpdateUserSetting>();
-
-  const isVerified = user.roles.some((role) => role.name === DefaultRoleValue.USER);
 
   const onFinishSetting: FormProps<FormUpdateUserSetting>["onFinish"] = async (values: FormUpdateUserSetting) => {
     const response = (
@@ -48,7 +45,7 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
       <Form layout="vertical" form={form} initialValues={{ email: user.email }} className="col-start-4 col-span-2">
         <Popover
           content={
-            isVerified && (
+            user.verifiedUser && (
               <Typography fontSize="sm" italic align="center">
                 Verified
               </Typography>
@@ -64,7 +61,7 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
             name="email"
             rules={[{ type: "email", message: Notification.invalid("email") }]}
           >
-            <EmailInput isVerified={isVerified} username={user.username} token={token} />
+            <EmailInput isVerified={user.verifiedUser} username={user.username} token={token} />
           </Form.Item>
         </Popover>
       </Form>
@@ -86,7 +83,7 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
         <div className="mb-[1.5rem]">
           <Popover
             content={
-              !isVerified && (
+              !user.verifiedUser && (
                 <Typography fontSize="sm" italic align="center">
                   Enable when your email is verified
                 </Typography>
@@ -94,10 +91,10 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
             }
           >
             <Form.Item<FormUpdateUserSetting> name="receiveNews" valuePropName="checked" className="mb-0">
-              <Checkbox disabled={!isVerified}>Receive news</Checkbox>
+              <Checkbox disabled={!user.verifiedUser}>Receive news</Checkbox>
             </Form.Item>
             <Form.Item<FormUpdateUserSetting> name="twoStepVerification" valuePropName="checked" className="mb-0">
-              <Checkbox disabled={!isVerified}>Two-factor authentication</Checkbox>
+              <Checkbox disabled={!user.verifiedUser}>Two-factor authentication</Checkbox>
             </Form.Item>
           </Popover>
         </div>

@@ -1,3 +1,5 @@
+import { DefaultPermissionValue } from "@/constants/default-data";
+
 export const Gender = {
   MALE: "MALE",
   FEMALE: "FEMALE",
@@ -34,24 +36,6 @@ export const ChapterType = {
 } as const;
 export type ChapterType = keyof typeof ChapterType;
 
-export const PermissionValue = {
-  CREATE_COMIC: "CREATE_COMIC",
-  USER_MANAGER: "USER_MANAGER",
-  APPROVE_COMIC: "APPROVE_COMIC",
-  APPROVE_CHAPTER: "APPROVE_CHAPTER",
-  BAN_COMIC: "BAN_COMIC",
-  BAN_CHAPTER: "BAN_CHAPTER",
-  DELETE_COMIC: "DELETE_COMIC",
-  DELETE_CHAPTER: "DELETE_CHAPTER",
-  COMMENT: "COMMENT",
-  PREVIEW_COMIC: "PREVIEW_COMIC",
-  READ_COMIC: "READ_COMIC",
-  DISABLE_COMMENT: "DISABLE_COMMENT",
-  APPROVE_REPORT: "APPROVE_REPORT",
-  REJECT_REPORT: "REJECT_REPORT",
-} as const;
-export type PermissionValue = keyof typeof PermissionValue;
-
 export type BaseEntity = {
   id: string;
   createdAt: string;
@@ -60,7 +44,7 @@ export type BaseEntity = {
 
 export type Permission = BaseEntity & {
   name: string;
-  value: PermissionValue;
+  value: DefaultPermissionValue;
   description: string;
 };
 
@@ -148,4 +132,12 @@ export type Comic = BaseEntity & {
   deletedAt: string | null;
   deletedReason: string | null;
   chapters: Chapter[];
+};
+
+export const isUserHavePermission = (user: User, permissionValue: DefaultPermissionValue) => {
+  return user.roles.some((role) => role.permissions.some((permission) => permission.value === permissionValue));
+};
+
+export const isUserHaveRole = (user: User, roleValue: string) => {
+  return user.roles.some((role) => role.value === roleValue);
 };
