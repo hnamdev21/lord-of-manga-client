@@ -4,4 +4,13 @@ body {
   line-height: 1.6;
   color: var(--color-black);
   background-color: var(--color-light);
+
+  &::-webkit-scrollbar {
+    width: rem(6px);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: rem(10px);
+    background: var(--color-primary);
+  }
 }

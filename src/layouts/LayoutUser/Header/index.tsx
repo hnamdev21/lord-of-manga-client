@@ -37,7 +37,7 @@ const Header = () => {
           {authContext?.user ? (
             <Popover content={<PopoverProfile />}>
               <Link href={Path.USER.PROFILE}>
-                <Avatar size={40} src={avatarSrc} alt="User avatar" className="cursor-pointer" />
+                <Avatar size={32} src={avatarSrc} alt="User avatar" className="cursor-pointer" />
               </Link>
             </Popover>
           ) : (

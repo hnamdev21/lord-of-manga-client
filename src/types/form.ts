@@ -1,6 +1,6 @@
 import { FieldNamesType } from "antd/es/cascader";
 
-import { Category, Chapter, Comic, Comment, Role, Tag, User } from "./data";
+import { Category, Chapter, Comic, Comment, Permission, Role, Tag, User } from "./data";
 
 export type FormSignIn = Pick<User, "username"> & {
   password: string;
@@ -80,5 +80,7 @@ export type FormCreateChapter = Pick<Chapter, "title" | "showComment" | "type" |
 };
 export type FormUpdateChapter = FormCreateChapter & Pick<Chapter, "id">;
 
-export type FormCreateRole = Pick<Role, "name" | "description" | "permissions">;
+export type FormCreateRole = Pick<Role, "name" | "description"> & {
+  permissionIds: Permission["id"][];
+};
 export type FormUpdateRole = FormCreateRole & Pick<Role, "id">;

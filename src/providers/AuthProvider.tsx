@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 import AXIOS_INSTANCE from "@/apis/instance";
-import { DefaultRoleName } from "@/constants/default-data";
+import { DefaultRoleValue } from "@/constants/default-data";
 import LocalStorageKey from "@/constants/local-key";
 import Notification from "@/constants/notification";
 import Path, { adminPaths, authorizedUserPaths } from "@/constants/path";
@@ -124,7 +124,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
 
         adminPaths.forEach((path) => {
-          if (pathname.startsWith(path) && !user.roles.some((role) => role.name === DefaultRoleName.ADMIN)) {
+          if (pathname.startsWith(path) && !user.roles.some((role) => role.value === DefaultRoleValue.ADMIN)) {
             message.info(Notification.signInAsAdminRequired);
             window.location.href = Path.ERROR.FORBIDDEN;
           }

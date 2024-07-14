@@ -12,13 +12,12 @@ import ComicDetail from "@/components/ComicDetailModal";
 import DeleteComicForm from "@/components/FormDeleteComicModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
-import { ComicStatusMapping, ComicTypeMapping } from "@/constants/mapping";
 import Notification from "@/constants/notification";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Comic, ComicStatus, ComicType } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
-import { conciseText, numberToCurrency, timestampToDateTime } from "@/utils/formatter";
+import { conciseText, numberToCurrency, timestampToDateTime, toReadable } from "@/utils/formatter";
 
 import ComicActions from "./components/ActionButtons";
 import BanComicForm from "./components/BanComicForm";
@@ -185,7 +184,7 @@ const ComicsModule = () => {
         dataIndex: "type",
         key: "type",
         width: "10%",
-        render: (_, { type }) => <AntdTag color={type === ComicType.FREE ? "success" : "warning"}>{ComicTypeMapping[type]}</AntdTag>,
+        render: (_, { type }) => <AntdTag color={type === ComicType.FREE ? "success" : "warning"}>{toReadable(type)}</AntdTag>,
       },
       {
         title: "Price",
@@ -221,7 +220,7 @@ const ComicsModule = () => {
           return (
             <AntdTag color={color} style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
               {icon}
-              {ComicStatusMapping[status]}
+              {toReadable(status)}
             </AntdTag>
           );
         },
@@ -267,60 +266,58 @@ const ComicsModule = () => {
   }, [tableParams.pagination]);
 
   return (
-    <React.Fragment>
-      <div className="w-full h-full flex flex-col gap-[3.5rem]">
-        <div className="w-full h-[4rem] bg-black" />
+    <div className="w-full h-full flex flex-col gap-[3.5rem]">
+      <div className="w-full h-[4rem] bg-black" />
 
-        <div className="w-full flex-1 relative">
-          <div className="absolute z-10 -translate-y-[100%] w-full h-[2.5rem] flex">
-            <div className="w-[15%] h-full" />
-            <div className="w-[10%] h-full" />
-            <div className="w-[10%] h-full" />
-            <div className="w-[10%] h-full" />
-            <div className="w-[10%] h-full" />
-            <div className="w-[10%] bg-[var(--color-gray-2)] h-full rounded-tl-2xl rounded-tr-2xl border border-solid border-gray-200 py-[.25rem] flex items-center justify-center gap-[.5rem]">
-              <Button element="button" icon type="button" color="warning" variant="outline" size="xs" onClick={() => {}}>
-                <FaEllipsisH />
-              </Button>
-              <Button element="button" icon type="button" color="success" variant="outline" size="xs" onClick={() => {}}>
-                <FaCheck />
-              </Button>
-              <Button element="button" icon type="button" color="danger" variant="outline" size="xs" onClick={() => {}}>
-                <FaBan />
-              </Button>
-              <Button element="button" icon type="button" color="gray" variant="outline" size="xs" onClick={() => {}}>
-                <FaTrash />
-              </Button>
-            </div>
-            <div className="w-[10%] h-full" />
-            <div className="w-[10%] h-full" />
-            <div className="w-[15%] h-full" />
+      <div className="w-full flex-1 relative">
+        <div className="absolute z-10 -translate-y-[100%] w-full h-[2.5rem] flex">
+          <div className="w-[15%] h-full" />
+          <div className="w-[10%] h-full" />
+          <div className="w-[10%] h-full" />
+          <div className="w-[10%] h-full" />
+          <div className="w-[10%] h-full" />
+          <div className="w-[10%] bg-[var(--color-gray-2)] h-full rounded-tl-2xl rounded-tr-2xl border border-solid border-gray-200 py-[.25rem] flex items-center justify-center gap-[.5rem]">
+            <Button element="button" icon type="button" color="warning" variant="outline" size="xs" onClick={() => {}}>
+              <FaEllipsisH />
+            </Button>
+            <Button element="button" icon type="button" color="success" variant="outline" size="xs" onClick={() => {}}>
+              <FaCheck />
+            </Button>
+            <Button element="button" icon type="button" color="danger" variant="outline" size="xs" onClick={() => {}}>
+              <FaBan />
+            </Button>
+            <Button element="button" icon type="button" color="gray" variant="outline" size="xs" onClick={() => {}}>
+              <FaTrash />
+            </Button>
           </div>
-
-          <Table
-            columns={columns}
-            dataSource={data?.content}
-            size="small"
-            rowKey={(record: Comic) => record.id}
-            bordered
-            pagination={{
-              current: tableParams.pagination?.current,
-              pageSize: tableParams.pagination?.pageSize,
-              total: data?.totalElements,
-              showQuickJumper: true,
-              showTotal: (total) => `Total ${total} record(s)`,
-            }}
-            onChange={(pagination) => {
-              setTableParams({
-                pagination,
-              });
-            }}
-          />
-
-          {modalHolder}
+          <div className="w-[10%] h-full" />
+          <div className="w-[10%] h-full" />
+          <div className="w-[15%] h-full" />
         </div>
+
+        <Table
+          columns={columns}
+          dataSource={data?.content}
+          size="small"
+          rowKey={(record: Comic) => record.id}
+          bordered
+          pagination={{
+            current: tableParams.pagination?.current,
+            pageSize: tableParams.pagination?.pageSize,
+            total: data?.totalElements,
+            showQuickJumper: true,
+            showTotal: (total) => `Total ${total} record(s)`,
+          }}
+          onChange={(pagination) => {
+            setTableParams({
+              pagination,
+            });
+          }}
+        />
+
+        {modalHolder}
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

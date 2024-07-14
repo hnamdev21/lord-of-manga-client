@@ -1,17 +1,29 @@
+$scroll-width: rem(2px);
+
 .container {
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   z-index: 21;
-  width: rem(52px);
+  width: calc(rem(52px) + $scroll-width);
   padding: rem(10px);
   transition: all 0.3s ease-in-out;
   background-color: var(--color-light);
   box-shadow: 0 0 rem(20px) rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: $scroll-width;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: rem(10px);
+    background: var(--color-primary);
+  }
 
   &:hover {
-    width: rem(240px);
+    width: calc(rem(240px) + $scroll-width);
   }
 
   .logo {

@@ -4,7 +4,7 @@ import React from "react";
 
 import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
-import { DefaultRoleName } from "@/constants/default-data";
+import { DefaultRoleValue } from "@/constants/default-data";
 import { SidebarAdminPath, SidebarCommonPath } from "@/constants/sidebar";
 import { AuthContext } from "@/providers/AuthProvider";
 
@@ -29,7 +29,7 @@ const Sidebar = () => {
       </div>
 
       {/* Admin Menu */}
-      {authContext?.user?.roles.some((role) => role.name === DefaultRoleName.ADMIN) && (
+      {authContext?.user?.roles.some((role) => role.value === DefaultRoleValue.ADMIN) && (
         <React.Fragment>
           <Typography tag="h6" fontSize="xs" fontWeight="bold" align="center" className={styles.title}>
             Admin

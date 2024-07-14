@@ -9,13 +9,12 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
-import { DefaultRoleName } from "@/constants/default-data";
-import { GenderMapping } from "@/constants/mapping";
+import { DefaultRoleValue } from "@/constants/default-data";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { User } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
-import { conciseText, timestampToDateTime } from "@/utils/formatter";
+import { conciseText, timestampToDateTime, toReadable } from "@/utils/formatter";
 
 import UserActions from "./components/ActionButtons";
 
@@ -113,7 +112,7 @@ const UsersModule = () => {
         dataIndex: "gender",
         key: "Gender",
         width: "8%",
-        render: (_, { gender }) => GenderMapping[gender],
+        render: (_, { gender }) => toReadable(gender),
       },
       {
         title: "Roles",
@@ -143,7 +142,7 @@ const UsersModule = () => {
         width: "8%",
         render: (_, user) => (
           <div className="flex gap-[1rem]">
-            {user.roles.some((role) => role.name === DefaultRoleName.ADMIN) ? null : <UserActions onBan={() => onBan(user)} onViewDetail={() => {}} />}
+            {user.roles.some((role) => role.value === DefaultRoleValue.ADMIN) ? null : <UserActions onBan={() => onBan(user)} onViewDetail={() => {}} />}
           </div>
         ),
       },

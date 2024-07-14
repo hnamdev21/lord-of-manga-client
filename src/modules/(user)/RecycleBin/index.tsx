@@ -10,14 +10,13 @@ import Button from "@/components/Button";
 import ComicDetail from "@/components/ComicDetailModal";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
-import { DefaultRoleName } from "@/constants/default-data";
-import { ComicTypeMapping } from "@/constants/mapping";
+import { DefaultRoleValue } from "@/constants/default-data";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Comic, ComicStatus, ComicType } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
-import { numberToCurrency, timestampToDateTime } from "@/utils/formatter";
+import { numberToCurrency, timestampToDateTime, toReadable } from "@/utils/formatter";
 
 const User_RecycleBinModule = () => {
   const authContext = React.use(AuthContext);
@@ -113,7 +112,7 @@ const User_RecycleBinModule = () => {
         dataIndex: "type",
         key: "type",
         width: "10%",
-        render: (_, { type }) => <AntdTag color={type === ComicType.FREE ? "green" : "yellow"}>{ComicTypeMapping[type]}</AntdTag>,
+        render: (_, { type }) => <AntdTag color={type === ComicType.FREE ? "green" : "yellow"}>{toReadable(type)}</AntdTag>,
       },
       {
         title: "Price",
@@ -127,7 +126,7 @@ const User_RecycleBinModule = () => {
         dataIndex: "deletedr",
         key: "deletedr",
         width: "10%",
-        render: (_, { deleter }) => (deleter?.roles.some((role) => role.name === DefaultRoleName.ADMIN) ? "Admin" : "Your self"),
+        render: (_, { deleter }) => (deleter?.roles.some((role) => role.value === DefaultRoleValue.ADMIN) ? "Admin" : "Your self"),
       },
       {
         title: "Reason",

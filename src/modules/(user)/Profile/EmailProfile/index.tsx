@@ -5,7 +5,7 @@ import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
-import { DefaultRoleName } from "@/constants/default-data";
+import { DefaultRoleValue } from "@/constants/default-data";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
@@ -21,7 +21,7 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
   const [form] = Form.useForm<FormUpdateEmail>();
   const [formSetting] = Form.useForm<FormUpdateUserSetting>();
 
-  const isVerified = user.roles.some((role) => role.name === DefaultRoleName.USER);
+  const isVerified = user.roles.some((role) => role.name === DefaultRoleValue.USER);
 
   const onFinishSetting: FormProps<FormUpdateUserSetting>["onFinish"] = async (values: FormUpdateUserSetting) => {
     const response = (

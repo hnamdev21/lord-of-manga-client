@@ -13,12 +13,11 @@ import Container from "@/components/Container";
 import DeleteComicForm from "@/components/FormDeleteComicModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
-import { ComicStatusMapping, ComicTypeMapping } from "@/constants/mapping";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Comic, ComicStatus, ComicType } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
-import { conciseText, numberToCurrency, timestampToDateTime } from "@/utils/formatter";
+import { conciseText, numberToCurrency, timestampToDateTime, toReadable } from "@/utils/formatter";
 
 import ComicActions from "./components/ActionButtons";
 import UpdateComicForm from "./components/FormUpdateComicModal";
@@ -168,7 +167,7 @@ const ComicManagementModule = () => {
         dataIndex: "type",
         key: "type",
         width: "10%",
-        render: (_, { type }) => <AntdTag color={type === ComicType.FREE ? "success" : "warning"}>{ComicTypeMapping[type]}</AntdTag>,
+        render: (_, { type }) => <AntdTag color={type === ComicType.FREE ? "success" : "warning"}>{toReadable(type)}</AntdTag>,
       },
       {
         title: "Price",
@@ -204,7 +203,7 @@ const ComicManagementModule = () => {
           return (
             <AntdTag color={color} style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
               {icon}
-              {ComicStatusMapping[status]}
+              {toReadable(status)}
             </AntdTag>
           );
         },

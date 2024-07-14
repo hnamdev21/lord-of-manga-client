@@ -12,12 +12,11 @@ import ChapterDetail from "@/components/ChapterDetailModal";
 import DeleteChapterForm from "@/components/FormDeleteChapterModal";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
-import { ChapterStatusMapping, ChapterTypeMapping } from "@/constants/mapping";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
 import { Chapter, ChapterStatus, Comic, ComicType } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
-import { conciseText, numberToCurrency, timestampToDateTime } from "@/utils/formatter";
+import { conciseText, numberToCurrency, timestampToDateTime, toReadable } from "@/utils/formatter";
 
 import ChapterActions from "./components/ActionButtons";
 
@@ -157,7 +156,7 @@ const ChapterManagementModule = ({ comicSlug }: ChapterManagementModuleProps) =>
         dataIndex: "type",
         key: "type",
         width: "10%",
-        render: (_, { type }) => <AntdTag color={type === ComicType.FREE ? "success" : "warning"}>{ChapterTypeMapping[type]}</AntdTag>,
+        render: (_, { type }) => <AntdTag color={type === ComicType.FREE ? "success" : "warning"}>{toReadable(type)}</AntdTag>,
       },
       {
         title: "Price",
@@ -193,7 +192,7 @@ const ChapterManagementModule = ({ comicSlug }: ChapterManagementModuleProps) =>
           return (
             <AntdTag color={color} style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
               {icon}
-              {ChapterStatusMapping[status]}
+              {toReadable(status)}
             </AntdTag>
           );
         },
@@ -239,61 +238,59 @@ const ChapterManagementModule = ({ comicSlug }: ChapterManagementModuleProps) =>
   }, [tableParams.pagination]);
 
   return (
-    <React.Fragment>
-      <div className="w-full h-full flex flex-col gap-[3.5rem]">
-        <div className="w-full h-[4rem] bg-black" />
+    <div className="w-full h-full flex flex-col gap-[3.5rem]">
+      <div className="w-full h-[4rem] bg-black" />
 
-        <div className="w-full flex-1 relative">
-          <div className="absolute z-10 -translate-y-[100%] w-full h-[2.5rem] flex">
-            <div className="w-[5%] h-full" />
-            <div className="w-[15%] h-full" />
-            <div className="w-[5%] h-full" />
-            <div className="w-[10%] h-full" />
-            <div className="w-[10%] h-full" />
-            <div className="w-[10%] bg-[var(--color-gray-2)] h-full rounded-tl-2xl rounded-tr-2xl border border-solid border-gray-200 py-[.25rem] flex items-center justify-center gap-[.5rem]">
-              <Button element="button" icon type="button" color="warning" variant="outline" size="xs" onClick={() => {}}>
-                <FaEllipsisH />
-              </Button>
-              <Button element="button" icon type="button" color="success" variant="outline" size="xs" onClick={() => {}}>
-                <FaCheck />
-              </Button>
-              <Button element="button" icon type="button" color="danger" variant="outline" size="xs" onClick={() => {}}>
-                <FaBan />
-              </Button>
-              <Button element="button" icon type="button" color="gray" variant="outline" size="xs" onClick={() => {}}>
-                <FaTrash />
-              </Button>
-            </div>
-            <div className="w-[10%] h-full" />
-            <div className="w-[10%] h-full" />
-            <div className="w-[10%] h-full" />
-            <div className="w-[15%] h-full" />
+      <div className="w-full flex-1 relative">
+        <div className="absolute z-10 -translate-y-[100%] w-full h-[2.5rem] flex">
+          <div className="w-[5%] h-full" />
+          <div className="w-[15%] h-full" />
+          <div className="w-[5%] h-full" />
+          <div className="w-[10%] h-full" />
+          <div className="w-[10%] h-full" />
+          <div className="w-[10%] bg-[var(--color-gray-2)] h-full rounded-tl-2xl rounded-tr-2xl border border-solid border-gray-200 py-[.25rem] flex items-center justify-center gap-[.5rem]">
+            <Button element="button" icon type="button" color="warning" variant="outline" size="xs" onClick={() => {}}>
+              <FaEllipsisH />
+            </Button>
+            <Button element="button" icon type="button" color="success" variant="outline" size="xs" onClick={() => {}}>
+              <FaCheck />
+            </Button>
+            <Button element="button" icon type="button" color="danger" variant="outline" size="xs" onClick={() => {}}>
+              <FaBan />
+            </Button>
+            <Button element="button" icon type="button" color="gray" variant="outline" size="xs" onClick={() => {}}>
+              <FaTrash />
+            </Button>
           </div>
-
-          <Table
-            columns={columns}
-            dataSource={chapters?.content}
-            size="small"
-            rowKey={(record: Chapter) => record.id}
-            bordered
-            pagination={{
-              current: tableParams.pagination?.current,
-              pageSize: tableParams.pagination?.pageSize,
-              total: chapters?.totalElements,
-              showQuickJumper: true,
-              showTotal: (total) => `Total ${total} chapters`,
-            }}
-            onChange={(pagination) => {
-              setTableParams({
-                pagination,
-              });
-            }}
-          />
-
-          {modalHolder}
+          <div className="w-[10%] h-full" />
+          <div className="w-[10%] h-full" />
+          <div className="w-[10%] h-full" />
+          <div className="w-[15%] h-full" />
         </div>
+
+        <Table
+          columns={columns}
+          dataSource={chapters?.content}
+          size="small"
+          rowKey={(record: Chapter) => record.id}
+          bordered
+          pagination={{
+            current: tableParams.pagination?.current,
+            pageSize: tableParams.pagination?.pageSize,
+            total: chapters?.totalElements,
+            showQuickJumper: true,
+            showTotal: (total) => `Total ${total} chapters`,
+          }}
+          onChange={(pagination) => {
+            setTableParams({
+              pagination,
+            });
+          }}
+        />
+
+        {modalHolder}
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 
