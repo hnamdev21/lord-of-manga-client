@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { FaLock, FaUser } from "react-icons/fa";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
@@ -15,6 +14,7 @@ import Notification from "@/constants/notification";
 import Path from "@/constants/path";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import AXIOS_INSTANCE from "@/services/instance";
 import { FormSignIn } from "@/types/form";
 import { BaseResponse } from "@/types/response";
 
@@ -38,7 +38,7 @@ const SignInModule = () => {
     <React.Fragment>
       <div>
         <Typography tag="h1" fontSize="2xl" align="center" className={styles.title}>
-          Welcome to Lord of Manga
+          {/* Welcome to Lord of Manga */}
         </Typography>
       </div>
 

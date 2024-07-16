@@ -5,16 +5,16 @@ import jwt from "jsonwebtoken";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import { DefaultRoleValue } from "@/constants/default-data";
 import LocalStorageKey from "@/constants/local-key";
 import Notification from "@/constants/notification";
 import Path, { adminPaths, authorizedUserPaths } from "@/constants/path";
+import AXIOS_INSTANCE from "@/services/instance";
 import { User } from "@/types/data";
 import { BaseResponse } from "@/types/response";
 
 type Auth = {
-  token: string | null;
+  token: string;
 };
 
 export const AuthContext = React.createContext<{
@@ -30,12 +30,12 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   const [auth, setAuth] = React.useState<Auth>({
-    token: null,
+    token: "",
   });
   const [user, setUser] = React.useState<User | null>(null);
 
   const getMe = async (token: string) => {
-    const { data } = (
+    const { data: user } = (
       await AXIOS_INSTANCE.get<BaseResponse<User>>("/users/mine", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -43,7 +43,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       })
     ).data;
 
-    return data;
+    return user;
   };
 
   const refreshUser = async () => {
@@ -70,7 +70,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem(LocalStorageKey.TOKEN);
 
     setAuth({
-      token: null,
+      token: "",
     });
     setUser(null);
 

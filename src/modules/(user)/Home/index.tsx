@@ -3,10 +3,8 @@
 import React from "react";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Container from "@/components/Container";
-import { Category } from "@/types/data";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
+import { CategoryAPI } from "@/services/apis/category";
 
 import ColCard from "./components/ColCard";
 import Hero from "./components/Hero";
@@ -15,8 +13,9 @@ import styles from "./styles.module.scss";
 
 const HomeModule = () => {
   const { data: categories } = useQuery("categories", async () => {
-    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Category[]>>>("/categories?size=4")).data;
-    return data.content;
+    const response = await CategoryAPI.getAllCategories({ size: 4 });
+
+    return response.data.content;
   });
 
   return (

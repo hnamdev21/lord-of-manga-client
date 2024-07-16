@@ -1,14 +1,13 @@
-import { Form, Input, message } from "antd";
+import { Form, Input, message, Modal } from "antd";
 import React from "react";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import { CategoryAPI } from "@/services/apis/category";
 import { Category } from "@/types/data";
 import { FormUpdateCategory } from "@/types/form";
-import { BaseResponse } from "@/types/response";
 
 type Props = {
   category: Category;
@@ -19,17 +18,18 @@ const UpdateCategoryForm = ({ category, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormUpdateCategory>();
 
+  if (!authContext) return null;
+
   const onFinish = async (values: FormUpdateCategory) => {
-    const response = (
-      await AXIOS_INSTANCE.put<BaseResponse<Category>>(`/categories/${category.id}`, values, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+    const response = await CategoryAPI.updateCategory({
+      id: category.id,
+      formData: values,
+      token: authContext.auth.token,
+    });
 
     if (response.code === StatusCode.OK) {
       refreshData();
+      Modal.destroyAll();
       message.success(Notification.updateSuccess("Category"));
     }
   };

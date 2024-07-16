@@ -1,13 +1,13 @@
 import { Form, FormProps, Input, message, Modal } from "antd";
 import React from "react";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import AXIOS_INSTANCE from "@/services/instance";
 import { User } from "@/types/data";
 import { FormTwoFactorAuthentication, FormUpdatePassword } from "@/types/form";
 import { BaseResponse } from "@/types/response";

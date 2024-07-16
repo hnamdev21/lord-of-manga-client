@@ -6,10 +6,10 @@ import React from "react";
 import { FaPlus, FaTimes } from "react-icons/fa";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import { AuthContext } from "@/providers/AuthProvider";
+import AXIOS_INSTANCE from "@/services/instance";
 import { Role } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { timestampToDateTime } from "@/utils/formatter";

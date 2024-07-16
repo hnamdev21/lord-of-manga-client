@@ -6,7 +6,6 @@ import React from "react";
 import { FaBan, FaCheck, FaEllipsisH, FaTimes, FaTrash } from "react-icons/fa";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import ChapterDetail from "@/components/ChapterDetailModal";
 import DeleteChapterForm from "@/components/FormDeleteChapterModal";
@@ -15,6 +14,7 @@ import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
+import AXIOS_INSTANCE from "@/services/instance";
 import { Chapter, ChapterStatus, ChapterType, Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { conciseText, numberToCurrency, timestampToDateTime, toReadable } from "@/utils/formatter";

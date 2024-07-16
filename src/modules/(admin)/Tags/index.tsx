@@ -6,14 +6,13 @@ import React from "react";
 import { FaPlus, FaTimes } from "react-icons/fa";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import { TagAPI } from "@/services/apis/tag";
 import { Tag } from "@/types/data";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { timestampToDateTime } from "@/utils/formatter";
 
 import TagActions from "./components/ActionButtons";
@@ -38,26 +37,20 @@ const TagsModule = () => {
     },
   });
 
+  if (!authContext) return null;
+
   const { data, refetch } = useQuery(
     "tags",
     async () => {
-      if (!authContext?.auth.token) return null;
+      const response = await TagAPI.getAllTags({
+        pageNumber: tableParams.pagination?.current,
+        size: tableParams.pagination?.pageSize,
+      });
 
-      const { data } = (
-        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Tag[]>>>(
-          `/tags?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
-          {
-            headers: {
-              Authorization: `Bearer ${authContext.auth.token}`,
-            },
-          }
-        )
-      ).data;
-
-      return data;
+      return response.data;
     },
     {
-      enabled: !!authContext?.auth.token,
+      enabled: !!authContext.auth.token,
     }
   );
 
@@ -96,13 +89,7 @@ const TagsModule = () => {
   };
 
   const deleteTag = async (record: Tag) => {
-    const response = (
-      await AXIOS_INSTANCE.delete<BaseResponse<boolean>>(`/categories/${record.id}`, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+    const response = await TagAPI.deleteTag({ id: record.id, token: authContext.auth.token });
 
     if (response.code === StatusCode.OK) {
       refetch();

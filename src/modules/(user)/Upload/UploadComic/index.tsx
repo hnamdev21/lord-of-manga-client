@@ -6,7 +6,6 @@ import React from "react";
 import { FaUpload } from "react-icons/fa";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
@@ -14,6 +13,7 @@ import { comicTypeOptions } from "@/constants/options";
 import { VND_CURRENCY } from "@/constants/sign";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import AXIOS_INSTANCE from "@/services/instance";
 import { Category, Comic, ComicType, Tag } from "@/types/data";
 import { FormCreateComic } from "@/types/form";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
@@ -31,7 +31,7 @@ const checkFile = (resolve: any, file: RcFile) => {
 const UploadComic = () => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormCreateComic>();
-  const { data } = useQuery(["categories", "tags"], async () => {
+  const { data: categoriesAndTags } = useQuery(["categories", "tags"], async () => {
     const [responseCategories, responseTags] = await Promise.all([
       AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Category[]>>>("/categories"),
       AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Tag[]>>>("/tags"),
@@ -136,7 +136,7 @@ const UploadComic = () => {
             rules={[{ required: true, message: Notification.pleaseSelect("categories") }]}
             className="flex-1"
           >
-            <Select mode="multiple" allowClear id="categories" placeholder="-- Select categories --" options={data?.categories} />
+            <Select mode="multiple" allowClear id="categories" placeholder="-- Select categories --" options={categoriesAndTags?.categories} />
           </Form.Item>
           <Form.Item<FormCreateComic>
             label={
@@ -153,7 +153,7 @@ const UploadComic = () => {
               mode="multiple"
               showSearch={false}
               searchValue={searchValue}
-              options={data?.tags}
+              options={categoriesAndTags?.tags}
               dropdownRender={(menu) => (
                 <React.Fragment>
                   <Space>

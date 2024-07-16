@@ -4,7 +4,6 @@ import { Checkbox, Form, FormProps, Input, InputNumber, message, Popover, Select
 import { FieldNamesType } from "antd/es/cascader";
 import React from "react";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import MultipleFileInput from "@/components/MultipleFileInput";
 import Typography from "@/components/Typography";
@@ -13,6 +12,7 @@ import { chapterTypeOptions } from "@/constants/options";
 import { VND_CURRENCY } from "@/constants/sign";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import AXIOS_INSTANCE from "@/services/instance";
 import { Chapter, Comic, ComicType } from "@/types/data";
 import { FormCreateChapter } from "@/types/form";
 import { BaseResponse } from "@/types/response";

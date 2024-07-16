@@ -1,14 +1,14 @@
-import { Form, Input, message, Select } from "antd";
+import { Form, Input, message, Modal, Select } from "antd";
 import React from "react";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import { genderOptions } from "@/constants/options";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import AXIOS_INSTANCE from "@/services/instance";
 import { Permission, User } from "@/types/data";
 import { FormUpdateEmployee } from "@/types/form";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
@@ -54,6 +54,7 @@ const UpdateEmployeeForm = ({ user, refreshData }: Props) => {
 
     if (response.code === StatusCode.OK) {
       refreshData();
+      Modal.destroyAll();
       message.success(Notification.updateSuccess("Employee"));
     }
   };

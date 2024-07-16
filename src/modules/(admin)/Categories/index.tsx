@@ -6,14 +6,13 @@ import React from "react";
 import { FaPlus, FaTimes } from "react-icons/fa";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import { CategoryAPI } from "@/services/apis/category";
 import { Category } from "@/types/data";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { timestampToDateTime } from "@/utils/formatter";
 
 import CategoryActions from "./components/ActionButtons";
@@ -31,6 +30,8 @@ const CategoriesModule = () => {
   const authContext = React.use(AuthContext);
   const [modalApi, modalHolder] = Modal.useModal();
 
+  if (!authContext) return null;
+
   const [tableParams, setTableParams] = React.useState<TableParams>({
     pagination: {
       current: 1,
@@ -41,20 +42,12 @@ const CategoriesModule = () => {
   const { data, refetch } = useQuery(
     "categories",
     async () => {
-      if (!authContext?.auth.token) return null;
+      const response = await CategoryAPI.getAllCategories({
+        pageNumber: tableParams.pagination?.current,
+        size: tableParams.pagination?.pageSize,
+      });
 
-      const { data } = (
-        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Category[]>>>(
-          `/categories?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
-          {
-            headers: {
-              Authorization: `Bearer ${authContext.auth.token}`,
-            },
-          }
-        )
-      ).data;
-
-      return data;
+      return response.data;
     },
     {
       enabled: !!authContext?.auth.token,
@@ -96,18 +89,15 @@ const CategoriesModule = () => {
   };
 
   const deleteCategory = async (record: Category) => {
-    const response = (
-      await AXIOS_INSTANCE.delete<BaseResponse<boolean>>(`/categories/${record.id}`, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+    const response = await CategoryAPI.deleteCategory({
+      id: record.id,
+      token: authContext.auth.token,
+    });
 
     if (response.code === StatusCode.OK) {
       refetch();
-      message.success(Notification.removeSuccess("Category"));
       Modal.destroyAll();
+      message.success(Notification.removeSuccess("Category"));
     }
   };
 

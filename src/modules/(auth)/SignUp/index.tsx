@@ -7,13 +7,13 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { FaAt, FaIdCard, FaLock, FaUser } from "react-icons/fa";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Logo from "@/components/Logo";
 import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import Path from "@/constants/path";
 import StatusCode from "@/constants/status-code";
+import AXIOS_INSTANCE from "@/services/instance";
 import { User } from "@/types/data";
 import { FormSignUp } from "@/types/form";
 import { BaseResponse } from "@/types/response";
@@ -35,7 +35,7 @@ const SignUpModule = () => {
   return (
     <React.Fragment>
       <Typography tag="h1" fontSize="2xl" align="center" className={styles.title}>
-        Welcome to Lord of Manga
+        {/* Welcome to Lord of Manga */}
       </Typography>
 
       <div className={cn("grid grid-cols-6 gap-[2rem]", styles.container)}>

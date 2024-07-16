@@ -4,10 +4,10 @@ import { Divider } from "antd";
 import React from "react";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import LocalStorageKey from "@/constants/local-key";
+import AXIOS_INSTANCE from "@/services/instance";
 import { Comic } from "@/types/data";
 import { BaseResponse } from "@/types/response";
 
@@ -22,14 +22,14 @@ const ReadingHistoryModule = () => {
     ["readingHistory"],
     async () => {
       const slugs = Object.keys(lastRead);
-      const { data } = (
+      const { data: comics } = (
         await AXIOS_INSTANCE.post<BaseResponse<Comic[]>>("/comics/slugs", {
           slugs,
         })
       ).data;
-      setComics(data);
+      setComics(comics);
 
-      return data;
+      return comics;
     },
     {
       enabled: !!Object.keys(lastRead).length,

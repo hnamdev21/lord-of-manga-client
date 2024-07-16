@@ -6,7 +6,7 @@ export type BaseResponse<T> = {
   data: T;
 };
 
-export type SearchComicResponse = {
+export type SearchResponse = {
   byTitle: Comic[];
   byCategoryName: Comic[];
   byTagName: Comic[];

@@ -4,8 +4,8 @@ import Link from "next/link";
 import React from "react";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Typography from "@/components/Typography";
+import AXIOS_INSTANCE from "@/services/instance";
 import { BaseResponse } from "@/types/response";
 
 type ListDataProps = {

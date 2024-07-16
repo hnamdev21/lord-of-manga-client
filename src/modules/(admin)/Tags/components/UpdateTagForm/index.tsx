@@ -1,14 +1,13 @@
-import { Form, Input, message } from "antd";
+import { Form, Input, message, Modal } from "antd";
 import React from "react";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import { TagAPI } from "@/services/apis/tag";
 import { Tag } from "@/types/data";
 import { FormUpdateTag } from "@/types/form";
-import { BaseResponse } from "@/types/response";
 
 type Props = {
   tag: Tag;
@@ -19,17 +18,18 @@ const UpdateTagForm = ({ tag, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormUpdateTag>();
 
+  if (!authContext) return null;
+
   const onFinish = async (values: FormUpdateTag) => {
-    const response = (
-      await AXIOS_INSTANCE.put<BaseResponse<Tag>>(`/tags/${tag.id}`, values, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+    const response = await TagAPI.updateTag({
+      id: tag.id,
+      formData: values,
+      token: authContext.auth.token,
+    });
 
     if (response.code === StatusCode.OK) {
       refreshData();
+      Modal.destroyAll();
       message.success(Notification.updateSuccess("Tag"));
     }
   };

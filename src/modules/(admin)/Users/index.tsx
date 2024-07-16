@@ -6,18 +6,19 @@ import React from "react";
 import { FaPlus, FaTimes } from "react-icons/fa";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import { DefaultRoleValue } from "@/constants/default-data";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
+import AXIOS_INSTANCE from "@/services/instance";
 import { User } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { conciseText, timestampToDateTime, toReadable } from "@/utils/formatter";
 
 import UserActions from "./components/ActionButtons";
+import BanUserForm from "./components/BanUserForm";
 import CreateEmployeeForm from "./components/CreateEmployeeForm";
 import UpdateEmployeeForm from "./components/UpdateEmployeeForm";
 
@@ -97,13 +98,20 @@ const UsersModule = () => {
   };
 
   const onBan = async (user: User) => {
-    await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/users/${user.id}/ban`, null, {
-      headers: {
-        Authorization: `Bearer ${authContext?.auth.token}`,
-      },
+    modalApi.info({
+      title: (
+        <Typography tag="h1" fontSize="md" align="center">
+          Ban {user.username}
+        </Typography>
+      ),
+      icon: null,
+      centered: true,
+      footer: null,
+      maskClosable: true,
+      closable: true,
+      closeIcon: <FaTimes />,
+      content: <BanUserForm user={user} refreshData={() => refetch()} />,
     });
-
-    refetch();
   };
 
   const columns: TableProps<User>["columns"] = React.useMemo(

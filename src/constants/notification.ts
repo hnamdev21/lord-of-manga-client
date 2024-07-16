@@ -20,14 +20,14 @@ const Notification = {
   // Success
   createSuccess: (field: string) => `${field} created successfully`,
   updateSuccess: (field: string) => `${field} updated successfully`,
-  deleteSuccess: (field: string) => `${field} deleted successfully`,
+  deleteSuccess: (field: string) => `${field} has been deleted`,
   uploadSuccess: (field: string) => `${field} uploaded successfully`,
   addSuccess: (field: string) => `${field} added successfully`,
-  removeSuccess: (field: string) => `${field} removed successfully`,
+  removeSuccess: (field: string) => `${field} has been removed`,
   restoreSuccess: (field: string) => `${field} restored successfully`,
   approveSuccess: (field: string) => `${field} approved successfully`,
   successVerified: (field: string) => `${field} verified successfully`,
-  banSuccess: (field: string) => `${field} banned successfully`,
+  banSuccess: (field: string) => `${field} has been banned`,
 
   // Error
   unexpectedError: "Something went wrong",

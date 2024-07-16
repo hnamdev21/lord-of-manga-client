@@ -4,12 +4,18 @@ import Image from "next/image";
 import React from "react";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { apiUrl } from "@/constants/config";
 import LocalStorageKey from "@/constants/local-key";
+import usePreventImageFromAttackedByUsingDevTools from "@/hooks/usePreventImageFromAttackedByUsingDevTools";
+import usePreventImageFromCapturedByUsingExtension from "@/hooks/usePreventImageFromCapturedByUsingExtension";
+import usePreventImageFromCapturedByUsingKeyboard from "@/hooks/usePreventImageFromCapturedByUsingKeyboard";
+import usePreventImageFromCapturedByUsingRightClick from "@/hooks/usePreventImageFromCapturedByUsingRightClick";
+import usePreventImageFromCapturedByUsingThirdParty from "@/hooks/usePreventImageFromCapturedByUsingThirdParty";
+import usePreventMaskFromStyledUsingDevTools from "@/hooks/usePreventMaskFromStyledUsingDevTools";
+import AXIOS_INSTANCE from "@/services/instance";
 import { Chapter, Comic } from "@/types/data";
 import { BaseResponse } from "@/types/response";
 
@@ -19,6 +25,13 @@ type Props = {
 };
 
 const ReadingModule = ({ comicSlug, chapterSlug }: Props) => {
+  usePreventImageFromAttackedByUsingDevTools();
+  usePreventImageFromCapturedByUsingExtension();
+  usePreventImageFromCapturedByUsingKeyboard();
+  usePreventImageFromCapturedByUsingRightClick();
+  usePreventImageFromCapturedByUsingThirdParty();
+  usePreventMaskFromStyledUsingDevTools();
+
   const { data } = useQuery(["comic", comicSlug, "chapter", chapterSlug], async () => {
     const { data: comic } = (await AXIOS_INSTANCE.get<BaseResponse<Comic>>("/comics/slug/" + comicSlug)).data;
     const { data: chapter } = (await AXIOS_INSTANCE.get<BaseResponse<Chapter>>("/chapters/slug/" + chapterSlug + "/comic/" + comic.id)).data;

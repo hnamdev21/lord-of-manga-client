@@ -3,11 +3,10 @@
 import { Tabs, type TabsProps } from "antd";
 import React from "react";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Container from "@/components/Container";
 import { AuthContext } from "@/providers/AuthProvider";
+import { ComicAPI } from "@/services/apis/comic";
 import { Comic } from "@/types/data";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
 
 import UploadChapter from "./UploadChapter";
 import UploadComic from "./UploadComic";
@@ -17,16 +16,17 @@ const UploadModule = () => {
 
   const [createdComics, setCreatedComics] = React.useState<Comic[]>([]);
 
-  const fetchCreatedComics = async () => {
-    const { data } = (
-      await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(`/comics/mine?all=true`, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+  if (!authContext) return null;
 
-    setCreatedComics(data.content);
+  const fetchCreatedComics = async () => {
+    const response = await ComicAPI.getAllMyComics({
+      token: authContext.auth.token,
+      params: {
+        all: true,
+      },
+    });
+
+    setCreatedComics(response.data.content);
   };
 
   const items: TabsProps["items"] = [

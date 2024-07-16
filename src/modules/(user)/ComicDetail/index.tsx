@@ -7,13 +7,13 @@ import React from "react";
 import { FaComment, FaDollarSign, FaEye } from "react-icons/fa";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { apiUrl } from "@/constants/config";
+import Path from "@/constants/path";
+import { ComicAPI } from "@/services/apis/comic";
 import { ChapterType, Comic } from "@/types/data";
-import { BaseResponse } from "@/types/response";
 import { timestampToDateTime } from "@/utils/formatter";
 
 import styles from "./styles.module.scss";
@@ -26,46 +26,48 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
   const router = useRouter();
   const [chapters, setChapters] = React.useState<Comic["chapters"] | null>(null);
 
-  const { data } = useQuery(["comic", comicSlug], async () => {
-    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<Comic>>(`/comics/slug/${comicSlug}`)).data;
-    setChapters(data.chapters);
-    return data;
+  const { data: comic } = useQuery(["comic", comicSlug], async () => {
+    const response = await ComicAPI.getComicBySlug({ slug: comicSlug });
+
+    setChapters(response.data.chapters);
+
+    return response.data;
   });
 
   const onSearchChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (!data) return;
+      if (!comic) return;
 
       const { value } = e.target;
 
       if (value) {
-        const filteredChapters = data.chapters.filter((chapter) => chapter.title.toLowerCase().includes(value.toLowerCase()));
+        const filteredChapters = comic.chapters.filter((chapter) => chapter.title.toLowerCase().includes(value.toLowerCase()));
         setChapters(filteredChapters);
       } else {
-        setChapters(data.chapters);
+        setChapters(comic.chapters);
       }
     },
-    [data]
+    [comic]
   );
 
   return (
     <React.Fragment>
       <Container className={styles.hero}>
         <div className={styles.hero__thumbnailContainer}>
-          <Image src={apiUrl + "/uploads/" + data?.thumbnailPath} alt={`Thumbnail image of ${data?.title}`} layout="fill" objectFit="cover" />
+          <Image src={apiUrl + "/uploads/" + comic?.thumbnailPath} alt={`Thumbnail image of ${comic?.title}`} layout="fill" objectFit="cover" />
         </div>
 
         <div className={styles.hero__leftContent}>
-          <Image src={apiUrl + "/uploads/" + data?.coverPath} alt={`Cover image of ${data?.title}`} layout="fill" />
+          <Image src={apiUrl + "/uploads/" + comic?.coverPath} alt={`Cover image of ${comic?.title}`} layout="fill" />
         </div>
 
         <div className={styles.hero__rightContent}>
           <Typography tag="h3" fontSize="6xl" fontWeight="md" textColor="light">
-            {data?.title}
+            {comic?.title}
           </Typography>
 
           <div className={styles.hero__rightContent__categories}>
-            {data?.categories.slice(0, 8).map((category) => (
+            {comic?.categories.slice(0, 8).map((category) => (
               <Button href="#" variant="outline" key={category.slug} color="light" size="sm">
                 {category.name}
               </Button>
@@ -74,15 +76,15 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
 
           <div>
             <Typography tag="p" textColor="light">
-              Author: {data?.author}
+              Author: {comic?.author}
             </Typography>
             <Typography tag="p" textColor="light">
-              Publisher: {data?.creator.fullName}
+              Publisher: {comic?.creator.fullName}
             </Typography>
           </div>
 
           <Typography tag="p" className="line-clamp-8" textColor="light">
-            {data?.description}
+            {comic?.description}
           </Typography>
         </div>
       </Container>
@@ -101,7 +103,7 @@ const ComicDetailModule = ({ comicSlug }: ComicDetailModuleProps) => {
         </div>
 
         {chapters?.map((chapter, index) => (
-          <div key={index} className={styles.content__card} onClick={() => router.push(`/comics/${comicSlug}/${chapter.slug}`)}>
+          <div key={index} className={styles.content__card} onClick={() => router.push(`/${Path.USER.COMICS}/${comicSlug}/${chapter.slug}`)}>
             <div className={styles.content__card__left}>
               <div className={styles.content__card__left__tag}>
                 {chapter.type === ChapterType.FREE ? (

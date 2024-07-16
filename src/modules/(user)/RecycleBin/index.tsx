@@ -5,7 +5,6 @@ import React from "react";
 import { FaEye, FaTimes, FaTrashRestore } from "react-icons/fa";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import ComicDetail from "@/components/ComicDetailModal";
 import Container from "@/components/Container";
@@ -14,6 +13,7 @@ import { DefaultRoleValue } from "@/constants/default-data";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import AXIOS_INSTANCE from "@/services/instance";
 import { Comic, ComicStatus, ComicType } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberToCurrency, timestampToDateTime, toReadable } from "@/utils/formatter";
@@ -27,7 +27,7 @@ const User_RecycleBinModule = () => {
     async () => {
       if (!authContext?.auth.token) return null;
 
-      const { data } = (
+      const { data: deletedComics } = (
         await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics/mine?all=true&status=" + ComicStatus.DELETED, {
           headers: {
             Authorization: `Bearer ${authContext.auth.token}`,
@@ -35,7 +35,7 @@ const User_RecycleBinModule = () => {
         })
       ).data;
 
-      return data;
+      return deletedComics;
     },
     {
       enabled: !!authContext?.auth.token,

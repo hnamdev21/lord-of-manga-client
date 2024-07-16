@@ -89,3 +89,13 @@ export type FormCreateEmployee = Pick<User, "fullName" | "username" | "email" | 
   roleIds: Role["id"][];
 };
 export type FormUpdateEmployee = FormCreateEmployee & Pick<User, "id">;
+
+export type ApproveComicRequest = {
+  id: Comic["id"];
+  token: string;
+};
+
+export type GetMyComicBySlugRequest = {
+  slug: string;
+  token: string;
+};

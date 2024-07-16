@@ -5,11 +5,11 @@ import Image from "next/image";
 import React from "react";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { apiUrl } from "@/constants/config";
+import AXIOS_INSTANCE from "@/services/instance";
 import { Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 

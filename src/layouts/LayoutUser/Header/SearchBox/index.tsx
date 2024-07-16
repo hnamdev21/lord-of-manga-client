@@ -4,9 +4,9 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { Divider } from "antd";
 import React from "react";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Typography from "@/components/Typography";
-import { BaseResponse, SearchComicResponse } from "@/types/response";
+import { PublicAPI } from "@/services/apis/public";
+import { SearchResponse } from "@/types/response";
 
 import SearchResultItem from "./SearchResultItem";
 import styles from "./styles.module.scss";
@@ -15,15 +15,15 @@ const SearchBox = () => {
   const [isFocus, setIsFocus] = React.useState(false);
   const [term, setTerm] = React.useState("");
   const debouncedTerm = useDebounce(term, 500);
-  const [data, setData] = React.useState<SearchComicResponse>({
+  const [data, setData] = React.useState<SearchResponse>({
     byTitle: [],
     byCategoryName: [],
     byTagName: [],
   });
 
   const searchComic = async (term: string) => {
-    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<SearchComicResponse>>(`/search?term=${term}`)).data;
-    setData(data);
+    const response = await PublicAPI.search({ term });
+    setData(response.data);
   };
 
   React.useEffect(() => {

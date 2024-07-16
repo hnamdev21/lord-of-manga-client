@@ -1,15 +1,17 @@
-import { Button as AntdButton, Divider, Form, FormProps, Input, InputNumber, InputRef, message, Select, Space, Upload } from "antd";
+import { Button as AntdButton, Divider, Form, FormProps, Input, InputNumber, InputRef, message, Modal, Select, Space, Upload } from "antd";
+import { FieldNamesType } from "antd/es/cascader";
 import { RcFile, UploadFile } from "antd/es/upload";
 import React from "react";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import { comicTypeOptions } from "@/constants/options";
 import { VND_CURRENCY } from "@/constants/sign";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import { ComicAPI } from "@/services/apis/comic";
+import AXIOS_INSTANCE from "@/services/instance";
 import { Category, Comic, Tag } from "@/types/data";
 import { FormUpdateComic } from "@/types/form";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
@@ -46,6 +48,8 @@ const UpdateComicForm = ({ comic, refreshData }: Props) => {
   const [searchValue, setSearchValue] = React.useState<string>("");
   const [disablePriceInput, setDisablePriceInput] = React.useState<boolean>(true);
 
+  if (!authContext) return null;
+
   const { data: categoryAndTagData } = useQuery(["categories", "tags"], async () => {
     const [responseCategories, responseTags] = await Promise.all([
       AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Category[]>>>("/categories"),
@@ -62,27 +66,23 @@ const UpdateComicForm = ({ comic, refreshData }: Props) => {
   });
 
   const onFinish: FormProps<FormUpdateComic>["onFinish"] = async (values: FormUpdateComic) => {
-    const response = (
-      await AXIOS_INSTANCE.put<BaseResponse<Comic>>(
-        "/comics/" + values.id,
-        {
-          ...values,
-          cover: (values.cover?.[0] as UploadFile)?.originFileObj,
-          thumbnail: (values.thumbnail?.[0] as UploadFile)?.originFileObj,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${authContext?.auth.token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-    ).data;
+    const formData = {
+      ...values,
+      cover: (values.cover?.[0] as UploadFile)?.originFileObj as unknown as FieldNamesType[],
+      thumbnail: (values.thumbnail?.[0] as UploadFile)?.originFileObj as unknown as FieldNamesType[],
+    };
+
+    const response = await ComicAPI.updateComic({
+      id: comic.id,
+      formData,
+      token: authContext?.auth.token,
+    });
 
     if (response.code === StatusCode.OK) {
       message.success(Notification.updateSuccess("Comic"));
       setSearchValue("");
       setDisablePriceInput(true);
+      Modal.destroyAll();
       refreshData();
     }
   };

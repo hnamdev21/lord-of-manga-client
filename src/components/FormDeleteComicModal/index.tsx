@@ -1,14 +1,14 @@
 import { Form, Input, message, notification } from "antd";
 import React from "react";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
+import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import { ComicAPI } from "@/services/apis/comic";
 import { Comic } from "@/types/data";
 import { FormDeleteComic } from "@/types/form";
-import { BaseResponse } from "@/types/response";
 
 type Props = {
   comic: Comic;
@@ -19,31 +19,21 @@ const DeleteComicForm = ({ comic, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
   const [notificationApi, modalHolder] = notification.useNotification();
 
-  const onRestore = async () => {
-    const { data } = (
-      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/comics/${comic.id}/restore`, null, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+  if (!authContext) return null;
 
-    if (data) {
+  const onRestore = async () => {
+    const response = await ComicAPI.restoreComic({ id: comic.id, token: authContext.auth.token });
+
+    if (response.code === StatusCode.OK) {
       refreshData();
       message.success(Notification.restoreSuccess(comic.title));
     }
   };
 
   const onFinish = async (values: FormDeleteComic) => {
-    const { data } = (
-      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/comics/${comic.id}/delete`, values, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+    const response = await ComicAPI.deleteComic({ id: comic.id, formData: values, token: authContext.auth.token });
 
-    if (data) {
+    if (response.code === StatusCode.OK) {
       refreshData();
       notificationApi.open({
         message: null,

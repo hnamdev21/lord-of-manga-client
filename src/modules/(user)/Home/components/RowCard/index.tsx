@@ -3,11 +3,11 @@ import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import CardComic from "@/components/CardComic";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
+import AXIOS_INSTANCE from "@/services/instance";
 import { Category, Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 

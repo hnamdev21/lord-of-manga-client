@@ -1,6 +1,6 @@
 import { Popover } from "antd";
 import React from "react";
-import { FaEye, FaMarker, FaUserSlash } from "react-icons/fa";
+import { FaEye, FaMarker, FaTrash, FaUserSlash } from "react-icons/fa";
 
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
@@ -29,11 +29,19 @@ const UserActions = ({ user, onViewDetail, onBan, onEdit }: Props) => {
           </Button>
         </Popover>
       )}
-      <Popover content={<Typography fontSize="sm">Ban</Typography>}>
-        <Button element="button" type="button" color="danger" size="sm" onClick={onBan} icon>
-          <FaUserSlash />
-        </Button>
-      </Popover>
+      {isUserHaveRole(user, DefaultRoleValue.EMPLOYEE) ? (
+        <Popover content={<Typography fontSize="sm">Delete</Typography>}>
+          <Button element="button" type="button" color="danger" size="sm" onClick={onBan} icon>
+            <FaTrash />
+          </Button>
+        </Popover>
+      ) : (
+        <Popover content={<Typography fontSize="sm">Ban</Typography>}>
+          <Button element="button" type="button" color="danger" size="sm" onClick={onBan} icon>
+            <FaUserSlash />
+          </Button>
+        </Popover>
+      )}
     </React.Fragment>
   );
 };

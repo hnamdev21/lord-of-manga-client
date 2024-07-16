@@ -6,7 +6,6 @@ import React from "react";
 import { FaBan, FaCheck, FaEllipsisH, FaTimes, FaTrash } from "react-icons/fa";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import ComicDetail from "@/components/ComicDetailModal";
 import Container from "@/components/Container";
@@ -15,6 +14,7 @@ import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
+import AXIOS_INSTANCE from "@/services/instance";
 import { Comic, ComicStatus, ComicType } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { conciseText, numberToCurrency, timestampToDateTime, toReadable } from "@/utils/formatter";

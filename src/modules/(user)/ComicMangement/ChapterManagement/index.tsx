@@ -6,7 +6,6 @@ import React from "react";
 import { FaBan, FaCheck, FaEllipsisH, FaTimes, FaTrash } from "react-icons/fa";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import ChapterDetail from "@/components/ChapterDetailModal";
 import DeleteChapterForm from "@/components/FormDeleteChapterModal";
@@ -14,7 +13,9 @@ import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
-import { Chapter, ChapterStatus, Comic, ComicType } from "@/types/data";
+import { ComicAPI } from "@/services/apis/comic";
+import AXIOS_INSTANCE from "@/services/instance";
+import { Chapter, ChapterStatus, ComicType } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { conciseText, numberToCurrency, timestampToDateTime, toReadable } from "@/utils/formatter";
 
@@ -42,10 +43,13 @@ const ChapterManagementModule = ({ comicSlug }: ChapterManagementModuleProps) =>
     },
   });
 
-  const { data: comic } = useQuery(["mine", "comic", comicSlug], async () => {
-    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<Comic>>(`/comics/slug/${comicSlug}/mine`)).data;
+  if (!authContext) return null;
 
-    return data;
+  const { data: comic } = useQuery(["mine", "comic", comicSlug], async () => {
+    // TODO - BACKEND
+    const response = await ComicAPI.getMyComicBySlug({ slug: comicSlug, token: authContext.auth.token });
+
+    return response.data;
   });
 
   const { data: chapters, refetch } = useQuery(

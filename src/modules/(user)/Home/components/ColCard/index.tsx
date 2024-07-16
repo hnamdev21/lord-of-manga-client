@@ -3,9 +3,9 @@
 import React from "react";
 import { useQuery } from "react-query";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import CardComicHorizontal from "@/components/CardComicHorizontal";
 import Typography from "@/components/Typography";
+import AXIOS_INSTANCE from "@/services/instance";
 import { Comic } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 

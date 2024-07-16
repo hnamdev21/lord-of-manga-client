@@ -1,14 +1,14 @@
-import { Form, Input, message, notification } from "antd";
+import { Form, Input, message, Modal, notification } from "antd";
 import React from "react";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
+import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import { ChapterAPI } from "@/services/apis/chapter";
 import { Chapter } from "@/types/data";
 import { FormDeleteChapter } from "@/types/form";
-import { BaseResponse } from "@/types/response";
 
 type Props = {
   chapter: Chapter;
@@ -19,31 +19,22 @@ const DeleteChapterForm = ({ chapter, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
   const [notificationApi, modalHolder] = notification.useNotification();
 
-  const onRestore = async () => {
-    const { data } = (
-      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/chapters/${chapter.id}/restore`, null, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+  if (!authContext) return null;
 
-    if (data) {
+  const onRestore = async () => {
+    const response = await ChapterAPI.restoreChapter({ id: chapter.id, token: authContext.auth.token });
+
+    if (response.code === StatusCode.OK) {
       refreshData();
+      Modal.destroyAll();
       message.success(Notification.restoreSuccess(chapter.title));
     }
   };
 
   const onFinish = async (values: FormDeleteChapter) => {
-    const { data } = (
-      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/chapters/${chapter.id}/delete`, values, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+    const response = await ChapterAPI.deleteChapter({ id: chapter.id, formData: values, token: authContext.auth.token });
 
-    if (data) {
+    if (response.code === StatusCode.OK) {
       refreshData();
       notificationApi.open({
         message: null,

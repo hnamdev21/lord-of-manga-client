@@ -3,12 +3,12 @@
 import { Button, Empty, Form, FormProps, Input, InputNumber, Select } from "antd";
 import React from "react";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import CardComic from "@/components/CardComic";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { filterComicTypeOptions, orderByOptions } from "@/constants/options";
 import { VND_CURRENCY } from "@/constants/sign";
+import AXIOS_INSTANCE from "@/services/instance";
 import { Comic, ComicStatus } from "@/types/data";
 import { FormComicFilter } from "@/types/form";
 import { BaseGetResponse, BaseResponse } from "@/types/response";

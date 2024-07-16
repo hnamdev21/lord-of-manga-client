@@ -1,10 +1,10 @@
 import { Form, Input, message } from "antd";
 import React from "react";
 
-import AXIOS_INSTANCE from "@/apis/instance";
 import Button from "@/components/Button";
 import Notification from "@/constants/notification";
 import { AuthContext } from "@/providers/AuthProvider";
+import AXIOS_INSTANCE from "@/services/instance";
 import { Chapter } from "@/types/data";
 import { FormBanChapter } from "@/types/form";
 import { BaseResponse } from "@/types/response";

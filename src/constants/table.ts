@@ -4,9 +4,9 @@ const Table = {
   CATEGORIES: "categories",
   COMICS: "comics",
   CHAPTERS: "chapters",
-  LOVED_COMICS: "loved_comics",
+  LOVED_COMICS: "loved-comics",
   COMMENTS: "comments",
-  USER_PAYMENTS: "user_payments",
+  USER_PAYMENTS: "user-payments",
   // FOLLOWERS: "followers",
   // REPORTS: "reports",
 } as const;
