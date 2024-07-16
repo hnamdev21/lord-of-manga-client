@@ -3,6 +3,7 @@
 import React from "react";
 
 import Container from "@/components/Container";
+import Path from "@/constants/path";
 import { FastAccessColProps } from "@/types/component";
 
 import FastAccessCol from "./FastAccessCol";
@@ -26,15 +27,11 @@ const fastAccessColumns: Array<FastAccessColProps> = [
     data: [
       {
         label: "Home",
-        href: "#",
+        href: Path.USER.HOME,
       },
       {
-        label: "About",
-        href: "#",
-      },
-      {
-        label: "Contact",
-        href: "#",
+        label: "Comics",
+        href: Path.USER.COMICS,
       },
     ],
   },

@@ -10,10 +10,9 @@ import { genderOptions } from "@/constants/options";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
 import { AdminAPI } from "@/services/apis/admin";
-import AXIOS_INSTANCE from "@/services/instance";
-import { Gender, Permission } from "@/types/data";
+import { RoleAPI } from "@/services/apis/role";
+import { Gender } from "@/types/data";
 import { FormCreateEmployee } from "@/types/form";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
 
 type Props = {
   refreshData: () => void;
@@ -26,13 +25,12 @@ const CreateEmployeeForm = ({ refreshData }: Props) => {
   if (!authContext) return null;
 
   const { data: roles } = useQuery(["admin", "roles"], async () => {
-    const response = (
-      await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Permission[]>>>(`/roles?size=9999`, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+    const response = await RoleAPI.getAllRoles({
+      params: {
+        pageNumber: 1,
+        size: 9999,
+      },
+    });
 
     return response.data.content;
   });

@@ -10,11 +10,11 @@ import { comicTypeOptions } from "@/constants/options";
 import { VND_CURRENCY } from "@/constants/sign";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import { CategoryAPI } from "@/services/apis/category";
 import { ComicAPI } from "@/services/apis/comic";
-import AXIOS_INSTANCE from "@/services/instance";
-import { Category, Comic, Tag } from "@/types/data";
+import { TagAPI } from "@/services/apis/tag";
+import { Comic } from "@/types/data";
 import { FormUpdateComic } from "@/types/form";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberFormatter } from "@/utils/formatter";
 
 type Props = {
@@ -51,13 +51,10 @@ const UpdateComicForm = ({ comic, refreshData }: Props) => {
   if (!authContext) return null;
 
   const { data: categoryAndTagData } = useQuery(["categories", "tags"], async () => {
-    const [responseCategories, responseTags] = await Promise.all([
-      AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Category[]>>>("/categories"),
-      AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Tag[]>>>("/tags"),
-    ]);
+    const [responseCategories, responseTags] = await Promise.all([CategoryAPI.getAllCategories({}), TagAPI.getAllTags({})]);
 
-    const categories = responseCategories.data.data.content;
-    const tags = responseTags.data.data.content;
+    const categories = responseCategories.data.content;
+    const tags = responseTags.data.content;
 
     const categoryOptions = categories.map((category) => ({ label: category.name, value: category.name }));
     const tagOptions = tags.map((tag) => ({ label: tag.name, value: tag.name }));

@@ -7,6 +7,7 @@ import React from "react";
 import { FaBookmark, FaDollarSign } from "react-icons/fa";
 
 import { apiUrl } from "@/constants/config";
+import Path from "@/constants/path";
 import { Comic, ComicType } from "@/types/data";
 
 import Button from "../Button";
@@ -22,7 +23,7 @@ const CardComic = ({ ...props }: Props) => {
 
   return (
     <Popover content={<CardComicDetail {...props} />} placement="left">
-      <div className={styles.card} onClick={() => router.push("/comics/" + slug)}>
+      <div className={styles.card} onClick={() => router.push(`${Path.USER.COMICS}/${slug}`)}>
         <Button className={styles.card__bookmark} element="button" type="button" variant="plain" size="sm">
           <FaBookmark />
         </Button>

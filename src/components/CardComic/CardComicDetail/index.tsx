@@ -5,6 +5,7 @@ import { FaBookmark, FaComment, FaEye } from "react-icons/fa";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import { apiUrl } from "@/constants/config";
+import Path from "@/constants/path";
 import { Comic } from "@/types/data";
 import { timestampToDateTime } from "@/utils/formatter";
 
@@ -64,7 +65,7 @@ const CardComicDetail = ({ ...props }: Props) => {
           <Typography className="line-clamp-6">{description}</Typography>
 
           <div className={styles.container__info__actions}>
-            <Button className="block flex-1 text-center" href={"/comics/" + slug}>
+            <Button className="block flex-1 text-center" href={`${Path.USER.COMICS}/${slug}`}>
               Read
             </Button>
 

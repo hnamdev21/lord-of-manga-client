@@ -9,6 +9,7 @@ import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { apiUrl } from "@/constants/config";
 import LocalStorageKey from "@/constants/local-key";
+import Path from "@/constants/path";
 import usePreventImageFromAttackedByUsingDevTools from "@/hooks/usePreventImageFromAttackedByUsingDevTools";
 import usePreventImageFromCapturedByUsingExtension from "@/hooks/usePreventImageFromCapturedByUsingExtension";
 import usePreventImageFromCapturedByUsingKeyboard from "@/hooks/usePreventImageFromCapturedByUsingKeyboard";
@@ -64,7 +65,7 @@ const ReadingModule = ({ comicSlug, chapterSlug }: Props) => {
                 <Button
                   variant="outline"
                   className="flex justify-center items-center"
-                  href={`/comics/${comicSlug}/${data?.comic.chapters[currentIndex - 1]?.slug}`}
+                  href={`/${Path.USER.COMICS}/${comicSlug}/${data?.comic.chapters[currentIndex - 1]?.slug}`}
                 >
                   Previous
                 </Button>
@@ -81,7 +82,7 @@ const ReadingModule = ({ comicSlug, chapterSlug }: Props) => {
                   type="button"
                   variant="outline"
                   className="flex justify-center items-center"
-                  href={`/comics/${comicSlug}/${data?.comic.chapters[currentIndex + 1]?.slug}`}
+                  href={`/${Path.USER.COMICS}/${comicSlug}/${data?.comic.chapters[currentIndex + 1]?.slug}`}
                 >
                   Next
                 </Button>

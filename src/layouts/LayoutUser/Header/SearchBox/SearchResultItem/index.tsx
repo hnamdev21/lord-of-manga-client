@@ -14,7 +14,7 @@ const SearchResultItem = (comic: Props) => {
   const router = useRouter();
 
   return (
-    <div className="flex h-[15rem] gap-[1rem] cursor-pointer" onClick={() => router.push(Path.USER.COMICS + comic.slug)}>
+    <div className="flex h-[15rem] gap-[1rem] cursor-pointer" onClick={() => router.push(`${Path.USER.COMICS}/${comic.slug}`)}>
       <div className="w-1/5 bg-white rounded-md overflow-hidden">
         <Image src={apiUrl + "/uploads/" + comic.coverPath} alt={`Cover image of ${comic.title}`} width={400} height={400} className="object-cover" />
       </div>

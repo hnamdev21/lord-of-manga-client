@@ -9,9 +9,8 @@ import { useQuery } from "react-query";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import { AuthContext } from "@/providers/AuthProvider";
-import AXIOS_INSTANCE from "@/services/instance";
+import { RoleAPI } from "@/services/apis/role";
 import { Role } from "@/types/data";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { timestampToDateTime } from "@/utils/formatter";
 
 import RoleActions from "./components/ActionButtons";
@@ -36,23 +35,19 @@ const RolesModule = () => {
     },
   });
 
+  if (!authContext) return null;
+
   const { data, refetch } = useQuery(
     "roles",
     async () => {
-      if (!authContext?.auth.token) return null;
+      const response = await RoleAPI.getAllRoles({
+        params: {
+          pageNumber: tableParams.pagination?.current,
+          size: tableParams.pagination?.pageSize,
+        },
+      });
 
-      const { data } = (
-        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Role[]>>>(
-          `/roles?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
-          {
-            headers: {
-              Authorization: `Bearer ${authContext.auth.token}`,
-            },
-          }
-        )
-      ).data;
-
-      return data;
+      return response.data;
     },
     {
       enabled: !!authContext?.auth.token,

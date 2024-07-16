@@ -6,10 +6,10 @@ import Button from "@/components/Button";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import { PermissionAPI } from "@/services/apis/permission";
 import AXIOS_INSTANCE from "@/services/instance";
-import { Permission } from "@/types/data";
 import { FormCreateRole } from "@/types/form";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
+import { BaseResponse } from "@/types/response";
 import { toUpperCaseWithUnderscores } from "@/utils/formatter";
 
 type Props = {
@@ -20,13 +20,12 @@ const CreateRoleForm = ({ refreshData }: Props) => {
   const authContext = React.use(AuthContext);
 
   const { data: permissions } = useQuery("permissions", async () => {
-    const response = (
-      await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Permission[]>>>(`/permissions?size=9999`, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+    const response = await PermissionAPI.getAllPermissions({
+      params: {
+        pageNumber: 1,
+        size: 9999,
+      },
+    });
 
     return response.data.content;
   });

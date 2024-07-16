@@ -14,9 +14,8 @@ import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
-import AXIOS_INSTANCE from "@/services/instance";
+import { ComicAPI } from "@/services/apis/comic";
 import { Comic, ComicStatus, ComicType } from "@/types/data";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { conciseText, numberToCurrency, timestampToDateTime, toReadable } from "@/utils/formatter";
 
 import ComicActions from "./components/ActionButtons";
@@ -40,23 +39,20 @@ const ComicManagementModule = () => {
     },
   });
 
+  if (!authContext) return null;
+
   const { data, refetch } = useQuery(
     "my-comics",
     async () => {
-      if (!authContext?.auth.token) return null;
+      const response = await ComicAPI.getAllMyComics({
+        params: {
+          pageNumber: tableParams.pagination?.current,
+          size: tableParams.pagination?.pageSize,
+        },
+        token: authContext.auth.token,
+      });
 
-      const { data } = (
-        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(
-          `/comics/mine?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
-          {
-            headers: {
-              Authorization: `Bearer ${authContext.auth.token}`,
-            },
-          }
-        )
-      ).data;
-
-      return data;
+      return response.data;
     },
     {
       enabled: !!authContext?.auth.token,

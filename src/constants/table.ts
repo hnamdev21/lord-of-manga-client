@@ -1,5 +1,7 @@
 const Table = {
   USERS: "users",
+  ROLES: "roles",
+  PERMISSIONS: "permissions",
   TAGS: "tags",
   CATEGORIES: "categories",
   COMICS: "comics",

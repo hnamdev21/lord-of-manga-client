@@ -5,6 +5,7 @@ import { FaBookmark, FaDollarSign } from "react-icons/fa";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import { apiUrl } from "@/constants/config";
+import Path from "@/constants/path";
 import { Comic, ComicType } from "@/types/data";
 
 import styles from "./styles.module.scss";
@@ -44,7 +45,7 @@ const ReadingHistoryCard = ({ comic, currentOrdinal, onClickRemove }: ReadingHis
           <Button element="button" type="button" variant="outline" size="sm" className={styles.button__remove} onClick={() => onClickRemove(comic)}>
             Remove
           </Button>
-          <Button href={`/comics/${comic.slug}/${currentSlug}`} size="sm" className={styles.button__read}>
+          <Button href={`/${Path.USER.COMICS}/${comic.slug}/${currentSlug}`} size="sm" className={styles.button__read}>
             Continue Reading
           </Button>
         </div>

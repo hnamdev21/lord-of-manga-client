@@ -4,6 +4,7 @@ import React from "react";
 import { FaComment, FaEye } from "react-icons/fa";
 
 import { apiUrl } from "@/constants/config";
+import Path from "@/constants/path";
 import { Comic } from "@/types/data";
 
 import Button from "../Button";
@@ -16,7 +17,7 @@ const CardComicHorizontal = ({ title, coverPath, description, slug, viewCount, c
   const router = useRouter();
 
   return (
-    <div className={styles.container} onClick={() => router.push("/comics/" + slug)}>
+    <div className={styles.container} onClick={() => router.push(`${Path.USER.COMICS}/${slug}`)}>
       <div className={styles.container__coverContainer}>
         <Image src={apiUrl + "/uploads/" + coverPath} alt={`Cover image of ${title}`} layout="fill" objectFit="cover" />
       </div>
