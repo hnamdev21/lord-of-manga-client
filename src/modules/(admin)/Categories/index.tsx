@@ -43,8 +43,10 @@ const CategoriesModule = () => {
     "categories",
     async () => {
       const response = await CategoryAPI.getAllCategories({
-        pageNumber: tableParams.pagination?.current,
-        size: tableParams.pagination?.pageSize,
+        params: {
+          pageNumber: tableParams.pagination?.current,
+          size: tableParams.pagination?.pageSize,
+        },
       });
 
       return response.data;

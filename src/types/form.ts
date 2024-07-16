@@ -99,3 +99,5 @@ export type GetMyComicBySlugRequest = {
   slug: string;
   token: string;
 };
+
+export type FormBanUser = Pick<User, "bannedReason">;

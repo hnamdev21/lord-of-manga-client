@@ -5,7 +5,7 @@ import { BaseGetResponse, BaseResponse } from "@/types/response";
 
 import { CreateTagRequest, DeleteTagRequest, GetAllTagsRequest, UpdateTagRequest } from "./dto";
 
-export const getAllTags = async (params: GetAllTagsRequest): Promise<BaseResponse<BaseGetResponse<Tag[]>>> => {
+export const getAllTags = async ({ params }: GetAllTagsRequest): Promise<BaseResponse<BaseGetResponse<Tag[]>>> => {
   const response = await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Tag[]>>>(`/${Table.TAGS}`, {
     params,
   });

@@ -5,7 +5,7 @@ import Button from "@/components/Button";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
-import { ComicAPI } from "@/services/apis/comic";
+import { AdminAPI } from "@/services/apis/admin";
 import { Comic } from "@/types/data";
 import { FormBanComic } from "@/types/form";
 
@@ -20,7 +20,7 @@ const BanComicForm = ({ comic, refreshData }: Props) => {
   if (!authContext) return null;
 
   const onFinish = async (values: FormBanComic) => {
-    const response = await ComicAPI.banComic({
+    const response = await AdminAPI.banComic({
       id: comic.id,
       formData: values,
       token: authContext.auth.token,

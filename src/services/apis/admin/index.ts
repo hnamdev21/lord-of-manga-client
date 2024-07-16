@@ -1,2 +1,2 @@
-// export * as AdminAPI from "./api";
-// export * as AdminDTO from "./dto";
+export * as AdminAPI from "./api";
+export * as AdminDTO from "./dto";

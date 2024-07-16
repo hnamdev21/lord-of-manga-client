@@ -5,7 +5,7 @@ import { BaseGetResponse, BaseResponse } from "@/types/response";
 
 import { CreateCategoryRequest, DeleteCategoryRequest, GetAllCategoriesRequest, UpdateCategoryRequest } from "./dto";
 
-export const getAllCategories = async (params: GetAllCategoriesRequest): Promise<BaseResponse<BaseGetResponse<Category[]>>> => {
+export const getAllCategories = async ({ params }: GetAllCategoriesRequest): Promise<BaseResponse<BaseGetResponse<Category[]>>> => {
   const response = await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Category[]>>>(`/${Table.CATEGORIES}`, {
     params,
   });

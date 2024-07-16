@@ -13,10 +13,12 @@ import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import Path from "@/constants/path";
+import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import { AdminAPI } from "@/services/apis/admin";
 import AXIOS_INSTANCE from "@/services/instance";
 import { Chapter, ChapterStatus, ChapterType, Comic } from "@/types/data";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
+import { BaseResponse } from "@/types/response";
 import { conciseText, numberToCurrency, timestampToDateTime, toReadable } from "@/utils/formatter";
 
 import ChapterActions from "./components/ActionButtons";
@@ -37,6 +39,8 @@ const ChaptersModule = ({ comicSlug }: Props) => {
   const authContext = React.use(AuthContext);
   const [modalApi, modalHolder] = Modal.useModal();
 
+  if (!authContext) return null;
+
   const [tableParams, setTableParams] = React.useState<TableParams>({
     pagination: {
       current: 1,
@@ -53,20 +57,16 @@ const ChaptersModule = ({ comicSlug }: Props) => {
   const { data: chapters, refetch } = useQuery(
     ["admin", "chapters", comicSlug, tableParams.pagination?.current, tableParams.pagination?.pageSize],
     async () => {
-      if (!authContext?.auth.token) return null;
+      const response = await AdminAPI.getAllChaptersByComicSlug({
+        slug: comicSlug,
+        token: authContext.auth.token,
+        params: {
+          pageNumber: tableParams.pagination?.current,
+          size: tableParams.pagination?.pageSize,
+        },
+      });
 
-      const { data } = (
-        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Chapter[]>>>(
-          `/admin/chapters/comic/slug/${comicSlug}?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
-          {
-            headers: {
-              Authorization: `Bearer ${authContext.auth.token}`,
-            },
-          }
-        )
-      ).data;
-
-      return data;
+      return response.data;
     },
     {
       enabled: !!authContext?.auth.token,
@@ -115,15 +115,9 @@ const ChaptersModule = ({ comicSlug }: Props) => {
   }, []);
 
   const onApprove = React.useCallback(async (chapter: Chapter) => {
-    const { data } = (
-      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/chapters/${chapter.id}/approve`, null, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+    const response = await AdminAPI.approveChapter({ id: chapter.id, token: authContext.auth.token });
 
-    if (data) {
+    if (response.code === StatusCode.OK) {
       message.success(Notification.approveSuccess(chapter.title));
       refetch();
     }

@@ -6,7 +6,7 @@ import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
-import { ComicAPI } from "@/services/apis/comic";
+import { AdminAPI } from "@/services/apis/admin";
 import { Comic } from "@/types/data";
 import { FormDeleteComic } from "@/types/form";
 
@@ -22,7 +22,7 @@ const DeleteComicForm = ({ comic, refreshData }: Props) => {
   if (!authContext) return null;
 
   const onRestore = async () => {
-    const response = await ComicAPI.restoreComic({ id: comic.id, token: authContext.auth.token });
+    const response = await AdminAPI.restoreComic({ id: comic.id, token: authContext.auth.token });
 
     if (response.code === StatusCode.OK) {
       refreshData();
@@ -31,7 +31,7 @@ const DeleteComicForm = ({ comic, refreshData }: Props) => {
   };
 
   const onFinish = async (values: FormDeleteComic) => {
-    const response = await ComicAPI.deleteComic({ id: comic.id, formData: values, token: authContext.auth.token });
+    const response = await AdminAPI.deleteComic({ id: comic.id, formData: values, token: authContext.auth.token });
 
     if (response.code === StatusCode.OK) {
       refreshData();

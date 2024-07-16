@@ -13,10 +13,10 @@ import { FaUpRightFromSquare } from "@/components/Icons";
 import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import Path from "@/constants/path";
+import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
-import AXIOS_INSTANCE from "@/services/instance";
+import { AdminAPI } from "@/services/apis/admin";
 import { Comic, ComicStatus, ComicType } from "@/types/data";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { conciseText, numberToCurrency, timestampToDateTime, toReadable } from "@/utils/formatter";
 
 import ComicActions from "./components/ActionButtons";
@@ -40,23 +40,20 @@ const ComicsModule = () => {
     },
   });
 
-  const { data, refetch } = useQuery(
+  if (!authContext) return null;
+
+  const { data: comics, refetch } = useQuery(
     ["admin", "comics", tableParams.pagination?.current, tableParams.pagination?.pageSize],
     async () => {
-      if (!authContext?.auth.token) return null;
+      const response = await AdminAPI.getAllComics({
+        token: authContext.auth.token,
+        params: {
+          pageNumber: tableParams.pagination?.current,
+          size: tableParams.pagination?.pageSize,
+        },
+      });
 
-      const { data } = (
-        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(
-          `/admin/comics?pageNumber=${tableParams.pagination?.current}&size=${tableParams.pagination?.pageSize}`,
-          {
-            headers: {
-              Authorization: `Bearer ${authContext.auth.token}`,
-            },
-          }
-        )
-      ).data;
-
-      return data;
+      return response.data;
     },
     {
       enabled: !!authContext?.auth.token,
@@ -81,7 +78,7 @@ const ComicsModule = () => {
         closeIcon: <FaTimes />,
       });
     },
-    [data]
+    [comics]
   );
 
   const onBan = React.useCallback((comic: Comic) => {
@@ -105,15 +102,9 @@ const ComicsModule = () => {
   }, []);
 
   const onApprove = React.useCallback(async (comic: Comic) => {
-    const { data } = (
-      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/comics/${comic.id}/approve`, null, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+    const response = await AdminAPI.approveComic({ id: comic.id, token: authContext.auth.token });
 
-    if (data) {
+    if (response.code === StatusCode.OK) {
       message.success(Notification.approveSuccess(comic.title));
       refetch();
     }
@@ -258,7 +249,7 @@ const ComicsModule = () => {
         ),
       },
     ],
-    [data]
+    [comics]
   );
 
   React.useEffect(() => {
@@ -297,14 +288,14 @@ const ComicsModule = () => {
 
         <Table
           columns={columns}
-          dataSource={data?.content}
+          dataSource={comics?.content}
           size="small"
           rowKey={(record: Comic) => record.id}
           bordered
           pagination={{
             current: tableParams.pagination?.current,
             pageSize: tableParams.pagination?.pageSize,
-            total: data?.totalElements,
+            total: comics?.totalElements,
             showQuickJumper: true,
             showTotal: (total) => `Total ${total} record(s)`,
           }}

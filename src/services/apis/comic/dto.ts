@@ -1,5 +1,5 @@
 import { Comic } from "@/types/data";
-import { FormBanComic, FormCreateComic, FormDeleteComic, FormUpdateComic } from "@/types/form";
+import { FormCreateComic, FormDeleteComic, FormUpdateComic } from "@/types/form";
 
 export type DeleteComicRequest = {
   id: Comic["id"];
@@ -14,7 +14,7 @@ export type RestoreComicRequest = {
 
 export type GetMyComicsRequest = {
   token: string;
-  params: {
+  params?: {
     pageNumber?: number;
     size?: number;
     all?: boolean;
@@ -25,17 +25,6 @@ export type GetMyComicsRequest = {
 
 export type GetComicsBySlugsRequest = {
   slugs: string[];
-};
-
-export type BanComicRequest = {
-  id: Comic["id"];
-  formData: FormBanComic;
-  token: string;
-};
-
-export type UnbanComicRequest = {
-  id: Comic["id"];
-  token: string;
 };
 
 export type GetComicBySlugRequest = {

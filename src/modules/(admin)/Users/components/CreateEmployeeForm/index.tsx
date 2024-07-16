@@ -9,8 +9,9 @@ import Notification from "@/constants/notification";
 import { genderOptions } from "@/constants/options";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import { AdminAPI } from "@/services/apis/admin";
 import AXIOS_INSTANCE from "@/services/instance";
-import { Gender, Permission, User } from "@/types/data";
+import { Gender, Permission } from "@/types/data";
 import { FormCreateEmployee } from "@/types/form";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 
@@ -21,6 +22,8 @@ type Props = {
 const CreateEmployeeForm = ({ refreshData }: Props) => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormCreateEmployee>();
+
+  if (!authContext) return null;
 
   const { data: roles } = useQuery(["admin", "roles"], async () => {
     const response = (
@@ -44,13 +47,10 @@ const CreateEmployeeForm = ({ refreshData }: Props) => {
   );
 
   const onFinish = async (values: FormCreateEmployee) => {
-    const response = (
-      await AXIOS_INSTANCE.post<BaseResponse<User>>(`/admin/users`, values, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+    const response = await AdminAPI.createEmployee({
+      formData: values,
+      token: authContext.auth.token,
+    });
 
     if (response.code === StatusCode.CREATED) {
       refreshData();

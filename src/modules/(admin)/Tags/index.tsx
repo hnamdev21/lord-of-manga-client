@@ -43,8 +43,10 @@ const TagsModule = () => {
     "tags",
     async () => {
       const response = await TagAPI.getAllTags({
-        pageNumber: tableParams.pagination?.current,
-        size: tableParams.pagination?.pageSize,
+        params: {
+          pageNumber: tableParams.pagination?.current,
+          size: tableParams.pagination?.pageSize,
+        },
       });
 
       return response.data;

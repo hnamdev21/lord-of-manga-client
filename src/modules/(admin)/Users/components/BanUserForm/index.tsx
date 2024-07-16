@@ -5,10 +5,9 @@ import Button from "@/components/Button";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
-import AXIOS_INSTANCE from "@/services/instance";
+import { AdminAPI } from "@/services/apis/admin";
 import { User } from "@/types/data";
 import { FormBanUser } from "@/types/form";
-import { BaseResponse } from "@/types/response";
 
 type Props = {
   user: User;
@@ -18,14 +17,10 @@ type Props = {
 const BanUserForm = ({ user, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
 
+  if (!authContext) return null;
+
   const onFinish = async (values: FormBanUser) => {
-    const response = (
-      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/users/${user.id}/ban`, values, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+    const response = await AdminAPI.banUser({ id: user.id, formData: values, token: authContext.auth.token });
 
     if (response.code === StatusCode.OK) {
       refreshData();

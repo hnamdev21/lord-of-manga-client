@@ -2,8 +2,10 @@ import { Tag } from "@/types/data";
 import { FormCreateTag, FormUpdateTag } from "@/types/form";
 
 export type GetAllTagsRequest = {
-  pageNumber?: number;
-  size?: number;
+  params?: {
+    pageNumber?: number;
+    size?: number;
+  };
 };
 
 export type CreateTagRequest = {

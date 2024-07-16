@@ -2,8 +2,10 @@ import { Category } from "@/types/data";
 import { FormCreateCategory, FormUpdateCategory } from "@/types/form";
 
 export type GetAllCategoriesRequest = {
-  pageNumber?: number;
-  size?: number;
+  params?: {
+    pageNumber?: number;
+    size?: number;
+  };
 };
 
 export type DeleteCategoryRequest = {

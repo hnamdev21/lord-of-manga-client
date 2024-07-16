@@ -12,9 +12,8 @@ import Typography from "@/components/Typography";
 import { DefaultRoleValue } from "@/constants/default-data";
 import Path from "@/constants/path";
 import { AuthContext } from "@/providers/AuthProvider";
-import AXIOS_INSTANCE from "@/services/instance";
+import { AdminAPI } from "@/services/apis/admin";
 import { User } from "@/types/data";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { conciseText, timestampToDateTime, toReadable } from "@/utils/formatter";
 
 import UserActions from "./components/ActionButtons";
@@ -40,23 +39,20 @@ const UsersModule = () => {
     },
   });
 
+  if (!authContext) return null;
+
   const { data, refetch } = useQuery(
     "users",
     async () => {
-      if (!authContext?.auth.token) return null;
+      const response = await AdminAPI.getAllUsers({
+        token: authContext.auth.token,
+        params: {
+          pageNumber: tableParams.pagination?.current,
+          size: tableParams.pagination?.pageSize,
+        },
+      });
 
-      const { data } = (
-        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<User[]>>>(
-          `/admin/users?pageNumber=${tableParams.pagination?.current || "0"}&size=${tableParams.pagination?.pageSize || "10"}`,
-          {
-            headers: {
-              Authorization: `Bearer ${authContext.auth.token}`,
-            },
-          }
-        )
-      ).data;
-
-      return data;
+      return response.data;
     },
     {
       enabled: !!authContext?.auth.token,

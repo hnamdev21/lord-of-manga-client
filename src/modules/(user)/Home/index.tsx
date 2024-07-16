@@ -13,7 +13,7 @@ import styles from "./styles.module.scss";
 
 const HomeModule = () => {
   const { data: categories } = useQuery("categories", async () => {
-    const response = await CategoryAPI.getAllCategories({ size: 4 });
+    const response = await CategoryAPI.getAllCategories({ params: { size: 4 } });
 
     return response.data.content;
   });

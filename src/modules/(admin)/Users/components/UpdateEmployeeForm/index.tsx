@@ -8,6 +8,7 @@ import Notification from "@/constants/notification";
 import { genderOptions } from "@/constants/options";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import { AdminAPI } from "@/services/apis/admin";
 import AXIOS_INSTANCE from "@/services/instance";
 import { Permission, User } from "@/types/data";
 import { FormUpdateEmployee } from "@/types/form";
@@ -21,6 +22,8 @@ type Props = {
 const UpdateEmployeeForm = ({ user, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormUpdateEmployee>();
+
+  if (!authContext) return null;
 
   const { data: roles } = useQuery(["admin", "roles"], async () => {
     const response = (
@@ -44,13 +47,11 @@ const UpdateEmployeeForm = ({ user, refreshData }: Props) => {
   );
 
   const onFinish = async (values: FormUpdateEmployee) => {
-    const response = (
-      await AXIOS_INSTANCE.put<BaseResponse<User>>(`/admin/users/${user.id}`, values, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+    const response = await AdminAPI.updateEmployee({
+      id: user.id,
+      formData: values,
+      token: authContext.auth.token,
+    });
 
     if (response.code === StatusCode.OK) {
       refreshData();

@@ -6,7 +6,7 @@ import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
-import { ChapterAPI } from "@/services/apis/chapter";
+import { AdminAPI } from "@/services/apis/admin";
 import { Chapter } from "@/types/data";
 import { FormDeleteChapter } from "@/types/form";
 
@@ -22,7 +22,7 @@ const DeleteChapterForm = ({ chapter, refreshData }: Props) => {
   if (!authContext) return null;
 
   const onRestore = async () => {
-    const response = await ChapterAPI.restoreChapter({ id: chapter.id, token: authContext.auth.token });
+    const response = await AdminAPI.restoreChapter({ id: chapter.id, token: authContext.auth.token });
 
     if (response.code === StatusCode.OK) {
       refreshData();
@@ -32,7 +32,7 @@ const DeleteChapterForm = ({ chapter, refreshData }: Props) => {
   };
 
   const onFinish = async (values: FormDeleteChapter) => {
-    const response = await ChapterAPI.deleteChapter({ id: chapter.id, formData: values, token: authContext.auth.token });
+    const response = await AdminAPI.deleteChapter({ id: chapter.id, formData: values, token: authContext.auth.token });
 
     if (response.code === StatusCode.OK) {
       refreshData();
