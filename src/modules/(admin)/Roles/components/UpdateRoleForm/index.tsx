@@ -1,4 +1,4 @@
-import { Form, Input, message, Modal, Select } from "antd";
+import { Form, FormProps, Input, message, Modal, Select } from "antd";
 import React from "react";
 import { useQuery } from "react-query";
 
@@ -42,7 +42,7 @@ const UpdateRoleForm = ({ role, refreshData }: Props) => {
     [permissions]
   );
 
-  const onFinish = async (values: FormUpdateRole) => {
+  const onFinish: FormProps<FormUpdateRole>["onFinish"] = async (values: FormUpdateRole) => {
     const response = (
       await AXIOS_INSTANCE.put<BaseResponse<Role>>(
         `/roles/${role.id}`,

@@ -12,13 +12,11 @@ import { chapterTypeOptions } from "@/constants/options";
 import { VND_CURRENCY } from "@/constants/sign";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
-import AXIOS_INSTANCE from "@/services/instance";
-import { Chapter, Comic, ComicType } from "@/types/data";
+import { ChapterAPI } from "@/services/apis/chapter";
+import { Comic, ComicType } from "@/types/data";
 import { FormCreateChapter } from "@/types/form";
-import { BaseResponse } from "@/types/response";
 import { numberFormatter } from "@/utils/formatter";
 import { getBase64 } from "@/utils/imageUtils";
-import { fromObjetToFomData } from "@/utils/utils";
 
 type UploadChapterProps = {
   createdComics: Comic[];
@@ -27,6 +25,8 @@ type UploadChapterProps = {
 const UploadChapter = ({ createdComics }: UploadChapterProps) => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormCreateChapter>();
+
+  if (!authContext) return null;
 
   const createdComicOptions = React.useMemo(() => {
     return createdComics.map((comic) => ({ label: comic.title, value: comic.id }));
@@ -37,16 +37,7 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
   const [images, setImages] = React.useState<Array<string>>([]);
 
   const onFinish: FormProps<FormCreateChapter>["onFinish"] = async (values: FormCreateChapter) => {
-    const formData = fromObjetToFomData({ ...values, files });
-
-    const response = (
-      await AXIOS_INSTANCE.post<BaseResponse<Chapter>>("/chapters", formData, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      })
-    ).data;
+    const response = await ChapterAPI.createChapter({ formData: { ...values, files }, token: authContext.auth.token });
 
     if (response.code === StatusCode.CREATED) {
       message.success(Notification.createSuccess("Chapter"));

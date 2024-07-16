@@ -1,4 +1,4 @@
-import { Form, Input, message, Modal } from "antd";
+import { Form, FormProps, Input, message, Modal } from "antd";
 import React from "react";
 
 import Button from "@/components/Button";
@@ -17,7 +17,7 @@ type Props = {
 const BanChapterForm = ({ chapter, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
 
-  const onFinish = async (values: FormBanChapter) => {
+  const onFinish: FormProps<FormBanChapter>["onFinish"] = async (values: FormBanChapter) => {
     const { data } = (
       await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/chapters/${chapter.id}/ban`, values, {
         headers: {

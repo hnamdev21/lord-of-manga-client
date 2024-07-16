@@ -1,8 +1,19 @@
 import Table from "@/constants/table";
 import AXIOS_INSTANCE from "@/services/instance";
+import { Chapter } from "@/types/data";
 import { BaseResponse } from "@/types/response";
 
-import { DeleteChapterRequest, RestoreChapterRequest } from "./dto";
+import { CreateChapterRequest, DeleteChapterRequest, RestoreChapterRequest } from "./dto";
+
+export const createChapter = async ({ formData, token }: CreateChapterRequest): Promise<BaseResponse<Chapter>> => {
+  const response = await AXIOS_INSTANCE.post<BaseResponse<Chapter>>(`/${Table.CHAPTERS}`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+};
 
 export const deleteChapter = async ({ id, formData, token }: DeleteChapterRequest): Promise<BaseResponse<boolean>> => {
   const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/${Table.CHAPTERS}/${id}/delete`, formData, {

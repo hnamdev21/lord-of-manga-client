@@ -19,11 +19,11 @@ import styles from "./styles.module.scss";
 
 const initData = {
   title: "",
-  sortBy: orderByOptions[0].value,
-  type: filterComicTypeOptions[0].value,
+  sortBy: "all",
+  type: "all",
   from: 0,
   to: 0,
-};
+} as FormComicFilter;
 
 const User_ComicsModule = () => {
   const [data, setData] = React.useState<BaseGetResponse<Comic[]> | null>(null);

@@ -1,5 +1,10 @@
 import { Chapter } from "@/types/data";
-import { FormDeleteChapter } from "@/types/form";
+import { FormCreateChapter, FormDeleteChapter } from "@/types/form";
+
+export type CreateChapterRequest = {
+  token: string;
+  formData: FormCreateChapter;
+};
 
 export type DeleteChapterRequest = {
   id: Chapter["id"];

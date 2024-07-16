@@ -1,4 +1,4 @@
-import { Form, Input, message, Modal, Select } from "antd";
+import { Form, FormProps, Input, message, Modal, Select } from "antd";
 import React from "react";
 import { useQuery } from "react-query";
 
@@ -46,7 +46,7 @@ const CreateEmployeeForm = ({ refreshData }: Props) => {
     [roles]
   );
 
-  const onFinish = async (values: FormCreateEmployee) => {
+  const onFinish: FormProps<FormCreateEmployee>["onFinish"] = async (values: FormCreateEmployee) => {
     const response = await AdminAPI.createEmployee({
       formData: values,
       token: authContext.auth.token,

@@ -77,6 +77,7 @@ export type FormDeleteChapter = Pick<Chapter, "deletedReason">;
 
 export type FormCreateChapter = Pick<Chapter, "title" | "showComment" | "type" | "price"> & {
   comicId: Comic["id"];
+  files: File[];
 };
 export type FormUpdateChapter = FormCreateChapter & Pick<Chapter, "id">;
 

@@ -1,4 +1,4 @@
-import { Form, Input, message, Modal } from "antd";
+import { Form, FormProps, Input, message, Modal } from "antd";
 import React from "react";
 
 import Button from "@/components/Button";
@@ -20,7 +20,7 @@ const UpdateTagForm = ({ tag, refreshData }: Props) => {
 
   if (!authContext) return null;
 
-  const onFinish = async (values: FormUpdateTag) => {
+  const onFinish: FormProps<FormUpdateTag>["onFinish"] = async (values: FormUpdateTag) => {
     const response = await TagAPI.updateTag({
       id: tag.id,
       formData: values,

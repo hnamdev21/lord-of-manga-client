@@ -15,9 +15,7 @@ import usePreventImageFromCapturedByUsingKeyboard from "@/hooks/usePreventImageF
 import usePreventImageFromCapturedByUsingRightClick from "@/hooks/usePreventImageFromCapturedByUsingRightClick";
 import usePreventImageFromCapturedByUsingThirdParty from "@/hooks/usePreventImageFromCapturedByUsingThirdParty";
 import usePreventMaskFromStyledUsingDevTools from "@/hooks/usePreventMaskFromStyledUsingDevTools";
-import AXIOS_INSTANCE from "@/services/instance";
-import { Chapter, Comic } from "@/types/data";
-import { BaseResponse } from "@/types/response";
+import { ComicAPI } from "@/services/apis/comic";
 
 type Props = {
   comicSlug: string;
@@ -33,8 +31,8 @@ const ReadingModule = ({ comicSlug, chapterSlug }: Props) => {
   usePreventMaskFromStyledUsingDevTools();
 
   const { data } = useQuery(["comic", comicSlug, "chapter", chapterSlug], async () => {
-    const { data: comic } = (await AXIOS_INSTANCE.get<BaseResponse<Comic>>("/comics/slug/" + comicSlug)).data;
-    const { data: chapter } = (await AXIOS_INSTANCE.get<BaseResponse<Chapter>>("/chapters/slug/" + chapterSlug + "/comic/" + comic.id)).data;
+    const { data: comic } = await ComicAPI.getComicBySlug({ slug: comicSlug });
+    const chapter = comic.chapters.find((c) => c.slug === chapterSlug);
 
     return {
       comic,
@@ -74,7 +72,7 @@ const ReadingModule = ({ comicSlug, chapterSlug }: Props) => {
             </div>
 
             <Typography tag="h4" fontSize="md" className="line-clamp-1 flex-1 border border-solid border-[var(--border-input)] rounded-md" align="center">
-              {data?.chapter.title}
+              {data?.chapter?.title}
             </Typography>
 
             <div className="w-[20%]">
@@ -98,7 +96,7 @@ const ReadingModule = ({ comicSlug, chapterSlug }: Props) => {
           Array.from({ length: data?.chapter.totalPages }).map((_, index) => (
             <div className="col-start-3 col-span-8 relative" key={index}>
               <Image
-                src={apiUrl + "/uploads/comic/" + data?.comic.id + "/chapter-" + data?.chapter.ordinal + "/" + index + ".png"}
+                src={apiUrl + "/uploads/comic/" + data?.comic.id + "/chapter-" + data?.chapter?.ordinal + "/" + index + ".png"}
                 alt={`Chapter image of ${index}`}
                 width={1920}
                 height={1080}

@@ -1,4 +1,4 @@
-import { Form, Input, message, Modal, notification } from "antd";
+import { Form, FormProps, Input, message, Modal, notification } from "antd";
 import React from "react";
 
 import Button from "@/components/Button";
@@ -31,7 +31,7 @@ const DeleteChapterForm = ({ chapter, refreshData }: Props) => {
     }
   };
 
-  const onFinish = async (values: FormDeleteChapter) => {
+  const onFinish: FormProps<FormDeleteChapter>["onFinish"] = async (values: FormDeleteChapter) => {
     const response = await AdminAPI.deleteChapter({ id: chapter.id, formData: values, token: authContext.auth.token });
 
     if (response.code === StatusCode.OK) {

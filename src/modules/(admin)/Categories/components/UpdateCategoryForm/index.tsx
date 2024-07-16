@@ -1,4 +1,4 @@
-import { Form, Input, message, Modal } from "antd";
+import { Form, FormProps, Input, message, Modal } from "antd";
 import React from "react";
 
 import Button from "@/components/Button";
@@ -20,7 +20,7 @@ const UpdateCategoryForm = ({ category, refreshData }: Props) => {
 
   if (!authContext) return null;
 
-  const onFinish = async (values: FormUpdateCategory) => {
+  const onFinish: FormProps<FormUpdateCategory>["onFinish"] = async (values: FormUpdateCategory) => {
     const response = await CategoryAPI.updateCategory({
       id: category.id,
       formData: values,

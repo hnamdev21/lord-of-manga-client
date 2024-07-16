@@ -1,4 +1,4 @@
-import { Form, Input, message, Modal } from "antd";
+import { Form, FormProps, Input, message, Modal } from "antd";
 import React from "react";
 
 import Button from "@/components/Button";
@@ -19,7 +19,7 @@ const BanComicForm = ({ comic, refreshData }: Props) => {
 
   if (!authContext) return null;
 
-  const onFinish = async (values: FormBanComic) => {
+  const onFinish: FormProps<FormBanComic>["onFinish"] = async (values: FormBanComic) => {
     const response = await AdminAPI.banComic({
       id: comic.id,
       formData: values,

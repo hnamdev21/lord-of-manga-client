@@ -1,7 +1,7 @@
 "use client";
 
 import { Divider, Form, FormProps, Input, InputNumber, InputRef, message, Select, Space, Upload } from "antd";
-import { RcFile, UploadFile } from "antd/es/upload";
+import { RcFile } from "antd/es/upload";
 import React from "react";
 import { FaUpload } from "react-icons/fa";
 import { useQuery } from "react-query";
@@ -13,10 +13,11 @@ import { comicTypeOptions } from "@/constants/options";
 import { VND_CURRENCY } from "@/constants/sign";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
-import AXIOS_INSTANCE from "@/services/instance";
-import { Category, Comic, ComicType, Tag } from "@/types/data";
+import { CategoryAPI } from "@/services/apis/category";
+import { ComicAPI } from "@/services/apis/comic";
+import { TagAPI } from "@/services/apis/tag";
+import { ComicType } from "@/types/data";
 import { FormCreateComic } from "@/types/form";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { numberFormatter } from "@/utils/formatter";
 
 const checkFile = (resolve: any, file: RcFile) => {
@@ -31,14 +32,14 @@ const checkFile = (resolve: any, file: RcFile) => {
 const UploadComic = () => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormCreateComic>();
-  const { data: categoriesAndTags } = useQuery(["categories", "tags"], async () => {
-    const [responseCategories, responseTags] = await Promise.all([
-      AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Category[]>>>("/categories"),
-      AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Tag[]>>>("/tags"),
-    ]);
 
-    const categories = responseCategories.data.data.content;
-    const tags = responseTags.data.data.content;
+  if (!authContext) return null;
+
+  const { data: categoriesAndTags } = useQuery(["categories", "tags"], async () => {
+    const [responseCategories, responseTags] = await Promise.all([CategoryAPI.getAllCategories({}), TagAPI.getAllTags({})]);
+
+    const categories = responseCategories.data.content;
+    const tags = responseTags.data.content;
 
     const categoryOptions = categories.map((category) => ({ label: category.name, value: category.name }));
     const tagOptions = tags.map((tag) => ({ label: tag.name, value: tag.name }));
@@ -52,22 +53,7 @@ const UploadComic = () => {
   const [disablePriceInput, setDisablePriceInput] = React.useState<boolean>(true);
 
   const onFinish: FormProps<FormCreateComic>["onFinish"] = async (values: FormCreateComic) => {
-    const response = (
-      await AXIOS_INSTANCE.post<BaseResponse<Comic>>(
-        "/comics",
-        {
-          ...values,
-          cover: (values.cover[0] as UploadFile).originFileObj,
-          thumbnail: (values.thumbnail[0] as UploadFile).originFileObj,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${authContext?.auth.token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-    ).data;
+    const response = await ComicAPI.createComic({ formData: values, token: authContext.auth.token });
 
     if (response.code === StatusCode.CREATED) {
       message.success(Notification.createSuccess("Comic"));

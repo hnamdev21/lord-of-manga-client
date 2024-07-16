@@ -39,7 +39,7 @@ const CategoriesModule = () => {
     },
   });
 
-  const { data, refetch } = useQuery(
+  const { data: categories, refetch } = useQuery(
     "categories",
     async () => {
       const response = await CategoryAPI.getAllCategories({
@@ -170,7 +170,7 @@ const CategoriesModule = () => {
         ),
       },
     ],
-    [data]
+    [categories]
   );
 
   React.useEffect(() => {
@@ -189,14 +189,14 @@ const CategoriesModule = () => {
 
       <Table
         columns={columns}
-        dataSource={data?.content}
+        dataSource={categories?.content}
         size="small"
         rowKey={(record: Category) => record.id}
         bordered
         pagination={{
           current: tableParams.pagination?.current,
           pageSize: tableParams.pagination?.pageSize,
-          total: data?.totalElements,
+          total: categories?.totalElements,
           showQuickJumper: true,
           showTotal: (total) => `Total ${total} record(s)`,
         }}

@@ -35,7 +35,7 @@ const SignUpModule = () => {
   return (
     <React.Fragment>
       <Typography tag="h1" fontSize="2xl" align="center" className={styles.title}>
-        {/* Welcome to Lord of Manga */}
+        Welcome to Lord of Manga
       </Typography>
 
       <div className={cn("grid grid-cols-6 gap-[2rem]", styles.container)}>

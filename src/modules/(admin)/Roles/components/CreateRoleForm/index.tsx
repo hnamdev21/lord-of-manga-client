@@ -1,4 +1,4 @@
-import { Form, Input, message, Modal, Select } from "antd";
+import { Form, FormProps, Input, message, Modal, Select } from "antd";
 import React from "react";
 import { useQuery } from "react-query";
 
@@ -40,7 +40,7 @@ const CreateRoleForm = ({ refreshData }: Props) => {
     [permissions]
   );
 
-  const onFinish = async (values: FormCreateRole) => {
+  const onFinish: FormProps<FormCreateRole>["onFinish"] = async (values: FormCreateRole) => {
     const response = (
       await AXIOS_INSTANCE.post<BaseResponse<boolean>>(
         `/roles`,

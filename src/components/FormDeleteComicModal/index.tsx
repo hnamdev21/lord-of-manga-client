@@ -1,4 +1,4 @@
-import { Form, Input, message, notification } from "antd";
+import { Form, FormProps, Input, message, notification } from "antd";
 import React from "react";
 
 import Button from "@/components/Button";
@@ -30,7 +30,7 @@ const DeleteComicForm = ({ comic, refreshData }: Props) => {
     }
   };
 
-  const onFinish = async (values: FormDeleteComic) => {
+  const onFinish: FormProps<FormDeleteComic>["onFinish"] = async (values: FormDeleteComic) => {
     const response = await AdminAPI.deleteComic({ id: comic.id, formData: values, token: authContext.auth.token });
 
     if (response.code === StatusCode.OK) {

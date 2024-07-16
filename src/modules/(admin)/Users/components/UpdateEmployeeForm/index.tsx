@@ -1,4 +1,4 @@
-import { Form, Input, message, Modal, Select } from "antd";
+import { Form, FormProps, Input, message, Modal, Select } from "antd";
 import React from "react";
 import { useQuery } from "react-query";
 
@@ -46,7 +46,7 @@ const UpdateEmployeeForm = ({ user, refreshData }: Props) => {
     [roles]
   );
 
-  const onFinish = async (values: FormUpdateEmployee) => {
+  const onFinish: FormProps<FormUpdateEmployee>["onFinish"] = async (values: FormUpdateEmployee) => {
     const response = await AdminAPI.updateEmployee({
       id: user.id,
       formData: values,

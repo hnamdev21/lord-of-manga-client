@@ -1,4 +1,4 @@
-import { Form, Input, message, Modal } from "antd";
+import { Form, FormProps, Input, message, Modal } from "antd";
 import React from "react";
 
 import Button from "@/components/Button";
@@ -19,7 +19,7 @@ const BanUserForm = ({ user, refreshData }: Props) => {
 
   if (!authContext) return null;
 
-  const onFinish = async (values: FormBanUser) => {
+  const onFinish: FormProps<FormBanUser>["onFinish"] = async (values: FormBanUser) => {
     const response = await AdminAPI.banUser({ id: user.id, formData: values, token: authContext.auth.token });
 
     if (response.code === StatusCode.OK) {

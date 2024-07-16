@@ -13,29 +13,30 @@ import { DefaultRoleValue } from "@/constants/default-data";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
+import { ComicAPI } from "@/services/apis/comic";
 import AXIOS_INSTANCE from "@/services/instance";
 import { Comic, ComicStatus, ComicType } from "@/types/data";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
+import { BaseResponse } from "@/types/response";
 import { numberToCurrency, timestampToDateTime, toReadable } from "@/utils/formatter";
 
 const User_RecycleBinModule = () => {
   const authContext = React.use(AuthContext);
   const [modalApi, modalHolder] = Modal.useModal();
 
-  const { data, refetch } = useQuery(
-    "recycle-bin",
+  if (!authContext) return null;
+
+  const { data: deletedComic, refetch } = useQuery(
+    ["user", "recycle-bin"],
     async () => {
-      if (!authContext?.auth.token) return null;
+      const response = await ComicAPI.getAllMyComics({
+        params: {
+          all: true,
+          status: ComicStatus.DELETED,
+        },
+        token: authContext.auth.token,
+      });
 
-      const { data: deletedComics } = (
-        await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics/mine?all=true&status=" + ComicStatus.DELETED, {
-          headers: {
-            Authorization: `Bearer ${authContext.auth.token}`,
-          },
-        })
-      ).data;
-
-      return deletedComics;
+      return response.data;
     },
     {
       enabled: !!authContext?.auth.token,
@@ -59,7 +60,7 @@ const User_RecycleBinModule = () => {
 
   const onDetail = React.useCallback(
     (id: string) => {
-      const comic = data?.content.find((comic) => comic.id === id);
+      const comic = deletedComic?.content.find((comic) => comic.id === id);
 
       if (!comic) {
         message.error(Notification.unexpectedError);
@@ -82,7 +83,7 @@ const User_RecycleBinModule = () => {
         closeIcon: <FaTimes />,
       });
     },
-    [data]
+    [deletedComic]
   );
 
   const columns: TableProps<Comic>["columns"] = React.useMemo(
@@ -158,7 +159,7 @@ const User_RecycleBinModule = () => {
         ),
       },
     ],
-    [data]
+    [deletedComic]
   );
 
   return (
@@ -170,7 +171,7 @@ const User_RecycleBinModule = () => {
           Recycle Bin
         </Typography>
 
-        <Table columns={columns} dataSource={data?.content} size="small" pagination={false} rowKey={(record: Comic) => record.id} bordered />
+        <Table columns={columns} dataSource={deletedComic?.content} size="small" pagination={false} rowKey={(record: Comic) => record.id} bordered />
       </Container>
     </React.Fragment>
   );
