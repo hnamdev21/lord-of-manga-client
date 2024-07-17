@@ -18,8 +18,6 @@ const UpdateTagForm = ({ tag, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormUpdateTag>();
 
-  if (!authContext) return null;
-
   const onFinish: FormProps<FormUpdateTag>["onFinish"] = async (values: FormUpdateTag) => {
     const response = await TagAPI.updateTag({
       id: tag.id,

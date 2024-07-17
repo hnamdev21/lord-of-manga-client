@@ -26,8 +26,6 @@ const UploadChapter = ({ createdComics }: UploadChapterProps) => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormCreateChapter>();
 
-  if (!authContext) return null;
-
   const createdComicOptions = React.useMemo(() => {
     return createdComics.map((comic) => ({ label: comic.title, value: comic.id }));
   }, [createdComics]);

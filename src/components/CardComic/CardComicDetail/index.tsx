@@ -65,11 +65,11 @@ const CardComicDetail = ({ ...props }: Props) => {
           <Typography className="line-clamp-6">{description}</Typography>
 
           <div className={styles.container__info__actions}>
-            <Button className="block flex-1 text-center" href={`${Path.USER.COMICS}/${slug}`}>
+            <Button className={styles.container__info__actions__read} href={`${Path.USER.COMICS}/${slug}`}>
               Read
             </Button>
 
-            <Button className="w-[10%]" element="button" type="button" variant="outline" color="dark" icon>
+            <Button className={styles.container__info__actions__bookmark} element="button" type="button" variant="outline" color="dark" icon>
               <FaBookmark />
             </Button>
           </div>

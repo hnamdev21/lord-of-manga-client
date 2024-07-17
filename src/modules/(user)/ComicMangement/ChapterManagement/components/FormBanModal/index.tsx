@@ -17,8 +17,6 @@ type Props = {
 const BanComicForm = ({ chapter, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
 
-  if (!authContext) return null;
-
   const onFinish: FormProps<FormBanChapter>["onFinish"] = async (values: FormBanChapter) => {
     const response = await AdminAPI.banChapter({
       id: chapter.id,

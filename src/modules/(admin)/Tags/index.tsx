@@ -37,8 +37,6 @@ const TagsModule = () => {
     },
   });
 
-  if (!authContext) return null;
-
   const { data, refetch } = useQuery(
     "tags",
     async () => {

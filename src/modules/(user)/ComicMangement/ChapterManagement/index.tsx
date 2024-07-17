@@ -43,8 +43,6 @@ const ChapterManagementModule = ({ comicSlug }: ChapterManagementModuleProps) =>
     },
   });
 
-  if (!authContext) return null;
-
   const { data: comic } = useQuery(["mine", "comic", comicSlug], async () => {
     // TODO - BACKEND
     const response = await ComicAPI.getMyComicBySlug({ slug: comicSlug, token: authContext.auth.token });

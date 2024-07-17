@@ -39,8 +39,6 @@ const ChaptersModule = ({ comicSlug }: Props) => {
   const authContext = React.use(AuthContext);
   const [modalApi, modalHolder] = Modal.useModal();
 
-  if (!authContext) return null;
-
   const [tableParams, setTableParams] = React.useState<TableParams>({
     pagination: {
       current: 1,

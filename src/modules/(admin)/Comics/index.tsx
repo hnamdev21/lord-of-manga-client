@@ -40,8 +40,6 @@ const ComicsModule = () => {
     },
   });
 
-  if (!authContext) return null;
-
   const { data: comics, refetch } = useQuery(
     ["admin", "comics", tableParams.pagination?.current, tableParams.pagination?.pageSize],
     async () => {

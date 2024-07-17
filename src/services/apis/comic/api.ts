@@ -4,10 +4,19 @@ import { Comic } from "@/types/data";
 import { GetMyComicBySlugRequest } from "@/types/form";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
 
-import { CreateComicRequest, DeleteComicRequest, GetComicBySlugRequest, GetMyComicsRequest, RestoreComicRequest, UpdateComicRequest } from "./dto";
+import {
+  CreateComicRequest,
+  DeleteComicRequest,
+  GetAllComicsBySlugsRequest,
+  GetAllComicsRequest,
+  GetComicBySlugRequest,
+  GetMyComicsRequest,
+  RestoreComicRequest,
+  UpdateComicRequest,
+} from "./dto";
 
 export const deleteComic = async ({ id, formData, token }: DeleteComicRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/${Table.COMICS}/${id}/delete`, formData, {
+  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/${ApiPrefix.COMICS}/${id}/delete`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -17,7 +26,7 @@ export const deleteComic = async ({ id, formData, token }: DeleteComicRequest): 
 };
 
 export const restoreComic = async ({ id, token }: RestoreComicRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/${Table.COMICS}/${id}/restore`, null, {
+  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/${ApiPrefix.COMICS}/${id}/restore`, null, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -27,7 +36,7 @@ export const restoreComic = async ({ id, token }: RestoreComicRequest): Promise<
 };
 
 export const getAllMyComics = async ({ token, params }: GetMyComicsRequest): Promise<BaseResponse<BaseGetResponse<Comic[]>>> => {
-  const response = await AXIOS_INSTANCE.get(`/${Table.COMICS}/mine`, {
+  const response = await AXIOS_INSTANCE.get(`/${ApiPrefix.COMICS}/mine`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -38,7 +47,7 @@ export const getAllMyComics = async ({ token, params }: GetMyComicsRequest): Pro
 };
 
 export const getMyComicBySlug = async ({ slug, token }: GetMyComicBySlugRequest): Promise<BaseResponse<Comic>> => {
-  const response = await AXIOS_INSTANCE.get(`/${Table.COMICS}/slug/${slug}/mine`, {
+  const response = await AXIOS_INSTANCE.get(`/${ApiPrefix.COMICS}/slug/${slug}/mine`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -48,13 +57,13 @@ export const getMyComicBySlug = async ({ slug, token }: GetMyComicBySlugRequest)
 };
 
 export const getComicBySlug = async ({ slug }: GetComicBySlugRequest): Promise<BaseResponse<Comic>> => {
-  const response = await AXIOS_INSTANCE.get(`/${Table.COMICS}/slug/${slug}`);
+  const response = await AXIOS_INSTANCE.get(`/${ApiPrefix.COMICS}/slug/${slug}`);
 
   return response.data;
 };
 
 export const createComic = async ({ formData, token }: CreateComicRequest): Promise<BaseResponse<Comic>> => {
-  const response = await AXIOS_INSTANCE.post(`/${Table.COMICS}`, formData, {
+  const response = await AXIOS_INSTANCE.post(`/${ApiPrefix.COMICS}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",
@@ -65,11 +74,25 @@ export const createComic = async ({ formData, token }: CreateComicRequest): Prom
 };
 
 export const updateComic = async ({ id, formData, token }: UpdateComicRequest): Promise<BaseResponse<Comic>> => {
-  const response = await AXIOS_INSTANCE.put(`/${Table.COMICS}/${id}`, formData, {
+  const response = await AXIOS_INSTANCE.put(`/${ApiPrefix.COMICS}/${id}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",
     },
+  });
+
+  return response.data;
+};
+
+export const getAllComicsBySlugs = async ({ formData }: GetAllComicsBySlugsRequest): Promise<BaseResponse<Comic[]>> => {
+  const response = await AXIOS_INSTANCE.post(`/${ApiPrefix.COMICS}/slugs`, formData);
+
+  return response.data;
+};
+
+export const getAllComics = async ({ params }: GetAllComicsRequest) => {
+  const response = await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(`/${ApiPrefix.COMICS}`, {
+    params,
   });
 
   return response.data;

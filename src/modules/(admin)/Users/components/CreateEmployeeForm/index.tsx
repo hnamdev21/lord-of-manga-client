@@ -22,8 +22,6 @@ const CreateEmployeeForm = ({ refreshData }: Props) => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormCreateEmployee>();
 
-  if (!authContext) return null;
-
   const { data: roles } = useQuery(["admin", "roles"], async () => {
     const response = await RoleAPI.getAllRoles({
       params: {

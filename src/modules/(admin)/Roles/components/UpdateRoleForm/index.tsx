@@ -7,10 +7,9 @@ import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
 import { PermissionAPI } from "@/services/apis/permission";
-import AXIOS_INSTANCE from "@/services/instance";
+import { RoleAPI } from "@/services/apis/role";
 import { Role } from "@/types/data";
 import { FormUpdateRole } from "@/types/form";
-import { BaseResponse } from "@/types/response";
 import { toUpperCaseWithUnderscores } from "@/utils/formatter";
 
 type Props = {
@@ -43,20 +42,14 @@ const UpdateRoleForm = ({ role, refreshData }: Props) => {
   );
 
   const onFinish: FormProps<FormUpdateRole>["onFinish"] = async (values: FormUpdateRole) => {
-    const response = (
-      await AXIOS_INSTANCE.put<BaseResponse<Role>>(
-        `/roles/${role.id}`,
-        {
-          ...values,
-          value: toUpperCaseWithUnderscores(values.name),
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${authContext?.auth.token}`,
-          },
-        }
-      )
-    ).data;
+    const response = await RoleAPI.updateRole({
+      id: role.id,
+      formData: {
+        ...values,
+        value: toUpperCaseWithUnderscores(values.name),
+      },
+      token: authContext.auth.token,
+    });
 
     if (response.code === StatusCode.OK) {
       refreshData();

@@ -24,7 +24,7 @@ const usePreventMaskFromStyledUsingDevTools = () => {
         mask.getBoundingClientRect().width < (windowSize.width || 1920) ||
         mask.getBoundingClientRect().height < (windowSize.height || 1080)
       ) {
-        return router.push("/");
+        return router.push(Path.USER.HOME);
       }
     }, 200);
   };

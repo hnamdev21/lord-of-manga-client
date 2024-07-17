@@ -9,9 +9,9 @@ import { DefaultRoleValue } from "@/constants/default-data";
 import LocalStorageKey from "@/constants/local-key";
 import Notification from "@/constants/notification";
 import Path, { adminPaths, authorizedUserPaths } from "@/constants/path";
-import AXIOS_INSTANCE from "@/services/instance";
+import { AuthAPI } from "@/services/apis/auth";
+import { UserAPI } from "@/services/apis/user";
 import { User } from "@/types/data";
-import { BaseResponse } from "@/types/response";
 
 type Auth = {
   token: string;
@@ -23,7 +23,15 @@ export const AuthContext = React.createContext<{
   refreshUser: () => Promise<void>;
   signIn: (token: string) => void;
   signOut: () => void;
-} | null>(null);
+}>({
+  auth: {
+    token: "",
+  },
+  user: null,
+  refreshUser: async () => {},
+  signIn: () => {},
+  signOut: () => {},
+});
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
@@ -34,31 +42,19 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   });
   const [user, setUser] = React.useState<User | null>(null);
 
-  const getMe = async (token: string) => {
-    const { data: user } = (
-      await AXIOS_INSTANCE.get<BaseResponse<User>>("/users/mine", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-    ).data;
-
-    return user;
-  };
-
   const refreshUser = async () => {
     if (!auth.token) return;
 
-    const user = await getMe(auth.token);
-    setUser(user);
+    const response = await UserAPI.getMyProfile({ token: auth.token });
+    setUser(response.data);
   };
 
   const signIn = async (token: string) => {
-    const user = await getMe(token);
+    const response = await UserAPI.getMyProfile({ token: auth.token });
 
     localStorage.setItem(LocalStorageKey.TOKEN, token);
 
-    setUser(user);
+    setUser(response.data);
     setAuth({
       token,
     });
@@ -66,7 +62,11 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     window.location.href = Path.USER.HOME;
   };
 
-  const signOut = () => {
+  const signOut = async () => {
+    const token = localStorage.getItem(LocalStorageKey.TOKEN) || "";
+
+    await AuthAPI.signOut({ formData: { token } });
+
     localStorage.removeItem(LocalStorageKey.TOKEN);
 
     setAuth({
@@ -75,6 +75,27 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(null);
 
     router.push(Path.AUTH.SIGN_IN);
+  };
+
+  const validateUser = async () => {
+    jwt.verify(auth.token, process.env.NEXT_PUBLIC_JWT_SECRET || "");
+
+    const response = await UserAPI.getMyProfile({ token: auth.token });
+    const user = response.data;
+    setUser(user);
+
+    if (user.roles.length === 0) {
+      message.info(Notification.banned);
+      signOut();
+      return;
+    }
+
+    adminPaths.forEach((path) => {
+      if (pathname.startsWith(path) && !user.roles.some((role) => role.value === DefaultRoleValue.ADMIN)) {
+        message.info(Notification.signInAsAdminRequired);
+        window.location.href = Path.ERROR.FORBIDDEN;
+      }
+    });
   };
 
   React.useEffect(() => {
@@ -115,23 +136,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (!auth.token) return;
 
     try {
-      jwt.verify(auth.token, process.env.NEXT_PUBLIC_JWT_SECRET || "");
-
-      getMe(auth.token).then((user) => {
-        setUser(user);
-
-        if (user.roles.length === 0) {
-          message.info(Notification.banned);
-          signOut();
-        }
-
-        adminPaths.forEach((path) => {
-          if (pathname.startsWith(path) && !user.roles.some((role) => role.value === DefaultRoleValue.ADMIN)) {
-            message.info(Notification.signInAsAdminRequired);
-            window.location.href = Path.ERROR.FORBIDDEN;
-          }
-        });
-      });
+      validateUser();
     } catch (error) {
       signOut();
     }

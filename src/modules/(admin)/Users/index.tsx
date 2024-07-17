@@ -39,8 +39,6 @@ const UsersModule = () => {
     },
   });
 
-  if (!authContext) return null;
-
   const { data, refetch } = useQuery(
     "users",
     async () => {

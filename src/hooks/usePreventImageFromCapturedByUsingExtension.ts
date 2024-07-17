@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 import { isDevelopment } from "@/constants/config";
+import Path from "@/constants/path";
 
 const usePreventImageFromCapturedByUsingExtension = () => {
   if (isDevelopment) return;
@@ -17,7 +18,7 @@ const usePreventImageFromCapturedByUsingExtension = () => {
       const body = document.querySelector("body");
 
       if (body?.style.minHeight === "100vh") {
-        return router.push("/");
+        return router.push(Path.USER.HOME);
       }
     }, 200);
   };

@@ -1,5 +1,5 @@
 import { Comic } from "@/types/data";
-import { FormCreateComic, FormDeleteComic, FormUpdateComic } from "@/types/form";
+import { FormComicFilter, FormCreateComic, FormDeleteComic, FormUpdateComic } from "@/types/form";
 
 export type DeleteComicRequest = {
   id: Comic["id"];
@@ -40,4 +40,17 @@ export type UpdateComicRequest = {
   id: Comic["id"];
   formData: FormUpdateComic;
   token: string;
+};
+
+export type GetAllComicsBySlugsRequest = {
+  formData: {
+    slugs: string[];
+  };
+};
+
+export type GetAllComicsRequest = {
+  params?: FormComicFilter & {
+    pageNumber?: number;
+    size?: number;
+  };
 };

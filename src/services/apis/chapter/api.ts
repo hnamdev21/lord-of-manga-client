@@ -6,7 +6,7 @@ import { BaseResponse } from "@/types/response";
 import { CreateChapterRequest, DeleteChapterRequest, RestoreChapterRequest } from "./dto";
 
 export const createChapter = async ({ formData, token }: CreateChapterRequest): Promise<BaseResponse<Chapter>> => {
-  const response = await AXIOS_INSTANCE.post<BaseResponse<Chapter>>(`/${Table.CHAPTERS}`, formData, {
+  const response = await AXIOS_INSTANCE.post<BaseResponse<Chapter>>(`/${ApiPrefix.CHAPTERS}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -16,7 +16,7 @@ export const createChapter = async ({ formData, token }: CreateChapterRequest): 
 };
 
 export const deleteChapter = async ({ id, formData, token }: DeleteChapterRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/${Table.CHAPTERS}/${id}/delete`, formData, {
+  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/${ApiPrefix.CHAPTERS}/${id}/delete`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -26,7 +26,7 @@ export const deleteChapter = async ({ id, formData, token }: DeleteChapterReques
 };
 
 export const restoreChapter = async ({ id, token }: RestoreChapterRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/${Table.CHAPTERS}/${id}/restore`, null, {
+  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/${ApiPrefix.CHAPTERS}/${id}/restore`, null, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

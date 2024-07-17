@@ -39,8 +39,6 @@ const ComicManagementModule = () => {
     },
   });
 
-  if (!authContext) return null;
-
   const { data, refetch } = useQuery(
     "my-comics",
     async () => {

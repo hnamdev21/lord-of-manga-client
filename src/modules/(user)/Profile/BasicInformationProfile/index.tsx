@@ -12,12 +12,10 @@ import Notification from "@/constants/notification";
 import { genderOptions } from "@/constants/options";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
-import AXIOS_INSTANCE from "@/services/instance";
+import { UserAPI } from "@/services/apis/user";
 import { User } from "@/types/data";
 import { FormUpdateProfile } from "@/types/form";
-import { BaseResponse } from "@/types/response";
 import { getBase64 } from "@/utils/imageUtils";
-import { fromObjetToFomData } from "@/utils/utils";
 
 import styles from "./styles.module.scss";
 
@@ -34,16 +32,7 @@ const BasicInformationProfile = ({ user, token }: { user: User; token: string })
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
   const onFinish: FormProps<FormUpdateProfile>["onFinish"] = async (values: FormUpdateProfile) => {
-    const formData = fromObjetToFomData({ ...values, file: avatarFile });
-
-    const response = (
-      await AXIOS_INSTANCE.put<BaseResponse<User>>("/users/mine", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      })
-    ).data;
+    const response = await UserAPI.updateProfile({ token, formData: { ...values, file: avatarFile } });
 
     if (response.code === StatusCode.OK) {
       authContext?.refreshUser();

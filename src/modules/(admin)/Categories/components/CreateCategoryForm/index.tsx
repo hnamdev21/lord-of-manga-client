@@ -15,8 +15,6 @@ type Props = {
 const CreateCategoryForm = ({ refreshData }: Props) => {
   const authContext = React.use(AuthContext);
 
-  if (!authContext) return null;
-
   const onFinish: FormProps<FormCreateCategory>["onFinish"] = async (values: FormCreateCategory) => {
     const response = await CategoryAPI.createCategory({
       formData: values,

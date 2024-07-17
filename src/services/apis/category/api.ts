@@ -6,7 +6,7 @@ import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { CreateCategoryRequest, DeleteCategoryRequest, GetAllCategoriesRequest, UpdateCategoryRequest } from "./dto";
 
 export const getAllCategories = async ({ params }: GetAllCategoriesRequest): Promise<BaseResponse<BaseGetResponse<Category[]>>> => {
-  const response = await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Category[]>>>(`/${Table.CATEGORIES}`, {
+  const response = await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Category[]>>>(`/${ApiPrefix.CATEGORIES}`, {
     params,
   });
 
@@ -14,7 +14,7 @@ export const getAllCategories = async ({ params }: GetAllCategoriesRequest): Pro
 };
 
 export const deleteCategory = async ({ id, token }: DeleteCategoryRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.delete<BaseResponse<boolean>>(`/${Table.CATEGORIES}/${id}`, {
+  const response = await AXIOS_INSTANCE.delete<BaseResponse<boolean>>(`/${ApiPrefix.CATEGORIES}/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -24,7 +24,7 @@ export const deleteCategory = async ({ id, token }: DeleteCategoryRequest): Prom
 };
 
 export const createCategory = async ({ formData, token }: CreateCategoryRequest): Promise<BaseResponse<Category>> => {
-  const response = await AXIOS_INSTANCE.post<BaseResponse<Category>>(`/${Table.CATEGORIES}`, formData, {
+  const response = await AXIOS_INSTANCE.post<BaseResponse<Category>>(`/${ApiPrefix.CATEGORIES}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -34,7 +34,7 @@ export const createCategory = async ({ formData, token }: CreateCategoryRequest)
 };
 
 export const updateCategory = async ({ id, formData, token }: UpdateCategoryRequest): Promise<BaseResponse<Category>> => {
-  const response = await AXIOS_INSTANCE.put<BaseResponse<Category>>(`/${Table.CATEGORIES}/${id}`, formData, {
+  const response = await AXIOS_INSTANCE.put<BaseResponse<Category>>(`/${ApiPrefix.CATEGORIES}/${id}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -7,10 +7,9 @@ import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
-import AXIOS_INSTANCE from "@/services/instance";
+import { UserAPI } from "@/services/apis/user";
 import { User } from "@/types/data";
 import { FormUpdateEmail, FormUpdateUserSetting } from "@/types/form";
-import { BaseResponse } from "@/types/response";
 
 import EmailInput from "./EmailInput";
 import styles from "./styles.module.scss";
@@ -21,13 +20,7 @@ const EmailProfile = ({ user, token }: { user: User; token: string }) => {
   const [formSetting] = Form.useForm<FormUpdateUserSetting>();
 
   const onFinishSetting: FormProps<FormUpdateUserSetting>["onFinish"] = async (values: FormUpdateUserSetting) => {
-    const response = (
-      await AXIOS_INSTANCE.put<BaseResponse<User>>("/users/mine/setting", values, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-    ).data;
+    const response = await UserAPI.updateUserSettings({ token, formData: values });
 
     if (response.code === StatusCode.OK) {
       authContext?.refreshUser();

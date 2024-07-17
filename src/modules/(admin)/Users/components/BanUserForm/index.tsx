@@ -17,15 +17,13 @@ type Props = {
 const BanUserForm = ({ user, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
 
-  if (!authContext) return null;
-
   const onFinish: FormProps<FormBanUser>["onFinish"] = async (values: FormBanUser) => {
     const response = await AdminAPI.banUser({ id: user.id, formData: values, token: authContext.auth.token });
 
     if (response.code === StatusCode.OK) {
       refreshData();
       Modal.destroyAll();
-      message.success("User has been banned");
+      message.success(Notification.banSuccess("User"));
     }
   };
 

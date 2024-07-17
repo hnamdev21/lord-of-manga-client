@@ -19,8 +19,6 @@ const DeleteChapterForm = ({ chapter, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
   const [notificationApi, modalHolder] = notification.useNotification();
 
-  if (!authContext) return null;
-
   const onRestore = async () => {
     const response = await AdminAPI.restoreChapter({ id: chapter.id, token: authContext.auth.token });
 

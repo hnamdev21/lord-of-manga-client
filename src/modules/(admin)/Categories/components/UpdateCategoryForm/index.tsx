@@ -18,8 +18,6 @@ const UpdateCategoryForm = ({ category, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormUpdateCategory>();
 
-  if (!authContext) return null;
-
   const onFinish: FormProps<FormUpdateCategory>["onFinish"] = async (values: FormUpdateCategory) => {
     const response = await CategoryAPI.updateCategory({
       id: category.id,

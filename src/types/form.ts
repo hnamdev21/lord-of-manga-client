@@ -7,6 +7,10 @@ export type FormSignIn = Pick<User, "username"> & {
   remember: boolean;
 };
 
+export type FormSignOut = {
+  token: string;
+};
+
 export type FormSignUp = Pick<User, "fullName" | "username" | "email" | "receiveNews"> & {
   password: string;
 };
@@ -31,11 +35,19 @@ export type FormUpdatePassword = {
 };
 
 export type FormComicFilter = {
-  title: string;
-  sortBy: "all" | "createdAt" | "updatedAt" | "title" | "price" | "viewCount" | "searchCount" | "likeCount";
-  type: "all" | "FREE" | "PAID_PER_CHAPTER" | "PAID_ONCE";
-  from: number;
-  to: number;
+  title?: string;
+  type?: "all" | Comic["type"];
+  from?: number;
+  to?: number;
+  categorySlug?: string;
+  tagSlug?: string;
+  tagNames?: string[];
+  categoryNames?: string[];
+  tagName?: string;
+  categoryName?: string;
+  tagSlugs?: string[];
+  categorySlugs?: string[];
+  sortBy?: "all" | "createdAt" | "updatedAt" | "title" | "price" | "viewCount" | "searchCount" | "likeCount";
 };
 
 export type FormForgotPassword = Required<Pick<User, "email">>;
@@ -50,7 +62,9 @@ export type FormTwoFactorAuthentication = {
   code: string;
 };
 
-export type FormUpdateProfile = Pick<User, "fullName" | "twoStepVerification" | "gender" | "receiveNews">;
+export type FormUpdateProfile = Pick<User, "fullName" | "twoStepVerification" | "gender" | "receiveNews"> & {
+  file: File | null;
+};
 
 export type FormCreateComment = Pick<Comment, "parentComment" | "chapter" | "content">;
 export type FormUpdateComment = Pick<Comment, "id" | "content">;
@@ -81,7 +95,7 @@ export type FormCreateChapter = Pick<Chapter, "title" | "showComment" | "type" |
 };
 export type FormUpdateChapter = FormCreateChapter & Pick<Chapter, "id">;
 
-export type FormCreateRole = Pick<Role, "name" | "description"> & {
+export type FormCreateRole = Pick<Role, "name" | "description" | "value"> & {
   permissionIds: Permission["id"][];
 };
 export type FormUpdateRole = FormCreateRole & Pick<Role, "id">;

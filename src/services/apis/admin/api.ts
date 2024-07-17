@@ -1,4 +1,4 @@
-import Table from "@/constants/table";
+import ApiPrefix from "@/constants/table";
 import AXIOS_INSTANCE from "@/services/instance";
 import { Chapter, Comic, User } from "@/types/data";
 import { BaseGetResponse, BaseResponse } from "@/types/response";
@@ -24,7 +24,7 @@ import {
 } from "./dto";
 
 export const getAllUsers = async ({ params, token }: GetAllUsersRequest) => {
-  const response = await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<User[]>>>(`/admin/${Table.USERS}`, {
+  const response = await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<User[]>>>(`/admin/${ApiPrefix.USERS}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -35,7 +35,7 @@ export const getAllUsers = async ({ params, token }: GetAllUsersRequest) => {
 };
 
 export const createEmployee = async ({ formData, token }: CreateEmployeeRequest) => {
-  const response = await AXIOS_INSTANCE.post<BaseResponse<boolean>>("/admin/users", formData, {
+  const response = await AXIOS_INSTANCE.post<BaseResponse<boolean>>(`/admin/${ApiPrefix.USERS}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -45,7 +45,7 @@ export const createEmployee = async ({ formData, token }: CreateEmployeeRequest)
 };
 
 export const updateEmployee = async ({ id, formData, token }: UpdateEmployeeRequest) => {
-  const response = await AXIOS_INSTANCE.put<BaseResponse<boolean>>(`/admin/users/${id}`, formData, {
+  const response = await AXIOS_INSTANCE.put<BaseResponse<boolean>>(`/admin/${ApiPrefix.USERS}/${id}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -55,7 +55,7 @@ export const updateEmployee = async ({ id, formData, token }: UpdateEmployeeRequ
 };
 
 export const banUser = async ({ id, formData, token }: BanUserRequest) => {
-  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${Table.USERS}/${id}/ban`, formData, {
+  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${ApiPrefix.USERS}/${id}/ban`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -65,7 +65,7 @@ export const banUser = async ({ id, formData, token }: BanUserRequest) => {
 };
 
 export const getComicBySlug = async ({ slug, token }: GetComicBySlug) => {
-  const response = await AXIOS_INSTANCE.get<BaseResponse<Comic>>(`/admin/${Table.COMICS}/slug/${slug}`, {
+  const response = await AXIOS_INSTANCE.get<BaseResponse<Comic>>(`/admin/${ApiPrefix.COMICS}/slug/${slug}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -75,7 +75,7 @@ export const getComicBySlug = async ({ slug, token }: GetComicBySlug) => {
 };
 
 export const approveComic = async ({ id, token }: ApproveComicRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${Table.COMICS}/${id}/approve`, null, {
+  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${ApiPrefix.COMICS}/${id}/approve`, null, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -85,7 +85,7 @@ export const approveComic = async ({ id, token }: ApproveComicRequest): Promise<
 };
 
 export const banComic = async ({ id, formData, token }: BanComicRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${Table.COMICS}/${id}/ban`, formData, {
+  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${ApiPrefix.COMICS}/${id}/ban`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -95,7 +95,7 @@ export const banComic = async ({ id, formData, token }: BanComicRequest): Promis
 };
 
 export const unbanComic = async ({ id, token }: UnbanComicRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${Table.COMICS}/${id}/unban`, null, {
+  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${ApiPrefix.COMICS}/${id}/unban`, null, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -105,7 +105,7 @@ export const unbanComic = async ({ id, token }: UnbanComicRequest): Promise<Base
 };
 
 export const deleteComic = async ({ id, formData, token }: DeleteComicRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${Table.COMICS}/${id}/delete`, formData, {
+  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${ApiPrefix.COMICS}/${id}/delete`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -115,7 +115,7 @@ export const deleteComic = async ({ id, formData, token }: DeleteComicRequest): 
 };
 
 export const restoreComic = async ({ id, token }: RestoreComicRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${Table.COMICS}/${id}/restore`, null, {
+  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${ApiPrefix.COMICS}/${id}/restore`, null, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -125,7 +125,7 @@ export const restoreComic = async ({ id, token }: RestoreComicRequest): Promise<
 };
 
 export const approveChapter = async ({ id, token }: ApproveChapterRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${Table.CHAPTERS}/${id}/approve`, null, {
+  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${ApiPrefix.CHAPTERS}/${id}/approve`, null, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -135,7 +135,7 @@ export const approveChapter = async ({ id, token }: ApproveChapterRequest): Prom
 };
 
 export const banChapter = async ({ id, formData, token }: BanChapterRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${Table.CHAPTERS}/${id}/ban`, formData, {
+  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${ApiPrefix.CHAPTERS}/${id}/ban`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -145,7 +145,7 @@ export const banChapter = async ({ id, formData, token }: BanChapterRequest): Pr
 };
 
 export const unbanChapter = async ({ id, token }: UnbanChapterRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${Table.CHAPTERS}/${id}/unban`, null, {
+  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${ApiPrefix.CHAPTERS}/${id}/unban`, null, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -155,7 +155,7 @@ export const unbanChapter = async ({ id, token }: UnbanChapterRequest): Promise<
 };
 
 export const deleteChapter = async ({ id, formData, token }: DeleteChapterRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${Table.CHAPTERS}/${id}/delete`, formData, {
+  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${ApiPrefix.CHAPTERS}/${id}/delete`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -165,7 +165,7 @@ export const deleteChapter = async ({ id, formData, token }: DeleteChapterReques
 };
 
 export const restoreChapter = async ({ id, token }: RestoreChapterRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${Table.CHAPTERS}/${id}/restore`, null, {
+  const response = await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/admin/${ApiPrefix.CHAPTERS}/${id}/restore`, null, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -175,7 +175,7 @@ export const restoreChapter = async ({ id, token }: RestoreChapterRequest): Prom
 };
 
 export const getAllChaptersByComicSlug = async ({ slug, params, token }: GetAllChaptersByComicSlugRequest) => {
-  const response = await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Chapter[]>>>(`/admin/${Table.CHAPTERS}/comic/slug/${slug}`, {
+  const response = await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Chapter[]>>>(`/admin/${ApiPrefix.CHAPTERS}/comic/slug/${slug}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -186,7 +186,7 @@ export const getAllChaptersByComicSlug = async ({ slug, params, token }: GetAllC
 };
 
 export const getAllComics = async ({ params, token }: GetAllComicsRequest) => {
-  const response = await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(`/admin/${Table.COMICS}`, {
+  const response = await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(`/admin/${ApiPrefix.COMICS}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

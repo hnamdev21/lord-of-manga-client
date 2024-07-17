@@ -15,8 +15,6 @@ type Props = {
 const CreateTagForm = ({ refreshData }: Props) => {
   const authContext = React.use(AuthContext);
 
-  if (!authContext) return null;
-
   const onFinish = async (values: FormCreateTag) => {
     const response = await TagAPI.createTag({
       formData: values,

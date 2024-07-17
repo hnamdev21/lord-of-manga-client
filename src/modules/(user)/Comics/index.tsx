@@ -8,12 +8,11 @@ import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { filterComicTypeOptions, orderByOptions } from "@/constants/options";
 import { VND_CURRENCY } from "@/constants/sign";
-import AXIOS_INSTANCE from "@/services/instance";
-import { Comic, ComicStatus } from "@/types/data";
+import { ComicAPI } from "@/services/apis/comic";
+import { Comic } from "@/types/data";
 import { FormComicFilter } from "@/types/form";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
+import { BaseGetResponse } from "@/types/response";
 import { numberFormatter } from "@/utils/formatter";
-import { fromObjetToQuery } from "@/utils/utils";
 
 import styles from "./styles.module.scss";
 
@@ -31,25 +30,35 @@ const User_ComicsModule = () => {
   const [page, setPage] = React.useState(1);
 
   const onFinish: FormProps<FormComicFilter>["onFinish"] = async (values: FormComicFilter) => {
-    const query = `/comics?pageNumber=1&size=6&status=${ComicStatus.APPROVED}&` + fromObjetToQuery(values, initData);
-    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(query)).data;
+    const response = await ComicAPI.getAllComics({
+      params: {
+        ...values,
+        pageNumber: page,
+        size: 6,
+      },
+    });
 
     setPage(1);
-    setData(data);
+    setData(response.data);
     setFilter(values);
   };
 
   const onLoadMore = async () => {
     const nextPage = page + 1;
-    const query = `/comics?pageNumber=${nextPage}&size=6&` + fromObjetToQuery(filter, initData);
-    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>(query)).data;
+    const response = await ComicAPI.getAllComics({
+      params: {
+        ...filter,
+        pageNumber: nextPage,
+        size: 6,
+      },
+    });
 
     setPage(nextPage);
     setData((prev) =>
       prev
         ? {
             ...prev,
-            content: [...prev.content, ...data.content],
+            content: [...prev.content, ...response.data.content],
           }
         : data
     );

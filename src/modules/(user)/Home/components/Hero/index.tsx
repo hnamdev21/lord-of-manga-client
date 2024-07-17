@@ -9,16 +9,21 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import { apiUrl } from "@/constants/config";
-import AXIOS_INSTANCE from "@/services/instance";
-import { Comic } from "@/types/data";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
+import Path from "@/constants/path";
+import { ComicAPI } from "@/services/apis/comic";
 
 import styles from "./styles.module.scss";
 
 const Hero = () => {
   const { data: comics } = useQuery(["hero", "comics"], async () => {
-    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics?size=4&sortBy=createdAt")).data;
-    return data.content;
+    const response = await ComicAPI.getAllComics({
+      params: {
+        size: 4,
+        sortBy: "createdAt",
+      },
+    });
+
+    return response.data.content;
   });
 
   return (
@@ -36,7 +41,7 @@ const Hero = () => {
                   <Image src={apiUrl + "/uploads/" + comic.coverPath} alt={`Cover image of ${comic.title}`} layout="fill" />
                 </div>
 
-                <Button href={"/comics/" + comic.slug} size="lg" className="block relative text-center" style={{ width: "100%" }}>
+                <Button href={`/${Path.USER.COMICS}/` + comic.slug} size="lg" className="block relative text-center" style={{ width: "100%" }}>
                   Read now
                 </Button>
               </div>

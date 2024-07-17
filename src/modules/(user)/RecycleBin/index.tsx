@@ -23,8 +23,6 @@ const User_RecycleBinModule = () => {
   const authContext = React.use(AuthContext);
   const [modalApi, modalHolder] = Modal.useModal();
 
-  if (!authContext) return null;
-
   const { data: deletedComic, refetch } = useQuery(
     ["user", "recycle-bin"],
     async () => {

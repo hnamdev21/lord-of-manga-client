@@ -33,8 +33,6 @@ const UploadComic = () => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormCreateComic>();
 
-  if (!authContext) return null;
-
   const { data: categoriesAndTags } = useQuery(["categories", "tags"], async () => {
     const [responseCategories, responseTags] = await Promise.all([CategoryAPI.getAllCategories({}), TagAPI.getAllTags({})]);
 
@@ -213,7 +211,7 @@ const UploadComic = () => {
                 Description
               </Typography>
             }
-            name={"description"}
+            name="description"
             rules={[{ required: true, message: Notification.pleaseEnter("description") }]}
           >
             <Input.TextArea rows={4} />

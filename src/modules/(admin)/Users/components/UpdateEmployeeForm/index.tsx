@@ -22,8 +22,6 @@ const UpdateEmployeeForm = ({ user, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
   const [form] = Form.useForm<FormUpdateEmployee>();
 
-  if (!authContext) return null;
-
   const { data: roles } = useQuery(["admin", "roles"], async () => {
     const response = await RoleAPI.getAllRoles({
       params: {
@@ -77,7 +75,7 @@ const UpdateEmployeeForm = ({ user, refreshData }: Props) => {
       </div>
 
       <Form.Item<FormUpdateEmployee> name="username" rules={[{ required: true, message: Notification.pleaseEnter("username") }]}>
-        <Input placeholder="Username" />
+        <Input placeholder="Username" disabled />
       </Form.Item>
 
       <Form.Item<FormUpdateEmployee>

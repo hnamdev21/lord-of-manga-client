@@ -6,7 +6,7 @@ import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { CreateTagRequest, DeleteTagRequest, GetAllTagsRequest, UpdateTagRequest } from "./dto";
 
 export const getAllTags = async ({ params }: GetAllTagsRequest): Promise<BaseResponse<BaseGetResponse<Tag[]>>> => {
-  const response = await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Tag[]>>>(`/${Table.TAGS}`, {
+  const response = await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Tag[]>>>(`/${ApiPrefix.TAGS}`, {
     params,
   });
 
@@ -14,7 +14,7 @@ export const getAllTags = async ({ params }: GetAllTagsRequest): Promise<BaseRes
 };
 
 export const deleteTag = async ({ id, token }: DeleteTagRequest): Promise<BaseResponse<boolean>> => {
-  const response = await AXIOS_INSTANCE.delete<BaseResponse<boolean>>(`/${Table.TAGS}/${id}`, {
+  const response = await AXIOS_INSTANCE.delete<BaseResponse<boolean>>(`/${ApiPrefix.TAGS}/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -24,7 +24,7 @@ export const deleteTag = async ({ id, token }: DeleteTagRequest): Promise<BaseRe
 };
 
 export const createTag = async ({ formData, token }: CreateTagRequest): Promise<BaseResponse<Tag>> => {
-  const response = await AXIOS_INSTANCE.post<BaseResponse<Tag>>(`/${Table.TAGS}`, formData, {
+  const response = await AXIOS_INSTANCE.post<BaseResponse<Tag>>(`/${ApiPrefix.TAGS}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -34,7 +34,7 @@ export const createTag = async ({ formData, token }: CreateTagRequest): Promise<
 };
 
 export const updateTag = async ({ id, formData, token }: UpdateTagRequest): Promise<BaseResponse<Tag>> => {
-  const response = await AXIOS_INSTANCE.put<BaseResponse<Tag>>(`/${Table.TAGS}/${id}`, formData, {
+  const response = await AXIOS_INSTANCE.put<BaseResponse<Tag>>(`/${ApiPrefix.TAGS}/${id}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

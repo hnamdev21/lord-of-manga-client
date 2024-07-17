@@ -35,8 +35,6 @@ const RolesModule = () => {
     },
   });
 
-  if (!authContext) return null;
-
   const { data, refetch } = useQuery(
     "roles",
     async () => {

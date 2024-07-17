@@ -13,10 +13,8 @@ import Typography from "@/components/Typography";
 import Notification from "@/constants/notification";
 import Path from "@/constants/path";
 import StatusCode from "@/constants/status-code";
-import AXIOS_INSTANCE from "@/services/instance";
-import { User } from "@/types/data";
+import { UserAPI } from "@/services/apis/user";
 import { FormSignUp } from "@/types/form";
-import { BaseResponse } from "@/types/response";
 
 import styles from "./styles.module.scss";
 
@@ -24,7 +22,7 @@ const SignUpModule = () => {
   const router = useRouter();
 
   const onFinish: FormProps<FormSignUp>["onFinish"] = async (values: FormSignUp) => {
-    const response = (await AXIOS_INSTANCE.post<BaseResponse<User>>("/users", values)).data;
+    const response = await UserAPI.signUp({ formData: values });
 
     if (response.code === StatusCode.CREATED) {
       message.success(Notification.welcome);

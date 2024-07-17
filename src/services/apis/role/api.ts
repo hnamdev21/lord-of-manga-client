@@ -6,7 +6,7 @@ import { BaseGetResponse, BaseResponse } from "@/types/response";
 import { CreateRoleRequest, GetAllRolesRequest, UpdateRoleRequest } from "./dto";
 
 export const getAllRoles = async ({ params }: GetAllRolesRequest) => {
-  const response = await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Role[]>>>(`/${Table.ROLES}`, {
+  const response = await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Role[]>>>(`/${ApiPrefix.ROLES}`, {
     params,
   });
 
@@ -14,7 +14,7 @@ export const getAllRoles = async ({ params }: GetAllRolesRequest) => {
 };
 
 export const createRole = async ({ token, formData }: CreateRoleRequest) => {
-  const response = await AXIOS_INSTANCE.post<BaseResponse<Role>>(`/${Table.ROLES}`, formData, {
+  const response = await AXIOS_INSTANCE.post<BaseResponse<Role>>(`/${ApiPrefix.ROLES}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -24,7 +24,7 @@ export const createRole = async ({ token, formData }: CreateRoleRequest) => {
 };
 
 export const updateRole = async ({ token, id, formData }: UpdateRoleRequest) => {
-  const response = await AXIOS_INSTANCE.put<BaseResponse<Role>>(`/${Table.ROLES}/${id}`, formData, {
+  const response = await AXIOS_INSTANCE.put<BaseResponse<Role>>(`/${ApiPrefix.ROLES}/${id}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

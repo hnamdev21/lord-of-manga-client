@@ -48,8 +48,6 @@ const UpdateComicForm = ({ comic, refreshData }: Props) => {
   const [searchValue, setSearchValue] = React.useState<string>("");
   const [disablePriceInput, setDisablePriceInput] = React.useState<boolean>(true);
 
-  if (!authContext) return null;
-
   const { data: categoryAndTagData } = useQuery(["categories", "tags"], async () => {
     const [responseCategories, responseTags] = await Promise.all([CategoryAPI.getAllCategories({}), TagAPI.getAllTags({})]);
 

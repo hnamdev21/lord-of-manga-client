@@ -7,9 +7,8 @@ import Button from "@/components/Button";
 import CardComic from "@/components/CardComic";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
-import AXIOS_INSTANCE from "@/services/instance";
-import { Category, Comic } from "@/types/data";
-import { BaseGetResponse, BaseResponse } from "@/types/response";
+import { ComicAPI } from "@/services/apis/comic";
+import { Category } from "@/types/data";
 
 import styles from "./styles.module.scss";
 
@@ -20,8 +19,12 @@ type Props = {
 
 const RowCard = ({ category, numberOfColumns }: Props) => {
   const { data: comics } = useQuery(["row-card", "comics", category.slug], async () => {
-    const { data } = (await AXIOS_INSTANCE.get<BaseResponse<BaseGetResponse<Comic[]>>>("/comics?categorySlug=" + category.slug)).data;
-    return data.content;
+    const response = await ComicAPI.getAllComics({
+      params: {
+        categorySlug: category.slug,
+      },
+    });
+    return response.data.content;
   });
 
   return (

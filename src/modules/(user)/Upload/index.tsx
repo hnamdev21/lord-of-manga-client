@@ -16,8 +16,6 @@ const UploadModule = () => {
 
   const [createdComics, setCreatedComics] = React.useState<Comic[]>([]);
 
-  if (!authContext) return null;
-
   const fetchCreatedComics = async () => {
     const response = await ComicAPI.getAllMyComics({
       token: authContext.auth.token,

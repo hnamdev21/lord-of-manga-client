@@ -3,11 +3,11 @@ import React from "react";
 
 import Button from "@/components/Button";
 import Notification from "@/constants/notification";
+import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
-import AXIOS_INSTANCE from "@/services/instance";
+import { AdminAPI } from "@/services/apis/admin";
 import { Chapter } from "@/types/data";
 import { FormBanChapter } from "@/types/form";
-import { BaseResponse } from "@/types/response";
 
 type Props = {
   chapter: Chapter;
@@ -18,15 +18,13 @@ const BanChapterForm = ({ chapter, refreshData }: Props) => {
   const authContext = React.use(AuthContext);
 
   const onFinish: FormProps<FormBanChapter>["onFinish"] = async (values: FormBanChapter) => {
-    const { data } = (
-      await AXIOS_INSTANCE.patch<BaseResponse<boolean>>(`/chapters/${chapter.id}/ban`, values, {
-        headers: {
-          Authorization: `Bearer ${authContext?.auth.token}`,
-        },
-      })
-    ).data;
+    const response = await AdminAPI.banChapter({
+      id: chapter.id,
+      formData: values,
+      token: authContext.auth.token,
+    });
 
-    if (data) {
+    if (response.code === StatusCode.OK) {
       refreshData();
       Modal.destroyAll();
       message.success(Notification.banSuccess(chapter.title));

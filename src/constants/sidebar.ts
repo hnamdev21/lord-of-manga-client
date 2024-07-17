@@ -22,6 +22,7 @@ import { IconType } from "react-icons/lib";
 import { FaClockRotateLeft } from "@/components/Icons";
 
 import { DefaultPermissionValue, DefaultRoleValue } from "./default-data";
+import Path from "./path";
 
 export type SidebarItem = {
   label: string;
@@ -34,28 +35,28 @@ export type SidebarItem = {
 export const SidebarCommonPath = {
   HOME: {
     label: "Home",
-    href: "/",
+    href: Path.USER.HOME,
     icon: FaHome,
     availableRoles: [],
     availablePermissions: [],
   },
   COMICS: {
     label: "Search",
-    href: "/comics",
+    href: Path.USER.COMICS,
     icon: FaSearch,
     availableRoles: [],
     availablePermissions: [],
   },
-  LIBRARY: {
-    label: "Library",
-    href: "/library",
-    icon: FaBook,
-    availableRoles: [],
-    availablePermissions: [],
-  },
+  // LIBRARY: {
+  //   label: "Library",
+  //   href: "/library",
+  //   icon: FaBook,
+  //   availableRoles: [],
+  //   availablePermissions: [],
+  // },
   READING_HISTORY: {
     label: "Reading History",
-    href: "/reading-history",
+    href: Path.USER.READING_HISTORY,
     icon: FaClockRotateLeft,
     availableRoles: [],
     availablePermissions: [],
@@ -66,35 +67,35 @@ export type SidebarCommonPath = (typeof SidebarCommonPath)[keyof typeof SidebarC
 export const SidebarAuthenticatedPath = {
   PROFILE: {
     label: "Profile",
-    href: "/profile",
+    href: Path.USER.PROFILE,
     icon: FaAddressCard,
     availableRoles: [],
     availablePermissions: [],
   },
   UPLOAD: {
     label: "Upload Comic",
-    href: "/upload",
+    href: Path.USER.UPLOAD,
     icon: FaUpload,
     availableRoles: [DefaultRoleValue.CREATOR],
     availablePermissions: [DefaultPermissionValue.CREATE_COMIC],
   },
   COMIC_MANAGEMENT: {
     label: "Comic Management",
-    href: "/comic-management",
+    href: Path.USER.COMIC_MANAGEMENT,
     icon: FaBox,
     availableRoles: [DefaultRoleValue.CREATOR],
     availablePermissions: [DefaultPermissionValue.CREATE_COMIC],
   },
   RECYCLE_BIN: {
     label: "Recycle Bin",
-    href: "/recycle-bin",
+    href: Path.USER.RECYCLE_BIN,
     icon: FaTrashRestore,
     availableRoles: [DefaultRoleValue.CREATOR],
     availablePermissions: [DefaultPermissionValue.CREATE_COMIC],
   },
   SAVED_COMICS: {
     label: "Saved Comics",
-    href: "/saved-comics",
+    href: Path.USER.SAVED_COMICS,
     icon: FaBookmark,
     availableRoles: [],
     availablePermissions: [],
@@ -105,77 +106,77 @@ export type SidebarPathAuthenticatedPath = (typeof SidebarAuthenticatedPath)[key
 export const SidebarAdminPath = {
   DASHBOARD: {
     label: "Dashboard",
-    href: "/admin/dashboard",
+    href: Path.ADMIN.DASHBOARD,
     icon: FaChartBar,
     availableRoles: [],
     availablePermissions: [],
   },
   ROLES: {
     label: "Roles",
-    href: "/admin/roles",
+    href: Path.ADMIN.ROLES,
     icon: FaIdCard,
     availableRoles: [DefaultRoleValue.HUMAN_RESOURCE],
     availablePermissions: [DefaultPermissionValue.USER_MANAGER],
   },
   USERS: {
     label: "Users",
-    href: "/admin/users",
+    href: Path.ADMIN.USERS,
     icon: FaUserFriends,
     availableRoles: [DefaultRoleValue.HUMAN_RESOURCE],
     availablePermissions: [DefaultPermissionValue.USER_MANAGER],
   },
   BANNED_USERS: {
     label: "Banned Users",
-    href: "/admin/banned-users",
+    href: Path.ADMIN.BANNED_USERS,
     icon: FaUsersSlash,
     availableRoles: [DefaultRoleValue.HUMAN_RESOURCE],
     availablePermissions: [DefaultPermissionValue.USER_MANAGER],
   },
   CATEGORIES: {
     label: "Categories",
-    href: "/admin/categories",
+    href: Path.ADMIN.CATEGORIES,
     icon: FaTags,
     availableRoles: [],
     availablePermissions: [],
   },
   TAGS: {
     label: "Tags",
-    href: "/admin/tags",
+    href: Path.ADMIN.TAGS,
     icon: FaHashtag,
     availableRoles: [],
     availablePermissions: [],
   },
   COMICS: {
     label: "Comics",
-    href: "/admin/comics",
+    href: Path.ADMIN.COMICS,
     icon: FaBook,
     availableRoles: [DefaultRoleValue.COMIC_CENSOR],
     availablePermissions: [],
   },
   BANNED_COMICS: {
     label: "Banned Comics",
-    href: "/admin/banned-comics",
+    href: Path.ADMIN.BANNED_COMICS,
     icon: FaBan,
     availableRoles: [DefaultRoleValue.COMIC_CENSOR],
     availablePermissions: [DefaultPermissionValue.BAN_COMIC],
   },
   RECYCLE_BIN: {
     label: "Recycle Bin",
-    href: "/admin/recycle-bin",
+    href: Path.ADMIN.RECYCLE_BIN,
     icon: FaTrashRestore,
     availableRoles: [DefaultRoleValue.COMIC_CENSOR],
     availablePermissions: [DefaultPermissionValue.DELETE_COMIC],
   },
   COMMENTS: {
     label: "Comments",
-    href: "/admin/comments",
+    href: Path.ADMIN.COMMENTS,
     icon: FaComment,
     availableRoles: [DefaultRoleValue.COMMENT_CENSOR],
     availablePermissions: [DefaultPermissionValue.DISABLE_COMMENT],
   },
   PAYMENTS: {
     label: "Payments",
-    href: "/admin/payments",
+    href: Path.ADMIN.PAYMENTS,
     icon: FaWallet,
     availableRoles: [],
     availablePermissions: [],

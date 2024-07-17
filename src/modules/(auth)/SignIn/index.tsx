@@ -14,9 +14,8 @@ import Notification from "@/constants/notification";
 import Path from "@/constants/path";
 import StatusCode from "@/constants/status-code";
 import { AuthContext } from "@/providers/AuthProvider";
-import AXIOS_INSTANCE from "@/services/instance";
+import { AuthAPI } from "@/services/apis/auth";
 import { FormSignIn } from "@/types/form";
-import { BaseResponse } from "@/types/response";
 
 import styles from "./styles.module.scss";
 
@@ -25,7 +24,7 @@ const SignInModule = () => {
   const authContext = React.use(AuthContext);
 
   const onFinish: FormProps<FormSignIn>["onFinish"] = async (values: FormSignIn) => {
-    const response = (await AXIOS_INSTANCE.post<BaseResponse<string>>("/auth/sign-in", values)).data;
+    const response = await AuthAPI.signIn({ formData: values });
 
     if (response.code === StatusCode.OK) {
       message.success(Notification.welcome);

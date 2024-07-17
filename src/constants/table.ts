@@ -1,4 +1,5 @@
-const Table = {
+const ApiPrefix = {
+  AUTH: "auth",
   USERS: "users",
   ROLES: "roles",
   PERMISSIONS: "permissions",
@@ -13,6 +14,6 @@ const Table = {
   // REPORTS: "reports",
 } as const;
 
-export type Table = (typeof Table)[keyof typeof Table];
+export type ApiPrefix = (typeof ApiPrefix)[keyof typeof ApiPrefix];
 
-export default Table;
+export default ApiPrefix;

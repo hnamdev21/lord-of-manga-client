@@ -7,9 +7,8 @@ import { useQuery } from "react-query";
 import Container from "@/components/Container";
 import Typography from "@/components/Typography";
 import LocalStorageKey from "@/constants/local-key";
-import AXIOS_INSTANCE from "@/services/instance";
+import { ComicAPI } from "@/services/apis/comic";
 import { Comic } from "@/types/data";
-import { BaseResponse } from "@/types/response";
 
 import ReadingHistoryCard from "./components/ReadingHistoryCard";
 import styles from "./styles.module.scss";
@@ -22,11 +21,7 @@ const ReadingHistoryModule = () => {
     ["readingHistory"],
     async () => {
       const slugs = Object.keys(lastRead);
-      const { data: comics } = (
-        await AXIOS_INSTANCE.post<BaseResponse<Comic[]>>("/comics/slugs", {
-          slugs,
-        })
-      ).data;
+      const { data: comics } = await ComicAPI.getAllComicsBySlugs({ formData: { slugs } });
       setComics(comics);
 
       return comics;
